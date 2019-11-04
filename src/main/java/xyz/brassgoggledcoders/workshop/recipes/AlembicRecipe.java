@@ -2,6 +2,7 @@ package xyz.brassgoggledcoders.workshop.recipes;
 
 import com.hrznstudio.titanium.recipe.serializer.GenericSerializer;
 import com.hrznstudio.titanium.recipe.serializer.SerializableRecipe;
+import net.minecraft.block.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
@@ -21,23 +22,24 @@ public class AlembicRecipe extends SerializableRecipe {
     public static GenericSerializer<AlembicRecipe> SERIALIZER = new GenericSerializer<>(new ResourceLocation(MOD_ID, "alembic"), AlembicRecipe.class);
     public static List<AlembicRecipe> RECIPES = new ArrayList<>();
 
-    static {
-
-    }
-
     public Ingredient.IItemList input;
     public ItemStack container;
     public ItemStack output;
     public ItemStack[] residue;
-    public boolean defaultRecipe;
+    public int cooldownTime;
 
     public AlembicRecipe(ResourceLocation resourceLocation) {
         super(resourceLocation);
     }
 
-    public AlembicRecipe(ResourceLocation resourceLocation, Ingredient.IItemList input, ItemStack output, ItemStack container, ItemStack[] residue, boolean defaultRecipe) {
+    public AlembicRecipe(ResourceLocation resourceLocation, Ingredient.IItemList input, ItemStack output, ItemStack container, ItemStack[] residue, int cooldownTime) {
         super(resourceLocation);
-
+        this.input = input;
+        this.output = output;
+        this.container = container;
+        this.residue = residue;
+        this.cooldownTime = cooldownTime;
+        RECIPES.add(this);
     }
 
     public boolean matches(World world, BlockPos pos) {
@@ -61,7 +63,7 @@ public class AlembicRecipe extends SerializableRecipe {
 
     @Override
     public ItemStack getRecipeOutput() {
-        return input.getStacks().iterator().next();
+        return output;
     }
 
     @Override

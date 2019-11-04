@@ -9,8 +9,7 @@ import net.minecraft.util.ResourceLocation;
 
 import static xyz.brassgoggledcoders.workshop.WorkShop.MOD_ID;
 
-public class Tags
-{
+public class Tags {
 
     public static class Items {
         public static final Tag<Item> COLD = tag("cold");
@@ -22,14 +21,9 @@ public class Tags
 
     public static class Blocks {
 
-
         private static Tag<Block> tag(String name) {
             return new BlockTags.Wrapper(new ResourceLocation(MOD_ID, name));
         }
     }
-
-
-
-
 
 }

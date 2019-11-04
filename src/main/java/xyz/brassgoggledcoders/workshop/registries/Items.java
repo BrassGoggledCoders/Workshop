@@ -16,19 +16,19 @@ public class Items {
     public static final RegistryObject<Item> WORKICON = ITEMS.register("workicon", () -> new Item(new Item.Properties()));
 
     //Alembic Outputs
-    public static final RegistryObject<Item> ADHESIVE_OILITEM = ITEMS.register("adhesive_oil", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
-    public static final RegistryObject<Item> DISTILLED_WATERITEM = ITEMS.register("distilled_water", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
-    public static final RegistryObject<Item> TANINITEM = ITEMS.register("tanin", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
+    public static final RegistryObject<Item> ADHESIVE_OIL = ITEMS.register("adhesive_oil", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
+    public static final RegistryObject<Item> DISTILLED_WATER = ITEMS.register("distilled_water", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
+    public static final RegistryObject<Item> TANIN = ITEMS.register("tanin", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
 
     //Ingredients
-    public static final RegistryObject<Item> SALTITEM = ITEMS.register("salt", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
-    public static final RegistryObject<Item> CHALKITEM = ITEMS.register("chalk", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
-    public static final RegistryObject<Item> ASHITEM = ITEMS.register("ash", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
-    public static final RegistryObject<Item> SILTITEM = ITEMS.register("silt", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
-    public static final RegistryObject<Item> TEAITEM = ITEMS.register("tea", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
-    public static final RegistryObject<Item> MEDICINAL_ROOTSITEM = ITEMS.register("medicinalroots", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
-
-
+    public static final RegistryObject<Item> SALT = ITEMS.register("salt", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
+    public static final RegistryObject<Item> CHALK = ITEMS.register("chalk", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
+    public static final RegistryObject<Item> ASH = ITEMS.register("ash", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
+    public static final RegistryObject<Item> SILT = ITEMS.register("silt", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
+    public static final RegistryObject<Item> TEA = ITEMS.register("tea", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
+    public static final RegistryObject<Item> MEDICINAL_ROOTS = ITEMS.register("medicinalroots", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
+    public static final RegistryObject<Item> RESINBUCKET = ITEMS.register("resinbucket", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
+    public static final RegistryObject<Item> STRANGLEGRASS = ITEMS.register("stranglegrass", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
 
     public static void register(IEventBus bus) {
         ITEMS.register(bus);

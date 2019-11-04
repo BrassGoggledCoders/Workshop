@@ -5,9 +5,7 @@ import net.minecraft.item.ItemStack;
 
 import static xyz.brassgoggledcoders.workshop.registries.Items.WORKICON;
 
-
-public class WorkGroup extends ItemGroup
-{
+public class WorkGroup extends ItemGroup {
 
     public static final WorkGroup instance = new WorkGroup(ItemGroup.GROUPS.length, "workshop");
 
@@ -21,6 +19,5 @@ public class WorkGroup extends ItemGroup
     {
         return new ItemStack(WORKICON.get());
     }
-
 
 }

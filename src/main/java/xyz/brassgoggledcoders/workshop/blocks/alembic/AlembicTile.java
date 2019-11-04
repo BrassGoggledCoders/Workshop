@@ -5,7 +5,6 @@ import net.minecraft.tileentity.TileEntity;
 
 import static xyz.brassgoggledcoders.workshop.registries.TileEntities.ALEMBICTILE;
 
-
 public class AlembicTile extends TileEntity implements ITickableTileEntity {
 
     public AlembicTile() {
@@ -16,9 +15,5 @@ public class AlembicTile extends TileEntity implements ITickableTileEntity {
     public void tick() {
 
     }
-
-
-
-
 
 }

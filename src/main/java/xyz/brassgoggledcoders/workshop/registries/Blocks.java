@@ -19,7 +19,6 @@ public class Blocks {
     private static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, MOD_ID);
     private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MOD_ID);
 
-
     //Alembic
 
     public static final RegistryObject<Block> ALEMBICBLOCK = BLOCKS.register("alembic",
@@ -28,15 +27,10 @@ public class Blocks {
             .hardnessAndResistance(5.0F)
     ));
 
-
-
-
-
     //BlockItems
 
     public static final RegistryObject<Item> ALEMBICITEM = ITEMS.register("alembic",
             () -> new BlockItem(ALEMBICBLOCK.get(), new Item.Properties().group(WorkGroup.instance)));
-
 
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);
