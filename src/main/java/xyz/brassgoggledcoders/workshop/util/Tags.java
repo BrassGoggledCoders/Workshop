@@ -7,7 +7,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 
-import static xyz.brassgoggledcoders.workshop.WorkShop.MOD_ID;
+import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
 public class Tags {
 

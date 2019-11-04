@@ -2,7 +2,6 @@ package xyz.brassgoggledcoders.workshop.recipes;
 
 import com.hrznstudio.titanium.recipe.serializer.GenericSerializer;
 import com.hrznstudio.titanium.recipe.serializer.SerializableRecipe;
-import net.minecraft.block.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static xyz.brassgoggledcoders.workshop.WorkShop.MOD_ID;
+import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
 public class AlembicRecipe extends SerializableRecipe {
 

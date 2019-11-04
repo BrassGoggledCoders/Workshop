@@ -12,7 +12,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.blocks.alembic.AlembicBlock;
 import xyz.brassgoggledcoders.workshop.util.WorkGroup;
 
-import static xyz.brassgoggledcoders.workshop.WorkShop.MOD_ID;
+import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
 public class Blocks {
 

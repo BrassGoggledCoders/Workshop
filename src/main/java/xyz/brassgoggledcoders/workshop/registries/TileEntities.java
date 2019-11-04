@@ -8,7 +8,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.blocks.alembic.AlembicTile;
 
-import static xyz.brassgoggledcoders.workshop.WorkShop.MOD_ID;
+import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 import static xyz.brassgoggledcoders.workshop.registries.Blocks.ALEMBICBLOCK;
 
 public class TileEntities {
