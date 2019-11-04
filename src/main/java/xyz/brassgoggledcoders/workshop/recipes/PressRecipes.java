@@ -29,6 +29,7 @@ public class PressRecipes extends SerializableRecipe {
         super(resourceLocation);
         this.input = input;
         this.output = output;
+        RECIPES.add(this);
     }
 
     @Override

@@ -3,12 +3,12 @@ package xyz.brassgoggledcoders.workshop.blocks.alembic;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
-import static xyz.brassgoggledcoders.workshop.registries.TileEntities.ALEMBICTILE;
+import static xyz.brassgoggledcoders.workshop.registries.TileEntities.ALEMBIC_TILE;
 
 public class AlembicTile extends TileEntity implements ITickableTileEntity {
 
     public AlembicTile() {
-        super(ALEMBICTILE.get());
+        super(ALEMBIC_TILE.get());
     }
 
     @Override
