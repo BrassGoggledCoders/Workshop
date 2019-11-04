@@ -3,7 +3,8 @@ package xyz.brassgoggledcoders.workshop.util;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
-import static xyz.brassgoggledcoders.workshop.util.lib.NameLib.workicon;
+import static xyz.brassgoggledcoders.workshop.registries.Items.WORKICON;
+
 
 public class WorkGroup extends ItemGroup
 {
@@ -18,7 +19,7 @@ public class WorkGroup extends ItemGroup
     @Override
     public ItemStack createIcon()
     {
-        return new ItemStack(workicon);
+        return new ItemStack(WORKICON.get());
     }
 
 

@@ -37,6 +37,7 @@ public class AlembicRecipe extends SerializableRecipe {
 
     public AlembicRecipe(ResourceLocation resourceLocation, Ingredient.IItemList input, ItemStack output, ItemStack container, ItemStack[] residue, boolean defaultRecipe) {
         super(resourceLocation);
+
     }
 
     public boolean matches(World world, BlockPos pos) {

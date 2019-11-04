@@ -1,16 +1,16 @@
 package xyz.brassgoggledcoders.workshop.blocks.alembic;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
-import xyz.brassgoggledcoders.workshop.blocks.BlockBase;
 
 import javax.annotation.Nullable;
 
-public class AlembicBlock extends BlockBase {
+public class AlembicBlock extends Block {
 
-    public AlembicBlock(Properties properties, String id) {
-        super(properties, id);
+    public AlembicBlock(Properties properties) {
+        super(properties);
     }
 
     @Override

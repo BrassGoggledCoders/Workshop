@@ -1,0 +1,35 @@
+package xyz.brassgoggledcoders.workshop.util;
+
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag;
+import net.minecraft.util.ResourceLocation;
+
+import static xyz.brassgoggledcoders.workshop.WorkShop.MOD_ID;
+
+public class Tags
+{
+
+    public static class Items {
+        public static final Tag<Item> COLD = tag("cold");
+
+        private static Tag<Item> tag(String name) {
+            return new ItemTags.Wrapper(new ResourceLocation(MOD_ID, name));
+        }
+    }
+
+    public static class Blocks {
+
+
+        private static Tag<Block> tag(String name) {
+            return new BlockTags.Wrapper(new ResourceLocation(MOD_ID, name));
+        }
+    }
+
+
+
+
+
+}
