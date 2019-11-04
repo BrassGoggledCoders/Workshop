@@ -7,15 +7,19 @@ import net.minecraft.data.DataGenerator;
 
 import java.util.Map;
 
-public class WorkShopSerializerProvider extends TitaniumSerializableProvider {
+public class WorkshopSerializerProvider extends TitaniumSerializableProvider {
 
-    public WorkShopSerializerProvider(DataGenerator generatorIn, String modid) {
+    public WorkshopSerializerProvider(DataGenerator generatorIn, String modid) {
         super(generatorIn, modid);
     }
 
     @Override
     public void add(Map<IJsonFile, IJSONGenerator> map) {
         AlembicRecipe.RECIPES.forEach(alembicRecipe -> map.put(alembicRecipe, alembicRecipe));
+        SpinningWheelRecipe.RECIPES.forEach(spinningWheelRecipe -> map.put(spinningWheelRecipe, spinningWheelRecipe));
+        SeasoningBarrelRecipe.RECIPES.forEach(seasoningBarrelRecipe -> map.put(seasoningBarrelRecipe, seasoningBarrelRecipe));
+        SinteringFurnaceRecipe.RECIPES.forEach(sinteringFurnaceRecipe -> map.put(sinteringFurnaceRecipe, sinteringFurnaceRecipe));
+        PressRecipes.RECIPES.forEach(pressRecipes -> map.put(pressRecipes, pressRecipes));
 
     }
 }

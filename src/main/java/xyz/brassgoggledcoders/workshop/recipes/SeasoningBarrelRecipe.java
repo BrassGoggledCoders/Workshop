@@ -5,23 +5,43 @@ import com.hrznstudio.titanium.recipe.serializer.SerializableRecipe;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
-public class SeasonedBarrelRecipe extends SerializableRecipe {
+public class SeasoningBarrelRecipe extends SerializableRecipe {
 
-    public static GenericSerializer<SeasonedBarrelRecipe> SERIALIZER = new GenericSerializer<>(new ResourceLocation(MOD_ID, "seasonedbarrel"), SeasonedBarrelRecipe.class);
-    public static List<SeasonedBarrelRecipe> RECIPES = new ArrayList<>();
+    public static GenericSerializer<SeasoningBarrelRecipe> SERIALIZER = new GenericSerializer<>(new ResourceLocation(MOD_ID, "seasoningbarrel"), SeasoningBarrelRecipe.class);
+    public static List<SeasoningBarrelRecipe> RECIPES = new ArrayList<>();
 
+    public ItemStack product;
+    public ItemStack catalyst;
+    public FluidStack input;
+    public FluidStack output;
+    public int seasoningTime;
 
-    public SeasonedBarrelRecipe(ResourceLocation resourceLocation) {
+    public SeasoningBarrelRecipe(ResourceLocation resourceLocation) {
         super(resourceLocation);
     }
+
+    public SeasoningBarrelRecipe(ResourceLocation resourceLocation, FluidStack input, ItemStack catalyst, FluidStack output, ItemStack product, int seasoningTime) {
+        super(resourceLocation);
+        this.input = input;
+        this.output = output;
+        this.catalyst = catalyst;
+        this.product = product;
+        this.seasoningTime = seasoningTime;
+        RECIPES.add(this);
+    }
+
 
     @Override
     public boolean matches(IInventory inv, World worldIn) {
@@ -30,7 +50,7 @@ public class SeasonedBarrelRecipe extends SerializableRecipe {
 
     @Override
     public ItemStack getCraftingResult(IInventory inv) {
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -40,16 +60,16 @@ public class SeasonedBarrelRecipe extends SerializableRecipe {
 
     @Override
     public ItemStack getRecipeOutput() {
-        return null;
+        return product;
     }
 
     @Override
     public GenericSerializer<? extends SerializableRecipe> getSerializer() {
-        return null;
+        return SERIALIZER;
     }
 
     @Override
     public IRecipeType<?> getType() {
-        return null;
+        return SERIALIZER.getRecipeType();
     }
 }
