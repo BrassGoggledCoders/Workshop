@@ -12,6 +12,7 @@ import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 import static xyz.brassgoggledcoders.workshop.registries.Blocks.*;
 
 public class TileEntities {
+    /*
     private static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, MOD_ID);
 
     public static final RegistryObject<TileEntityType<?>> ALEMBIC_TILE = TILE_ENTITIES.register("alembic", () -> TileEntityType.Builder.create(AlembicTile::new, ALEMBIC_BLOCK.get()).build(null));
@@ -23,4 +24,6 @@ public class TileEntities {
     public static void register(IEventBus bus) {
         TILE_ENTITIES.register(bus);
     }
+
+    */
 }

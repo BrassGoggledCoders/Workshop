@@ -9,9 +9,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import xyz.brassgoggledcoders.workshop.recipes.*;
-import xyz.brassgoggledcoders.workshop.registries.Blocks;
 import xyz.brassgoggledcoders.workshop.registries.Items;
-import xyz.brassgoggledcoders.workshop.registries.TileEntities;
 
 import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
@@ -25,9 +23,8 @@ public class Workshop {
     public Workshop() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        Blocks.register(modBus);
+
         Items.register(modBus);
-        TileEntities.register(modBus);
 
         EventManager.mod(RegistryEvent.Register.class).filter(register -> register.getGenericType().equals(IRecipeSerializer.class))
                 .process(register -> register.getRegistry().registerAll(AlembicRecipe.SERIALIZER, SpinningWheelRecipe.SERIALIZER, SeasoningBarrelRecipe.SERIALIZER, SinteringFurnaceRecipe.SERIALIZER, PressRecipes.SERIALIZER))

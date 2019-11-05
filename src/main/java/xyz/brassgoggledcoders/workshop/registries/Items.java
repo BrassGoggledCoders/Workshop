@@ -12,6 +12,9 @@ import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 public class Items {
 
     private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MOD_ID);
+    public static final RegistryObject<Item> WORKICON = ITEMS.register("workicon", () -> new Item(new Item.Properties()));
+/*
+    private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MOD_ID);
 
     public static final RegistryObject<Item> WORKICON = ITEMS.register("workicon", () -> new Item(new Item.Properties()));
 
@@ -30,7 +33,7 @@ public class Items {
     public static final RegistryObject<Item> RESIN_BUCKET = ITEMS.register("resin_bucket", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
     public static final RegistryObject<Item> METAL_DUST = ITEMS.register("stranglegrass", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
 
-
+*/
 
     public static void register(IEventBus bus) {
         ITEMS.register(bus);

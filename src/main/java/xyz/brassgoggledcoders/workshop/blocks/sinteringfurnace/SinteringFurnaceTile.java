@@ -2,32 +2,17 @@ package xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace;
 
 
 import com.hrznstudio.titanium.annotation.Save;
-import com.hrznstudio.titanium.block.BlockTileBase;
-import com.hrznstudio.titanium.block.tile.TileActive;
 import com.hrznstudio.titanium.block.tile.inventory.SidedInvHandler;
 import com.hrznstudio.titanium.util.RecipeUtil;
 import net.minecraft.item.DyeColor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
 import org.apache.commons.lang3.tuple.Pair;
 import xyz.brassgoggledcoders.workshop.blocks.WorkShopMachine;
 import xyz.brassgoggledcoders.workshop.recipes.SinteringFurnaceRecipe;
-import xyz.brassgoggledcoders.workshop.util.WorkTags;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.SINTERING_FURNACE_BLOCK;
 
-import static xyz.brassgoggledcoders.workshop.registries.TileEntities.SINTERING_FURNACE_TILE;
-
-public class SinteringFurnaceTile2 extends WorkShopMachine {
+public class SinteringFurnaceTile extends WorkShopMachine {
 
     @Save
     private SidedInvHandler powder;
@@ -39,8 +24,8 @@ public class SinteringFurnaceTile2 extends WorkShopMachine {
     private SidedInvHandler fuel;
     private SinteringFurnaceRecipe currentRecipe;
 
-    public SinteringFurnaceTile2(BlockTileBase base, int x, int y) {
-        super(base, x, y);
+    public SinteringFurnaceTile() {
+        super(SINTERING_FURNACE_BLOCK, 102, 41);
 
         this.addInventory(this.powder = (SidedInvHandler) new SidedInvHandler("powder", 34, 19, 8, 0)
                 .setColor(DyeColor.ORANGE)

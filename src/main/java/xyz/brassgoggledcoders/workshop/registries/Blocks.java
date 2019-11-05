@@ -15,7 +15,7 @@ import xyz.brassgoggledcoders.workshop.util.WorkGroup;
 import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
 public class Blocks {
-
+/*
     private static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, MOD_ID);
     private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MOD_ID);
 
@@ -78,5 +78,5 @@ public class Blocks {
         BLOCKS.register(bus);
         ITEMS.register(bus);
     }
-
+*/
 }
