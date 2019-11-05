@@ -8,6 +8,7 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,11 @@ public class SinteringFurnaceRecipe extends SerializableRecipe {
     @Override
     public boolean matches(IInventory inv, World worldIn) {
         return false;
+    }
+
+    public boolean matches(ItemStack powder, ItemStack targetMaterial) {
+        return powder.isItemEqual(powder) && targetMaterial.isItemEqual(targetMaterial);
+
     }
 
     @Override
