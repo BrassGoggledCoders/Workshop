@@ -1,19 +1,20 @@
 package xyz.brassgoggledcoders.workshop.blocks.press;
 
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
+import xyz.brassgoggledcoders.workshop.blocks.WorkShopMachine;
 
-import static xyz.brassgoggledcoders.workshop.registries.TileEntities.PRESS_TILE;
+import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.PRESS_BLOCK;
 
-public class PressTile extends TileEntity implements ITickableTileEntity {
+public class PressTile extends WorkShopMachine {
 
     public PressTile() {
-        super(PRESS_TILE.get());
+        super(PRESS_BLOCK,102, 42);
     }
 
     @Override
-    public void tick() {
-
+    public Runnable onFinish() {
+        return null;
     }
+
+
 
 }

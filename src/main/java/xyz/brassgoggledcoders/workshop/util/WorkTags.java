@@ -9,10 +9,12 @@ import net.minecraft.util.ResourceLocation;
 
 import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
-public class Tags {
+public class WorkTags {
 
     public static class Items {
         public static final Tag<Item> COLD = tag("cold");
+        public static final Tag<Item> FUEL = tag("fuel");
+        public static final Tag<Item> POWDER = tag("powder");
 
         private static Tag<Item> tag(String name) {
             return new ItemTags.Wrapper(new ResourceLocation(MOD_ID, name));

@@ -47,6 +47,16 @@ public class Blocks {
                     .sound(SoundType.METAL)
                     .hardnessAndResistance(5.0F)
             ));
+    public static final RegistryObject<Block> STRANGLE_GRASS_BLOCK = BLOCKS.register("stranglegrass",
+            () -> new AlembicBlock(Block.Properties.create(Material.IRON)
+                    .sound(SoundType.METAL)
+                    .hardnessAndResistance(5.0F)
+            ));
+    public static final RegistryObject<Block> REBARRED_CONCRETE = BLOCKS.register("rebarred_concrete",
+            () -> new AlembicBlock(Block.Properties.create(Material.IRON)
+                    .sound(SoundType.METAL)
+                    .hardnessAndResistance(5.0F)
+            ));
 
     //BlockItems
 
@@ -59,6 +69,8 @@ public class Blocks {
     public static final RegistryObject<Item> SEASONING_BARREL_ITEM = ITEMS.register("seasoning_barrel",
             () -> new BlockItem(SEASONING_BARREL_BLOCK.get(), new Item.Properties().group(WorkGroup.instance)));
     public static final RegistryObject<Item> SPINNING_WHEEL_ITEM = ITEMS.register("spinning_wheel",
+            () -> new BlockItem(SPINNING_WHEEL_BLOCK.get(), new Item.Properties().group(WorkGroup.instance)));
+    public static final RegistryObject<Item> STRANGLE_GRASS_ITEM = ITEMS.register("stranglegrass",
             () -> new BlockItem(SPINNING_WHEEL_BLOCK.get(), new Item.Properties().group(WorkGroup.instance)));
 
 

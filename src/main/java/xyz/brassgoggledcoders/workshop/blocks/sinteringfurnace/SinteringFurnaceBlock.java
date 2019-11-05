@@ -1,17 +1,23 @@
 package xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace;
 
-import net.minecraft.block.Block;
+import com.hrznstudio.titanium.api.IFactory;
+import com.hrznstudio.titanium.block.BlockTileBase;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
-import xyz.brassgoggledcoders.workshop.blocks.alembic.AlembicTile;
 
 import javax.annotation.Nullable;
 
-public class SinteringFurnaceBlock extends Block {
+public class SinteringFurnaceBlock extends BlockTileBase {
 
-    public SinteringFurnaceBlock(Properties properties) {
-        super(properties);
+    public SinteringFurnaceBlock() {
+        super("sintering_furnace", Properties.from(Blocks.FURNACE), SinteringFurnaceTile.class);
+    }
+
+    @Override
+    public IFactory getTileEntityFactory() {
+        return SinteringFurnaceTile::new;
     }
 
     @Override

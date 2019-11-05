@@ -18,7 +18,7 @@ public class Items {
     //Alembic Outputs
     public static final RegistryObject<Item> ADHESIVE_OIL = ITEMS.register("adhesive_oil", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
     public static final RegistryObject<Item> DISTILLED_WATER = ITEMS.register("distilled_water", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
-    public static final RegistryObject<Item> TANIN = ITEMS.register("tanin", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
+    public static final RegistryObject<Item> TANNIN = ITEMS.register("tannin", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
 
     //Ingredients
     public static final RegistryObject<Item> SALT = ITEMS.register("salt", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
@@ -26,9 +26,11 @@ public class Items {
     public static final RegistryObject<Item> ASH = ITEMS.register("ash", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
     public static final RegistryObject<Item> SILT = ITEMS.register("silt", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
     public static final RegistryObject<Item> TEA = ITEMS.register("tea", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
-    public static final RegistryObject<Item> MEDICINAL_ROOTS = ITEMS.register("medicinalroots", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
-    public static final RegistryObject<Item> RESINBUCKET = ITEMS.register("resinbucket", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
-    public static final RegistryObject<Item> STRANGLEGRASS = ITEMS.register("stranglegrass", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
+    public static final RegistryObject<Item> MEDICINAL_ROOTS = ITEMS.register("medicinal_roots", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
+    public static final RegistryObject<Item> RESIN_BUCKET = ITEMS.register("resin_bucket", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
+    public static final RegistryObject<Item> METAL_DUST = ITEMS.register("stranglegrass", () -> new Item(new Item.Properties().group(WorkGroup.instance)));
+
+
 
     public static void register(IEventBus bus) {
         ITEMS.register(bus);

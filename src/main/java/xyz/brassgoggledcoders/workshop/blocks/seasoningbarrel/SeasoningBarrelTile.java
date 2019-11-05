@@ -1,19 +1,20 @@
 package xyz.brassgoggledcoders.workshop.blocks.seasoningbarrel;
 
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 
-import static xyz.brassgoggledcoders.workshop.registries.TileEntities.SEASONING_BARREL_TILE;
+import xyz.brassgoggledcoders.workshop.blocks.WorkShopMachine;
 
-public class SeasoningBarrelTile extends TileEntity implements ITickableTileEntity {
+import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.SEASONING_BARREL_BLOCK;
+
+public class SeasoningBarrelTile extends WorkShopMachine {
+
 
     public SeasoningBarrelTile() {
-        super(SEASONING_BARREL_TILE.get());
+        super(SEASONING_BARREL_BLOCK, 102, 42);
+
     }
 
     @Override
-    public void tick() {
-
+    public Runnable onFinish() {
+        return null;
     }
-
 }

@@ -1,16 +1,23 @@
 package xyz.brassgoggledcoders.workshop.blocks.alembic;
 
-import net.minecraft.block.Block;
+import com.hrznstudio.titanium.api.IFactory;
+import com.hrznstudio.titanium.block.BlockTileBase;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 
 import javax.annotation.Nullable;
 
-public class AlembicBlock extends Block {
+public class AlembicBlock extends BlockTileBase {
 
-    public AlembicBlock(Properties properties) {
-        super(properties);
+    public AlembicBlock() {
+        super("alembic", Properties.from(Blocks.IRON_BLOCK), AlembicTile.class);
+    }
+
+    @Override
+    public IFactory getTileEntityFactory() {
+        return AlembicTile::new;
     }
 
     @Override

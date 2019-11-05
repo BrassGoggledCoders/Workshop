@@ -43,9 +43,8 @@ public class SinteringFurnaceRecipe extends SerializableRecipe {
         return false;
     }
 
-    public boolean matches(ItemStack powder, ItemStack targetMaterial) {
-        return powder.isItemEqual(powder) && targetMaterial.isItemEqual(targetMaterial);
-
+    public boolean matches(IItemHandler powderIn, IItemHandler targetMaterialIn) {
+        return this.powder.isItemEqual(powderIn.getStackInSlot(0)) && this.targetMaterial.isItemEqual(targetMaterialIn.getStackInSlot(0));
     }
 
     @Override

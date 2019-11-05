@@ -1,19 +1,17 @@
 package xyz.brassgoggledcoders.workshop.blocks.spinningwheel;
 
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 
-import static xyz.brassgoggledcoders.workshop.registries.TileEntities.SPINNING_WHEEL_TILE;
+import com.hrznstudio.titanium.block.tile.TileActive;
 
-public class SpinningWheelTile extends TileEntity implements ITickableTileEntity {
+import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.SPINNING_WHEEL_BLOCK;
+
+public class SpinningWheelTile extends TileActive {
 
     public SpinningWheelTile() {
-        super(SPINNING_WHEEL_TILE.get());
+        super(SPINNING_WHEEL_BLOCK);
     }
 
-    @Override
-    public void tick() {
 
-    }
+
 
 }

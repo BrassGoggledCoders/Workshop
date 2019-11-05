@@ -9,6 +9,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,8 +42,28 @@ public class AlembicRecipe extends SerializableRecipe {
         RECIPES.add(this);
     }
 
-    public boolean matches(World world, BlockPos pos) {
-        return Ingredient.fromItemListStream(Arrays.asList(this.input).stream()).test(new ItemStack(world.getBlockState(pos).getBlock()));
+    public boolean matches(IItemHandler itemIn, IItemHandler containerIn) {
+        List<ItemStack> handlerItems = new ArrayList<>();
+        for (int i = 0; i < itemIn.getSlots(); i++) {
+            if (!itemIn.getStackInSlot(i).isEmpty()) handlerItems.add(itemIn.getStackInSlot(i).copy());
+        }
+        for (ItemStack stack : input.getStacks()) {
+            boolean found = false;
+            int i = 0;
+            for (; i < handlerItems.size(); i++) {
+                if (handlerItems.get(i).isItemEqual(stack)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                handlerItems.remove(i);
+                break;
+            }
+
+            if (!found) return false;
+        }
+        return handlerItems.size() == 0 && this.container.isItemEqual(containerIn.getStackInSlot(0));
     }
 
     @Override
