@@ -31,30 +31,25 @@ public class AlembicTile extends WorkShopMachine {
 
     public AlembicTile() {
         super(ALEMBIC_BLOCK, 102, 22);
-        this.addInventory(this.input = (SidedInvHandler) new SidedInvHandler("input", 34, 19, 8, 0)
-                .setColor(DyeColor.ORANGE)
+        this.addInventory(this.input = (SidedInvHandler) new SidedInvHandler("input", 34, 19, 3, 0)
+                .setColor(DyeColor.RED)
                 .setSlotPosition(integer -> getSlotPos(integer))
-                .setSlotLimit(3)
                 .setTile(this)
                 .setOnSlotChanged((stack, integer) -> checkForRecipe()));
-        this.addInventory(this.container = (SidedInvHandler) new SidedInvHandler("container", 34, 19, 8, 0)
-                .setColor(DyeColor.ORANGE)
-                .setSlotLimit(1)
+        this.addInventory(this.container = (SidedInvHandler) new SidedInvHandler("container", 34, 10, 1, 0)
+                .setColor(DyeColor.WHITE)
                 .setTile(this)
                 .setOnSlotChanged((stack, integer) -> checkForRecipe()));
-        this.addInventory(this.residue = (SidedInvHandler) new SidedInvHandler("residue", 34, 19, 8, 0)
-                .setColor(DyeColor.ORANGE)
-                .setRange(1, 3)
+        this.addInventory(this.residue = (SidedInvHandler) new SidedInvHandler("residue", 50, 19, 3, 0)
+                .setColor(DyeColor.YELLOW)
                 .setInputFilter((stack, integer) -> false)
                 .setTile(this));
-        this.addInventory(this.output = (SidedInvHandler) new SidedInvHandler("output", 34, 19, 8, 0)
-                .setColor(DyeColor.ORANGE)
-                .setSlotLimit(1)
+        this.addInventory(this.output = (SidedInvHandler) new SidedInvHandler("output", 50, 10, 1, 0)
+                .setColor(DyeColor.BLACK)
                 .setInputFilter((stack, integer) -> false)
                 .setTile(this));
-        this.addInventory(this.coldItem = (SidedInvHandler) new SidedInvHandler("coldItem", 34, 19, 8, 0)
-                .setColor(DyeColor.ORANGE)
-                .setSlotLimit(1)
+        this.addInventory(this.coldItem = (SidedInvHandler) new SidedInvHandler("coldItem", 10, 10, 1, 0)
+                .setColor(DyeColor.LIGHT_BLUE)
                 .setTile(this));
     }
 
