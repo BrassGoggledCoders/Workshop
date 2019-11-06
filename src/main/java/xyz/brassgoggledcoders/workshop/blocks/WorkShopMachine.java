@@ -13,11 +13,11 @@ public abstract class WorkShopMachine extends TileActive {
     @Save
     private PosProgressBar progressBar;
 
-    public WorkShopMachine(BlockTileBase base, int x, int y) {
+    public WorkShopMachine(BlockTileBase base, int x, int y, PosProgressBar.BarDirection direction) {
         super(base);
         this.addProgressBar(progressBar = new PosProgressBar(x, y, 100).
                 setTile(this).
-                setBarDirection(PosProgressBar.BarDirection.HORIZONTAL_RIGHT).
+                setBarDirection(direction).
                 setCanReset(tileEntity -> true).
                 setOnStart(() -> progressBar.setMaxProgress(getMaxProgress())).
                 setOnFinishWork(() -> onFinish().run())

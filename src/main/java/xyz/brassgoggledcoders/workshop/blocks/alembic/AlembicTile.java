@@ -2,6 +2,7 @@ package xyz.brassgoggledcoders.workshop.blocks.alembic;
 
 import com.hrznstudio.titanium.annotation.Save;
 import com.hrznstudio.titanium.block.tile.inventory.SidedInvHandler;
+import com.hrznstudio.titanium.block.tile.progress.PosProgressBar;
 import com.hrznstudio.titanium.util.RecipeUtil;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
@@ -30,25 +31,26 @@ public class AlembicTile extends WorkShopMachine {
     private AlembicRecipe currentRecipe;
 
     public AlembicTile() {
-        super(ALEMBIC_BLOCK, 102, 22);
-        this.addInventory(this.input = (SidedInvHandler) new SidedInvHandler("input", 34, 19, 3, 0)
+        super(ALEMBIC_BLOCK, 102, 22, PosProgressBar.BarDirection.HORIZONTAL_RIGHT);
+        this.addInventory(this.input = (SidedInvHandler) new SidedInvHandler("input", 25, 25, 3, 0)
                 .setColor(DyeColor.RED)
-                .setSlotPosition(integer -> getSlotPos(integer))
+                .setRange(1,3)
                 .setTile(this)
                 .setOnSlotChanged((stack, integer) -> checkForRecipe()));
-        this.addInventory(this.container = (SidedInvHandler) new SidedInvHandler("container", 34, 10, 1, 0)
+        this.addInventory(this.container = (SidedInvHandler) new SidedInvHandler("container", 40, 43, 1, 0)
                 .setColor(DyeColor.WHITE)
                 .setTile(this)
                 .setOnSlotChanged((stack, integer) -> checkForRecipe()));
-        this.addInventory(this.residue = (SidedInvHandler) new SidedInvHandler("residue", 50, 19, 3, 0)
+        this.addInventory(this.residue = (SidedInvHandler) new SidedInvHandler("residue", 125, 25, 3, 0)
                 .setColor(DyeColor.YELLOW)
+                .setRange(1,3)
                 .setInputFilter((stack, integer) -> false)
                 .setTile(this));
-        this.addInventory(this.output = (SidedInvHandler) new SidedInvHandler("output", 50, 10, 1, 0)
+        this.addInventory(this.output = (SidedInvHandler) new SidedInvHandler("output", 100  , 43, 1, 0)
                 .setColor(DyeColor.BLACK)
                 .setInputFilter((stack, integer) -> false)
                 .setTile(this));
-        this.addInventory(this.coldItem = (SidedInvHandler) new SidedInvHandler("coldItem", 10, 10, 1, 0)
+        this.addInventory(this.coldItem = (SidedInvHandler) new SidedInvHandler("coldItem", 75, 25, 1, 0)
                 .setColor(DyeColor.LIGHT_BLUE)
                 .setTile(this));
     }
@@ -109,17 +111,9 @@ public class AlembicTile extends WorkShopMachine {
             case 1:
                 return Pair.of(slotSpacing, -offset);
             case 2:
-                return Pair.of(slotSpacing * 2, 0);
+                return Pair.of(slotSpacing, -offset -offset);
             case 3:
-                return Pair.of(-offset, slotSpacing);
-            case 4:
-                return Pair.of(slotSpacing * 2 + offset, slotSpacing);
-            case 5:
-                return Pair.of(0, slotSpacing * 2);
-            case 6:
-                return Pair.of(slotSpacing, slotSpacing * 2 + offset);
-            case 7:
-                return Pair.of(slotSpacing * 2, slotSpacing * 2);
+                return Pair.of(slotSpacing, -offset-offset-offset);
             default:
                 return Pair.of(0, 0);
         }
