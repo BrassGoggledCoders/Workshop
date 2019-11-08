@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,22 +20,23 @@ public class PressRecipes extends SerializableRecipe {
     public static List<PressRecipes> RECIPES = new ArrayList<>();
 
     public ItemStack input;
-    public ItemStack output;
+    public FluidStack output;
+    public int fluidOutAmount;
 
     public PressRecipes(ResourceLocation resourceLocation) {
         super(resourceLocation);
     }
 
-    public PressRecipes(ResourceLocation resourceLocation, ItemStack input, ItemStack output) {
+    public PressRecipes(ResourceLocation resourceLocation, ItemStack input, FluidStack output, int fluidOutAmount) {
         super(resourceLocation);
         this.input = input;
+        this.fluidOutAmount = fluidOutAmount;
         this.output = output;
         RECIPES.add(this);
     }
 
-    @Override
-    public boolean matches(IInventory inv, World worldIn) {
-        return false;
+    public boolean matches(ItemStack stack) {
+        return this.input.isItemEqual(stack);
     }
 
     @Override

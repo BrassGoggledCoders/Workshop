@@ -3,16 +3,17 @@ package xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace;
 
 import com.hrznstudio.titanium.annotation.Save;
 import com.hrznstudio.titanium.block.tile.inventory.SidedInvHandler;
+import com.hrznstudio.titanium.block.tile.progress.PosProgressBar;
 import com.hrznstudio.titanium.util.RecipeUtil;
 import net.minecraft.item.DyeColor;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.apache.commons.lang3.tuple.Pair;
-import xyz.brassgoggledcoders.workshop.blocks.WorkShopMachine;
+import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
 import xyz.brassgoggledcoders.workshop.recipes.SinteringFurnaceRecipe;
 
 import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.SINTERING_FURNACE_BLOCK;
 
-public class SinteringFurnaceTile extends WorkShopMachine {
+public class SinteringFurnaceTile extends WorkshopGUIMachine {
 
     @Save
     private SidedInvHandler powder;
@@ -25,7 +26,7 @@ public class SinteringFurnaceTile extends WorkShopMachine {
     private SinteringFurnaceRecipe currentRecipe;
 
     public SinteringFurnaceTile() {
-        super(SINTERING_FURNACE_BLOCK, 102, 41);
+        super(SINTERING_FURNACE_BLOCK, 102, 41, 100,  PosProgressBar.BarDirection.HORIZONTAL_RIGHT);
 
         this.addInventory(this.powder = (SidedInvHandler) new SidedInvHandler("powder", 34, 19, 8, 0)
                 .setColor(DyeColor.ORANGE)

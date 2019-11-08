@@ -8,14 +8,14 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 
-public abstract class WorkShopMachine extends TileActive {
+public abstract class WorkshopGUIMachine extends TileActive {
 
     @Save
     private PosProgressBar progressBar;
 
-    public WorkShopMachine(BlockTileBase base, int x, int y, PosProgressBar.BarDirection direction) {
+    public WorkshopGUIMachine(BlockTileBase base, int x, int y, int maxprogress, PosProgressBar.BarDirection direction) {
         super(base);
-        this.addProgressBar(progressBar = new PosProgressBar(x, y, 100).
+        this.addProgressBar(progressBar = new PosProgressBar(x, y, maxprogress).
                 setTile(this).
                 setBarDirection(direction).
                 setCanReset(tileEntity -> true).
