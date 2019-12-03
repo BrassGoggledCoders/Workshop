@@ -15,7 +15,7 @@ public class WorkTags {
         public static final Tag<Item> COLD = tag("cold");
         public static final Tag<Item> FUEL = tag("fuel");
         public static final Tag<Item> POWDER = tag("powder");
-        public static final Tag<Item> CONTAINER = tag("container");
+        public static final Tag<Item> FLUIDCONTAINER = tag("container");
         public static final Tag<Item> PRESS = tag("press");
 
         private static Tag<Item> tag(String name) {

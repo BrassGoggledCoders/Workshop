@@ -40,6 +40,11 @@ public class PressRecipes extends SerializableRecipe {
     }
 
     @Override
+    public boolean matches(IInventory inv, World worldIn) {
+        return false;
+    }
+
+    @Override
     public ItemStack getCraftingResult(IInventory inv) {
         return null;
     }
@@ -51,7 +56,7 @@ public class PressRecipes extends SerializableRecipe {
 
     @Override
     public ItemStack getRecipeOutput() {
-        return output;
+        return getRecipeOutput();
     }
 
     @Override

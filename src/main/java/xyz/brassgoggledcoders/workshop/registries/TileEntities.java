@@ -23,7 +23,6 @@ public class TileEntities {
 
     public static void register(IEventBus bus) {
         TILE_ENTITIES.register(bus);
-    }
+    } */
 
-    */
 }

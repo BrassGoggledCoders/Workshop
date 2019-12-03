@@ -14,7 +14,7 @@ import xyz.brassgoggledcoders.workshop.recipes.AlembicRecipe;
 
 import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.ALEMBIC_BLOCK;
 import static xyz.brassgoggledcoders.workshop.util.WorkTags.Items.COLD;
-import static xyz.brassgoggledcoders.workshop.util.WorkTags.Items.CONTAINER;
+import static xyz.brassgoggledcoders.workshop.util.WorkTags.Items.FLUIDCONTAINER;
 
 
 public class AlembicTile extends WorkshopGUIMachine {
@@ -40,7 +40,7 @@ public class AlembicTile extends WorkshopGUIMachine {
                 .setTile(this));
         this.addInventory(this.container = (SidedInvHandler) new SidedInvHandler("container", 56, 43, 1, 0)
                 .setColor(DyeColor.WHITE)
-                .setInputFilter((stack, integer) -> stack.getItem().isIn(CONTAINER))
+                .setInputFilter((stack, integer) -> stack.getItem().isIn(FLUIDCONTAINER))
                 .setTile(this));
         this.addInventory(this.residue = (SidedInvHandler) new SidedInvHandler("residue", 125, 25, 3, 0)
                 .setColor(DyeColor.YELLOW)
