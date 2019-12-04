@@ -73,10 +73,11 @@ public class SpinningWheelTile extends TileActive {
             int j = 0;
             for (int i = 0; i < slots; ++i) {
                 if (j != 0) break;
-                if (input.getStackInSlot(i).isEmpty() || input.getStackInSlot(i).equals(item.getDefaultInstance()))
+                if (input.getStackInSlot(i).isEmpty() || input.getStackInSlot(i).equals(item.getDefaultInstance())) {
                     input.insertItem(i, item.getDefaultInstance(), false);
                     item.getDefaultInstance().shrink(1);
                     ++j;
+                }
             }
 
         }
