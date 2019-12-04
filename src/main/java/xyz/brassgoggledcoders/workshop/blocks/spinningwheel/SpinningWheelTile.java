@@ -42,10 +42,11 @@ public class SpinningWheelTile extends TileActive {
 
     private void checkForRecipe() {
         if (isServer()) {
-            if (currentRecipe != null && currentRecipe.matches(world, pos)) {
+            if (currentRecipe != null && currentRecipe.matches(input)) {
                 return;
             }
-            currentRecipe = RecipeUtil.getRecipes(world, SpinningWheelRecipe.SERIALIZER.getRecipeType()).stream().filter(wheelRecipe -> wheelRecipe.matches(world, pos)).findFirst().orElse(null);
+            currentRecipe = RecipeUtil.getRecipes(world, SpinningWheelRecipe.SERIALIZER.getRecipeType()).stream().filter(wheelRecipe -> wheelRecipe.matches(input)).findFirst().orElse(null);
+            progress = 0;
         }
     }
 
@@ -70,40 +71,45 @@ public class SpinningWheelTile extends TileActive {
 
     @Override
     public boolean onActivated(PlayerEntity playerIn, Hand hand, Direction facing, double hitX, double hitY, double hitZ) {
-        //ToDo: insert quarter spin here
-
         if(!playerIn.getHeldItemMainhand().isEmpty()) {
             Item item = playerIn.getHeldItemMainhand().getItem();
             item.getDefaultInstance().shrink(1);
-            input.setStackInSlot(1, item.getDefaultInstance());
+            input.insertItem(0,item.getDefaultInstance(), false);
+            return true;
         }
-        if(playerIn.getHeldItemMainhand().isEmpty()){
-            ItemStack outputItem = output.getStackInSlot(1);
-            ItemStack inputItem = null;
-            int slots = input.getSlots();
-            for(int i = 0; i <= slots; i++){
-                if(inputItem == null){
-                    inputItem = input.getStackInSlot(i);
-                }else{
-                    break;
+        if(playerIn.getHeldItemMainhand().isEmpty() && playerIn.isSneaking()){
+            int max = output.getStackInSlot(0).getCount();
+            if(output.extractItem(0,max,false).isEmpty()){
+                int slots = input.getSlots();
+                for(int i = 0; i <= slots; ++i) {
+                    if(playerIn.getHeldItemMainhand().isEmpty() && !input.extractItem(i,1, false).isEmpty()) {
+                        int inputmax = input.getStackInSlot(i).getCount();
+                        ItemStack stack = input.extractItem(i, inputmax, false);
+                        playerIn.addItemStackToInventory(stack);
+                    }
+                    else{
+                        break;
+                    }
                 }
-            }
-            if(!outputItem.isEmpty()){
-                playerIn.setHeldItem(Hand.MAIN_HAND, outputItem);
-                outputItem.shrink(1);
-            }else if(!inputItem.isEmpty()){
-                playerIn.setHeldItem(Hand.MAIN_HAND, inputItem);
-                inputItem.shrink(1);
+            }else {
+                ItemStack stack = output.extractItem(0, max, false);
+                playerIn.addItemStackToInventory(stack);
             }
         }
-        checkForRecipe();
-        if(!fullProgress() && currentRecipe != null){
-            progress = +25;
-            return true;
-        }else if(fullProgress()){
-            progress = 0;
-            onFinish();
-            return true;
-        }else{return false;}
+        if(playerIn.getHeldItemMainhand().isEmpty() && !input.getStackInSlot(0).isEmpty()) {
+            checkForRecipe();
+            if (!fullProgress() && currentRecipe != null) {
+                //ToDo: insert quarter spin here
+                progress = +25;
+                return true;
+            } else if (fullProgress()) {
+                progress = 0;
+                onFinish();
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
     }
 }

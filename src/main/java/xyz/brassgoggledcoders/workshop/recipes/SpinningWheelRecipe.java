@@ -10,6 +10,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,8 +37,16 @@ public class SpinningWheelRecipe extends SerializableRecipe {
         RECIPES.add(this);
     }
 
-    public boolean matches(World world, BlockPos pos) {
-        return Ingredient.fromItemListStream(Arrays.asList(this.input).stream()).test(new ItemStack(world.getBlockState(pos).getBlock()));
+    public boolean matches(IItemHandler inv) {
+        int matched = 0;
+        int slots = inv.getSlots();
+        int recipeSize = input.getStacks().size();
+        for(int x = 0; x < slots; ++x){
+            if(this.input.getStacks().contains(inv.getStackInSlot(x))){
+                ++matched;
+            }
+        }
+        return matched >= recipeSize;
     }
 
     @Override
