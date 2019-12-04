@@ -74,8 +74,12 @@ public class SpinningWheelTile extends TileActive {
         if(!playerIn.getHeldItem(hand).isEmpty()) {
             Item item = playerIn.getHeldItem(hand).getItem();
             item.getDefaultInstance().shrink(1);
-            input.insertItem(0,item.getDefaultInstance(), false);
-            
+            int slots = input.getSlots();
+            for(int i = 0; i <= slots; ++i) {
+                if(input.getStackInSlot(i).isEmpty() || input.getStackInSlot(i).equals(item.getDefaultInstance()))
+                input.insertItem(i, item.getDefaultInstance(), false);
+            }
+
         }
         if(playerIn.getHeldItem(hand).isEmpty() && playerIn.isSneaking()){
             int max = output.getStackInSlot(0).getCount();
