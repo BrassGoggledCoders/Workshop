@@ -42,11 +42,10 @@ public class SpinningWheelTile extends TileActive {
 
     private void checkForRecipe() {
         if (isServer()) {
-            if (currentRecipe != null && currentRecipe.matches(input)) {
-                return;
+            if (currentRecipe == null || !currentRecipe.matches(input)) {
+                currentRecipe = RecipeUtil.getRecipes(world, SpinningWheelRecipe.SERIALIZER.getRecipeType()).stream().filter(wheelRecipe -> wheelRecipe.matches(input)).findFirst().orElse(null);
+                progress = 0;
             }
-            currentRecipe = RecipeUtil.getRecipes(world, SpinningWheelRecipe.SERIALIZER.getRecipeType()).stream().filter(wheelRecipe -> wheelRecipe.matches(input)).findFirst().orElse(null);
-            progress = 0;
         }
     }
 
@@ -71,18 +70,19 @@ public class SpinningWheelTile extends TileActive {
 
     @Override
     public boolean onActivated(PlayerEntity playerIn, Hand hand, Direction facing, double hitX, double hitY, double hitZ) {
-        if(!playerIn.getHeldItemMainhand().isEmpty()) {
-            Item item = playerIn.getHeldItemMainhand().getItem();
+
+        if(!playerIn.getHeldItem(hand).isEmpty()) {
+            Item item = playerIn.getHeldItem(hand).getItem();
             item.getDefaultInstance().shrink(1);
             input.insertItem(0,item.getDefaultInstance(), false);
-            return true;
+            
         }
-        if(playerIn.getHeldItemMainhand().isEmpty() && playerIn.isSneaking()){
+        if(playerIn.getHeldItem(hand).isEmpty() && playerIn.isSneaking()){
             int max = output.getStackInSlot(0).getCount();
             if(output.extractItem(0,max,false).isEmpty()){
                 int slots = input.getSlots();
                 for(int i = 0; i <= slots; ++i) {
-                    if(playerIn.getHeldItemMainhand().isEmpty() && !input.extractItem(i,1, false).isEmpty()) {
+                    if(playerIn.getHeldItem(hand).isEmpty() && !input.extractItem(i,1, false).isEmpty()) {
                         int inputmax = input.getStackInSlot(i).getCount();
                         ItemStack stack = input.extractItem(i, inputmax, false);
                         playerIn.addItemStackToInventory(stack);
@@ -96,7 +96,7 @@ public class SpinningWheelTile extends TileActive {
                 playerIn.addItemStackToInventory(stack);
             }
         }
-        if(playerIn.getHeldItemMainhand().isEmpty() && !input.getStackInSlot(0).isEmpty()) {
+        if(playerIn.getHeldItem(hand).isEmpty() && !input.getStackInSlot(0).isEmpty()) {
             checkForRecipe();
             if (!fullProgress() && currentRecipe != null) {
                 //ToDo: insert quarter spin here
