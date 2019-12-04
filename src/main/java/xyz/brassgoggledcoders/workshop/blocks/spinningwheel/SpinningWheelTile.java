@@ -1,7 +1,6 @@
 package xyz.brassgoggledcoders.workshop.blocks.spinningwheel;
 
 
-
 import com.hrznstudio.titanium.annotation.Save;
 import com.hrznstudio.titanium.block.tile.TileActive;
 import com.hrznstudio.titanium.block.tile.inventory.SidedInvHandler;
@@ -49,58 +48,57 @@ public class SpinningWheelTile extends TileActive {
         }
     }
 
-    private Runnable onFinish() {
-        return () -> {
-            if (currentRecipe != null) {
-                SpinningWheelRecipe wheelRecipe = currentRecipe;
-                for (int i = 0; i < input.getSlots(); i++) {
-                    input.getStackInSlot(i).shrink(1);
-                }
-                if(wheelRecipe.output !=null && !wheelRecipe.output.isEmpty()){
-                    ItemHandlerHelper.insertItem(output, wheelRecipe.output.copy(), false);
-                    //checkForRecipe();
-                }
+    private void onFinish() {
+        if (currentRecipe != null) {
+            SpinningWheelRecipe wheelRecipe = currentRecipe;
+            for (int i = 0; i < input.getSlots(); i++) {
+                input.getStackInSlot(i).shrink(1);
             }
-        };
+            if (wheelRecipe.output != null && !wheelRecipe.output.isEmpty()) {
+                ItemHandlerHelper.insertItem(output, wheelRecipe.output.copy(), false);
+                //checkForRecipe();
+            }
+        }
     }
 
-    private boolean fullProgress(){
+    private boolean fullProgress() {
         return progress >= 100;
     }
 
     @Override
     public boolean onActivated(PlayerEntity playerIn, Hand hand, Direction facing, double hitX, double hitY, double hitZ) {
-
-        if(!playerIn.getHeldItem(hand).isEmpty()) {
+        if (!playerIn.getHeldItem(hand).isEmpty()) {
             Item item = playerIn.getHeldItem(hand).getItem();
-            item.getDefaultInstance().shrink(1);
             int slots = input.getSlots();
-            for(int i = 0; i <= slots; ++i) {
-                if(input.getStackInSlot(i).isEmpty() || input.getStackInSlot(i).equals(item.getDefaultInstance()))
-                input.insertItem(i, item.getDefaultInstance(), false);
+            int j = 0;
+            for (int i = 0; i < slots; ++i) {
+                if (j != 0) break;
+                if (input.getStackInSlot(i).isEmpty() || input.getStackInSlot(i).equals(item.getDefaultInstance()))
+                    input.insertItem(i, item.getDefaultInstance(), false);
+                    item.getDefaultInstance().shrink(1);
+                    ++j;
             }
 
         }
-        if(playerIn.getHeldItem(hand).isEmpty() && playerIn.isSneaking()){
+        if (playerIn.getHeldItem(hand).isEmpty() && playerIn.isSneaking()) {
             int max = output.getStackInSlot(0).getCount();
-            if(output.extractItem(0,max,false).isEmpty()){
+            if (output.extractItem(0, max, false).isEmpty()) {
                 int slots = input.getSlots();
-                for(int i = 0; i <= slots; ++i) {
-                    if(playerIn.getHeldItem(hand).isEmpty() && !input.extractItem(i,1, false).isEmpty()) {
+                for (int i = 0; i < slots; ++i) {
+                    if (playerIn.getHeldItem(hand).isEmpty() && !input.extractItem(i, 1, false).isEmpty()) {
                         int inputmax = input.getStackInSlot(i).getCount();
                         ItemStack stack = input.extractItem(i, inputmax, false);
                         playerIn.addItemStackToInventory(stack);
-                    }
-                    else{
+                    } else {
                         break;
                     }
                 }
-            }else {
+            } else {
                 ItemStack stack = output.extractItem(0, max, false);
                 playerIn.addItemStackToInventory(stack);
             }
         }
-        if(playerIn.getHeldItem(hand).isEmpty() && !input.getStackInSlot(0).isEmpty()) {
+        if (playerIn.getHeldItem(hand).isEmpty() && !input.getStackInSlot(0).isEmpty()) {
             checkForRecipe();
             if (!fullProgress() && currentRecipe != null) {
                 //ToDo: insert quarter spin here
