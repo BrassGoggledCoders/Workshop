@@ -68,6 +68,8 @@ public class PressTile extends TileActive {
             return true;
         }
         else if(heldItem.equals(Items.BUCKET.getDefaultInstance())){
+            ItemStack item = outputFluid.getFluid().getFluid().getFilledBucket().getDefaultInstance();
+            playerIn.inventory.addItemStackToInventory(item);
             return true;
         }else{
             input.insertItem(0, heldItem, false);
