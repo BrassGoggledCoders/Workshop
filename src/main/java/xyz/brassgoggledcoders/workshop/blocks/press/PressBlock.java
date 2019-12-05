@@ -8,7 +8,7 @@ import net.minecraft.block.Blocks;
 public class PressBlock extends BlockTileBase {
 
     public PressBlock() {
-        super("alembic", Properties.from(Blocks.IRON_BLOCK), PressTile.class);
+        super("press", Properties.from(Blocks.IRON_BLOCK), PressTile.class);
     }
 
     @Override
