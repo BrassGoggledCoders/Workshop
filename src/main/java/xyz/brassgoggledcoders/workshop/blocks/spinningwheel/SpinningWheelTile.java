@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraftforge.items.ItemHandlerHelper;
+import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.recipes.SpinningWheelRecipe;
 
 import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.SPINNING_WHEEL_BLOCK;
@@ -24,7 +25,7 @@ public class SpinningWheelTile extends TileActive {
     private SidedInvHandler output;
 
     private SpinningWheelRecipe currentRecipe;
-    private int progress;
+    private int progress = 0;
 
     public SpinningWheelTile() {
         super(SPINNING_WHEEL_BLOCK);
@@ -41,7 +42,8 @@ public class SpinningWheelTile extends TileActive {
 
     private void checkForRecipe() {
         if (isServer()) {
-            if (currentRecipe == null || !currentRecipe.matches(input)) {
+            if (currentRecipe != null && currentRecipe.matches(input)) {
+            }else{
                 currentRecipe = RecipeUtil.getRecipes(world, SpinningWheelRecipe.SERIALIZER.getRecipeType()).stream().filter(wheelRecipe -> wheelRecipe.matches(input)).findFirst().orElse(null);
                 progress = 0;
             }
@@ -67,46 +69,44 @@ public class SpinningWheelTile extends TileActive {
 
     @Override
     public boolean onActivated(PlayerEntity playerIn, Hand hand, Direction facing, double hitX, double hitY, double hitZ) {
+        int j = 0;
         if (!playerIn.getHeldItem(hand).isEmpty()) {
             Item item = playerIn.getHeldItem(hand).getItem();
-            int slots = input.getSlots();
-            int j = 0;
-            for (int i = 0; i < slots; ++i) {
-                if (j != 0) break;
-                if (input.getStackInSlot(i).isEmpty() || input.getStackInSlot(i).equals(item.getDefaultInstance())) {
-                    input.insertItem(i, item.getDefaultInstance(), false);
-                    item.getDefaultInstance().shrink(1);
-                    ++j;
-                }
+            Workshop.LOGGER.info(item.toString());
+            if (j == 0) {
+                input.insertItem(0, item.getDefaultInstance(), false);
+                Workshop.LOGGER.info("item inserted");
+                ++j;
             }
-
-        }
-        if (playerIn.getHeldItem(hand).isEmpty() && playerIn.isSneaking()) {
+        } else if(playerIn.getHeldItem(hand).isEmpty() && playerIn.isSneaking()) {
             int max = output.getStackInSlot(0).getCount();
             if (output.extractItem(0, max, false).isEmpty()) {
-                int slots = input.getSlots();
-                for (int i = 0; i < slots; ++i) {
-                    if (playerIn.getHeldItem(hand).isEmpty() && !input.extractItem(i, 1, false).isEmpty()) {
-                        int inputmax = input.getStackInSlot(i).getCount();
-                        ItemStack stack = input.extractItem(i, inputmax, false);
-                        playerIn.addItemStackToInventory(stack);
-                    } else {
-                        break;
+                for(int i = 0; i < input.getSlots(); ++i) {
+                    if (!input.extractItem(0, 1, false).isEmpty()) {
+                        int inputmax = input.getStackInSlot(0).getCount();
+                        ItemStack Item = input.extractItem(0, inputmax, false);
+                        Workshop.LOGGER.info("input stack extracted");
+                        playerIn.inventory.add(inputmax,Item);
+                        ++j;
                     }
                 }
             } else {
                 ItemStack stack = output.extractItem(0, max, false);
-                playerIn.addItemStackToInventory(stack);
+                Workshop.LOGGER.info("ouput stack extracted");
+                playerIn.inventory.addItemStackToInventory(stack);
+                Workshop.LOGGER.info("stack added to inv");
             }
-        }
-        if (playerIn.getHeldItem(hand).isEmpty() && !input.getStackInSlot(0).isEmpty()) {
+        } else if(playerIn.getHeldItem(hand).isEmpty()) {
             checkForRecipe();
+            Workshop.LOGGER.info("RecipeCheck");
             if (!fullProgress() && currentRecipe != null) {
                 //ToDo: insert quarter spin here
-                progress = +25;
+                this.progress = +25;
+                Workshop.LOGGER.info(progress);
                 return true;
             } else if (fullProgress()) {
                 progress = 0;
+                Workshop.LOGGER.info("final");
                 onFinish();
                 return true;
             } else {

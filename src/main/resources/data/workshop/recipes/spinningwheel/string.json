@@ -1,11 +1,10 @@
 {
-  "input": {
+  "input": [{
     "item": "minecraft:white_wool"
-  },
+  }],
   "output": {
     "item": "minecraft:string",
-    "count": 3
+    "count": 4
   },
-  "block": "workshop:spinning_wheel",
   "type": "workshop:spinningwheel"
 }

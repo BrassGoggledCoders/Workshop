@@ -1,6 +1,8 @@
 package xyz.brassgoggledcoders.workshop.recipes;
 
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.hrznstudio.titanium.recipe.serializer.GenericSerializer;
 import com.hrznstudio.titanium.recipe.serializer.SerializableRecipe;
 import net.minecraft.inventory.IInventory;
@@ -23,14 +25,14 @@ public class SpinningWheelRecipe extends SerializableRecipe {
     public static GenericSerializer<SpinningWheelRecipe> SERIALIZER = new GenericSerializer<>(new ResourceLocation(MOD_ID, "spinningwheel"), SpinningWheelRecipe.class);
     public static List<SpinningWheelRecipe> RECIPES = new ArrayList<>();
 
-    public Ingredient.IItemList input;
+    public Ingredient.IItemList[] input;
     public ItemStack output;
 
     public SpinningWheelRecipe(ResourceLocation resourceLocation) {
         super(resourceLocation);
     }
 
-    public SpinningWheelRecipe(ResourceLocation resourceLocation, Ingredient.IItemList input, ItemStack output) {
+    public SpinningWheelRecipe(ResourceLocation resourceLocation, ItemStack output, Ingredient.IItemList[] input) {
         super(resourceLocation);
         this.input = input;
         this.output = output;
@@ -38,15 +40,28 @@ public class SpinningWheelRecipe extends SerializableRecipe {
     }
 
     public boolean matches(IItemHandler inv) {
-        int matched = 0;
-        int slots = inv.getSlots();
-        int recipeSize = input.getStacks().size();
-        for(int x = 0; x < slots; ++x){
-            if(this.input.getStacks().contains(inv.getStackInSlot(x))){
-                ++matched;
-            }
+        List<ItemStack> handlerItems = new ArrayList<>();
+        for (int i = 0; i < inv.getSlots(); i++) {
+            if (!inv.getStackInSlot(i).isEmpty()) handlerItems.add(inv.getStackInSlot(i).copy());
         }
-        return matched >= recipeSize;
+        for (Ingredient.IItemList iItemList : input) {
+            boolean found = false;
+            for (ItemStack stack : iItemList.getStacks()) {
+                int i = 0;
+                for (; i < handlerItems.size(); i++) {
+                    if (handlerItems.get(i).isItemEqual(stack)) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) {
+                    handlerItems.remove(i);
+                    break;
+                }
+            }
+            if (!found) return false;
+        }
+        return handlerItems.size() == 0;
     }
 
     @Override

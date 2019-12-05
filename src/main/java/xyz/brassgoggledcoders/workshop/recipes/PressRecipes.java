@@ -56,7 +56,7 @@ public class PressRecipes extends SerializableRecipe {
 
     @Override
     public ItemStack getRecipeOutput() {
-        return getRecipeOutput();
+        return ItemStack.EMPTY;
     }
 
     @Override

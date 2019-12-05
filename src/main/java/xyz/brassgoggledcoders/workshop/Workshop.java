@@ -21,7 +21,7 @@ import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 public class Workshop extends ModuleController {
     public static final String MOD_ID = "workshop";
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static Logger LOGGER = LogManager.getLogger();
 
     public Workshop() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
