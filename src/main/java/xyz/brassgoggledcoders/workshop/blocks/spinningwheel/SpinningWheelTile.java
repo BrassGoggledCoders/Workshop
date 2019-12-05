@@ -42,8 +42,7 @@ public class SpinningWheelTile extends TileActive {
 
     private void checkForRecipe() {
         if (isServer()) {
-            if (currentRecipe != null && currentRecipe.matches(input)) {
-            }else{
+            if (currentRecipe == null || !currentRecipe.matches(input)) {
                 currentRecipe = RecipeUtil.getRecipes(world, SpinningWheelRecipe.SERIALIZER.getRecipeType()).stream().filter(wheelRecipe -> wheelRecipe.matches(input)).findFirst().orElse(null);
                 progress = 0;
             }
