@@ -60,12 +60,11 @@ public class SinteringFurnaceTile extends WorkshopGUIMachine {
         return currentRecipe != null ? currentRecipe.meltTime : 100;
     }
 
-    public void checkForRecipe() {
+    private void checkForRecipe() {
         if (isServer()) {
-            if (currentRecipe != null && currentRecipe.matches(powder, targetMaterial)) {
-                return;
+            if (currentRecipe == null || !currentRecipe.matches(powder, targetMaterial)) {
+                currentRecipe = RecipeUtil.getRecipes(world, SinteringFurnaceRecipe.SERIALIZER.getRecipeType()).stream().filter(sinteringFurnaceRecipe -> sinteringFurnaceRecipe.matches(powder, targetMaterial)).findFirst().orElse(null);
             }
-            currentRecipe = RecipeUtil.getRecipes(world, SinteringFurnaceRecipe.SERIALIZER.getRecipeType()).stream().filter(sinteringFurnaceRecipe -> sinteringFurnaceRecipe.matches(powder, targetMaterial)).findFirst().orElse(null);
         }
     }
 

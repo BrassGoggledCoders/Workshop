@@ -59,10 +59,9 @@ public class AlembicTile extends WorkshopGUIMachine {
 
     public void checkForRecipe() {
         if (isServer()) {
-            if (currentRecipe != null && currentRecipe.matches(input, container)) {
-                return;
+            if (currentRecipe == null || !currentRecipe.matches(input, container)) {
+                currentRecipe = RecipeUtil.getRecipes(world, AlembicRecipe.SERIALIZER.getRecipeType()).stream().filter(alembicRecipe -> alembicRecipe.matches(input, container)).findFirst().orElse(null);
             }
-            currentRecipe = RecipeUtil.getRecipes(world, AlembicRecipe.SERIALIZER.getRecipeType()).stream().filter(alembicRecipe -> alembicRecipe.matches(input, container)).findFirst().orElse(null);
         }
     }
 

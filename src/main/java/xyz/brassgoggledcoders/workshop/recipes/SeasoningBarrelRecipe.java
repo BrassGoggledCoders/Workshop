@@ -1,13 +1,17 @@
 package xyz.brassgoggledcoders.workshop.recipes;
 
+import com.hrznstudio.titanium.block.tile.fluid.PosFluidTank;
 import com.hrznstudio.titanium.recipe.serializer.GenericSerializer;
 import com.hrznstudio.titanium.recipe.serializer.SerializableRecipe;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,26 +23,30 @@ public class SeasoningBarrelRecipe extends SerializableRecipe {
     public static GenericSerializer<SeasoningBarrelRecipe> SERIALIZER = new GenericSerializer<>(new ResourceLocation(MOD_ID, "seasoningbarrel"), SeasoningBarrelRecipe.class);
     public static List<SeasoningBarrelRecipe> RECIPES = new ArrayList<>();
 
-    public ItemStack product;
-    public ItemStack catalyst;
-    public FluidStack input;
-    public FluidStack output;
+    public ItemStack productIn;
+    public ItemStack catalystOut;
+    public FluidStack fluidInput;
+    public FluidStack fluidOut;
     public int seasoningTime;
 
     public SeasoningBarrelRecipe(ResourceLocation resourceLocation) {
         super(resourceLocation);
     }
 
-    public SeasoningBarrelRecipe(ResourceLocation resourceLocation, FluidStack input, ItemStack catalyst, FluidStack output, ItemStack product, int seasoningTime) {
+    public SeasoningBarrelRecipe(ResourceLocation resourceLocation, FluidStack fluidInput, ItemStack catalystOut, FluidStack output, ItemStack productIn, int seasoningTime) {
         super(resourceLocation);
-        this.input = input;
-        this.output = output;
-        this.catalyst = catalyst;
-        this.product = product;
+        this.fluidInput = fluidInput;
+        this.fluidOut = output;
+        this.catalystOut = catalystOut;
+        this.productIn = productIn;
         this.seasoningTime = seasoningTime;
         RECIPES.add(this);
     }
 
+    public boolean matches(IItemHandler handler, PosFluidTank tank) {
+        if (catalystOut == null || tank == null || fluidInput == null) return false;
+        return handler.getStackInSlot(0).equals(catalystOut) && tank.drainForced(fluidInput, IFluidHandler.FluidAction.SIMULATE).getAmount() == fluidInput.getAmount();
+    }
 
     @Override
     public boolean matches(IInventory inv, World worldIn) {
@@ -57,7 +65,7 @@ public class SeasoningBarrelRecipe extends SerializableRecipe {
 
     @Override
     public ItemStack getRecipeOutput() {
-        return product;
+        return catalystOut;
     }
 
     @Override
