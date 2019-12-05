@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import xyz.brassgoggledcoders.workshop.recipes.PressRecipes;
 
 import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.PRESS_BLOCK;
@@ -53,9 +54,8 @@ public class PressTile extends TileActive {
             if (currentRecipe != null) {
                 PressRecipes pressRecipes = currentRecipe;
                 input.getStackInSlot(0).shrink(1);
-                outputFluid.fill(currentRecipe.output,);
+                outputFluid.fillForced(pressRecipes.output.copy(), IFluidHandler.FluidAction.EXECUTE);
             }
-
         };
     }
 
@@ -79,13 +79,11 @@ public class PressTile extends TileActive {
         return 120;
     }
 
-    private void checkForRecipe(){
-        if (!world.isRemote) {
-            if (currentRecipe != null && currentRecipe.matches(input)) {
-                return;
+    private void checkForRecipe() {
+        if (isServer()) {
+            if (currentRecipe == null && !currentRecipe.matches(input)) {
+                currentRecipe = RecipeUtil.getRecipes(world, PressRecipes.SERIALIZER.getRecipeType()).stream().filter(alembicRecipe -> alembicRecipe.matches(input)).findFirst().orElse(null);
             }
-            currentRecipe = RecipeUtil.getRecipes(world, PressRecipes.SERIALIZER.getRecipeType()).stream().filter(alembicRecipe -> alembicRecipe.matches(input)).findFirst().orElse(null);
         }
     }
-
 }

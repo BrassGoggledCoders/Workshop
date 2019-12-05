@@ -22,16 +22,14 @@ public class PressRecipes extends SerializableRecipe {
 
     public ItemStack input;
     public FluidStack output;
-    public int fluidOutAmount;
 
     public PressRecipes(ResourceLocation resourceLocation) {
         super(resourceLocation);
     }
 
-    public PressRecipes(ResourceLocation resourceLocation, ItemStack input, FluidStack output, int fluidOutAmount) {
+    public PressRecipes(ResourceLocation resourceLocation, ItemStack input, FluidStack output) {
         super(resourceLocation);
         this.input = input;
-        this.fluidOutAmount = fluidOutAmount;
         this.output = output;
         RECIPES.add(this);
     }
