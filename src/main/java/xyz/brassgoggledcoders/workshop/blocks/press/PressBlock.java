@@ -1,9 +1,18 @@
 package xyz.brassgoggledcoders.workshop.blocks.press;
 
 
-public class PressBlock  {
+import com.hrznstudio.titanium.api.IFactory;
+import com.hrznstudio.titanium.block.BlockTileBase;
+import net.minecraft.block.Blocks;
 
+public class PressBlock extends BlockTileBase {
 
+    public PressBlock() {
+        super("alembic", Properties.from(Blocks.IRON_BLOCK), PressTile.class);
+    }
 
-
+    @Override
+    public IFactory getTileEntityFactory() {
+        return PressTile::new;
+    }
 }

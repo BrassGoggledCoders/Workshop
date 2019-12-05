@@ -24,9 +24,8 @@ public class BlockNames{
         List<Feature.Builder> features = new ArrayList<>();
         features.add(Feature.builder("alembic").
                 content(Block.class, ALEMBIC_BLOCK));
-        /*
         features.add(Feature.builder("press").
-                content(Block.class, PRESS_BLOCK)); */
+                content(Block.class, PRESS_BLOCK));
         features.add(Feature.builder("sintering_furnace").
                 content(Block.class, SINTERING_FURNACE_BLOCK));
         features.add(Feature.builder("spinning_wheel").

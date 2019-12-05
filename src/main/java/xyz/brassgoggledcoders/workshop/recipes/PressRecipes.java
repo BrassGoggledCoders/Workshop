@@ -8,6 +8,7 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +36,8 @@ public class PressRecipes extends SerializableRecipe {
         RECIPES.add(this);
     }
 
-    public boolean matches(ItemStack stack) {
-        return this.input.isItemEqual(stack);
+    public boolean matches(IItemHandler inv) {
+        return this.input.isItemEqual(inv.getStackInSlot(0));
     }
 
     @Override

@@ -1,176 +1,91 @@
 package xyz.brassgoggledcoders.workshop.blocks.press;
 
-
+import com.hrznstudio.titanium.annotation.Save;
+import com.hrznstudio.titanium.block.tile.TileActive;
+import com.hrznstudio.titanium.block.tile.fluid.PosFluidTank;
+import com.hrznstudio.titanium.block.tile.fluid.SidedFluidTank;
+import com.hrznstudio.titanium.block.tile.inventory.SidedInvHandler;
+import com.hrznstudio.titanium.block.tile.progress.PosProgressBar;
 import com.hrznstudio.titanium.util.RecipeUtil;
-import net.minecraft.item.Item;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.item.Items;
 import net.minecraft.util.Direction;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidAttributes;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.minecraft.util.Hand;
 import xyz.brassgoggledcoders.workshop.recipes.PressRecipes;
-import xyz.brassgoggledcoders.workshop.util.WorkTags;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.PRESS_BLOCK;
 
-public class PressTile extends TileEntity implements ITickableTileEntity {
+public class PressTile extends TileActive {
 
-    private static final int CAPACITY = 4 * FluidAttributes.BUCKET_VOLUME;
-    protected FluidTank tank = new FluidTank(CAPACITY);
-    private int internalFluid;
-    private int pressTime = 120;
+    @Save
+    private PosProgressBar progressBar;
+    @Save
+    private SidedInvHandler input;
+    @Save
+    private SidedFluidTank outputFluid;
+
+
     private PressRecipes currentRecipe;
 
-    public PressTile(TileEntityType<?> tileEntityTypeIn) {
-        super(tileEntityTypeIn);
+    public PressTile() {
+        super(PRESS_BLOCK);
+        this.addProgressBar(progressBar = new PosProgressBar(0, 0, 120).
+                setTile(this).
+                setBarDirection(PosProgressBar.BarDirection.HORIZONTAL_RIGHT).
+                setCanReset(tileEntity -> true).
+                setOnStart(() -> progressBar.setMaxProgress(getMaxProgress())).
+                setOnFinishWork(() -> onFinish().run()));
+        this.addInventory(this.input = (SidedInvHandler) new SidedInvHandler("input", 34, 25, 1, 0)
+                .setColor(DyeColor.RED)
+                .setTile(this)
+                .setOnSlotChanged((stack, integer) -> checkForRecipe()));
+        this.addTank(this.outputFluid = (SidedFluidTank) new SidedFluidTank("output_fluid", 4000, 149, 20, 3).
+                setColor(DyeColor.MAGENTA).
+                setTile(this).
+                setTankAction(PosFluidTank.Action.DRAIN));
+
+    }
+
+    private Runnable onFinish(){
+        return () -> {
+            if (currentRecipe != null) {
+                PressRecipes pressRecipes = currentRecipe;
+                input.getStackInSlot(0).shrink(1);
+                outputFluid.fill(currentRecipe.output,);
+            }
+
+        };
     }
 
     @Override
-    public void tick() {
-
-        onStart();
-
+    public boolean onActivated(PlayerEntity playerIn, Hand hand, Direction facing, double hitX, double hitY, double hitZ) {
+        ItemStack heldItem = playerIn.getHeldItem(hand);
+        if(heldItem.isEmpty()){
+            int max = input.getStackInSlot(0).getCount();
+            input.extractItem(0,max,false);
+            return true;
+        }
+        else if(heldItem.equals(Items.BUCKET.getDefaultInstance())){
+            return true;
+        }else{
+            input.insertItem(0, heldItem, false);
+            return true;
+        }
     }
 
-    private void checkForRecipe(ItemStack input){
+    public int getMaxProgress(){
+        return 120;
+    }
+
+    private void checkForRecipe(){
         if (!world.isRemote) {
             if (currentRecipe != null && currentRecipe.matches(input)) {
                 return;
             }
             currentRecipe = RecipeUtil.getRecipes(world, PressRecipes.SERIALIZER.getRecipeType()).stream().filter(alembicRecipe -> alembicRecipe.matches(input)).findFirst().orElse(null);
         }
-    }
-
-    private void onStart(){
-        if(getPressTime() != 0){
-            handler.ifPresent(h -> {
-                ItemStack stack = h.getStackInSlot(0);
-                checkForRecipe(stack);
-                if(stack.isEmpty()){
-                    pressTime = 120;
-                }
-                else if(!stack.isEmpty()) {
-                    if (stack == currentRecipe.input) {
-                        if (getInternalFluid() < 4000 && getPotentialFluid() >= 4000) {
-                            pressTime = -1;
-                            onFinish();
-                        }
-                    }
-                }
-            });
-        }
-    }
-
-    private void onFinish(){
-        if(getPressTime() == 0){
-            handler.ifPresent(h -> {
-                ItemStack stack = h.getStackInSlot(0);
-                if(stack == currentRecipe.input){
-                    int fluidOutAmount = currentRecipe.fluidOutAmount;
-                    stack.shrink(1);
-                    tank.fill(currentRecipe.output, IFluidHandler.FluidAction.EXECUTE);
-                    if(getInternalFluid() > 4000){
-                        if(getPotentialFluid() >= 4000) {
-                            internalFluid = +fluidOutAmount;
-                        }
-                    }
-                }
-
-            });
-        }
-    }
-
-    //Inventory Handler
-
-    private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
-    private LazyOptional<IFluidHandler> fluidHandler = LazyOptional.of(() -> tank);
-
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-                return handler.cast();
-        }
-        if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-            return fluidHandler.cast();
-        }
-        return super.getCapability(cap, side);
-    }
-
-
-
-    private IItemHandler createHandler() {
-        return new ItemStackHandler(1) {
-
-            @Override
-            protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
-                return 8;
-            }
-
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return stack.getItem().isIn(WorkTags.Items.PRESS) ;
-            }
-
-            @Nonnull
-            @Override
-            public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                Item item = stack.getItem();
-                if (!stack.getItem().isIn(WorkTags.Items.PRESS)) {
-                    return stack;
-                }
-
-                return super.insertItem(slot, stack, simulate);
-            }
-
-            @Override
-            @Nonnull
-            public ItemStack extractItem(int slot, int amount, boolean simulate)
-            {
-                return extractItem(slot, amount, simulate);
-            }
-
-        };
-
-    }
-
-    private int getPotentialFluid(){
-        return currentRecipe.fluidOutAmount + internalFluid;
-    }
-
-    private int getInternalFluid(){
-        return internalFluid;
-    }
-
-    private int getPressTime(){
-        return pressTime;
-    }
-
-
-    @Override
-    public void read(CompoundNBT tag)
-    {
-        super.read(tag);
-        tank.readFromNBT(tag);
-    }
-
-    @Override
-    public CompoundNBT write(CompoundNBT tag)
-    {
-        tag = super.write(tag);
-        tank.writeToNBT(tag);
-        return tag;
     }
 
 }
