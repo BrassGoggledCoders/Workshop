@@ -32,6 +32,7 @@ public class SpinningWheelTile extends TileActive {
         this.addInventory(this.input = (SidedInvHandler) new SidedInvHandler("input", 34, 25, 3, 0)
                 .setColor(DyeColor.RED)
                 .setRange(1, 3)
+                .setOnSlotChanged((stack, integer) -> checkForRecipe())
                 .setTile(this));
         this.addInventory(this.output = (SidedInvHandler) new SidedInvHandler("output", 102, 44, 1, 0)
                 .setColor(DyeColor.BLACK)
@@ -96,16 +97,13 @@ public class SpinningWheelTile extends TileActive {
                 Workshop.LOGGER.info("stack added to inv");
             }
         } else if(playerIn.getHeldItem(hand).isEmpty()) {
-            checkForRecipe();
-            Workshop.LOGGER.info("RecipeCheck");
             if (!fullProgress() && currentRecipe != null) {
-                //ToDo: insert quarter spin here
-                this.progress = +25;
-                Workshop.LOGGER.info(progress);
-                return true;
+                    //ToDo: insert quarter spin here
+                    this.progress += 25;
+                    Workshop.LOGGER.info(progress);
+                    return true;
             } else if (fullProgress()) {
                 progress = 0;
-                Workshop.LOGGER.info("final");
                 onFinish();
                 return true;
             } else {
