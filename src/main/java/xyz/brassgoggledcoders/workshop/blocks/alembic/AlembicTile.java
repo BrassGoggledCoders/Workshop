@@ -109,19 +109,4 @@ public class AlembicTile extends WorkshopGUIMachine {
             }
         };
     }
-
-    public static Pair<Integer, Integer> getSlotPos(int slot) {
-        int slotSpacing = 22;
-        int offset = 2;
-        switch (slot) {
-            case 1:
-                return Pair.of(slotSpacing, -offset);
-            case 2:
-                return Pair.of(slotSpacing, -offset - offset);
-            case 3:
-                return Pair.of(slotSpacing, -offset - offset - offset);
-            default:
-                return Pair.of(0, 0);
-        }
-    }
 }
