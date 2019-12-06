@@ -42,7 +42,6 @@ public class SeasoningBarrelTile extends WorkshopGUIMachine {
         );
         this.addInventory(this.output = (SidedInvHandler) new SidedInvHandler("output", 129, 22, 1, 2).
                 setColor(DyeColor.ORANGE).
-                setRange(1, 3).
                 setInputFilter((stack, integer) -> false).
                 setTile(this));
         this.addTank(this.outputFluid = (SidedFluidTank) new SidedFluidTank("output_fluid", 4000, 149, 20, 3).
