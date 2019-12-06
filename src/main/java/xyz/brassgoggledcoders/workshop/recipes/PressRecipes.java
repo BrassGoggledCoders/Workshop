@@ -35,7 +35,7 @@ public class PressRecipes extends SerializableRecipe {
     }
 
     public boolean matches(IItemHandler inv) {
-        return this.input.isItemEqual(inv.getStackInSlot(0));
+        return inv.getStackInSlot(0).isItemEqual(input);
     }
 
     @Override

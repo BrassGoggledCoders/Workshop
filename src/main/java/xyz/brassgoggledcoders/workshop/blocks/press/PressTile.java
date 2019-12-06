@@ -85,7 +85,7 @@ public class PressTile extends TileActive {
     private void checkForRecipe() {
         if (isServer()) {
             if (currentRecipe == null || !currentRecipe.matches(input)) {
-                currentRecipe = RecipeUtil.getRecipes(world, PressRecipes.SERIALIZER.getRecipeType()).stream().filter(alembicRecipe -> alembicRecipe.matches(input)).findFirst().orElse(null);
+                currentRecipe = RecipeUtil.getRecipes(world, PressRecipes.SERIALIZER.getRecipeType()).stream().filter(pressRecipe -> pressRecipe.matches(input)).findFirst().orElse(null);
             }
         }
     }
