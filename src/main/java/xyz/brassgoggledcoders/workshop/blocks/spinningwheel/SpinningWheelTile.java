@@ -60,6 +60,7 @@ public class SpinningWheelTile extends TileActive {
                 ItemHandlerHelper.insertItem(output, wheelRecipe.output.copy(), false);
                 //checkForRecipe();
             }
+            checkForRecipe();
         }
     }
 
@@ -97,7 +98,6 @@ public class SpinningWheelTile extends TileActive {
                 Workshop.LOGGER.info("stack added to inv");
             }
         } else if(playerIn.getHeldItem(hand).isEmpty()) {
-            checkForRecipe();
             if (!fullProgress() && currentRecipe != null) {
                     //ToDo: insert quarter spin here
                     this.progress += 25;
