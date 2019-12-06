@@ -1,19 +1,29 @@
 package xyz.brassgoggledcoders.workshop.assets;
 
 import com.hrznstudio.titanium.api.client.AssetTypes;
+import com.hrznstudio.titanium.api.client.IAsset;
+import com.hrznstudio.titanium.api.client.IAssetType;
+import com.hrznstudio.titanium.client.gui.asset.DefaultAssetProvider;
+import com.hrznstudio.titanium.client.gui.asset.IAssetProvider;
+import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 import java.awt.*;
 
-public class WorkshopAssetProvider implements IWorkAssetProvider {
+import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
-    private final IWorkAsset THERMOMETER_EMPTY = new IWorkAsset() {
+public class WorkshopAssetProvider implements IAssetProvider {
+
+    ResourceLocation WORKSHOP_LOCATION = new ResourceLocation(MOD_ID, "textures/gui/workshopassets.png");
+    static WorkshopAssetProvider WORKSHOP_PROVIDER = new WorkshopAssetProvider();
+
+    private final IAsset THERMOMETER_EMPTY = new IAsset() {
         @Override
         public Rectangle getArea() {
             return new Rectangle(0, 0, 13, 31);
         }
     };
-    private final IWorkAsset THERMOMETER_FULL = new IWorkAsset() {
+    private final IAsset THERMOMETER_FULL = new IAsset() {
         @Override
         public Rectangle getArea() {
             return new Rectangle(16, 0, 13, 31);
@@ -25,7 +35,7 @@ public class WorkshopAssetProvider implements IWorkAssetProvider {
 
     @Nullable
     @Override
-    public <T extends IWorkAsset> T getAsset(IWorkAssetType<T> assetType) {
+    public <T extends IAsset> T getAsset(IAssetType<T> assetType) {
         if (assetType == WorkshopAssetTypes.THERMOMETER_EMPTY) {
             return assetType.castOrDefault(this.THERMOMETER_EMPTY);
         }

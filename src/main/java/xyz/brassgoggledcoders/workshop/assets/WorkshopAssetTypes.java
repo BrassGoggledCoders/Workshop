@@ -1,14 +1,18 @@
 package xyz.brassgoggledcoders.workshop.assets;
 
+import com.hrznstudio.titanium.api.client.GenericAssetType;
+import com.hrznstudio.titanium.api.client.IAsset;
+import com.hrznstudio.titanium.api.client.IAssetType;
+
 public class WorkshopAssetTypes {
-    public static final IWorkAssetType<IWorkAsset> THERMOMETER_EMPTY;
-    public static final IWorkAssetType<IWorkAsset> THERMOMETER_FULL;
+    public static final IAssetType<IAsset> THERMOMETER_EMPTY;
+    public static final IAssetType<IAsset> THERMOMETER_FULL;
 
     public WorkshopAssetTypes() {
     }
 
     static {
-        THERMOMETER_EMPTY = new WorkAssetType(WorkshopAssetProvider.WORKSHOP_PROVIDER::getAsset, IWorkAsset.class);
-        THERMOMETER_FULL = new WorkAssetType(WorkshopAssetProvider.WORKSHOP_PROVIDER::getAsset, IWorkAsset.class);
+        THERMOMETER_EMPTY = new GenericAssetType(WorkshopAssetProvider.WORKSHOP_PROVIDER::getAsset, IAsset.class);
+        THERMOMETER_FULL = new GenericAssetType(WorkshopAssetProvider.WORKSHOP_PROVIDER::getAsset, IAsset.class);
     }
 }
