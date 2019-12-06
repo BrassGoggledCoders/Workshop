@@ -27,7 +27,6 @@ public class PressTile extends TileActive {
     @Save
     private SidedFluidTank outputFluid;
 
-
     private PressRecipes currentRecipe;
 
     public PressTile() {
@@ -56,6 +55,7 @@ public class PressTile extends TileActive {
                 input.getStackInSlot(0).shrink(1);
                 outputFluid.fillForced(pressRecipes.output.copy(), IFluidHandler.FluidAction.EXECUTE);
             }
+            checkForRecipe();
         };
     }
 
