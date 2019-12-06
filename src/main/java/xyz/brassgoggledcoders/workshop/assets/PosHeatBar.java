@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.gui.heatbar;
+package xyz.brassgoggledcoders.workshop.assets;
 
 import com.hrznstudio.titanium.api.IFactory;
 import com.hrznstudio.titanium.api.client.AssetTypes;

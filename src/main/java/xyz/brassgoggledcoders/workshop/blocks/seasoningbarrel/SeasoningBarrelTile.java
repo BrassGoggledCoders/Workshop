@@ -19,35 +19,28 @@ public class SeasoningBarrelTile extends WorkshopGUIMachine {
     @Save
     private SidedInvHandler input;
     @Save
-    private SidedFluidTank inputFluid;
+    private SidedFluidTank fluidSlot;
     @Save
     private SidedInvHandler output;
-    @Save
-    private SidedFluidTank outputFluid;
+
     private SeasoningBarrelRecipe currentRecipe;
 
 
     public SeasoningBarrelTile() {
-        super(SEASONING_BARREL_BLOCK, 102, 42, 100,  PosProgressBar.BarDirection.HORIZONTAL_RIGHT);
-        this.addInventory(input = (SidedInvHandler) new SidedInvHandler("input", 34, 19, 1, 0).
+        super(SEASONING_BARREL_BLOCK, 58, 40, 100, PosProgressBar.BarDirection.VERTICAL_UP);
+        this.addInventory(input = (SidedInvHandler) new SidedInvHandler("input", 58, 10, 1, 0).
                 setColor(DyeColor.LIGHT_BLUE).
                 setTile(this).
                 setOnSlotChanged((stack, integer) -> checkForRecipe()));
-        this.addTank(this.inputFluid = (SidedFluidTank) new SidedFluidTank("input_fluid", 4000, 33, 18, 1).
-                setColor(DyeColor.LIME).
-                setTankType(PosFluidTank.Type.SMALL).
-                setTile(this).
-                setTankAction(PosFluidTank.Action.FILL).
-                setOnContentChange(this::checkForRecipe)
-        );
-        this.addInventory(this.output = (SidedInvHandler) new SidedInvHandler("output", 129, 22, 1, 2).
-                setColor(DyeColor.ORANGE).
-                setInputFilter((stack, integer) -> false).
-                setTile(this));
-        this.addTank(this.outputFluid = (SidedFluidTank) new SidedFluidTank("output_fluid", 4000, 149, 20, 3).
-                setColor(DyeColor.MAGENTA).
-                setTile(this).
-                setTankAction(PosFluidTank.Action.DRAIN));
+        this.addTank(this.fluidSlot = (SidedFluidTank) new SidedFluidTank("input_fluid", 4000, 103, 20, 1)
+                .setColor(DyeColor.LIME)
+                .setTile(this)
+                .setTankAction(PosFluidTank.Action.FILL)
+                .setOnContentChange(this::checkForRecipe));
+        this.addInventory(this.output = (SidedInvHandler) new SidedInvHandler("output", 58, 60, 1, 2)
+                .setColor(DyeColor.ORANGE)
+                .setInputFilter((stack, integer) -> false)
+                .setTile(this));
     }
 
     @Override
@@ -57,8 +50,8 @@ public class SeasoningBarrelTile extends WorkshopGUIMachine {
 
     private void checkForRecipe() {
         if (isServer()) {
-            if (currentRecipe == null || !currentRecipe.matches(input, inputFluid)) {
-                currentRecipe = RecipeUtil.getRecipes(world, SeasoningBarrelRecipe.SERIALIZER.getRecipeType()).stream().filter(barrelRecipe -> barrelRecipe.matches(input, inputFluid)).findFirst().orElse(null);
+            if (currentRecipe == null || !currentRecipe.matches(input, fluidSlot)) {
+                currentRecipe = RecipeUtil.getRecipes(world, SeasoningBarrelRecipe.SERIALIZER.getRecipeType()).stream().filter(barrelRecipe -> barrelRecipe.matches(input, fluidSlot)).findFirst().orElse(null);
             }
         }
     }
