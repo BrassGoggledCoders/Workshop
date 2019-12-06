@@ -97,6 +97,7 @@ public class SpinningWheelTile extends TileActive {
                 Workshop.LOGGER.info("stack added to inv");
             }
         } else if(playerIn.getHeldItem(hand).isEmpty()) {
+            checkForRecipe();
             if (!fullProgress() && currentRecipe != null) {
                     //ToDo: insert quarter spin here
                     this.progress += 25;
