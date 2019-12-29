@@ -13,14 +13,14 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 version = '0.0.1'
-group = 'felahliir.gemchanting'
-archivesBaseName = 'gemchanting'
+group = 'xyz.brassgoggledcoders.workshop'
+archivesBaseName = 'workshop'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
 
-    mappings channel: 'snapshot', version: '20191126-1.14.3'
+    mappings channel: 'snapshot', version: '20191229-1.14.3'
 
     runs {
         client {
@@ -52,20 +52,20 @@ repositories {
 
 dependencies {
 
-    minecraft 'net.minecraftforge:forge:1.14.4-28.1.96'
-    compile fg.deobf('com.hrznstudio:titanium:1.14.4-2.2.+')
+    minecraft 'net.minecraftforge:forge:1.14.4-28.1.109'
+    compile fg.deobf('com.hrznstudio:titanium:1.14.4-2.2.11')
 }
 
 
 jar {
     manifest {
         attributes([
-            "Specification-Title": "gemchanting",
-            "Specification-Vendor": "felahliir",
+            "Specification-Title": "workshop",
+            "Specification-Vendor": "brassgoogledcoders",
             "Specification-Version": "0.0.1", // We are version 1 of ourselves
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"felahliir",
+            "Implementation-Vendor" :"brassgoogledcoders",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
