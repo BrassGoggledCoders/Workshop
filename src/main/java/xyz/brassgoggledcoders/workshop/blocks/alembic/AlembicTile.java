@@ -2,15 +2,24 @@ package xyz.brassgoggledcoders.workshop.blocks.alembic;
 
 import com.hrznstudio.titanium.annotation.Save;
 import com.hrznstudio.titanium.block.tile.inventory.SidedInvHandler;
+import com.hrznstudio.titanium.block.tile.progress.MultiProgressBarHandler;
 import com.hrznstudio.titanium.block.tile.progress.PosProgressBar;
 import com.hrznstudio.titanium.util.RecipeUtil;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.apache.commons.lang3.tuple.Pair;
+import xyz.brassgoggledcoders.workshop.assets.PosHeatBar;
 import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
 import xyz.brassgoggledcoders.workshop.recipes.AlembicRecipe;
 
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.ALEMBIC_BLOCK;
 import static xyz.brassgoggledcoders.workshop.util.WorkTags.Items.COLD;
@@ -18,6 +27,8 @@ import static xyz.brassgoggledcoders.workshop.util.WorkTags.Items.FLUIDCONTAINER
 
 
 public class AlembicTile extends WorkshopGUIMachine {
+
+    private final List<PosProgressBar> posWorkBars = new ArrayList();
 
     @Save
     private SidedInvHandler input;
@@ -29,8 +40,13 @@ public class AlembicTile extends WorkshopGUIMachine {
     private SidedInvHandler output;
     @Save
     private SidedInvHandler coldItem;
+    @Save
+    private PosHeatBar alembicTemp;
+
     private AlembicRecipe currentRecipe;
     private int coldTime;
+    private int temp;
+    private int maxTemp = 5000;
 
     public AlembicTile() {
         super(ALEMBIC_BLOCK, 76, 42, 100, PosProgressBar.BarDirection.HORIZONTAL_RIGHT);
@@ -55,6 +71,12 @@ public class AlembicTile extends WorkshopGUIMachine {
                 .setColor(DyeColor.LIGHT_BLUE)
                 .setInputFilter((stack, integer) -> stack.getItem().isIn(COLD))
                 .setTile(this));
+        this.addHeatBar(this.alembicTemp = new PosHeatBar(100, 20, temp, getMaxTemp())
+                .setColor(DyeColor.LIGHT_BLUE));
+    }
+
+    public void addHeatBar(PosHeatBar posHeatBar) {
+        posHeatBar.setTile(this);
     }
 
     public void checkForRecipe() {
@@ -63,6 +85,20 @@ public class AlembicTile extends WorkshopGUIMachine {
                 currentRecipe = RecipeUtil.getRecipes(world, AlembicRecipe.SERIALIZER.getRecipeType()).stream().filter(alembicRecipe -> alembicRecipe.matches(input, container)).findFirst().orElse(null);
             }
         }
+    }
+
+
+    public int getMaxTemp() {
+        return maxTemp;
+    }
+
+    public int getTemp() {
+        if(this.world.getBlockState(this.pos.down()).equals(Blocks.LAVA.getDefaultState())){
+            temp = 1000;
+        }else {
+            temp = 50;
+        }
+        return temp;
     }
 
     @Override
@@ -108,4 +144,13 @@ public class AlembicTile extends WorkshopGUIMachine {
             }
         };
     }
+
+    @Override
+    public boolean onActivated(PlayerEntity playerIn, Hand hand, Direction facing, double hitX, double hitY, double hitZ) {
+        if (super.onActivated(playerIn, hand, facing, hitX, hitY, hitZ)) return true;
+        getTemp();
+        openGui(playerIn);
+        return true;
+    }
+
 }
