@@ -1,7 +1,7 @@
 {
-  "input": [{
+  "input": {
     "item": "minecraft:apple"
-  }],
+  },
   "inputFluid": "{FluidName:\"minecraft:water\",Amount:1000}",
   "type": "workshop:press"
 }

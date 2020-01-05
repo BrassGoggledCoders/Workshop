@@ -1,8 +1,5 @@
 package xyz.brassgoggledcoders.workshop.recipes;
 
-
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
 import com.hrznstudio.titanium.recipe.serializer.GenericSerializer;
 import com.hrznstudio.titanium.recipe.serializer.SerializableRecipe;
 import net.minecraft.inventory.IInventory;
@@ -10,33 +7,30 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
-import xyz.brassgoggledcoders.workshop.Workshop;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
 public class SpinningWheelRecipe extends SerializableRecipe {
 
-    public static GenericSerializer<SpinningWheelRecipe> SERIALIZER = new GenericSerializer<>(new ResourceLocation(MOD_ID, "spinningwheel"), SpinningWheelRecipe.class);
+    public static GenericSerializer<SpinningWheelRecipe> SERIALIZER = new GenericSerializer<>(new ResourceLocation(MOD_ID, "spinning_wheel"), SpinningWheelRecipe.class);
     public static List<SpinningWheelRecipe> RECIPES = new ArrayList<>();
 
-    public Ingredient.IItemList[] input;
-    public ItemStack output;
+    public Ingredient.IItemList[] itemsIn;
+    public ItemStack itemOut;
 
     public SpinningWheelRecipe(ResourceLocation resourceLocation) {
         super(resourceLocation);
     }
 
-    public SpinningWheelRecipe(ResourceLocation resourceLocation, ItemStack output, Ingredient.IItemList[] input) {
+    public SpinningWheelRecipe(ResourceLocation resourceLocation, ItemStack itemOut, Ingredient.IItemList[] itemsIn) {
         super(resourceLocation);
-        this.input = input;
-        this.output = output;
+        this.itemsIn = itemsIn;
+        this.itemOut = itemOut;
         RECIPES.add(this);
     }
 
@@ -45,7 +39,7 @@ public class SpinningWheelRecipe extends SerializableRecipe {
         for (int i = 0; i < inv.getSlots(); i++) {
             if (!inv.getStackInSlot(i).isEmpty()) handlerItems.add(inv.getStackInSlot(i).copy());
         }
-        for (Ingredient.IItemList iItemList : input) {
+        for (Ingredient.IItemList iItemList : itemsIn) {
             boolean found = false;
             for (ItemStack stack : iItemList.getStacks()) {
                 int i = 0;
@@ -82,7 +76,7 @@ public class SpinningWheelRecipe extends SerializableRecipe {
 
     @Override
     public ItemStack getRecipeOutput() {
-        return output;
+        return itemOut;
     }
 
     @Override

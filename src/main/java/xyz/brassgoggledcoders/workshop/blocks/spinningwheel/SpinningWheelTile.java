@@ -65,7 +65,7 @@ public class SpinningWheelTile extends TileActive {
     private void onFinish() {
         if (currentRecipe != null) {
             SpinningWheelRecipe wheelRecipe = currentRecipe;
-            for (Ingredient.IItemList iItemList : wheelRecipe.input) {
+            for (Ingredient.IItemList iItemList : wheelRecipe.itemsIn) {
                 boolean found = false;
                 for (ItemStack stack : iItemList.getStacks()) {
                     int i = 0;
@@ -82,8 +82,8 @@ public class SpinningWheelTile extends TileActive {
                     }
                 }
             }
-            if (wheelRecipe.output != null && !wheelRecipe.output.isEmpty()) {
-                ItemHandlerHelper.insertItem(output, wheelRecipe.output.copy(), false);
+            if (wheelRecipe.itemOut != null && !wheelRecipe.itemOut.isEmpty()) {
+                ItemHandlerHelper.insertItem(output, wheelRecipe.itemOut.copy(), false);
                 //checkForRecipe();
             }
             checkForRecipe();
@@ -102,10 +102,10 @@ public class SpinningWheelTile extends TileActive {
             } else {
                 if (!fullProgress() && currentRecipe != null) {
                     progress += 1;
-                    Workshop.LOGGER.info(progress);
-                } else if (fullProgress()) {
-                    onFinish();
-                    progress = 0;
+                    if (fullProgress()) {
+                        onFinish();
+                        progress = 0;
+                    }
                 } else {
                     checkForRecipe();
                 }

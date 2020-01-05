@@ -1,8 +1,8 @@
 {
-  "input": [{
+  "itemsIn": [{
     "item": "minecraft:white_wool"
   }],
-  "output": {
+  "itemOut": {
     "item": "minecraft:string",
     "count": 4
   },
