@@ -13,6 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
+import xyz.brassgoggledcoders.workshop.Workshop;
 
 import java.util.ArrayList;
 import java.util.Arrays;

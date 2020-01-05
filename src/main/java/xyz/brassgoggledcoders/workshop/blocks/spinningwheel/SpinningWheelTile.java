@@ -14,6 +14,7 @@ import net.minecraft.util.Hand;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.recipes.SpinningWheelRecipe;
+import xyz.brassgoggledcoders.workshop.registries.Recipes;
 
 import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.SPINNING_WHEEL_BLOCK;
 
@@ -38,16 +39,26 @@ public class SpinningWheelTile extends TileActive {
                 .setColor(DyeColor.BLACK)
                 .setInputFilter((stack, integer) -> false)
                 .setTile(this));
-
     }
 
     private void checkForRecipe() {
         if (isServer()) {
             if (currentRecipe == null || !currentRecipe.matches(input)) {
-                currentRecipe = RecipeUtil.getRecipes(world, SpinningWheelRecipe.SERIALIZER.getRecipeType()).stream().filter(wheelRecipe -> wheelRecipe.matches(input)).findFirst().orElse(null);
+                currentRecipe = this.getWorld().getRecipeManager()
+                        .getRecipes()
+                        .stream()
+                        .filter(recipe -> recipe.getType() == SpinningWheelRecipe.SERIALIZER.getRecipeType())
+                        .map(recipe -> (SpinningWheelRecipe) recipe)
+                        .filter(this::matches)
+                        .findFirst()
+                        .orElse(null);
                 progress = 0;
             }
         }
+    }
+
+    private boolean matches(SpinningWheelRecipe wheelRecipe) {
+        return wheelRecipe.matches(input);
     }
 
     private void onFinish() {
@@ -65,52 +76,68 @@ public class SpinningWheelTile extends TileActive {
     }
 
     private boolean fullProgress() {
-        return progress >= 100;
+        return progress >= 4;
     }
 
     @Override
     public boolean onActivated(PlayerEntity playerIn, Hand hand, Direction facing, double hitX, double hitY, double hitZ) {
-        int j = 0;
-        if (!playerIn.getHeldItem(hand).isEmpty()) {
-            Item item = playerIn.getHeldItem(hand).getItem();
-            Workshop.LOGGER.info(item.toString());
-            if (j == 0) {
-                input.insertItem(0, item.getDefaultInstance(), false);
-                Workshop.LOGGER.info("item inserted");
-                ++j;
+        if (!playerIn.isSneaking()) {
+            if(!world.isRemote) {
+                extractInsertItem(playerIn, hand);
             }
-        } else if(playerIn.getHeldItem(hand).isEmpty() && playerIn.isSneaking()) {
-            int max = output.getStackInSlot(0).getCount();
-            if (output.extractItem(0, max, false).isEmpty()) {
-                for(int i = 0; i < input.getSlots(); ++i) {
-                    if (!input.extractItem(0, 1, false).isEmpty()) {
-                        int inputmax = input.getStackInSlot(0).getCount();
-                        ItemStack Item = input.extractItem(0, inputmax, false);
-                        Workshop.LOGGER.info("input stack extracted");
-                        playerIn.inventory.add(inputmax,Item);
-                        ++j;
-                    }
-                }
-            } else {
-                ItemStack stack = output.extractItem(0, max, false);
-                Workshop.LOGGER.info("ouput stack extracted");
-                playerIn.inventory.addItemStackToInventory(stack);
-                Workshop.LOGGER.info("stack added to inv");
-            }
-        } else if(playerIn.getHeldItem(hand).isEmpty()) {
+        } else{
             if (!fullProgress() && currentRecipe != null) {
-                    //ToDo: insert quarter spin here
-                    this.progress += 25;
-                    Workshop.LOGGER.info(progress);
-                    return true;
+                //ToDo: insert quarter spin here
+                progress += 1;
+                Workshop.LOGGER.info(progress);
+                return true;
             } else if (fullProgress()) {
                 progress = 0;
                 onFinish();
                 return true;
             } else {
-                return false;
+                checkForRecipe();
             }
         }
         return false;
+    }
+
+    public void extractInsertItem(PlayerEntity player, Hand hand) {
+        ItemStack held = player.getHeldItem(hand);
+        boolean used = false;
+        if (!held.isEmpty()) {
+            int slots = input.getSlots();
+            for (int x = 0; x < slots; ++x) {
+                if (!used) {
+                    if(input.getStackInSlot(x).isEmpty()) {
+                        ItemStack heldCopy = held.copy();
+                        int count = held.getCount();
+                        input.insertItem(x, heldCopy, false);
+                        held.shrink(count);
+                        used = true;
+                    }
+                }
+            }
+        } else {
+            ItemStack outStack = output.getStackInSlot(0);
+            if(!outStack.isEmpty()) {
+                int count = outStack.getCount();
+                ItemStack item = output.extractItem(0, count, false);
+                player.addItemStackToInventory(item);
+            }else{
+                int slots = input.getSlots();
+                for (int x = 0; x < slots; ++x) {
+                    if (!used) {
+                        ItemStack inStack = input.getStackInSlot(x);
+                        if(!inStack.isEmpty()){
+                            int count = inStack.getCount();
+                            ItemStack item = input.extractItem(x, count, false);
+                            player.addItemStackToInventory(item);
+                            used = true;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

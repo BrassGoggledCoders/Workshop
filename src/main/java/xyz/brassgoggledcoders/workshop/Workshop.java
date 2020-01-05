@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import xyz.brassgoggledcoders.workshop.blocks.BlockNames;
 import xyz.brassgoggledcoders.workshop.recipes.*;
 import xyz.brassgoggledcoders.workshop.registries.Items;
+import xyz.brassgoggledcoders.workshop.registries.Recipes;
 
 import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
@@ -26,12 +27,8 @@ public class Workshop extends ModuleController {
     public Workshop() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-
+        Recipes.register(modBus);
         Items.register(modBus);
-
-        EventManager.mod(RegistryEvent.Register.class).filter(register -> register.getGenericType().equals(IRecipeSerializer.class))
-                .process(register -> register.getRegistry().registerAll(AlembicRecipe.SERIALIZER, SpinningWheelRecipe.SERIALIZER, SeasoningBarrelRecipe.SERIALIZER, SinteringFurnaceRecipe.SERIALIZER, PressRecipes.SERIALIZER))
-                .subscribe();
 
     }
 
