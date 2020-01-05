@@ -13,25 +13,15 @@ import net.minecraftforge.items.IItemHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
+import static xyz.brassgoggledcoders.workshop.registries.Recipes.SPINNING_WHEEL_SERIALIZER;
 
 public class SpinningWheelRecipe extends SerializableRecipe {
-
-    public static GenericSerializer<SpinningWheelRecipe> SERIALIZER = new GenericSerializer<>(new ResourceLocation(MOD_ID, "spinning_wheel"), SpinningWheelRecipe.class);
-    public static List<SpinningWheelRecipe> RECIPES = new ArrayList<>();
 
     public Ingredient.IItemList[] itemsIn;
     public ItemStack itemOut;
 
     public SpinningWheelRecipe(ResourceLocation resourceLocation) {
         super(resourceLocation);
-    }
-
-    public SpinningWheelRecipe(ResourceLocation resourceLocation, ItemStack itemOut, Ingredient.IItemList[] itemsIn) {
-        super(resourceLocation);
-        this.itemsIn = itemsIn;
-        this.itemOut = itemOut;
-        RECIPES.add(this);
     }
 
     public boolean matches(IItemHandler inv) {
@@ -81,13 +71,12 @@ public class SpinningWheelRecipe extends SerializableRecipe {
 
     @Override
     public GenericSerializer<? extends SerializableRecipe> getSerializer() {
-        return SERIALIZER;
+        return SPINNING_WHEEL_SERIALIZER.get();
     }
 
     @Override
     public IRecipeType<?> getType() {
-        return SERIALIZER.getRecipeType();
+        return SPINNING_WHEEL_SERIALIZER.get().getRecipeType();
     }
-
 
 }

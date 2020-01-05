@@ -5,6 +5,7 @@ import com.hrznstudio.titanium.recipe.serializer.SerializableRecipe;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
@@ -13,14 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
+import static xyz.brassgoggledcoders.workshop.registries.Recipes.SEASONING_BARREL_SERIALIZER;
+import static xyz.brassgoggledcoders.workshop.registries.Recipes.SINTERING_FURNACE_SERIALIZER;
 
 public class SinteringFurnaceRecipe extends SerializableRecipe {
 
-    public static GenericSerializer<SinteringFurnaceRecipe> SERIALIZER = new GenericSerializer<>(new ResourceLocation(MOD_ID, "sinteringfurnace"), SinteringFurnaceRecipe.class);
-    public static List<SinteringFurnaceRecipe> RECIPES = new ArrayList<>();
-
-    public ItemStack powder;
-    public ItemStack targetMaterial;
+    public Ingredient.IItemList[] powderIn;
+    public ItemStack itemIn;
     public ItemStack output;
     public int meltTime;
 
@@ -28,22 +28,34 @@ public class SinteringFurnaceRecipe extends SerializableRecipe {
         super(resourceLocation);
     }
 
-    public SinteringFurnaceRecipe(ResourceLocation resourceLocation, ItemStack powder, ItemStack targetMaterial, ItemStack output, int meltTime) {
-        super(resourceLocation);
-        this.powder = powder;
-        this.targetMaterial = targetMaterial;
-        this.output = output;
-        this.meltTime = meltTime;
-        RECIPES.add(this);
-    }
-
     @Override
     public boolean matches(IInventory inv, World worldIn) {
         return false;
     }
 
-    public boolean matches(IItemHandler powderIn, IItemHandler targetMaterialIn) {
-        return this.powder.isItemEqual(powderIn.getStackInSlot(0)) && this.targetMaterial.isItemEqual(targetMaterialIn.getStackInSlot(0));
+    public boolean matches(IItemHandler powderInv, IItemHandler itemInv) {
+        List<ItemStack> handlerItems = new ArrayList<>();
+        for (int i = 0; i < powderInv.getSlots(); i++) {
+            if (!powderInv.getStackInSlot(i).isEmpty()) handlerItems.add(powderInv.getStackInSlot(i).copy());
+        }
+        for (Ingredient.IItemList iItemList : powderIn) {
+            boolean found = false;
+            for (ItemStack stack : iItemList.getStacks()) {
+                int i = 0;
+                for (; i < handlerItems.size(); i++) {
+                    if (handlerItems.get(i).isItemEqual(stack)) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) {
+                    handlerItems.remove(i);
+                    break;
+                }
+            }
+            if (!found) return false;
+        }
+        return handlerItems.size() == 0 && this.itemIn.isItemEqual(itemInv.getStackInSlot(0));
     }
 
     @Override
@@ -63,11 +75,11 @@ public class SinteringFurnaceRecipe extends SerializableRecipe {
 
     @Override
     public GenericSerializer<? extends SerializableRecipe> getSerializer() {
-        return SERIALIZER;
+        return SINTERING_FURNACE_SERIALIZER.get();
     }
 
     @Override
     public IRecipeType<?> getType() {
-        return SERIALIZER.getRecipeType();
+        return SINTERING_FURNACE_SERIALIZER.get().getRecipeType();
     }
 }

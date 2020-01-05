@@ -17,12 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
+import static xyz.brassgoggledcoders.workshop.registries.Recipes.SEASONING_BARREL_SERIALIZER;
 
 public class SeasoningBarrelRecipe extends SerializableRecipe {
-
-    public static GenericSerializer<SeasoningBarrelRecipe> SERIALIZER = new GenericSerializer<>(new ResourceLocation(MOD_ID, "seasoningbarrel"), SeasoningBarrelRecipe.class);
-    public static List<SeasoningBarrelRecipe> RECIPES = new ArrayList<>();
-
     public ItemStack productIn;
     public ItemStack catalystOut;
     public FluidStack fluidInput;
@@ -31,16 +28,6 @@ public class SeasoningBarrelRecipe extends SerializableRecipe {
 
     public SeasoningBarrelRecipe(ResourceLocation resourceLocation) {
         super(resourceLocation);
-    }
-
-    public SeasoningBarrelRecipe(ResourceLocation resourceLocation, FluidStack fluidInput, ItemStack catalystOut, FluidStack output, ItemStack productIn, int seasoningTime) {
-        super(resourceLocation);
-        this.fluidInput = fluidInput;
-        this.fluidOut = output;
-        this.catalystOut = catalystOut;
-        this.productIn = productIn;
-        this.seasoningTime = seasoningTime;
-        RECIPES.add(this);
     }
 
     public boolean matches(IItemHandler handler, PosFluidTank tank) {
@@ -70,11 +57,11 @@ public class SeasoningBarrelRecipe extends SerializableRecipe {
 
     @Override
     public GenericSerializer<? extends SerializableRecipe> getSerializer() {
-        return SERIALIZER;
+        return SEASONING_BARREL_SERIALIZER.get();
     }
 
     @Override
     public IRecipeType<?> getType() {
-        return SERIALIZER.getRecipeType();
+        return SEASONING_BARREL_SERIALIZER.get().getRecipeType();
     }
 }

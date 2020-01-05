@@ -27,6 +27,7 @@ public class SpinningWheelTile extends TileActive {
     private SidedInvHandler output;
 
     private SpinningWheelRecipe currentRecipe;
+
     private int progress = 0;
 
     public SpinningWheelTile() {
@@ -48,7 +49,7 @@ public class SpinningWheelTile extends TileActive {
                 currentRecipe = this.getWorld().getRecipeManager()
                         .getRecipes()
                         .stream()
-                        .filter(recipe -> recipe.getType() == SpinningWheelRecipe.SERIALIZER.getRecipeType())
+                        .filter(recipe -> recipe.getType() == Recipes.SPINNING_WHEEL)
                         .map(recipe -> (SpinningWheelRecipe) recipe)
                         .filter(this::matches)
                         .findFirst()
@@ -75,7 +76,8 @@ public class SpinningWheelTile extends TileActive {
                             found = true;
                             break;
                         }
-                    }if (found) {
+                    }
+                    if (found) {
                         ItemStack stack2 = input.getStackInSlot(i);
                         stack2.shrink(1);
                         break;

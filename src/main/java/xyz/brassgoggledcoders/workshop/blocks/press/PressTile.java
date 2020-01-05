@@ -13,8 +13,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import xyz.brassgoggledcoders.workshop.recipes.PressRecipes;
+import xyz.brassgoggledcoders.workshop.recipes.PressRecipe;
+import xyz.brassgoggledcoders.workshop.recipes.SpinningWheelRecipe;
+import xyz.brassgoggledcoders.workshop.registries.Recipes;
 
 import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.PRESS_BLOCK;
 
@@ -27,7 +30,7 @@ public class PressTile extends TileActive {
     @Save
     private SidedFluidTank outputFluid;
 
-    private PressRecipes currentRecipe;
+    private PressRecipe currentRecipe;
 
     public PressTile() {
         super(PRESS_BLOCK);
@@ -48,12 +51,12 @@ public class PressTile extends TileActive {
 
     }
 
-    private Runnable onFinish(){
+    private Runnable onFinish() {
         return () -> {
             if (currentRecipe != null) {
-                PressRecipes pressRecipes = currentRecipe;
+                PressRecipe pressRecipes = currentRecipe;
                 input.getStackInSlot(0).shrink(1);
-                outputFluid.fillForced(pressRecipes.output.copy(), IFluidHandler.FluidAction.EXECUTE);
+                outputFluid.fillForced(pressRecipes.fluidOut.copy(), IFluidHandler.FluidAction.EXECUTE);
             }
             checkForRecipe();
         };
@@ -62,31 +65,53 @@ public class PressTile extends TileActive {
     @Override
     public boolean onActivated(PlayerEntity playerIn, Hand hand, Direction facing, double hitX, double hitY, double hitZ) {
         ItemStack heldItem = playerIn.getHeldItem(hand);
-        if(heldItem.isEmpty()){
-            int max = input.getStackInSlot(0).getCount();
-            input.extractItem(0,max,false);
+        FluidStack fluidOut = outputFluid.getFluid();
+        if (heldItem.equals(Items.BUCKET.getDefaultInstance())) {
+            if (fluidOut.getAmount() >= 1000) {
+                ItemStack item = outputFluid.getFluid().getFluid().getFilledBucket().getDefaultInstance();
+                playerIn.inventory.addItemStackToInventory(item);
+                heldItem.shrink(1);
+                outputFluid.drain(1000, IFluidHandler.FluidAction.EXECUTE);
+                return true;
+            }
+        } else if (!heldItem.isEmpty()) {
+            input.insertItem(0, heldItem.copy(), false);
+            int count = heldItem.getCount();
+            heldItem.shrink(count);
+            return true;
+        } else {
+            ItemStack inputStack = input.getStackInSlot(0);
+            if (!inputStack.isEmpty()) {
+                int count = inputStack.getCount();
+                ItemStack stack = input.extractItem(0, count, false);
+                playerIn.addItemStackToInventory(stack);
+            }
             return true;
         }
-        else if(heldItem.equals(Items.BUCKET.getDefaultInstance())){
-            ItemStack item = outputFluid.getFluid().getFluid().getFilledBucket().getDefaultInstance();
-            playerIn.inventory.addItemStackToInventory(item);
-            heldItem.shrink(1);
-            return true;
-        }else{
-            input.insertItem(0, heldItem, false);
-            return true;
-        }
+        return false;
     }
 
-    public int getMaxProgress(){
+    public int getMaxProgress() {
         return 120;
     }
 
     private void checkForRecipe() {
         if (isServer()) {
             if (currentRecipe == null || !currentRecipe.matches(input)) {
-                currentRecipe = RecipeUtil.getRecipes(world, PressRecipes.SERIALIZER.getRecipeType()).stream().filter(pressRecipe -> pressRecipe.matches(input)).findFirst().orElse(null);
+                currentRecipe = this.getWorld().getRecipeManager()
+                        .getRecipes()
+                        .stream()
+                        .filter(recipe -> recipe.getType() == Recipes.PRESS)
+                        .map(recipe -> (PressRecipe) recipe)
+                        .filter(this::matches)
+                        .findFirst()
+                        .orElse(null);
             }
         }
     }
+
+    private boolean matches(PressRecipe pressRecipe) {
+        return pressRecipe.matches(input);
+    }
+
 }

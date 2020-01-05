@@ -6,11 +6,10 @@ import com.hrznstudio.titanium.block.tile.fluid.PosFluidTank;
 import com.hrznstudio.titanium.block.tile.fluid.SidedFluidTank;
 import com.hrznstudio.titanium.block.tile.inventory.SidedInvHandler;
 import com.hrznstudio.titanium.block.tile.progress.PosProgressBar;
-import com.hrznstudio.titanium.util.RecipeUtil;
 import net.minecraft.item.DyeColor;
 import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
-import xyz.brassgoggledcoders.workshop.recipes.PressRecipes;
 import xyz.brassgoggledcoders.workshop.recipes.SeasoningBarrelRecipe;
+import xyz.brassgoggledcoders.workshop.registries.Recipes;
 
 import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.SEASONING_BARREL_BLOCK;
 
@@ -50,10 +49,20 @@ public class SeasoningBarrelTile extends WorkshopGUIMachine {
 
     private void checkForRecipe() {
         if (isServer()) {
-            if (currentRecipe == null || !currentRecipe.matches(input, fluidSlot)) {
-                currentRecipe = RecipeUtil.getRecipes(world, SeasoningBarrelRecipe.SERIALIZER.getRecipeType()).stream().filter(barrelRecipe -> barrelRecipe.matches(input, fluidSlot)).findFirst().orElse(null);
+            if (currentRecipe == null || !currentRecipe.matches(input,fluidSlot)) {
+                currentRecipe = this.getWorld().getRecipeManager()
+                        .getRecipes()
+                        .stream()
+                        .filter(recipe -> recipe.getType() == Recipes.PRESS)
+                        .map(recipe -> (SeasoningBarrelRecipe) recipe)
+                        .filter(this::matches)
+                        .findFirst()
+                        .orElse(null);
             }
         }
     }
 
+    private boolean matches(SeasoningBarrelRecipe seasoningBarrelRecipe) {
+        return seasoningBarrelRecipe.matches(input, fluidSlot);
+    }
 }

@@ -9,7 +9,9 @@ import net.minecraft.item.DyeColor;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.apache.commons.lang3.tuple.Pair;
 import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
+import xyz.brassgoggledcoders.workshop.recipes.SeasoningBarrelRecipe;
 import xyz.brassgoggledcoders.workshop.recipes.SinteringFurnaceRecipe;
+import xyz.brassgoggledcoders.workshop.registries.Recipes;
 
 import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.SINTERING_FURNACE_BLOCK;
 
@@ -62,10 +64,21 @@ public class SinteringFurnaceTile extends WorkshopGUIMachine {
 
     private void checkForRecipe() {
         if (isServer()) {
-            if (currentRecipe == null || !currentRecipe.matches(powder, targetMaterial)) {
-                currentRecipe = RecipeUtil.getRecipes(world, SinteringFurnaceRecipe.SERIALIZER.getRecipeType()).stream().filter(sinteringFurnaceRecipe -> sinteringFurnaceRecipe.matches(powder, targetMaterial)).findFirst().orElse(null);
+            if (currentRecipe == null || !currentRecipe.matches(powder,targetMaterial)) {
+                currentRecipe = this.getWorld().getRecipeManager()
+                        .getRecipes()
+                        .stream()
+                        .filter(recipe -> recipe.getType() == Recipes.PRESS)
+                        .map(recipe -> (SinteringFurnaceRecipe) recipe)
+                        .filter(this::matches)
+                        .findFirst()
+                        .orElse(null);
             }
         }
+    }
+
+    private boolean matches(SinteringFurnaceRecipe sinteringFurnaceRecipe) {
+        return sinteringFurnaceRecipe.matches(powder, targetMaterial);
     }
 
 

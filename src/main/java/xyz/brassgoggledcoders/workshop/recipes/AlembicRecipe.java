@@ -14,11 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
+import static xyz.brassgoggledcoders.workshop.registries.Recipes.ALEMBIC_SERIALIZER;
 
 public class AlembicRecipe extends SerializableRecipe {
-
-    public static GenericSerializer<AlembicRecipe> SERIALIZER = new GenericSerializer<>(new ResourceLocation(MOD_ID, "alembic"), AlembicRecipe.class);
-    public static List<AlembicRecipe> RECIPES = new ArrayList<>();
 
     public Ingredient.IItemList input;
     public ItemStack container;
@@ -28,16 +26,6 @@ public class AlembicRecipe extends SerializableRecipe {
 
     public AlembicRecipe(ResourceLocation resourceLocation) {
         super(resourceLocation);
-    }
-
-    public AlembicRecipe(ResourceLocation resourceLocation, Ingredient.IItemList input, ItemStack output, ItemStack container, ItemStack[] residue, int cooldownTime) {
-        super(resourceLocation);
-        this.input = input;
-        this.output = output;
-        this.container = container;
-        this.residue = residue;
-        this.cooldownTime = cooldownTime;
-        RECIPES.add(this);
     }
 
     public boolean matches(IItemHandler itemIn, IItemHandler containerIn) {
@@ -86,11 +74,11 @@ public class AlembicRecipe extends SerializableRecipe {
 
     @Override
     public GenericSerializer<? extends SerializableRecipe> getSerializer() {
-        return SERIALIZER;
+        return ALEMBIC_SERIALIZER.get();
     }
 
     @Override
     public IRecipeType<?> getType() {
-        return SERIALIZER.getRecipeType();
+        return ALEMBIC_SERIALIZER.get().getRecipeType();
     }
 }

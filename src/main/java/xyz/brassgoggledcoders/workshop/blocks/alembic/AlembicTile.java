@@ -16,6 +16,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import xyz.brassgoggledcoders.workshop.assets.PosHeatBar;
 import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
 import xyz.brassgoggledcoders.workshop.recipes.AlembicRecipe;
+import xyz.brassgoggledcoders.workshop.recipes.SpinningWheelRecipe;
+import xyz.brassgoggledcoders.workshop.registries.Recipes;
 
 
 import java.util.ArrayList;
@@ -27,8 +29,6 @@ import static xyz.brassgoggledcoders.workshop.util.WorkTags.Items.FLUIDCONTAINER
 
 
 public class AlembicTile extends WorkshopGUIMachine {
-
-    private final List<PosProgressBar> posWorkBars = new ArrayList();
 
     @Save
     private SidedInvHandler input;
@@ -79,12 +79,23 @@ public class AlembicTile extends WorkshopGUIMachine {
         posHeatBar.setTile(this);
     }
 
-    public void checkForRecipe() {
+    private void checkForRecipe() {
         if (isServer()) {
             if (currentRecipe == null || !currentRecipe.matches(input, container)) {
-                currentRecipe = RecipeUtil.getRecipes(world, AlembicRecipe.SERIALIZER.getRecipeType()).stream().filter(alembicRecipe -> alembicRecipe.matches(input, container)).findFirst().orElse(null);
+                currentRecipe = this.getWorld().getRecipeManager()
+                        .getRecipes()
+                        .stream()
+                        .filter(recipe -> recipe.getType() == Recipes.ALEMBIC)
+                        .map(recipe -> (AlembicRecipe) recipe)
+                        .filter(this::matches)
+                        .findFirst()
+                        .orElse(null);
             }
         }
+    }
+
+    private boolean matches(AlembicRecipe alembicRecipe) {
+        return alembicRecipe.matches(input, container);
     }
 
 
