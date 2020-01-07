@@ -1,7 +1,8 @@
 {
-  "input": {
-    "item": "minecraft:apple"
+  "itemIn": {
+    "item": "minecraft:apple",
+    "count": 4
   },
-  "inputFluid": "{FluidName:\"minecraft:water\",Amount:1000}",
+  "fluidOut": "{FluidName:\"minecraft:water\",Amount:1000}",
   "type": "workshop:press"
 }
