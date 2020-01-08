@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import xyz.brassgoggledcoders.workshop.blocks.BlockNames;
 import xyz.brassgoggledcoders.workshop.recipes.*;
+import xyz.brassgoggledcoders.workshop.registries.Blocks;
 import xyz.brassgoggledcoders.workshop.registries.Items;
 import xyz.brassgoggledcoders.workshop.registries.Recipes;
 
@@ -29,7 +30,7 @@ public class Workshop extends ModuleController {
 
         Recipes.register(modBus);
         Items.register(modBus);
-
+        Blocks.register(modBus);
     }
 
     @Override

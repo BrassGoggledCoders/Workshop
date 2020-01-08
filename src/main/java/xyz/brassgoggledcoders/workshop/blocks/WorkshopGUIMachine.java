@@ -20,6 +20,7 @@ public abstract class WorkshopGUIMachine extends TileActive {
                 setBarDirection(direction).
                 setCanReset(tileEntity -> true).
                 setOnStart(() -> progressBar.setMaxProgress(getMaxProgress())).
+                setCanIncrease(tileEntity -> canIncrease()).
                 setOnFinishWork(() -> onFinish().run())
         );
     }
@@ -34,6 +35,8 @@ public abstract class WorkshopGUIMachine extends TileActive {
         openGui(playerIn);
         return true;
     }
+
+    public abstract boolean canIncrease();
 
     public int getMaxProgress() {
         return 100;

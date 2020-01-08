@@ -3,7 +3,7 @@
     "item": "minecraft:flint",
     "count": 4
   },
-  "fluidIn": "{FluidName:\"minecraft:water\",Amount:10}",
+  "fluidInput": "{FluidName:\"minecraft:water\",Amount:10}",
   "fluidOut": "{FluidName:\"minecraft:lava\",Amount:10}",
   "type": "workshop:seasoning_barrel"
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "workshop:blocks/seasoning_barrel_end",
+    "side": "workshop:blocks/seasoning_barrel_side"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y":  { "model": "workshop:block/seasoning_barrel" },
+    "axis=z":   { "model": "workshop:block/seasoning_barrel", "x": 90 },
+    "axis=x":   { "model": "workshop:block/seasoning_barrel", "x": 90, "y": 90 }
+  }
+}

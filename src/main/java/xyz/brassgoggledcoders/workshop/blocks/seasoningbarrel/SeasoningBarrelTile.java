@@ -7,6 +7,9 @@ import com.hrznstudio.titanium.block.tile.fluid.SidedFluidTank;
 import com.hrznstudio.titanium.block.tile.inventory.SidedInvHandler;
 import com.hrznstudio.titanium.block.tile.progress.PosProgressBar;
 import net.minecraft.item.DyeColor;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
+import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
 import xyz.brassgoggledcoders.workshop.recipes.SeasoningBarrelRecipe;
 import xyz.brassgoggledcoders.workshop.registries.Recipes;
@@ -16,44 +19,79 @@ import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.SEASONING_BARREL
 public class SeasoningBarrelTile extends WorkshopGUIMachine {
 
     @Save
-    private SidedInvHandler input;
+    private SidedInvHandler inputInventory;
     @Save
-    private SidedFluidTank fluidSlot;
+    private SidedFluidTank inputFluidTank;
     @Save
-    private SidedInvHandler output;
+    private SidedInvHandler outputInventory;
+    @Save
+    private SidedFluidTank outputFluidTank;
 
     private SeasoningBarrelRecipe currentRecipe;
 
 
     public SeasoningBarrelTile() {
-        super(SEASONING_BARREL_BLOCK, 58, 40, 100, PosProgressBar.BarDirection.VERTICAL_UP);
-        this.addInventory(input = (SidedInvHandler) new SidedInvHandler("input", 58, 10, 1, 0).
+        super(SEASONING_BARREL_BLOCK, 76, 42, 100, PosProgressBar.BarDirection.HORIZONTAL_RIGHT);
+        this.addInventory(this.inputInventory = (SidedInvHandler) new SidedInvHandler("inputInventory", 29, 42, 1, 0).
                 setColor(DyeColor.LIGHT_BLUE).
                 setTile(this).
                 setOnSlotChanged((stack, integer) -> checkForRecipe()));
-        this.addTank(this.fluidSlot = (SidedFluidTank) new SidedFluidTank("input_fluid", 4000, 103, 20, 1)
-                .setColor(DyeColor.LIME)
+        this.addTank(this.inputFluidTank = (SidedFluidTank) new SidedFluidTank("inputFluidTank", 4000, 52, 20, 1)
+                .setColor(DyeColor.BROWN)
                 .setTile(this)
                 .setTankAction(PosFluidTank.Action.FILL)
                 .setOnContentChange(this::checkForRecipe));
-        this.addInventory(this.output = (SidedInvHandler) new SidedInvHandler("output", 58, 60, 1, 2)
-                .setColor(DyeColor.ORANGE)
+        this.addInventory(this.outputInventory = (SidedInvHandler) new SidedInvHandler("outputInventory", 130, 42, 1, 2)
+                .setColor(DyeColor.BLUE)
                 .setInputFilter((stack, integer) -> false)
                 .setTile(this));
+        this.addTank(this.outputFluidTank = (SidedFluidTank) new SidedFluidTank("outputFluidTank", 4000, 105, 20, 1)
+                .setColor(DyeColor.BLACK)
+                .setTile(this)
+                .setTankAction(PosFluidTank.Action.DRAIN));
+    }
+
+    @Override
+    public boolean canIncrease() {
+        return currentRecipe != null && ItemHandlerHelper.insertItem(outputInventory, currentRecipe.itemOut.copy(), true).isEmpty() && outputFluidTank.fillForced(currentRecipe.fluidOut.copy(), IFluidHandler.FluidAction.SIMULATE) == currentRecipe.fluidOut.getAmount();
+    }
+
+    @Override
+    public int getMaxProgress() {
+        return currentRecipe != null ? currentRecipe.seasoningTime : 1000;
     }
 
     @Override
     public Runnable onFinish() {
-        return null;
+        return () -> {
+            if (currentRecipe != null) {
+                SeasoningBarrelRecipe seasoningBarrelRecipe = currentRecipe;
+                inputFluidTank.drainForced(seasoningBarrelRecipe.fluidInput, IFluidHandler.FluidAction.EXECUTE);
+                for (int i = 0; i < inputInventory.getSlots(); i++) {
+                    int count = seasoningBarrelRecipe.itemIn.getCount();
+                    inputInventory.getStackInSlot(i).shrink(count);
+                }
+                if(outputFluidTank.getFluid().equals(seasoningBarrelRecipe.fluidOut) || outputFluidTank.isEmpty()){
+                    int capacity = outputFluidTank.getCapacity();
+                    if(capacity >= outputFluidTank.getFluid().getAmount() + seasoningBarrelRecipe.fluidOut.getAmount()){
+                        outputFluidTank.fillForced(seasoningBarrelRecipe.fluidOut.copy(), IFluidHandler.FluidAction.EXECUTE);
+                    }
+                }
+                for (int i = 0; i < outputInventory.getSlots(); i++) {
+                    int count = seasoningBarrelRecipe.itemOut.getCount();
+                    outputInventory.insertItem(0,seasoningBarrelRecipe.itemOut,false);
+                }
+            }
+        };
     }
 
     private void checkForRecipe() {
         if (isServer()) {
-            if (currentRecipe == null || !currentRecipe.matches(input,fluidSlot)) {
+            if (currentRecipe == null || !currentRecipe.matches(inputInventory,inputFluidTank)) {
                 currentRecipe = this.getWorld().getRecipeManager()
                         .getRecipes()
                         .stream()
-                        .filter(recipe -> recipe.getType() == Recipes.PRESS)
+                        .filter(recipe -> recipe.getType() == Recipes.SEASONING_BARREL)
                         .map(recipe -> (SeasoningBarrelRecipe) recipe)
                         .filter(this::matches)
                         .findFirst()
@@ -63,6 +101,7 @@ public class SeasoningBarrelTile extends WorkshopGUIMachine {
     }
 
     private boolean matches(SeasoningBarrelRecipe seasoningBarrelRecipe) {
-        return seasoningBarrelRecipe.matches(input, fluidSlot);
+        Workshop.LOGGER.info(seasoningBarrelRecipe.matches(inputInventory, inputFluidTank));
+        return seasoningBarrelRecipe.matches(inputInventory, inputFluidTank);
     }
 }
