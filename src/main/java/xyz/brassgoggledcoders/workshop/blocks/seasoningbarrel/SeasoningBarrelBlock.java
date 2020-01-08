@@ -12,14 +12,17 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Rotation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 
 public class SeasoningBarrelBlock extends BlockTileBase {
 
-    public static final EnumProperty<Direction.Axis> AXIS;
+    public static final EnumProperty<Direction> FACING;
 
     public SeasoningBarrelBlock() {
         super("seasoning_barrel", Properties.from(Blocks.IRON_BLOCK), SeasoningBarrelTile.class);
-        this.setDefaultState((BlockState)this.getDefaultState().with(AXIS, Direction.Axis.Y));
+        this.setDefaultState((BlockState)this.getDefaultState().with(FACING, Direction.DOWN));
     }
 
     @Override
@@ -27,32 +30,20 @@ public class SeasoningBarrelBlock extends BlockTileBase {
         return SeasoningBarrelTile::new;
     }
 
-    public BlockState rotate(BlockState state, Rotation rotation) {
-        switch(rotation) {
-            case COUNTERCLOCKWISE_90:
-            case CLOCKWISE_90:
-                switch((Direction.Axis)state.get(AXIS)) {
-                    case X:
-                        return (BlockState)state.with(AXIS, Direction.Axis.Z);
-                    case Z:
-                        return (BlockState)state.with(AXIS, Direction.Axis.X);
-                    default:
-                        return state;
-                }
-            default:
-                return state;
-        }
+    @Override
+    public boolean isSolid(BlockState state) {
+        return false;
     }
 
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> state) {
-        state.add(new IProperty[]{AXIS});
+        state.add(new IProperty[]{FACING});
     }
 
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return (BlockState)this.getDefaultState().with(AXIS, context.getFace().getAxis());
+        return (BlockState)this.getDefaultState().with(FACING, context.getFace());
     }
 
     static {
-        AXIS = BlockStateProperties.AXIS;
+        FACING = BlockStateProperties.FACING;
     }
 }

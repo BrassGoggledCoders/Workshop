@@ -1,7 +1,10 @@
 {
   "variants": {
-    "axis=y":  { "model": "workshop:block/seasoning_barrel" },
-    "axis=z":   { "model": "workshop:block/seasoning_barrel", "x": 90 },
-    "axis=x":   { "model": "workshop:block/seasoning_barrel", "x": 90, "y": 90 }
+    "facing=up":  { "model": "workshop:block/seasoning_barrel", "x": -90},
+    "facing=down":   { "model": "workshop:block/seasoning_barrel", "x": 90 },
+    "facing=east":   { "model": "workshop:block/seasoning_barrel", "y": 90},
+    "facing=west":  { "model": "workshop:block/seasoning_barrel" , "y": -90},
+    "facing=north":   { "model": "workshop:block/seasoning_barrel", "z": -90 },
+    "facing=south":   { "model": "workshop:block/seasoning_barrel", "x": 180}
   }
 }
