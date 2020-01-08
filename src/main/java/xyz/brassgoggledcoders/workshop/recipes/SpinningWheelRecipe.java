@@ -18,7 +18,7 @@ import static xyz.brassgoggledcoders.workshop.registries.Recipes.SPINNING_WHEEL_
 public class SpinningWheelRecipe extends SerializableRecipe {
 
     public Ingredient.IItemList[] itemsIn;
-    public ItemStack itemOut;
+    public ItemStack itemOut = ItemStack.EMPTY;
 
     public SpinningWheelRecipe(ResourceLocation resourceLocation) {
         super(resourceLocation);
