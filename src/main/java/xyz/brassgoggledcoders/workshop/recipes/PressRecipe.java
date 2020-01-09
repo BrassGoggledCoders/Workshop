@@ -15,15 +15,15 @@ import static xyz.brassgoggledcoders.workshop.registries.Recipes.PRESS_SERIALIZE
 
 public class PressRecipe extends SerializableRecipe {
 
-    public ItemStack itemIn;
-    public FluidStack fluidOut;
+    public ItemStack itemIn = ItemStack.EMPTY;
+    public FluidStack fluidOut = FluidStack.EMPTY;
 
     public PressRecipe(ResourceLocation resourceLocation) {
         super(resourceLocation);
     }
 
     public boolean matches(IItemHandler inv) {
-        return inv.getStackInSlot(0).isItemEqual(itemIn);
+        return this.itemIn.isItemEqual(inv.getStackInSlot(0));
     }
 
     @Override

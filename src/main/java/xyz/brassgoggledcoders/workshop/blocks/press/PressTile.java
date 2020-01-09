@@ -15,6 +15,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.recipes.PressRecipe;
 import xyz.brassgoggledcoders.workshop.recipes.SpinningWheelRecipe;
 import xyz.brassgoggledcoders.workshop.registries.Recipes;
@@ -26,7 +27,7 @@ public class PressTile extends TileActive {
     @Save
     private PosProgressBar progressBar;
     @Save
-    private SidedInvHandler input;
+    private SidedInvHandler inputInventory;
     @Save
     private SidedFluidTank outputFluid;
 
@@ -39,8 +40,9 @@ public class PressTile extends TileActive {
                 setBarDirection(PosProgressBar.BarDirection.HORIZONTAL_RIGHT).
                 setCanReset(tileEntity -> true).
                 setOnStart(() -> progressBar.setMaxProgress(getMaxProgress())).
+                setCanIncrease(tileEntity -> canIncrease()).
                 setOnFinishWork(() -> onFinish().run()));
-        this.addInventory(this.input = (SidedInvHandler) new SidedInvHandler("input", 34, 25, 1, 0)
+        this.addInventory(this.inputInventory = (SidedInvHandler) new SidedInvHandler("inputInventory", 34, 25, 1, 0)
                 .setColor(DyeColor.RED)
                 .setTile(this)
                 .setOnSlotChanged((stack, integer) -> checkForRecipe()));
@@ -55,39 +57,48 @@ public class PressTile extends TileActive {
         return () -> {
             if (currentRecipe != null) {
                 PressRecipe pressRecipes = currentRecipe;
-                input.getStackInSlot(0).shrink(1);
+                int count = currentRecipe.itemIn.getCount();
+                inputInventory.getStackInSlot(0).shrink(count);
                 outputFluid.fillForced(pressRecipes.fluidOut.copy(), IFluidHandler.FluidAction.EXECUTE);
             }
             checkForRecipe();
         };
     }
 
+
+    public boolean canIncrease() {
+        return currentRecipe != null && outputFluid.fillForced(currentRecipe.fluidOut.copy(), IFluidHandler.FluidAction.SIMULATE) == currentRecipe.fluidOut.getAmount();
+    }
+
     @Override
     public boolean onActivated(PlayerEntity playerIn, Hand hand, Direction facing, double hitX, double hitY, double hitZ) {
-        ItemStack heldItem = playerIn.getHeldItem(hand);
-        FluidStack fluidOut = outputFluid.getFluid();
-        if (heldItem.equals(Items.BUCKET.getDefaultInstance())) {
-            if (fluidOut.getAmount() >= 1000) {
-                ItemStack item = outputFluid.getFluid().getFluid().getFilledBucket().getDefaultInstance();
-                playerIn.inventory.addItemStackToInventory(item);
-                heldItem.shrink(1);
-                outputFluid.drain(1000, IFluidHandler.FluidAction.EXECUTE);
+            ItemStack heldItem = playerIn.getHeldItem(hand);
+            FluidStack fluidOut = outputFluid.getFluid();
+            if (heldItem.isItemEqual(Items.BUCKET.getDefaultInstance())) {
+                if (fluidOut.getAmount() >= 1000) {
+                    ItemStack item = outputFluid.getFluid().getFluid().getFilledBucket().getDefaultInstance();
+                    playerIn.inventory.addItemStackToInventory(item);
+                    heldItem.shrink(1);
+                    outputFluid.drain(1000, IFluidHandler.FluidAction.EXECUTE);
+                    return true;
+                }
+            } else if (!heldItem.isEmpty()) {
+                if (inputInventory.getStackInSlot(0).isEmpty()) {
+                    inputInventory.insertItem(0, heldItem.copy(), false);
+                    int count = heldItem.getCount();
+                    heldItem.shrink(count);
+                    checkForRecipe();
+                    return true;
+                }
+            } else if(heldItem.isEmpty()) {
+                ItemStack inputStack = inputInventory.getStackInSlot(0);
+                if (!inputStack.isEmpty()) {
+                    int count = inputStack.getCount();
+                    ItemStack stack = inputInventory.extractItem(0, count, false);
+                    playerIn.addItemStackToInventory(stack);
+                }
                 return true;
             }
-        } else if (!heldItem.isEmpty()) {
-            input.insertItem(0, heldItem.copy(), false);
-            int count = heldItem.getCount();
-            heldItem.shrink(count);
-            return true;
-        } else {
-            ItemStack inputStack = input.getStackInSlot(0);
-            if (!inputStack.isEmpty()) {
-                int count = inputStack.getCount();
-                ItemStack stack = input.extractItem(0, count, false);
-                playerIn.addItemStackToInventory(stack);
-            }
-            return true;
-        }
         return false;
     }
 
@@ -97,7 +108,7 @@ public class PressTile extends TileActive {
 
     private void checkForRecipe() {
         if (isServer()) {
-            if (currentRecipe == null || !currentRecipe.matches(input)) {
+            if (currentRecipe == null || !currentRecipe.matches(inputInventory)) {
                 currentRecipe = this.getWorld().getRecipeManager()
                         .getRecipes()
                         .stream()
@@ -106,12 +117,13 @@ public class PressTile extends TileActive {
                         .filter(this::matches)
                         .findFirst()
                         .orElse(null);
+                Workshop.LOGGER.info(currentRecipe.matches(inputInventory));
             }
         }
     }
 
     private boolean matches(PressRecipe pressRecipe) {
-        return pressRecipe.matches(input);
+        return pressRecipe.matches(inputInventory);
     }
 
 }
