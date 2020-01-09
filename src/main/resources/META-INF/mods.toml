@@ -12,21 +12,20 @@ modId="workshop"
 
 version="${0.0.1}"
 
-displayName="WorkShop"
-
-updateJSONURL="http://myurl.me/"
+displayName="Workshop"
 
 displayURL="http://example.com/"
 
 logoFile="examplemod.png"
 
-credits="Divine for the design, Snurly for the art probably"
+credits="Divine for the design, Snurly and VeyezX for the art probably"
 
 authors="Brass Goggled Coders"
 
 description='''
+This mod adds various lower tier machines to work in tandum with our higher tier machines in other mods to give you a stepping stone type feel
 
-This mod adds machines to work in tandum with our other mods
+Spinning Wheel, Sintering Furnace, Seasoning Barrel, Press and Alembic Machines are used to create various types of materials and items!
 
 '''
 
