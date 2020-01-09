@@ -4,12 +4,11 @@ package xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace;
 import com.hrznstudio.titanium.annotation.Save;
 import com.hrznstudio.titanium.block.tile.inventory.SidedInvHandler;
 import com.hrznstudio.titanium.block.tile.progress.PosProgressBar;
-import com.hrznstudio.titanium.util.RecipeUtil;
 import net.minecraft.item.DyeColor;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.ItemHandlerHelper;
-import org.apache.commons.lang3.tuple.Pair;
 import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
-import xyz.brassgoggledcoders.workshop.recipes.SeasoningBarrelRecipe;
 import xyz.brassgoggledcoders.workshop.recipes.SinteringFurnaceRecipe;
 import xyz.brassgoggledcoders.workshop.registries.Recipes;
 
@@ -18,43 +17,64 @@ import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.SINTERING_FURNAC
 public class SinteringFurnaceTile extends WorkshopGUIMachine {
 
     @Save
-    private SidedInvHandler powder;
+    private SidedInvHandler powderInventory;
     @Save
-    private SidedInvHandler targetMaterial;
+    private SidedInvHandler targetInputInventory;
     @Save
-    private SidedInvHandler output;
+    private SidedInvHandler outputInventory;
     @Save
-    private SidedInvHandler fuel;
+    private SidedInvHandler fuelInventory;
+
+    private int burnTime = 0;
+
     private SinteringFurnaceRecipe currentRecipe;
 
     public SinteringFurnaceTile() {
-        super(SINTERING_FURNACE_BLOCK, 102, 41, 100,  PosProgressBar.BarDirection.HORIZONTAL_RIGHT);
+        super(SINTERING_FURNACE_BLOCK, 76, 42, 100, PosProgressBar.BarDirection.HORIZONTAL_RIGHT);
 
-        this.addInventory(this.powder = (SidedInvHandler) new SidedInvHandler("powder", 34, 19, 8, 0)
+        this.addInventory(this.powderInventory = (SidedInvHandler) new SidedInvHandler("powderInventory", 70, 19, 2, 0)
                 .setColor(DyeColor.ORANGE)
-                .setSlotPosition(integer -> getSlotPos(integer))
-                .setSlotLimit(1)
                 .setTile(this)
                 .setOnSlotChanged((stack, integer) -> checkForRecipe()));
-        this.addInventory(this.targetMaterial = (SidedInvHandler) new SidedInvHandler("targetMaterial", 34, 19, 8, 0)
+        this.addInventory(this.targetInputInventory = (SidedInvHandler) new SidedInvHandler("targetInputInventory", 34, 42, 1, 0)
                 .setColor(DyeColor.YELLOW)
-                .setSlotPosition(integer -> getSlotPos(integer))
-                .setSlotLimit(1)
                 .setTile(this)
                 .setOnSlotChanged((stack, integer) -> checkForRecipe()));
-        this.addInventory(this.output = (SidedInvHandler) new SidedInvHandler("output", 34, 19, 8, 0)
+        this.addInventory(this.outputInventory = (SidedInvHandler) new SidedInvHandler("outputInventory", 120, 42, 1, 0)
                 .setColor(DyeColor.BLACK)
-                .setSlotPosition(integer -> getSlotPos(integer))
-                .setSlotLimit(1)
-                .setTile(this)
-                .setOnSlotChanged((stack, integer) -> checkForRecipe()));
-        this.addInventory(this.fuel = (SidedInvHandler) new SidedInvHandler("fuel", 34, 19, 8, 0)
+                .setTile(this));
+        this.addInventory(this.fuelInventory = (SidedInvHandler) new SidedInvHandler("fuelInventory", 78, 70, 1, 0)
                 .setColor(DyeColor.RED)
-                .setSlotPosition(integer -> getSlotPos(integer))
-                .setSlotLimit(1)
-                .setTile(this)
-                .setOnSlotChanged((stack, integer) -> checkForRecipe()));
+                .setTile(this));
 
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if(!isActive()){
+            setBurnTime();
+        } else{
+            -- burnTime;
+        }
+    }
+
+    @Override
+    public boolean canIncrease() {
+        return isActive() && currentRecipe != null && ItemHandlerHelper.insertItem(outputInventory, currentRecipe.itemOut.copy(), true).isEmpty();
+    }
+
+    public boolean isActive() {
+        return burnTime > 0;
+    }
+
+    public int setBurnTime(){
+        ItemStack stack = fuelInventory.getStackInSlot(0);
+        if(!stack.isEmpty()) {
+            this.burnTime = ForgeHooks.getBurnTime(stack);
+            fuelInventory.getStackInSlot(0).shrink(1);
+        }
+        return burnTime;
     }
 
     @Override
@@ -64,11 +84,11 @@ public class SinteringFurnaceTile extends WorkshopGUIMachine {
 
     private void checkForRecipe() {
         if (isServer()) {
-            if (currentRecipe == null || !currentRecipe.matches(powder,targetMaterial)) {
+            if (currentRecipe == null || !currentRecipe.matches(powderInventory,targetInputInventory)) {
                 currentRecipe = this.getWorld().getRecipeManager()
                         .getRecipes()
                         .stream()
-                        .filter(recipe -> recipe.getType() == Recipes.PRESS)
+                        .filter(recipe -> recipe.getType() == Recipes.SINTERING_FURNACE)
                         .map(recipe -> (SinteringFurnaceRecipe) recipe)
                         .filter(this::matches)
                         .findFirst()
@@ -78,7 +98,7 @@ public class SinteringFurnaceTile extends WorkshopGUIMachine {
     }
 
     private boolean matches(SinteringFurnaceRecipe sinteringFurnaceRecipe) {
-        return sinteringFurnaceRecipe.matches(powder, targetMaterial);
+        return sinteringFurnaceRecipe.matches(powderInventory, targetInputInventory);
     }
 
 
@@ -87,41 +107,16 @@ public class SinteringFurnaceTile extends WorkshopGUIMachine {
         return () -> {
             if (currentRecipe != null) {
                 SinteringFurnaceRecipe sinteringFurnaceRecipe = currentRecipe;
-                for (int i = 0; i < powder.getSlots(); i++) {
-                    powder.getStackInSlot(i).shrink(1);
+                for (int i = 0; i < powderInventory.getSlots(); i++) {
+                    powderInventory.getStackInSlot(i).shrink(1);
                 }
-                for (int i = 0; i < targetMaterial.getSlots(); i++) {
-                    targetMaterial.getStackInSlot(i).shrink(1);
-                }
-                if(sinteringFurnaceRecipe.output !=null && !sinteringFurnaceRecipe.output.isEmpty()){
-                    ItemHandlerHelper.insertItem(output, sinteringFurnaceRecipe.output.copy(), false);
+                targetInputInventory.getStackInSlot(0).shrink(1);
+                if (sinteringFurnaceRecipe.itemOut != null && !sinteringFurnaceRecipe.itemOut.isEmpty()) {
+                    ItemHandlerHelper.insertItem(outputInventory, sinteringFurnaceRecipe.itemOut.copy(), false);
                     //checkForRecipe();
                 }
             }
         };
-    }
-
-    public static Pair<Integer, Integer> getSlotPos(int slot) {
-        int slotSpacing = 22;
-        int offset = 2;
-        switch (slot) {
-            case 1:
-                return Pair.of(slotSpacing, -offset);
-            case 2:
-                return Pair.of(slotSpacing * 2, 0);
-            case 3:
-                return Pair.of(-offset, slotSpacing);
-            case 4:
-                return Pair.of(slotSpacing * 2 + offset, slotSpacing);
-            case 5:
-                return Pair.of(0, slotSpacing * 2);
-            case 6:
-                return Pair.of(slotSpacing, slotSpacing * 2 + offset);
-            case 7:
-                return Pair.of(slotSpacing * 2, slotSpacing * 2);
-            default:
-                return Pair.of(0, 0);
-        }
     }
 
 }

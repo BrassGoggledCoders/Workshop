@@ -13,30 +13,23 @@ import net.minecraftforge.items.IItemHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
-import static xyz.brassgoggledcoders.workshop.registries.Recipes.SEASONING_BARREL_SERIALIZER;
 import static xyz.brassgoggledcoders.workshop.registries.Recipes.SINTERING_FURNACE_SERIALIZER;
 
 public class SinteringFurnaceRecipe extends SerializableRecipe {
 
     public Ingredient.IItemList[] powderIn;
-    public ItemStack itemIn;
-    public ItemStack output;
-    public int meltTime;
+    public ItemStack itemIn = ItemStack.EMPTY;
+    public ItemStack itemOut = ItemStack.EMPTY;
+    public int meltTime = 240;
 
     public SinteringFurnaceRecipe(ResourceLocation resourceLocation) {
         super(resourceLocation);
     }
 
-    @Override
-    public boolean matches(IInventory inv, World worldIn) {
-        return false;
-    }
-
-    public boolean matches(IItemHandler powderInv, IItemHandler itemInv) {
+    public boolean matches(IItemHandler powder, IItemHandler itemInv) {
         List<ItemStack> handlerItems = new ArrayList<>();
-        for (int i = 0; i < powderInv.getSlots(); i++) {
-            if (!powderInv.getStackInSlot(i).isEmpty()) handlerItems.add(powderInv.getStackInSlot(i).copy());
+        for (int i = 0; i < powder.getSlots(); i++) {
+            if (!powder.getStackInSlot(i).isEmpty()) handlerItems.add(powder.getStackInSlot(i).copy());
         }
         for (Ingredient.IItemList iItemList : powderIn) {
             boolean found = false;
@@ -55,7 +48,12 @@ public class SinteringFurnaceRecipe extends SerializableRecipe {
             }
             if (!found) return false;
         }
-        return handlerItems.size() == 0 && this.itemIn.isItemEqual(itemInv.getStackInSlot(0));
+        return handlerItems.size() == 0 && itemInv.getStackInSlot(0).isItemEqual(itemIn);
+    }
+
+    @Override
+    public boolean matches(IInventory inv, World worldIn) {
+        return false;
     }
 
     @Override
@@ -70,7 +68,7 @@ public class SinteringFurnaceRecipe extends SerializableRecipe {
 
     @Override
     public ItemStack getRecipeOutput() {
-        return output;
+        return itemOut;
     }
 
     @Override
@@ -82,4 +80,5 @@ public class SinteringFurnaceRecipe extends SerializableRecipe {
     public IRecipeType<?> getType() {
         return SINTERING_FURNACE_SERIALIZER.get().getRecipeType();
     }
+
 }

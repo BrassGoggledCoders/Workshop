@@ -1,14 +1,13 @@
 {
   "powderIn": [{
-    "item": "minecraft:blaze_powder",
-    "count": 4
+    "item": "minecraft:blaze_powder"
   }],
   "itemIn": {
     "item": "minecraft:flint",
     "count": 4
   },
   "itemOut": {
-    "item": "workshop:obsidian_plate",
+    "item": "minecraft:apple",
     "count": 1
   },
   "type": "workshop:sintering_furnace"
