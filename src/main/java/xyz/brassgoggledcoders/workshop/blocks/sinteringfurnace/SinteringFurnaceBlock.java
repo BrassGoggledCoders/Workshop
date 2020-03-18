@@ -1,13 +1,27 @@
 package xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace;
 
 import com.hrznstudio.titanium.api.IFactory;
-import com.hrznstudio.titanium.block.BlockTileBase;
+import com.hrznstudio.titanium.block.BlockRotation;
 import net.minecraft.block.Blocks;
+import net.minecraft.util.BlockRenderLayer;
 
-public class SinteringFurnaceBlock extends BlockTileBase {
+import javax.annotation.Nonnull;
+
+public class SinteringFurnaceBlock extends BlockRotation<SinteringFurnaceTile> {
 
     public SinteringFurnaceBlock() {
         super("sintering_furnace", Properties.from(Blocks.FURNACE), SinteringFurnaceTile.class);
+    }
+
+    @Nonnull
+    @Override
+    public RotationType getRotationType() {
+        return RotationType.FOUR_WAY;
+    }
+
+    @Override
+    public BlockRenderLayer getRenderLayer() {
+        return BlockRenderLayer.CUTOUT;
     }
 
     @Override
