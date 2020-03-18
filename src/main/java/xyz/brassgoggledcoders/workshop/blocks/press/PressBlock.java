@@ -3,7 +3,6 @@ package xyz.brassgoggledcoders.workshop.blocks.press;
 
 import com.hrznstudio.titanium.api.IFactory;
 import com.hrznstudio.titanium.block.BlockRotation;
-import com.hrznstudio.titanium.block.BlockTileBase;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.BlockRenderLayer;

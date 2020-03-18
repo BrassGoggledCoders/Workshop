@@ -56,5 +56,4 @@ public class PressRecipe extends SerializableRecipe {
         return PRESS_SERIALIZER.get().getRecipeType();
     }
 
-
 }

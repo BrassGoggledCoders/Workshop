@@ -6,7 +6,6 @@ import com.hrznstudio.titanium.block.tile.fluid.PosFluidTank;
 import com.hrznstudio.titanium.block.tile.fluid.SidedFluidTank;
 import com.hrznstudio.titanium.block.tile.inventory.SidedInvHandler;
 import com.hrznstudio.titanium.block.tile.progress.PosProgressBar;
-import com.hrznstudio.titanium.util.RecipeUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
@@ -17,7 +16,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.recipes.PressRecipe;
-import xyz.brassgoggledcoders.workshop.recipes.SpinningWheelRecipe;
 import xyz.brassgoggledcoders.workshop.registries.Recipes;
 
 import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.PRESS_BLOCK;
@@ -117,9 +115,12 @@ public class PressTile extends TileActive {
                         .filter(this::matches)
                         .findFirst()
                         .orElse(null);
-                Workshop.LOGGER.info(currentRecipe.matches(inputInventory));
             }
         }
+    }
+
+    public SidedInvHandler getInputInventory() {
+        return inputInventory;
     }
 
     private boolean matches(PressRecipe pressRecipe) {

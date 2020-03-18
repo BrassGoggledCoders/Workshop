@@ -164,4 +164,9 @@ public class AlembicTile extends WorkshopGUIMachine {
         return true;
     }
 
+    @Override
+    public boolean canIncrease() {
+        return false;
+    }
+
 }
