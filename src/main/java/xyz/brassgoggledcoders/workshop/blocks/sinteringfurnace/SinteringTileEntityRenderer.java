@@ -65,9 +65,6 @@ public class SinteringTileEntityRenderer extends TileEntityRenderer<SinteringFur
                     GlStateManager.popMatrix();
                 }
 
-                if(){
-
-                }
             }
 
         }
