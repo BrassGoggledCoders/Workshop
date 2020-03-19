@@ -1,8 +1,7 @@
 package xyz.brassgoggledcoders.workshop.blocks.press;
 
-import com.hrznstudio.titanium.block.BlockRotation;
 import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.block.BlockState;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;

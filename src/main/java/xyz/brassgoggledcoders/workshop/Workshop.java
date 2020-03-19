@@ -1,22 +1,22 @@
 package xyz.brassgoggledcoders.workshop;
 
+import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.hrznstudio.titanium.module.Module;
 import com.hrznstudio.titanium.module.ModuleController;
+
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import xyz.brassgoggledcoders.workshop.blocks.BlockNames;
 import xyz.brassgoggledcoders.workshop.blocks.press.PressTile;
 import xyz.brassgoggledcoders.workshop.blocks.press.PressTileEntityRenderer;
-import xyz.brassgoggledcoders.workshop.registries.Blocks;
-import xyz.brassgoggledcoders.workshop.registries.Items;
-import xyz.brassgoggledcoders.workshop.registries.Recipes;
-
-import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
+import xyz.brassgoggledcoders.workshop.registries.*;
 
 //Main Class
 @Mod(MOD_ID)

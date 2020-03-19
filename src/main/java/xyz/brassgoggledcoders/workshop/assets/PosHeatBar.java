@@ -1,25 +1,22 @@
 package xyz.brassgoggledcoders.workshop.assets;
 
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.util.Collections;
+import java.util.List;
+
 import com.hrznstudio.titanium.api.IFactory;
-import com.hrznstudio.titanium.api.client.AssetTypes;
-import com.hrznstudio.titanium.api.client.IAsset;
-import com.hrznstudio.titanium.api.client.IGuiAddon;
-import com.hrznstudio.titanium.api.client.IGuiAddonProvider;
+import com.hrznstudio.titanium.api.client.*;
 import com.hrznstudio.titanium.block.tile.TileBase;
-import com.hrznstudio.titanium.block.tile.progress.PosProgressBar;
-import com.hrznstudio.titanium.client.gui.addon.ProgressBarGuiAddon;
 import com.hrznstudio.titanium.client.gui.asset.IAssetProvider;
 import com.mojang.blaze3d.platform.GlStateManager;
+
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.DyeColor;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.INBTSerializable;
-
-import java.awt.*;
-import java.util.Collections;
-import java.util.List;
 
 public class PosHeatBar implements INBTSerializable<CompoundNBT>, IGuiAddonProvider {
 

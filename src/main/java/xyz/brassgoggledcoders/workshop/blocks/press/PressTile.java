@@ -1,24 +1,22 @@
 package xyz.brassgoggledcoders.workshop.blocks.press;
 
+import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.PRESS_BLOCK;
+
 import com.hrznstudio.titanium.annotation.Save;
 import com.hrznstudio.titanium.block.tile.TileActive;
 import com.hrznstudio.titanium.block.tile.fluid.PosFluidTank;
 import com.hrznstudio.titanium.block.tile.fluid.SidedFluidTank;
 import com.hrznstudio.titanium.block.tile.inventory.SidedInvHandler;
 import com.hrznstudio.titanium.block.tile.progress.PosProgressBar;
+
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.recipes.PressRecipe;
 import xyz.brassgoggledcoders.workshop.registries.Recipes;
-
-import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.PRESS_BLOCK;
 
 public class PressTile extends TileActive {
 

@@ -1,9 +1,9 @@
 package xyz.brassgoggledcoders.workshop.util;
 
+import static xyz.brassgoggledcoders.workshop.registries.Items.WORKICON;
+
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-
-import static xyz.brassgoggledcoders.workshop.registries.Items.WORKICON;
 
 
 public class WorkGroup extends ItemGroup {

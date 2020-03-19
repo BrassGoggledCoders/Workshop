@@ -1,9 +1,12 @@
 package xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace;
 
 
+import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.SINTERING_FURNACE_BLOCK;
+
 import com.hrznstudio.titanium.annotation.Save;
 import com.hrznstudio.titanium.block.tile.inventory.SidedInvHandler;
 import com.hrznstudio.titanium.block.tile.progress.PosProgressBar;
+
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeHooks;
@@ -11,8 +14,6 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
 import xyz.brassgoggledcoders.workshop.recipes.SinteringFurnaceRecipe;
 import xyz.brassgoggledcoders.workshop.registries.Recipes;
-
-import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.SINTERING_FURNACE_BLOCK;
 
 public class SinteringFurnaceTile extends WorkshopGUIMachine {
 

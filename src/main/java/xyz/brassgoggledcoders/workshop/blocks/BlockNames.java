@@ -1,15 +1,16 @@
 package xyz.brassgoggledcoders.workshop.blocks;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.hrznstudio.titanium.module.Feature;
+
 import net.minecraft.block.Block;
 import xyz.brassgoggledcoders.workshop.blocks.alembic.AlembicBlock;
 import xyz.brassgoggledcoders.workshop.blocks.press.PressBlock;
 import xyz.brassgoggledcoders.workshop.blocks.seasoningbarrel.SeasoningBarrelBlock;
 import xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace.SinteringFurnaceBlock;
 import xyz.brassgoggledcoders.workshop.blocks.spinningwheel.SpinningWheelBlock;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BlockNames{
 

@@ -1,11 +1,12 @@
 package xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace;
 
+import javax.annotation.Nonnull;
+
 import com.hrznstudio.titanium.api.IFactory;
 import com.hrznstudio.titanium.block.BlockRotation;
+
 import net.minecraft.block.Blocks;
 import net.minecraft.util.BlockRenderLayer;
-
-import javax.annotation.Nonnull;
 
 public class SinteringFurnaceBlock extends BlockRotation<SinteringFurnaceTile> {
 
@@ -25,7 +26,7 @@ public class SinteringFurnaceBlock extends BlockRotation<SinteringFurnaceTile> {
     }
 
     @Override
-    public IFactory getTileEntityFactory() {
+    public IFactory<SinteringFurnaceTile> getTileEntityFactory() {
         return SinteringFurnaceTile::new;
     }
 

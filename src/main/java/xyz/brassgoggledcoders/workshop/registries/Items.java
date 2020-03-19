@@ -1,12 +1,12 @@
 package xyz.brassgoggledcoders.workshop.registries;
 
+import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
+
 import net.minecraft.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
 public class Items {
 

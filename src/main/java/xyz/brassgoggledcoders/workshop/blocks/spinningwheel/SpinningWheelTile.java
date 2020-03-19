@@ -1,13 +1,14 @@
 package xyz.brassgoggledcoders.workshop.blocks.spinningwheel;
 
 
+import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.SPINNING_WHEEL_BLOCK;
+
 import com.hrznstudio.titanium.annotation.Save;
 import com.hrznstudio.titanium.block.tile.TileActive;
 import com.hrznstudio.titanium.block.tile.inventory.SidedInvHandler;
-import com.hrznstudio.titanium.util.RecipeUtil;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeColor;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.Direction;
@@ -15,8 +16,6 @@ import net.minecraft.util.Hand;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.recipes.SpinningWheelRecipe;
 import xyz.brassgoggledcoders.workshop.registries.Recipes;
-
-import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.SPINNING_WHEEL_BLOCK;
 
 public class SpinningWheelTile extends TileActive {
 

@@ -1,7 +1,13 @@
 package xyz.brassgoggledcoders.workshop.recipes;
 
+import static xyz.brassgoggledcoders.workshop.registries.Recipes.ALEMBIC_SERIALIZER;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import com.hrznstudio.titanium.recipe.serializer.GenericSerializer;
 import com.hrznstudio.titanium.recipe.serializer.SerializableRecipe;
+
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
@@ -9,12 +15,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
-import static xyz.brassgoggledcoders.workshop.registries.Recipes.ALEMBIC_SERIALIZER;
 
 public class AlembicRecipe extends SerializableRecipe {
 

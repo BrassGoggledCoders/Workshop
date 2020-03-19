@@ -1,13 +1,11 @@
 package xyz.brassgoggledcoders.workshop.util;
 
+import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.*;
 import net.minecraft.util.ResourceLocation;
-
-import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
 public class WorkTags {
 

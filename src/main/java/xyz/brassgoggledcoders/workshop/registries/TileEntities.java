@@ -1,16 +1,5 @@
 package xyz.brassgoggledcoders.workshop.registries;
 
-
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import xyz.brassgoggledcoders.workshop.blocks.alembic.AlembicTile;
-
-import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
-import static xyz.brassgoggledcoders.workshop.registries.Blocks.*;
-
 public class TileEntities {
     /*
     private static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, MOD_ID);
