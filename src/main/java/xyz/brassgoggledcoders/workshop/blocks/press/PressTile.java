@@ -63,7 +63,7 @@ public class PressTile extends TileActive {
 
 
     public boolean canIncrease() {
-        return currentRecipe != null && outputFluid.fillForced(currentRecipe.fluidOut.copy(), IFluidHandler.FluidAction.SIMULATE) == currentRecipe.fluidOut.getAmount();
+        return currentRecipe != null && outputFluid.fillForced(currentRecipe.fluidOut.copy(), IFluidHandler.FluidAction.SIMULATE) == currentRecipe.fluidOut.getAmount() && isActive();
     }
 
     @Override
@@ -121,8 +121,16 @@ public class PressTile extends TileActive {
         return inputInventory;
     }
 
+    public SidedFluidTank getOutputFluid() {
+        return outputFluid;
+    }
+
     private boolean matches(PressRecipe pressRecipe) {
         return pressRecipe.matches(inputInventory);
+    }
+
+    public boolean isActive(){
+        return true;
     }
 
 }

@@ -16,7 +16,11 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import xyz.brassgoggledcoders.workshop.blocks.BlockNames;
 import xyz.brassgoggledcoders.workshop.blocks.press.PressTile;
 import xyz.brassgoggledcoders.workshop.blocks.press.PressTileEntityRenderer;
-import xyz.brassgoggledcoders.workshop.registries.*;
+import xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace.SinteringFurnaceTile;
+import xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace.SinteringTileEntityRenderer;
+import xyz.brassgoggledcoders.workshop.registries.Blocks;
+import xyz.brassgoggledcoders.workshop.registries.Items;
+import xyz.brassgoggledcoders.workshop.registries.Recipes;
 
 //Main Class
 @Mod(MOD_ID)
@@ -36,6 +40,7 @@ public class Workshop extends ModuleController {
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         ClientRegistry.bindTileEntitySpecialRenderer(PressTile.class, new PressTileEntityRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(SinteringFurnaceTile.class, new SinteringTileEntityRenderer());
     }
 
 

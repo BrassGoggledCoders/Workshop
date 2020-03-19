@@ -120,4 +120,23 @@ public class SinteringFurnaceTile extends WorkshopGUIMachine {
         };
     }
 
+    public SidedInvHandler getFuelInventory() {
+        return fuelInventory;
+    }
+
+    public SidedInvHandler getOutputInventory() {
+        return outputInventory;
+    }
+
+    public SidedInvHandler getPowderInventory() {
+        return powderInventory;
+    }
+
+    public SidedInvHandler getTargetInputInventory() {
+        return targetInputInventory;
+    }
+
+    public SinteringFurnaceRecipe getCurrentRecipe() {
+        return currentRecipe;
+    }
 }
