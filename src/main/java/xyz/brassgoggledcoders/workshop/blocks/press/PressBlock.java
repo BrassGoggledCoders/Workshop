@@ -5,18 +5,19 @@ import javax.annotation.Nonnull;
 import com.hrznstudio.titanium.api.IFactory;
 import com.hrznstudio.titanium.block.BlockRotation;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.*;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import xyz.brassgoggledcoders.workshop.Workshop;
 
 public class PressBlock extends BlockRotation<PressTile> {
 
     public PressBlock() {
         super("press", Properties.from(Blocks.IRON_BLOCK), PressTile.class);
+        setItemGroup(Workshop.workshopTab);
     }
 
     @Nonnull

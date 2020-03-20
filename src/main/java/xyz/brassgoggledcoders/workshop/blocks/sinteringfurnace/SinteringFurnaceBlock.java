@@ -7,11 +7,13 @@ import com.hrznstudio.titanium.block.BlockRotation;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.util.BlockRenderLayer;
+import xyz.brassgoggledcoders.workshop.Workshop;
 
 public class SinteringFurnaceBlock extends BlockRotation<SinteringFurnaceTile> {
 
     public SinteringFurnaceBlock() {
         super("sintering_furnace", Properties.from(Blocks.FURNACE), SinteringFurnaceTile.class);
+        setItemGroup(Workshop.workshopTab);
     }
 
     @Nonnull

@@ -7,7 +7,10 @@ import org.apache.logging.log4j.Logger;
 
 import com.hrznstudio.titanium.module.Module;
 import com.hrznstudio.titanium.module.ModuleController;
+import com.hrznstudio.titanium.tab.TitaniumTab;
 
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -18,9 +21,7 @@ import xyz.brassgoggledcoders.workshop.blocks.press.PressTile;
 import xyz.brassgoggledcoders.workshop.blocks.press.PressTileEntityRenderer;
 import xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace.SinteringFurnaceTile;
 import xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace.SinteringTileEntityRenderer;
-import xyz.brassgoggledcoders.workshop.registries.Blocks;
-import xyz.brassgoggledcoders.workshop.registries.Items;
-import xyz.brassgoggledcoders.workshop.registries.Recipes;
+import xyz.brassgoggledcoders.workshop.registries.*;
 
 //Main Class
 @Mod(MOD_ID)
@@ -28,6 +29,8 @@ public class Workshop extends ModuleController {
     public static final String MOD_ID = "workshop";
 
     public static Logger LOGGER = LogManager.getLogger();
+
+    public static ItemGroup workshopTab = new TitaniumTab(MOD_ID, () -> new ItemStack(net.minecraft.item.Items.APPLE));
 
     public Workshop() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
@@ -43,8 +46,7 @@ public class Workshop extends ModuleController {
         ClientRegistry.bindTileEntitySpecialRenderer(SinteringFurnaceTile.class, new SinteringTileEntityRenderer());
     }
 
-
-        @Override
+    @Override
     protected void initModules() {
         Module.Builder blocks = Module.builder("blocks").description("Module for all the blocks in WorkShop");
         new BlockNames().generateFeatures().forEach(blocks::feature);

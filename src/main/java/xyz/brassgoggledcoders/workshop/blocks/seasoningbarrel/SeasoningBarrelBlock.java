@@ -8,6 +8,7 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.*;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
+import xyz.brassgoggledcoders.workshop.Workshop;
 
 public class SeasoningBarrelBlock extends BlockTileBase<SeasoningBarrelTile> {
 
@@ -16,6 +17,7 @@ public class SeasoningBarrelBlock extends BlockTileBase<SeasoningBarrelTile> {
     public SeasoningBarrelBlock() {
         super("seasoning_barrel", Properties.from(Blocks.IRON_BLOCK), SeasoningBarrelTile.class);
         this.setDefaultState((BlockState) this.getDefaultState().with(FACING, Direction.DOWN));
+        setItemGroup(Workshop.workshopTab);
     }
 
     @Override

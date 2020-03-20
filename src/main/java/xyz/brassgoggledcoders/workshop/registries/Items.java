@@ -4,14 +4,13 @@ import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
 import net.minecraft.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class Items {
 
     private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MOD_ID);
-    public static final RegistryObject<Item> WORKICON = ITEMS.register("workicon", () -> new Item(new Item.Properties()));
+    //public static final RegistryObject<Item> WORKICON = ITEMS.register("workicon", () -> new Item(new Item.Properties()));
 
 /*
     //Alembic Outputs

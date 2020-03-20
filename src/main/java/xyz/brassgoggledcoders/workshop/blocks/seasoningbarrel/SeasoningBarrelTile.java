@@ -9,6 +9,7 @@ import com.hrznstudio.titanium.block.tile.inventory.SidedInvHandler;
 import com.hrznstudio.titanium.block.tile.progress.PosProgressBar;
 
 import net.minecraft.item.DyeColor;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.Workshop;
@@ -17,6 +18,8 @@ import xyz.brassgoggledcoders.workshop.recipes.SeasoningBarrelRecipe;
 import xyz.brassgoggledcoders.workshop.registries.Recipes;
 
 public class SeasoningBarrelTile extends WorkshopGUIMachine {
+
+    private static int tankSize = 4000; // mB
 
     @Save
     private SidedInvHandler inputInventory;
@@ -33,12 +36,12 @@ public class SeasoningBarrelTile extends WorkshopGUIMachine {
         super(SEASONING_BARREL_BLOCK, 76, 42, 100, PosProgressBar.BarDirection.HORIZONTAL_RIGHT);
         this.addInventory(this.inputInventory = (SidedInvHandler) new SidedInvHandler("inputInventory", 29, 42, 1, 0)
                 .setColor(DyeColor.LIGHT_BLUE).setTile(this).setOnSlotChanged((stack, integer) -> checkForRecipe()));
-        this.addTank(this.inputFluidTank = (SidedFluidTank) new SidedFluidTank("inputFluidTank", 4000, 52, 20, 1)
+        this.addTank(this.inputFluidTank = (SidedFluidTank) new SidedFluidTank("inputFluidTank", tankSize, 52, 20, 1)
                 .setColor(DyeColor.BROWN).setTile(this).setTankAction(PosFluidTank.Action.FILL)
                 .setOnContentChange(this::checkForRecipe));
         this.addInventory(this.outputInventory = (SidedInvHandler) new SidedInvHandler("outputInventory", 130, 42, 1, 2)
                 .setColor(DyeColor.BLUE).setInputFilter((stack, integer) -> false).setTile(this));
-        this.addTank(this.outputFluidTank = (SidedFluidTank) new SidedFluidTank("outputFluidTank", 4000, 105, 20, 1)
+        this.addTank(this.outputFluidTank = (SidedFluidTank) new SidedFluidTank("outputFluidTank", tankSize, 105, 20, 1)
                 .setColor(DyeColor.BLACK).setTile(this).setTankAction(PosFluidTank.Action.DRAIN));
     }
 
@@ -74,7 +77,10 @@ public class SeasoningBarrelTile extends WorkshopGUIMachine {
                     }
                 }
                 for(int i = 0; i < outputInventory.getSlots(); i++) {
-                    outputInventory.insertItem(0, seasoningBarrelRecipe.itemOut, false);
+                    ItemStack itemOut = seasoningBarrelRecipe.itemOut;
+                    if(itemOut != null) {
+                        outputInventory.insertItem(0, itemOut, false);
+                    }
                 }
             }
         };
