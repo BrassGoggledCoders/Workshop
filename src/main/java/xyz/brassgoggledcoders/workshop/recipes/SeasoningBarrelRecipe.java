@@ -1,6 +1,6 @@
 package xyz.brassgoggledcoders.workshop.recipes;
 
-import static xyz.brassgoggledcoders.workshop.registries.Recipes.SEASONING_BARREL_SERIALIZER;
+import static xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes.SEASONING_BARREL_SERIALIZER;
 
 import com.hrznstudio.titanium.block.tile.fluid.PosFluidTank;
 import com.hrznstudio.titanium.recipe.serializer.GenericSerializer;

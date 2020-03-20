@@ -1,6 +1,6 @@
 package xyz.brassgoggledcoders.workshop.recipes;
 
-import static xyz.brassgoggledcoders.workshop.registries.Recipes.ALEMBIC_SERIALIZER;
+import static xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes.ALEMBIC_SERIALIZER;
 
 import java.util.ArrayList;
 import java.util.List;

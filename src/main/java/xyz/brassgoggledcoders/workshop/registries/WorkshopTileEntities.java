@@ -1,6 +1,6 @@
 package xyz.brassgoggledcoders.workshop.registries;
 
-public class TileEntities {
+public class WorkshopTileEntities {
     /*
     private static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, MOD_ID);
 

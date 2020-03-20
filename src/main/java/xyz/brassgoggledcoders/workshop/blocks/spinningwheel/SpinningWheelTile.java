@@ -15,7 +15,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.recipes.SpinningWheelRecipe;
-import xyz.brassgoggledcoders.workshop.registries.Recipes;
+import xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes;
 
 public class SpinningWheelTile extends TileActive {
 
@@ -47,7 +47,7 @@ public class SpinningWheelTile extends TileActive {
                 currentRecipe = this.getWorld().getRecipeManager()
                         .getRecipes()
                         .stream()
-                        .filter(recipe -> recipe.getType() == Recipes.SPINNING_WHEEL)
+                        .filter(recipe -> recipe.getType() == WorkshopRecipes.SPINNING_WHEEL)
                         .map(recipe -> (SpinningWheelRecipe) recipe)
                         .filter(this::matches)
                         .findFirst()

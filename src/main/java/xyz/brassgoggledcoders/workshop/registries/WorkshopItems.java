@@ -7,7 +7,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class Items {
+public class WorkshopItems {
 
     private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MOD_ID);
     //public static final RegistryObject<Item> WORKICON = ITEMS.register("workicon", () -> new Item(new Item.Properties()));

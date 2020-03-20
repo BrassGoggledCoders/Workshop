@@ -16,7 +16,7 @@ import net.minecraft.util.Hand;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import xyz.brassgoggledcoders.workshop.recipes.PressRecipe;
-import xyz.brassgoggledcoders.workshop.registries.Recipes;
+import xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes;
 
 public class PressTile extends TileActive {
 
@@ -108,7 +108,7 @@ public class PressTile extends TileActive {
                 currentRecipe = this.getWorld().getRecipeManager()
                         .getRecipes()
                         .stream()
-                        .filter(recipe -> recipe.getType() == Recipes.PRESS)
+                        .filter(recipe -> recipe.getType() == WorkshopRecipes.PRESS)
                         .map(recipe -> (PressRecipe) recipe)
                         .filter(this::matches)
                         .findFirst()

@@ -13,7 +13,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
 import xyz.brassgoggledcoders.workshop.recipes.SinteringFurnaceRecipe;
-import xyz.brassgoggledcoders.workshop.registries.Recipes;
+import xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes;
 
 public class SinteringFurnaceTile extends WorkshopGUIMachine {
 
@@ -89,7 +89,7 @@ public class SinteringFurnaceTile extends WorkshopGUIMachine {
                 currentRecipe = this.getWorld().getRecipeManager()
                         .getRecipes()
                         .stream()
-                        .filter(recipe -> recipe.getType() == Recipes.SINTERING_FURNACE)
+                        .filter(recipe -> recipe.getType() == WorkshopRecipes.SINTERING_FURNACE)
                         .map(recipe -> (SinteringFurnaceRecipe) recipe)
                         .filter(this::matches)
                         .findFirst()

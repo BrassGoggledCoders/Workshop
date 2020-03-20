@@ -15,7 +15,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
 import xyz.brassgoggledcoders.workshop.recipes.SeasoningBarrelRecipe;
-import xyz.brassgoggledcoders.workshop.registries.Recipes;
+import xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes;
 
 public class SeasoningBarrelTile extends WorkshopGUIMachine {
 
@@ -90,7 +90,7 @@ public class SeasoningBarrelTile extends WorkshopGUIMachine {
         if(isServer()) {
             if(currentRecipe == null || !currentRecipe.matches(inputInventory, inputFluidTank)) {
                 currentRecipe = this.getWorld().getRecipeManager().getRecipes().stream()
-                        .filter(recipe -> recipe.getType() == Recipes.SEASONING_BARREL)
+                        .filter(recipe -> recipe.getType() == WorkshopRecipes.SEASONING_BARREL)
                         .map(recipe -> (SeasoningBarrelRecipe) recipe).filter(this::matches).findFirst().orElse(null);
             }
         }

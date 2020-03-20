@@ -1,6 +1,6 @@
 package xyz.brassgoggledcoders.workshop.recipes;
 
-import static xyz.brassgoggledcoders.workshop.registries.Recipes.PRESS_SERIALIZER;
+import static xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes.PRESS_SERIALIZER;
 
 import com.hrznstudio.titanium.recipe.serializer.GenericSerializer;
 import com.hrznstudio.titanium.recipe.serializer.SerializableRecipe;

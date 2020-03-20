@@ -30,15 +30,16 @@ public class Workshop extends ModuleController {
 
     public static Logger LOGGER = LogManager.getLogger();
 
-    public static ItemGroup workshopTab = new TitaniumTab(MOD_ID, () -> new ItemStack(net.minecraft.item.Items.APPLE));
+    public static ItemGroup workshopTab = new TitaniumTab(MOD_ID,
+            () -> new ItemStack(net.minecraft.block.Blocks.ANVIL));// TODO ICON
 
     public Workshop() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        Recipes.register(modBus);
-        Items.register(modBus);
-        Blocks.register(modBus);
+        WorkshopRecipes.register(modBus);
+        WorkshopItems.register(modBus);
+        WorkshopBlocks.register(modBus);
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
