@@ -1,0 +1,19 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+      "textures": {
+        "texture": "minecraft:block/obsidian"
+      },
+      "model": "minecraft:block/pressure_plate_up"
+    },
+    "variants": {
+        "powered": { 
+            "true": {
+                "model": "minecraft:block/pressure_plate_down"
+            },
+            "false": { 
+                "model": "minecraft:block/pressure_plate_up" 
+            }
+        }
+    }
+}
