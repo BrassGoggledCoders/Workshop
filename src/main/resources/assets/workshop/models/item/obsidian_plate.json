@@ -1,3 +1,6 @@
 {
-    "parent": "workshop:block/obsidian_plate"
+  "parent":"item/generated",
+  "textures": {
+    "layer0":"minecraft:block/obsidian"
+  }
 }

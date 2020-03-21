@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "workshop:broken_anvil"
+  },
+  "result": {
+    "item": "minecraft:iron_block",
+    "count": 3
+  },
+  "experience": 0.1,
+  "cookingtime": 300
+}

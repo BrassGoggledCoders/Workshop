@@ -6,5 +6,6 @@
     "block.workshop.sintering_furnace": "Sintering Furnace",
     "block.workshop.spinning_wheel": "Spinning Wheel",
     "block.workshop.alembic": "Alembic",
-    "block.workshop.obsidian_plate": "Obsidian Plate"
+    "block.workshop.obsidian_plate": "Obsidian Plate",
+    "block.workshop.broken_anvil": "Broken Anvil"
 }
