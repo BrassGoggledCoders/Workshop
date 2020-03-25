@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BDB",
+    "G G",
+    "BFB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:bricks"
+    },
+    "G": {
+      "tag": "forge:glass"
+    },
+    "D": {
+      "item": "minecraft:dropper"
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    }
+  },
+  "result": {
+    "item": "workshop:sintering_furnace"
+  }
+}
