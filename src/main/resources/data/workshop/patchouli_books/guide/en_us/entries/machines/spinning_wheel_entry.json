@@ -1,0 +1,11 @@
+{
+    "name": "Spinning Wheel",
+    "icon": "workshop:spinning_wheel",
+    "category": "machine_category",
+    "pages": [
+        {
+            "type": "text",
+            "text": "The $(item)Spinning Wheel$() takes fibers and often something else and transforms it into threads, cords, or ropes."
+        }
+    ]
+}
