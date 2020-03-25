@@ -7,5 +7,8 @@
     "block.workshop.spinning_wheel": "Spinning Wheel",
     "block.workshop.alembic": "Alembic",
     "block.workshop.obsidian_plate": "Obsidian Plate",
-    "block.workshop.broken_anvil": "Broken Anvil"
+    "block.workshop.broken_anvil": "Broken Anvil",
+    
+    "guide.workshop.name": "Workshop Guide",
+    "guide.workshop.landing_text": "A pocket handbook to the world of small scale manufacturing."
 }

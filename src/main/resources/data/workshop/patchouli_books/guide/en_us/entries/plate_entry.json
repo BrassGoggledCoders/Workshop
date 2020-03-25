@@ -1,0 +1,11 @@
+{
+    "name": "Obsidian Plate",
+    "icon": "workshop:obsidian_plate",
+    "category": "misc_category",
+    "pages": [
+        {
+            "type": "text",
+            "text": "The $(item)Obsidian Plate$() acts like a $(item)Pressure Plate$()."
+        }
+    ]
+}
