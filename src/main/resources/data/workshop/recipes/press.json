@@ -1,25 +1,25 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "BDB",
-    "G G",
-    "BFB"
+    "WPW",
+    "WGW",
+    "WBW"
   ],
   "key": {
-    "B": {
-      "item": "minecraft:bricks"
+    "W": {
+      "tag": "minecraft:planks"
     },
     "G": {
       "tag": "forge:glass"
     },
-    "D": {
-      "item": "minecraft:dropper"
+    "P": {
+      "item": "minecraft:piston"
     },
-    "F": {
-      "item": "minecraft:furnace"
+    "B": {
+      "item": "minecraft:barrel"
     }
   },
   "result": {
-    "item": "workshop:sintering_furnace"
+    "item": "workshop:press"
   }
 }

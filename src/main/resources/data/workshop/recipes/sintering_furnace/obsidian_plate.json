@@ -7,7 +7,7 @@
     "count": 4
   },
   "itemOut": {
-    "item": "minecraft:apple",
+    "item": "workshop:obsidian_plate",
     "count": 1
   },
   "type": "workshop:sintering_furnace"

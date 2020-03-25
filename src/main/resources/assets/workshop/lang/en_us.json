@@ -8,6 +8,8 @@
     "block.workshop.alembic": "Alembic",
     "block.workshop.obsidian_plate": "Obsidian Plate",
     "block.workshop.broken_anvil": "Broken Anvil",
+
+    "item.workshop.caramel_apple": "Caramel Apple",
     
     "guide.workshop.name": "Workshop Guide",
     "guide.workshop.landing_text": "A pocket handbook to the world of small scale manufacturing."
