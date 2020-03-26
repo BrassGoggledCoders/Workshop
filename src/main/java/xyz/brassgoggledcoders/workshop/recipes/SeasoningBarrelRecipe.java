@@ -1,11 +1,8 @@
 package xyz.brassgoggledcoders.workshop.recipes;
 
-import static xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes.SEASONING_BARREL_SERIALIZER;
-
-import com.hrznstudio.titanium.block.tile.fluid.PosFluidTank;
+import com.hrznstudio.titanium.component.fluid.FluidTankComponent;
 import com.hrznstudio.titanium.recipe.serializer.GenericSerializer;
 import com.hrznstudio.titanium.recipe.serializer.SerializableRecipe;
-
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
@@ -14,6 +11,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
+
+import static xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes.SEASONING_BARREL_SERIALIZER;
 
 public class SeasoningBarrelRecipe extends SerializableRecipe {
     public ItemStack itemIn = ItemStack.EMPTY;
@@ -26,7 +25,7 @@ public class SeasoningBarrelRecipe extends SerializableRecipe {
         super(resourceLocation);
     }
 
-    public boolean matches(IItemHandler handler, PosFluidTank tank) {
+    public boolean matches(IItemHandler handler, FluidTankComponent tank) {
         if (itemOut == null || tank == null || fluidInput == null) return false;
         return handler.getStackInSlot(0).isItemEqual(itemIn) && tank.drainForced(fluidInput, IFluidHandler.FluidAction.SIMULATE).getAmount() == fluidInput.getAmount();
     }

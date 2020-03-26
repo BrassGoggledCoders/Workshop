@@ -1,51 +1,50 @@
 package xyz.brassgoggledcoders.workshop.blocks.press;
 
-import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.PRESS_BLOCK;
-
 import com.hrznstudio.titanium.annotation.Save;
-import com.hrznstudio.titanium.block.tile.TileActive;
-import com.hrznstudio.titanium.block.tile.fluid.PosFluidTank;
-import com.hrznstudio.titanium.block.tile.fluid.SidedFluidTank;
-import com.hrznstudio.titanium.block.tile.inventory.SidedInvHandler;
-import com.hrznstudio.titanium.block.tile.progress.PosProgressBar;
-
+import com.hrznstudio.titanium.block.tile.ActiveTile;
+import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
+import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
+import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.DyeColor;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import xyz.brassgoggledcoders.workshop.recipes.PressRecipe;
+import xyz.brassgoggledcoders.workshop.registries.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes;
 
-public class PressTile extends TileActive {
+import javax.annotation.Nonnull;
+
+public class PressTile extends ActiveTile<PressTile> {
 
     @Save
-    private PosProgressBar progressBar;
+    private ProgressBarComponent<PressTile> progressBar;
     @Save
-    private SidedInvHandler inputInventory;
+    private SidedInventoryComponent<PressTile> inputInventory;
     @Save
-    private SidedFluidTank outputFluid;
+    private SidedFluidTankComponent<PressTile> outputFluid;
 
     private PressRecipe currentRecipe;
 
     public PressTile() {
-        super(PRESS_BLOCK);
-        this.addProgressBar(progressBar = new PosProgressBar(0, 0, 120).
-                setTile(this).
-                setBarDirection(PosProgressBar.BarDirection.HORIZONTAL_RIGHT).
+        super(WorkshopBlocks.PRESS.getBlock());
+        this.addProgressBar(progressBar = new ProgressBarComponent(0, 0, 120).
+                setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT).
                 setCanReset(tileEntity -> true).
                 setOnStart(() -> progressBar.setMaxProgress(getMaxProgress())).
                 setCanIncrease(tileEntity -> canIncrease()).
                 setOnFinishWork(() -> onFinish().run()));
-        this.addInventory(this.inputInventory = (SidedInvHandler) new SidedInvHandler("inputInventory", 34, 25, 1, 0)
+        this.addInventory(this.inputInventory = (SidedInventoryComponent) new SidedInventoryComponent("inputInventory", 34, 25, 1, 0)
                 .setColor(DyeColor.RED)
-                .setTile(this)
                 .setOnSlotChanged((stack, integer) -> checkForRecipe()));
-        this.addTank(this.outputFluid = (SidedFluidTank) new SidedFluidTank("output_fluid", 4000, 149, 20, 3).
+        this.addTank(this.outputFluid = (SidedFluidTankComponent) new SidedFluidTankComponent("output_fluid", 4000, 149, 20, 3).
                 setColor(DyeColor.MAGENTA).
-                setTile(this).
-                setTankAction(PosFluidTank.Action.DRAIN));
+                setTankAction(SidedFluidTankComponent.Action.DRAIN));
 
     }
 
@@ -67,7 +66,7 @@ public class PressTile extends TileActive {
     }
 
     @Override
-    public boolean onActivated(PlayerEntity playerIn, Hand hand, Direction facing, double hitX, double hitY, double hitZ) {
+    public ActionResultType onActivated(PlayerEntity playerIn, Hand hand, Direction facing, double hitX, double hitY, double hitZ) {
             ItemStack heldItem = playerIn.getHeldItem(hand);
             FluidStack fluidOut = outputFluid.getFluid();
             if (heldItem.isItemEqual(Items.BUCKET.getDefaultInstance())) {
@@ -76,7 +75,7 @@ public class PressTile extends TileActive {
                     playerIn.inventory.addItemStackToInventory(item);
                     heldItem.shrink(1);
                     outputFluid.drain(1000, IFluidHandler.FluidAction.EXECUTE);
-                    return true;
+                    return ActionResultType.SUCCESS;
                 }
             } else if (!heldItem.isEmpty()) {
                 if (inputInventory.getStackInSlot(0).isEmpty()) {
@@ -84,7 +83,7 @@ public class PressTile extends TileActive {
                     int count = heldItem.getCount();
                     heldItem.shrink(count);
                     checkForRecipe();
-                    return true;
+                    return ActionResultType.SUCCESS;
                 }
             } else if(heldItem.isEmpty()) {
                 ItemStack inputStack = inputInventory.getStackInSlot(0);
@@ -93,9 +92,15 @@ public class PressTile extends TileActive {
                     ItemStack stack = inputInventory.extractItem(0, count, false);
                     playerIn.addItemStackToInventory(stack);
                 }
-                return true;
+                return ActionResultType.SUCCESS;
             }
-        return false;
+        return ActionResultType.PASS;
+    }
+
+    @Nonnull
+    @Override
+    public PressTile getSelf() {
+        return this;
     }
 
     public int getMaxProgress() {
@@ -117,11 +122,11 @@ public class PressTile extends TileActive {
         }
     }
 
-    public SidedInvHandler getInputInventory() {
+    public SidedInventoryComponent getInputInventory() {
         return inputInventory;
     }
 
-    public SidedFluidTank getOutputFluid() {
+    public SidedFluidTankComponent getOutputFluid() {
         return outputFluid;
     }
 

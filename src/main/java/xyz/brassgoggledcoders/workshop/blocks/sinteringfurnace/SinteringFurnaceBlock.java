@@ -1,30 +1,23 @@
 package xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace;
 
-import javax.annotation.Nonnull;
-
 import com.hrznstudio.titanium.api.IFactory;
-import com.hrznstudio.titanium.block.BlockRotation;
-
+import com.hrznstudio.titanium.block.BasicTileBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.util.BlockRenderLayer;
-import xyz.brassgoggledcoders.workshop.Workshop;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.Direction;
 
-public class SinteringFurnaceBlock extends BlockRotation<SinteringFurnaceTile> {
+//TODO: Return to using Titanium base class when it has the right constructor
+public class SinteringFurnaceBlock extends BasicTileBlock<SinteringFurnaceTile> {
+
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public SinteringFurnaceBlock() {
-        super("sintering_furnace", Properties.from(Blocks.FURNACE), SinteringFurnaceTile.class);
-        setItemGroup(Workshop.workshopTab);
-    }
-
-    @Nonnull
-    @Override
-    public RotationType getRotationType() {
-        return RotationType.FOUR_WAY;
-    }
-
-    @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT;
+        super(Properties.from(Blocks.FURNACE), SinteringFurnaceTile.class);
+        this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH));
     }
 
     @Override
@@ -32,4 +25,9 @@ public class SinteringFurnaceBlock extends BlockRotation<SinteringFurnaceTile> {
         return SinteringFurnaceTile::new;
     }
 
+    @Override
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        super.fillStateContainer(builder);
+        builder.add(FACING);
+    }
 }

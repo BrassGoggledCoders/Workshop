@@ -1,23 +1,23 @@
 package xyz.brassgoggledcoders.workshop.blocks.seasoningbarrel;
 
 import com.hrznstudio.titanium.api.IFactory;
-import com.hrznstudio.titanium.block.BlockTileBase;
-
-import net.minecraft.block.*;
+import com.hrznstudio.titanium.block.BasicTileBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.*;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
-import xyz.brassgoggledcoders.workshop.Workshop;
 
-public class SeasoningBarrelBlock extends BlockTileBase<SeasoningBarrelTile> {
+public class SeasoningBarrelBlock extends BasicTileBlock<SeasoningBarrelTile> {
 
-    public static final EnumProperty<Direction> FACING;
+    public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     public SeasoningBarrelBlock() {
-        super("seasoning_barrel", Properties.from(Blocks.IRON_BLOCK), SeasoningBarrelTile.class);
-        this.setDefaultState((BlockState) this.getDefaultState().with(FACING, Direction.DOWN));
-        setItemGroup(Workshop.workshopTab);
+        super(Properties.from(Blocks.OAK_PLANKS).notSolid(), SeasoningBarrelTile.class);
+        this.setDefaultState(this.getDefaultState().with(FACING, Direction.DOWN));
     }
 
     @Override
@@ -26,19 +26,13 @@ public class SeasoningBarrelBlock extends BlockTileBase<SeasoningBarrelTile> {
     }
 
     @Override
-    public boolean isSolid(BlockState state) {
-        return false;
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        super.fillStateContainer(builder);
+        builder.add(FACING);
     }
 
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> state) {
-        state.add(new IProperty[] { FACING });
-    }
-
+    @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return (BlockState) this.getDefaultState().with(FACING, context.getFace());
-    }
-
-    static {
-        FACING = BlockStateProperties.FACING;
+        return this.getDefaultState().with(FACING, context.getFace());
     }
 }

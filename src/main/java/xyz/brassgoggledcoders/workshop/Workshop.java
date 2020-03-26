@@ -16,7 +16,6 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import xyz.brassgoggledcoders.workshop.blocks.BlockNames;
 import xyz.brassgoggledcoders.workshop.blocks.press.PressTile;
 import xyz.brassgoggledcoders.workshop.blocks.press.PressTileEntityRenderer;
 import xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace.SinteringFurnaceTile;
@@ -30,7 +29,7 @@ public class Workshop extends ModuleController {
 
     public static Logger LOGGER = LogManager.getLogger();
 
-    public static ItemGroup workshopTab = new TitaniumTab(MOD_ID,
+    public static ItemGroup ITEM_GROUP = new TitaniumTab(MOD_ID,
             () -> new ItemStack(net.minecraft.block.Blocks.ANVIL));// TODO ICON
 
     public Workshop() {
@@ -42,16 +41,13 @@ public class Workshop extends ModuleController {
         WorkshopBlocks.register(modBus);
     }
 
-    private void doClientStuff(final FMLClientSetupEvent event) {
-        ClientRegistry.bindTileEntitySpecialRenderer(PressTile.class, new PressTileEntityRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(SinteringFurnaceTile.class, new SinteringTileEntityRenderer());
-    }
-
     @Override
     protected void initModules() {
-        Module.Builder blocks = Module.builder("blocks").description("Module for all the blocks in WorkShop");
-        new BlockNames().generateFeatures().forEach(blocks::feature);
-        addModule(blocks);
+
     }
 
+    private void doClientStuff(final FMLClientSetupEvent event) {
+        ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.PRESS.getTileEntityType(), PressTileEntityRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.SINTERING_FURNACE.getTileEntityType(), SinteringTileEntityRenderer::new);
+    }
 }

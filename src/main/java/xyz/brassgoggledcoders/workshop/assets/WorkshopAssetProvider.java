@@ -8,8 +8,8 @@ import javax.annotation.Nullable;
 
 import com.hrznstudio.titanium.api.client.IAsset;
 import com.hrznstudio.titanium.api.client.IAssetType;
-import com.hrznstudio.titanium.client.gui.asset.IAssetProvider;
 
+import com.hrznstudio.titanium.client.screen.asset.IAssetProvider;
 import net.minecraft.util.ResourceLocation;
 
 public class WorkshopAssetProvider implements IAssetProvider {

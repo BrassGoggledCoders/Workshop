@@ -1,38 +1,38 @@
 package xyz.brassgoggledcoders.workshop.blocks;
 
 import com.hrznstudio.titanium.annotation.Save;
-import com.hrznstudio.titanium.block.BlockTileBase;
-import com.hrznstudio.titanium.block.tile.TileActive;
-import com.hrznstudio.titanium.block.tile.progress.PosProgressBar;
-
+import com.hrznstudio.titanium.block.BasicTileBlock;
+import com.hrznstudio.titanium.block.tile.ActiveTile;
+import com.hrznstudio.titanium.block.tile.BasicTile;
+import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 
-public abstract class WorkshopGUIMachine extends TileActive {
-
+public abstract class WorkshopGUIMachine<T extends ActiveTile<T>> extends ActiveTile<T> {
     @Save
-    private PosProgressBar progressBar;
+    private ProgressBarComponent progressBar;
 
-    public WorkshopGUIMachine(BlockTileBase<?> base, int x, int y, int maxprogress,
-            PosProgressBar.BarDirection direction) {
+    public WorkshopGUIMachine(BasicTileBlock base, int x, int y, int maxprogress, ProgressBarComponent.BarDirection direction) {
         super(base);
-        this.addProgressBar(progressBar = new PosProgressBar(x, y, maxprogress).setTile(this).setBarDirection(direction)
-                .setCanReset(tileEntity -> true).setOnStart(() -> progressBar.setMaxProgress(getMaxProgress()))
-                .setCanIncrease(tileEntity -> canIncrease()).setOnFinishWork(() -> onFinish().run()));
+        this.addProgressBar(progressBar = new ProgressBarComponent(x, y, maxprogress)
+                .setBarDirection(direction)
+                .setCanReset(tileEntity -> true)
+                .setOnStart(() -> progressBar.setMaxProgress(getMaxProgress()))
+                .setCanIncrease(tileEntity -> canIncrease())
+                .setOnFinishWork(() -> onFinish().run()));
     }
 
-    public PosProgressBar getProgressBar() {
+    public ProgressBarComponent getProgressBar() {
         return progressBar;
     }
 
     @Override
-    public boolean onActivated(PlayerEntity playerIn, Hand hand, Direction facing, double hitX, double hitY,
-            double hitZ) {
-        if(super.onActivated(playerIn, hand, facing, hitX, hitY, hitZ))
-            return true;
+    public ActionResultType onActivated(PlayerEntity playerIn, Hand hand, Direction facing, double hitX, double hitY,
+                                        double hitZ) {
         openGui(playerIn);
-        return true;
+        return ActionResultType.SUCCESS;
     }
 
     public abstract boolean canIncrease();
@@ -42,5 +42,4 @@ public abstract class WorkshopGUIMachine extends TileActive {
     }
 
     public abstract Runnable onFinish();
-
 }

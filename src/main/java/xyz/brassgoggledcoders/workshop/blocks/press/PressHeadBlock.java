@@ -1,9 +1,9 @@
 package xyz.brassgoggledcoders.workshop.blocks.press;
 
 import com.hrznstudio.titanium.api.IFactory;
-import com.hrznstudio.titanium.block.BlockRotation;
+import com.hrznstudio.titanium.block.RotatableBlock;
 
-public class PressHeadBlock extends BlockRotation<PressTile> {
+public class PressHeadBlock extends RotatableBlock<PressTile> {
 
     public PressHeadBlock(String name, Properties properties, Class<PressTile> tileClass) {
         super(name, properties, tileClass);

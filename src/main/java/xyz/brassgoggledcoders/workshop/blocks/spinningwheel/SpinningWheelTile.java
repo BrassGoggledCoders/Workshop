@@ -1,44 +1,42 @@
 package xyz.brassgoggledcoders.workshop.blocks.spinningwheel;
 
-
-import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.SPINNING_WHEEL_BLOCK;
-
 import com.hrznstudio.titanium.annotation.Save;
-import com.hrznstudio.titanium.block.tile.TileActive;
-import com.hrznstudio.titanium.block.tile.inventory.SidedInvHandler;
-
+import com.hrznstudio.titanium.block.tile.ActiveTile;
+import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.recipes.SpinningWheelRecipe;
+import xyz.brassgoggledcoders.workshop.registries.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes;
 
-public class SpinningWheelTile extends TileActive {
+import javax.annotation.Nonnull;
+
+public class SpinningWheelTile extends ActiveTile<SpinningWheelTile> {
 
     @Save
-    private SidedInvHandler inputInventory;
+    private SidedInventoryComponent inputInventory;
     @Save
-    private SidedInvHandler outputInventory;
+    private SidedInventoryComponent outputInventory;
 
     private SpinningWheelRecipe currentRecipe;
 
     private int progress = 0;
 
     public SpinningWheelTile() {
-        super(SPINNING_WHEEL_BLOCK);
-        this.addInventory(this.inputInventory = (SidedInvHandler) new SidedInvHandler("inputInventory", 34, 25, 3, 0)
+        super(WorkshopBlocks.SPINNING_WHEEL.getBlock());
+        this.addInventory(this.inputInventory = (SidedInventoryComponent) new SidedInventoryComponent("inputInventory", 34, 25, 3, 0)
                 .setColor(DyeColor.RED)
                 .setRange(1, 3)
-                .setOnSlotChanged((stack, integer) -> checkForRecipe())
-                .setTile(this));
-        this.addInventory(this.outputInventory = (SidedInvHandler) new SidedInvHandler("outputInventory", 102, 44, 1, 0)
+                .setOnSlotChanged((stack, integer) -> checkForRecipe()));
+        this.addInventory(this.outputInventory = (SidedInventoryComponent) new SidedInventoryComponent("outputInventory", 102, 44, 1, 0)
                 .setColor(DyeColor.BLACK)
-                .setInputFilter((stack, integer) -> false)
-                .setTile(this));
+                .setInputFilter((stack, integer) -> false));
     }
 
     private void checkForRecipe() {
@@ -95,9 +93,9 @@ public class SpinningWheelTile extends TileActive {
     }
 
     @Override
-    public boolean onActivated(PlayerEntity playerIn, Hand hand, Direction facing, double hitX, double hitY, double hitZ) {
+    public ActionResultType onActivated(PlayerEntity playerIn, Hand hand, Direction facing, double hitX, double hitY, double hitZ) {
         if (!world.isRemote) {
-            if (!playerIn.isSneaking()) {
+            if (!playerIn.isCrouching()) {
                 extractInsertItem(playerIn, hand);
             } else {
                 if (!fullProgress() && currentRecipe != null) {
@@ -111,7 +109,13 @@ public class SpinningWheelTile extends TileActive {
                 }
             }
         }
-        return false;
+        return ActionResultType.PASS;
+    }
+
+    @Nonnull
+    @Override
+    public SpinningWheelTile getSelf() {
+        return this;
     }
 
     public void extractInsertItem(PlayerEntity player, Hand hand) {

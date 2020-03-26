@@ -34,7 +34,7 @@ public class WorkshopItems {
 
 */
 
-    public static final RegistryObject<Item> CARAMEL_APPLE = ITEMS.register("caramel_apple", () -> new Item(new Item.Properties().group(Workshop.workshopTab).food(Items.APPLE.getFood())));
+    public static final RegistryObject<Item> CARAMEL_APPLE = ITEMS.register("caramel_apple", () -> new Item(new Item.Properties().group(Workshop.ITEM_GROUP).food(Items.APPLE.getFood())));
 
     public static void register(IEventBus bus) {
         ITEMS.register(bus);

@@ -1,48 +1,50 @@
 package xyz.brassgoggledcoders.workshop.blocks.seasoningbarrel;
 
-import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.SEASONING_BARREL_BLOCK;
-
 import com.hrznstudio.titanium.annotation.Save;
-import com.hrznstudio.titanium.block.tile.fluid.PosFluidTank;
-import com.hrznstudio.titanium.block.tile.fluid.SidedFluidTank;
-import com.hrznstudio.titanium.block.tile.inventory.SidedInvHandler;
-import com.hrznstudio.titanium.block.tile.progress.PosProgressBar;
-
+import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
+import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
+import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
-import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
 import xyz.brassgoggledcoders.workshop.recipes.SeasoningBarrelRecipe;
+import xyz.brassgoggledcoders.workshop.registries.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes;
 
-public class SeasoningBarrelTile extends WorkshopGUIMachine {
+import javax.annotation.Nonnull;
 
-    private static int tankSize = 4000; // mB
+public class SeasoningBarrelTile extends WorkshopGUIMachine<SeasoningBarrelTile> {
+
+    private static final int tankSize = 4000; // mB
 
     @Save
-    private SidedInvHandler inputInventory;
+    private SidedInventoryComponent<SeasoningBarrelTile> inputInventory;
     @Save
-    private SidedFluidTank inputFluidTank;
+    private SidedFluidTankComponent<SeasoningBarrelTile> inputFluidTank;
     @Save
-    private SidedInvHandler outputInventory;
+    private SidedInventoryComponent<SeasoningBarrelTile> outputInventory;
     @Save
-    private SidedFluidTank outputFluidTank;
+    private SidedFluidTankComponent<SeasoningBarrelTile> outputFluidTank;
 
     private SeasoningBarrelRecipe currentRecipe;
 
     public SeasoningBarrelTile() {
-        super(SEASONING_BARREL_BLOCK, 76, 42, 100, PosProgressBar.BarDirection.HORIZONTAL_RIGHT);
-        this.addInventory(this.inputInventory = (SidedInvHandler) new SidedInvHandler("inputInventory", 29, 42, 1, 0)
-                .setColor(DyeColor.LIGHT_BLUE).setTile(this).setOnSlotChanged((stack, integer) -> checkForRecipe()));
-        this.addTank(this.inputFluidTank = (SidedFluidTank) new SidedFluidTank("inputFluidTank", tankSize, 52, 20, 1)
-                .setColor(DyeColor.BROWN).setTile(this).setTankAction(PosFluidTank.Action.FILL)
+        super(WorkshopBlocks.SEASONING_BARREL.getBlock(), 76, 42, 100, ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT);
+        this.addInventory(this.inputInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("inputInventory", 29, 42, 1, 0)
+                .setColor(DyeColor.LIGHT_BLUE)
+                .setOnSlotChanged((stack, integer) -> checkForRecipe()));
+        this.addTank(this.inputFluidTank = (SidedFluidTankComponent) new SidedFluidTankComponent("inputFluidTank", tankSize, 52, 20, 1)
+                .setColor(DyeColor.BROWN)
+                .setTankAction(SidedFluidTankComponent.Action.FILL)
                 .setOnContentChange(this::checkForRecipe));
-        this.addInventory(this.outputInventory = (SidedInvHandler) new SidedInvHandler("outputInventory", 130, 42, 1, 2)
-                .setColor(DyeColor.BLUE).setInputFilter((stack, integer) -> false).setTile(this));
-        this.addTank(this.outputFluidTank = (SidedFluidTank) new SidedFluidTank("outputFluidTank", tankSize, 105, 20, 1)
-                .setColor(DyeColor.BLACK).setTile(this).setTankAction(PosFluidTank.Action.DRAIN));
+        this.addInventory(this.outputInventory = (SidedInventoryComponent) new SidedInventoryComponent("outputInventory", 130, 42, 1, 2)
+                .setColor(DyeColor.BLUE)
+                .setInputFilter((stack, integer) -> false));
+        this.addTank(this.outputFluidTank = (SidedFluidTankComponent) new SidedFluidTankComponent("outputFluidTank", tankSize, 105, 20, 1)
+                .setColor(DyeColor.BLACK)
+                .setTankAction(SidedFluidTankComponent.Action.DRAIN));
     }
 
     @Override
@@ -91,13 +93,14 @@ public class SeasoningBarrelTile extends WorkshopGUIMachine {
             if(currentRecipe == null || !currentRecipe.matches(inputInventory, inputFluidTank)) {
                 currentRecipe = this.getWorld().getRecipeManager().getRecipes().stream()
                         .filter(recipe -> recipe.getType() == WorkshopRecipes.SEASONING_BARREL)
-                        .map(recipe -> (SeasoningBarrelRecipe) recipe).filter(this::matches).findFirst().orElse(null);
+                        .map(recipe -> (SeasoningBarrelRecipe) recipe).filter(recipe -> recipe.matches(inputInventory, inputFluidTank)).findFirst().orElse(null);
             }
         }
     }
 
-    private boolean matches(SeasoningBarrelRecipe seasoningBarrelRecipe) {
-        Workshop.LOGGER.info(seasoningBarrelRecipe.matches(inputInventory, inputFluidTank));
-        return seasoningBarrelRecipe.matches(inputInventory, inputFluidTank);
+    @Nonnull
+    @Override
+    public SeasoningBarrelTile getSelf() {
+        return this;
     }
 }

@@ -1,29 +1,27 @@
 package xyz.brassgoggledcoders.workshop.blocks.press;
 
-import javax.annotation.Nonnull;
-
 import com.hrznstudio.titanium.api.IFactory;
-import com.hrznstudio.titanium.block.BlockRotation;
-
-import net.minecraft.block.*;
-import net.minecraft.util.BlockRenderLayer;
+import com.hrznstudio.titanium.block.BasicTileBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import xyz.brassgoggledcoders.workshop.Workshop;
 
-public class PressBlock extends BlockRotation<PressTile> {
+//TODO: Return to using Titanium base rotation class when it has the right constructor
+public class PressBlock extends BasicTileBlock<PressTile> {
+
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public PressBlock() {
-        super("press", Properties.from(Blocks.IRON_BLOCK), PressTile.class);
-        setItemGroup(Workshop.workshopTab);
-    }
-
-    @Nonnull
-    @Override
-    public RotationType getRotationType() {
-        return RotationType.FOUR_WAY;
+        super(Properties.from(Blocks.IRON_BLOCK).notSolid(), PressTile.class);
+        this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH));
     }
 
     @Override
@@ -32,22 +30,18 @@ public class PressBlock extends BlockRotation<PressTile> {
     }
 
     @Override
-    public boolean isSolid(BlockState state) {
-        return false;
-    }
-
-    @Override
     public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
         return false;
     }
 
     @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT;
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 32.0D, 16.0D);
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 32.0D, 16.0D);
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        super.fillStateContainer(builder);
+        builder.add(FACING);
     }
 }

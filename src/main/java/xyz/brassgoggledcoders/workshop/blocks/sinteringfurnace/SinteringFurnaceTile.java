@@ -1,52 +1,48 @@
 package xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace;
 
 
-import static xyz.brassgoggledcoders.workshop.blocks.BlockNames.SINTERING_FURNACE_BLOCK;
-
 import com.hrznstudio.titanium.annotation.Save;
-import com.hrznstudio.titanium.block.tile.inventory.SidedInvHandler;
-import com.hrznstudio.titanium.block.tile.progress.PosProgressBar;
-
+import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
+import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
 import xyz.brassgoggledcoders.workshop.recipes.SinteringFurnaceRecipe;
+import xyz.brassgoggledcoders.workshop.registries.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes;
 
-public class SinteringFurnaceTile extends WorkshopGUIMachine {
+import javax.annotation.Nonnull;
+
+public class SinteringFurnaceTile extends WorkshopGUIMachine<SinteringFurnaceTile> {
 
     @Save
-    private SidedInvHandler powderInventory;
+    private SidedInventoryComponent powderInventory;
     @Save
-    private SidedInvHandler targetInputInventory;
+    private SidedInventoryComponent targetInputInventory;
     @Save
-    private SidedInvHandler outputInventory;
+    private SidedInventoryComponent outputInventory;
     @Save
-    private SidedInvHandler fuelInventory;
+    private SidedInventoryComponent fuelInventory;
 
     private int burnTime = 0;
 
     private SinteringFurnaceRecipe currentRecipe;
 
     public SinteringFurnaceTile() {
-        super(SINTERING_FURNACE_BLOCK, 76, 42, 100, PosProgressBar.BarDirection.HORIZONTAL_RIGHT);
+        super(WorkshopBlocks.SINTERING_FURNACE.getBlock(), 76, 42, 100, ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT);
 
-        this.addInventory(this.powderInventory = (SidedInvHandler) new SidedInvHandler("powderInventory", 70, 19, 2, 0)
+        this.addInventory(this.powderInventory = (SidedInventoryComponent) new SidedInventoryComponent("powderInventory", 70, 19, 2, 0)
                 .setColor(DyeColor.ORANGE)
-                .setTile(this)
                 .setOnSlotChanged((stack, integer) -> checkForRecipe()));
-        this.addInventory(this.targetInputInventory = (SidedInvHandler) new SidedInvHandler("targetInputInventory", 34, 42, 1, 0)
+        this.addInventory(this.targetInputInventory = (SidedInventoryComponent) new SidedInventoryComponent("targetInputInventory", 34, 42, 1, 0)
                 .setColor(DyeColor.YELLOW)
-                .setTile(this)
                 .setOnSlotChanged((stack, integer) -> checkForRecipe()));
-        this.addInventory(this.outputInventory = (SidedInvHandler) new SidedInvHandler("outputInventory", 120, 42, 1, 0)
-                .setColor(DyeColor.BLACK)
-                .setTile(this));
-        this.addInventory(this.fuelInventory = (SidedInvHandler) new SidedInvHandler("fuelInventory", 78, 70, 1, 0)
-                .setColor(DyeColor.RED)
-                .setTile(this));
+        this.addInventory(this.outputInventory = (SidedInventoryComponent) new SidedInventoryComponent("outputInventory", 120, 42, 1, 0)
+                .setColor(DyeColor.BLACK));
+        this.addInventory(this.fuelInventory = (SidedInventoryComponent) new SidedInventoryComponent("fuelInventory", 78, 70, 1, 0)
+                .setColor(DyeColor.RED));
 
     }
 
@@ -58,6 +54,12 @@ public class SinteringFurnaceTile extends WorkshopGUIMachine {
         } else{
             -- burnTime;
         }
+    }
+
+    @Nonnull
+    @Override
+    public SinteringFurnaceTile getSelf() {
+        return this;
     }
 
     @Override
@@ -91,17 +93,12 @@ public class SinteringFurnaceTile extends WorkshopGUIMachine {
                         .stream()
                         .filter(recipe -> recipe.getType() == WorkshopRecipes.SINTERING_FURNACE)
                         .map(recipe -> (SinteringFurnaceRecipe) recipe)
-                        .filter(this::matches)
+                        .filter(recipe -> recipe.matches(powderInventory, targetInputInventory))
                         .findFirst()
                         .orElse(null);
             }
         }
     }
-
-    private boolean matches(SinteringFurnaceRecipe sinteringFurnaceRecipe) {
-        return sinteringFurnaceRecipe.matches(powderInventory, targetInputInventory);
-    }
-
 
     @Override
     public Runnable onFinish() {
@@ -120,19 +117,19 @@ public class SinteringFurnaceTile extends WorkshopGUIMachine {
         };
     }
 
-    public SidedInvHandler getFuelInventory() {
+    public SidedInventoryComponent getFuelInventory() {
         return fuelInventory;
     }
 
-    public SidedInvHandler getOutputInventory() {
+    public SidedInventoryComponent getOutputInventory() {
         return outputInventory;
     }
 
-    public SidedInvHandler getPowderInventory() {
+    public SidedInventoryComponent getPowderInventory() {
         return powderInventory;
     }
 
-    public SidedInvHandler getTargetInputInventory() {
+    public SidedInventoryComponent getTargetInputInventory() {
         return targetInputInventory;
     }
 

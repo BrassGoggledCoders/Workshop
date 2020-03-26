@@ -1,6 +1,7 @@
 package xyz.brassgoggledcoders.workshop.blocks;
 
 import net.minecraft.block.*;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.FallingBlockEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
@@ -26,8 +27,8 @@ public class BrokenAnvilBlock extends FallingBlock {
     private static final VoxelShape X_AXIS_AABB = VoxelShapes.or(PART_BASE, PART_LOWER_X, PART_MID_X);
     private static final VoxelShape Z_AXIS_AABB = VoxelShapes.or(PART_BASE, PART_LOWER_Z, PART_MID_Z);
 
-    public BrokenAnvilBlock(Properties properties) {
-        super(properties);
+    public BrokenAnvilBlock() {
+        super(Properties.create(Material.ANVIL));
         this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
     }
 

@@ -1,20 +1,19 @@
 package xyz.brassgoggledcoders.workshop.assets;
 
+import com.hrznstudio.titanium.client.screen.addon.BasicScreenAddon;
+import com.hrznstudio.titanium.client.screen.asset.IAssetProvider;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.util.text.TextFormatting;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hrznstudio.titanium.client.gui.addon.BasicGuiAddon;
-import com.hrznstudio.titanium.client.gui.asset.IAssetProvider;
-
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.util.text.TextFormatting;
-
-public class HeatBarGuiAddon extends BasicGuiAddon {
-    private PosHeatBar heatBar;
+public class HeatBarScreenAddon extends BasicScreenAddon {
+    private HeatBarComponent heatBar;
     private IAssetProvider provider;
 
-    public HeatBarGuiAddon(int posX, int posY, PosHeatBar posHeatBar) {
+    public HeatBarScreenAddon(int posX, int posY, HeatBarComponent posHeatBar) {
         super(posX, posY);
         this.heatBar = posHeatBar;
     }
@@ -27,18 +26,20 @@ public class HeatBarGuiAddon extends BasicGuiAddon {
         return this.provider != null ? this.heatBar.getBarDirection().getYSize(this.provider) : 0;
     }
 
-    public void drawGuiContainerBackgroundLayer(Screen screen, IAssetProvider provider, int guiX, int guiY, int mouseX,
-            int mouseY, float partialTicks) {
+    public HeatBarComponent getHeatBar() {
+        return this.heatBar;
+    }
+
+    @Override
+    public void drawBackgroundLayer(Screen screen, IAssetProvider iAssetProvider, int guiX, int guiY, int mouseX,
+                                    int mouseY, float partialTicks) {
         this.provider = provider;
         this.heatBar.getBarDirection().render(screen, guiX, guiY, provider, this);
     }
 
-    public void drawGuiContainerForegroundLayer(Screen screen, IAssetProvider provider, int guiX, int guiY, int mouseX,
-            int mouseY) {
-    }
+    @Override
+    public void drawForegroundLayer(Screen screen, IAssetProvider iAssetProvider, int i, int i1, int i2, int i3) {
 
-    public PosHeatBar getHeatBar() {
-        return this.heatBar;
     }
 
     public List<String> getTooltipLines() {

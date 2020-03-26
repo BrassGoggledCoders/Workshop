@@ -1,16 +1,12 @@
 package xyz.brassgoggledcoders.workshop.assets;
 
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.util.Collections;
-import java.util.List;
-
 import com.hrznstudio.titanium.api.IFactory;
-import com.hrznstudio.titanium.api.client.*;
-import com.hrznstudio.titanium.block.tile.TileBase;
-import com.hrznstudio.titanium.client.gui.asset.IAssetProvider;
+import com.hrznstudio.titanium.api.client.IAsset;
+import com.hrznstudio.titanium.api.client.IScreenAddon;
+import com.hrznstudio.titanium.api.client.IScreenAddonProvider;
+import com.hrznstudio.titanium.client.screen.asset.IAssetProvider;
+import com.hrznstudio.titanium.component.IComponentHarness;
 import com.mojang.blaze3d.platform.GlStateManager;
-
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.DyeColor;
 import net.minecraft.nbt.CompoundNBT;
@@ -18,22 +14,31 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.INBTSerializable;
 
-public class PosHeatBar implements INBTSerializable<CompoundNBT>, IGuiAddonProvider {
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
+public class HeatBarComponent<T extends IComponentHarness> implements INBTSerializable<CompoundNBT>, IScreenAddonProvider {
+
+    private T componentHarness;
     private int posX;
     private int posY;
     private int temp;
     private int maxTemp;
-    private TileBase tileBase;
-    private PosHeatBar.BarDirection barDirection;
+    private HeatBarComponent.BarDirection barDirection;
 
     private DyeColor color;
 
-    public PosHeatBar(int posX, int posY, int temp, int maxMachineTemp) {
+    public HeatBarComponent(int posX, int posY, int temp, int maxMachineTemp) {
         this.posX = posX;
         this.posY = posY;
         this.temp = temp;
         this.maxTemp = maxMachineTemp;
+    }
+
+    public HeatBarComponent<T> setComponentHarness(T componentHarness) {
+        this.componentHarness = componentHarness;
+        return this;
     }
 
     public int getPosX() {
@@ -54,22 +59,17 @@ public class PosHeatBar implements INBTSerializable<CompoundNBT>, IGuiAddonProvi
 
     public void setTemp(int temp) {
         this.temp = temp;
-        if (this.tileBase != null) {
-            this.tileBase.markForUpdate();
+        if (componentHarness != null) {
+            componentHarness.markComponentForUpdate();
         }
 
     }
 
-    public PosHeatBar setTile(TileBase tileBase) {
-        this.tileBase = tileBase;
-        return this;
-    }
-
-    public PosHeatBar.BarDirection getBarDirection() {
+    public HeatBarComponent.BarDirection getBarDirection() {
         return this.barDirection;
     }
 
-    public PosHeatBar setBarDirection(PosHeatBar.BarDirection direction) {
+    public HeatBarComponent setBarDirection(HeatBarComponent.BarDirection direction) {
         this.barDirection = direction;
         return this;
     }
@@ -78,15 +78,17 @@ public class PosHeatBar implements INBTSerializable<CompoundNBT>, IGuiAddonProvi
         return this.color;
     }
 
-    public PosHeatBar setColor(DyeColor color) {
+    public HeatBarComponent setColor(DyeColor color) {
         this.color = color;
         return this;
+
     }
 
-    public List<IFactory<? extends IGuiAddon>> getGuiAddons() {
-        return Collections.singletonList(() -> {
-            return new HeatBarGuiAddon(this.posX, this.posY, this);
-        });
+    @Override
+    public List<IFactory<? extends IScreenAddon>> getScreenAddons() {
+        List<IFactory<? extends IScreenAddon>> addons = new ArrayList<>();
+        addons.add(() -> new HeatBarScreenAddon(getPosX(), getPosY(), this));
+        return addons;
     }
 
     @Override
@@ -99,10 +101,9 @@ public class PosHeatBar implements INBTSerializable<CompoundNBT>, IGuiAddonProvi
 
     }
 
-    public static enum BarDirection {
-
+    public enum BarDirection {
         VERTICAL_UP {
-            public void render(Screen screen, int guiX, int guiY, IAssetProvider provider, HeatBarGuiAddon addon) {
+            public void render(Screen screen, int guiX, int guiY, IAssetProvider provider, HeatBarScreenAddon addon) {
                 IAsset assetBorder = IAssetProvider.getAsset(provider, WorkshopAssetTypes.THERMOMETER_VERTICAL_EMPTY);
                 Point offset = assetBorder.getOffset();
                 Rectangle area = assetBorder.getArea();
@@ -132,7 +133,7 @@ public class PosHeatBar implements INBTSerializable<CompoundNBT>, IGuiAddonProvi
             }
         },
         HORIZONTAL_RIGHT {
-            public void render(Screen screen, int guiX, int guiY, IAssetProvider provider, HeatBarGuiAddon addon) {
+            public void render(Screen screen, int guiX, int guiY, IAssetProvider provider, HeatBarScreenAddon addon) {
                 IAsset assetBorder = IAssetProvider.getAsset(provider, WorkshopAssetTypes.THERMOMETER_HORIZONTAL_RIGHT_EMPTY);
                 Point offset = assetBorder.getOffset();
                 Rectangle area = assetBorder.getArea();
@@ -162,7 +163,7 @@ public class PosHeatBar implements INBTSerializable<CompoundNBT>, IGuiAddonProvi
             }
         },
         HORIZONTAL_LEFT {
-            public void render(Screen screen, int guiX, int guiY, IAssetProvider provider, HeatBarGuiAddon addon) {
+            public void render(Screen screen, int guiX, int guiY, IAssetProvider provider, HeatBarScreenAddon addon) {
                 IAsset assetBorder = IAssetProvider.getAsset(provider, WorkshopAssetTypes.THERMOMETER_HORIZONTAL_LEFT_EMPTY);
                 Point offset = assetBorder.getOffset();
                 Rectangle area = assetBorder.getArea();
@@ -196,7 +197,7 @@ public class PosHeatBar implements INBTSerializable<CompoundNBT>, IGuiAddonProvi
         }
 
         @OnlyIn(Dist.CLIENT)
-        public abstract void render(Screen var1, int var2, int var3, IAssetProvider var4, HeatBarGuiAddon var5);
+        public abstract void render(Screen var1, int var2, int var3, IAssetProvider var4, HeatBarScreenAddon var5);
 
         @OnlyIn(Dist.CLIENT)
         public abstract int getXSize(IAssetProvider var1);
