@@ -14,14 +14,6 @@
     "facing=east": {
       "model": "workshop:block/press",
       "y": 90
-    },
-    "facing=up": {
-      "model": "workshop:block/press",
-      "x": -90
-    },
-    "facing=down": {
-      "model": "workshop:block/press",
-      "x": 90
     }
   }
 }

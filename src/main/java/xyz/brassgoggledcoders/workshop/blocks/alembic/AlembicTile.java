@@ -3,10 +3,12 @@ package xyz.brassgoggledcoders.workshop.blocks.alembic;
 import com.hrznstudio.titanium.annotation.Save;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import com.hrznstudio.titanium.nbthandler.NBTManager;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -23,17 +25,12 @@ import static xyz.brassgoggledcoders.workshop.util.WorkTags.Items.COLD;
 import static xyz.brassgoggledcoders.workshop.util.WorkTags.Items.FLUIDCONTAINER;
 
 public class AlembicTile extends WorkshopGUIMachine<AlembicTile> {
-    @Save
+
     private SidedInventoryComponent input;
-    @Save
     private SidedInventoryComponent container;
-    @Save
     private SidedInventoryComponent residue;
-    @Save
     private SidedInventoryComponent output;
-    @Save
     private SidedInventoryComponent coldItem;
-    @Save
     private HeatBarComponent alembicTemp;
 
     private AlembicRecipe currentRecipe;
@@ -42,7 +39,7 @@ public class AlembicTile extends WorkshopGUIMachine<AlembicTile> {
     private int maxTemp = 5000;
 
     public AlembicTile() {
-        super(WorkshopBlocks.ALEMBIC.getBlock(), 76, 42, 100, ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT);
+        super(WorkshopBlocks.ALEMBIC.get(), 76, 42, 100, ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT);
         this.addInventory(this.input = (SidedInventoryComponent) new SidedInventoryComponent("input", 34, 25, 3, 0)
                 .setColor(DyeColor.RED)
                 .setRange(1, 3));
@@ -60,6 +57,29 @@ public class AlembicTile extends WorkshopGUIMachine<AlembicTile> {
                 .setColor(DyeColor.LIGHT_BLUE)
                 .setInputFilter((stack, integer) -> ((ItemStack)stack).getItem().isIn(COLD)));
         this.alembicTemp = new HeatBarComponent(100, 20, temp, getMaxTemp()).setColor(DyeColor.LIGHT_BLUE);
+    }
+
+    @Override
+    public void read(CompoundNBT compound) {
+        input.deserializeNBT(compound.getCompound("input"));
+        container.deserializeNBT(compound.getCompound("container"));
+        residue.deserializeNBT(compound.getCompound("residue"));
+        output.deserializeNBT(compound.getCompound("output"));
+        coldItem.deserializeNBT(compound.getCompound("coldItem"));
+        alembicTemp.deserializeNBT(compound.getCompound("temp"));
+        super.read(compound);
+    }
+
+    @Override
+    @Nonnull
+    public CompoundNBT write(CompoundNBT compound) {
+        compound.put("input", input.serializeNBT());
+        compound.put("container", container.serializeNBT());
+        compound.put("residue", container.serializeNBT());
+        compound.put("output", container.serializeNBT());
+        compound.put("coldItem", container.serializeNBT());
+        compound.put("temp", container.serializeNBT());
+        return super.write(compound);
     }
 
     private void checkForRecipe() {

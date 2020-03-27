@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -22,11 +23,8 @@ import javax.annotation.Nonnull;
 
 public class PressTile extends ActiveTile<PressTile> {
 
-    @Save
     private ProgressBarComponent<PressTile> progressBar;
-    @Save
     private SidedInventoryComponent<PressTile> inputInventory;
-    @Save
     private SidedFluidTankComponent<PressTile> outputFluid;
 
     private PressRecipe currentRecipe;
@@ -45,7 +43,24 @@ public class PressTile extends ActiveTile<PressTile> {
         this.addTank(this.outputFluid = (SidedFluidTankComponent) new SidedFluidTankComponent("output_fluid", 4000, 149, 20, 3).
                 setColor(DyeColor.MAGENTA).
                 setTankAction(SidedFluidTankComponent.Action.DRAIN));
+    }
 
+
+    @Override
+    public void read(CompoundNBT compound) {
+        progressBar.deserializeNBT(compound.getCompound("progress"));
+        inputInventory.deserializeNBT(compound.getCompound("input"));
+        outputFluid.readFromNBT(compound.getCompound("output"));
+        super.read(compound);
+    }
+
+    @Override
+    @Nonnull
+    public CompoundNBT write(CompoundNBT compound) {
+        compound.put("progress", progressBar.serializeNBT());
+        compound.put("input", inputInventory.serializeNBT());
+        compound.put("output", outputFluid.writeToNBT(new CompoundNBT()));
+        return super.write(compound);
     }
 
     private Runnable onFinish() {

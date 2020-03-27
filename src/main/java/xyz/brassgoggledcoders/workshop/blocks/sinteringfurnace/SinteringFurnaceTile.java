@@ -6,6 +6,7 @@ import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
@@ -17,13 +18,9 @@ import javax.annotation.Nonnull;
 
 public class SinteringFurnaceTile extends WorkshopGUIMachine<SinteringFurnaceTile> {
 
-    @Save
     private SidedInventoryComponent powderInventory;
-    @Save
     private SidedInventoryComponent targetInputInventory;
-    @Save
     private SidedInventoryComponent outputInventory;
-    @Save
     private SidedInventoryComponent fuelInventory;
 
     private int burnTime = 0;
@@ -43,7 +40,25 @@ public class SinteringFurnaceTile extends WorkshopGUIMachine<SinteringFurnaceTil
                 .setColor(DyeColor.BLACK));
         this.addInventory(this.fuelInventory = (SidedInventoryComponent) new SidedInventoryComponent("fuelInventory", 78, 70, 1, 0)
                 .setColor(DyeColor.RED));
+    }
 
+    @Override
+    public void read(CompoundNBT compound) {
+        powderInventory.deserializeNBT(compound.getCompound("powderInventory"));
+        targetInputInventory.deserializeNBT(compound.getCompound("targetInputInventory"));
+        outputInventory.deserializeNBT(compound.getCompound("outputInventory"));
+        fuelInventory.deserializeNBT(compound.getCompound("fuelInventory"));
+        super.read(compound);
+    }
+
+    @Override
+    @Nonnull
+    public CompoundNBT write(CompoundNBT compound) {
+        compound.put("powderInventory", powderInventory.serializeNBT());
+        compound.put("targetInputInventory", targetInputInventory.serializeNBT());
+        compound.put("outputInventory", outputInventory.serializeNBT());
+        compound.put("fuelInventory", fuelInventory.serializeNBT());
+        return super.write(compound);
     }
 
     @Override

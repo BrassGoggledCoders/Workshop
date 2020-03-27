@@ -1,11 +1,16 @@
 package xyz.brassgoggledcoders.workshop.registries;
 
+import com.hrznstudio.titanium.block.BasicTileBlock;
+import com.hrznstudio.titanium.block.tile.BasicTile;
+import com.hrznstudio.titanium.module.api.RegistryManager;
+import com.hrznstudio.titanium.nbthandler.NBTManager;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
+import xyz.brassgoggledcoders.workshop.Workshop;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -60,7 +65,6 @@ public class BlockRegistryObjectGroup<B extends Block, I extends Item, T extends
                                                       DeferredRegister<TileEntityType<?>> tileEntityTypeRegistry) {
         this.register(blockRegistry, itemRegistry);
         if (tileSupplier != null) {
-            //noinspection ConstantConditions
             tileEntity = tileEntityTypeRegistry.register(name, () -> TileEntityType.Builder.create(tileSupplier, this.getBlock())
                     .build(null));
         }

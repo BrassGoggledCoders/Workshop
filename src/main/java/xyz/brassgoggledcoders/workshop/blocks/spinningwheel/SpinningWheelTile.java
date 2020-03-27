@@ -7,10 +7,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraftforge.items.ItemHandlerHelper;
+import sun.security.provider.ConfigFile;
 import xyz.brassgoggledcoders.workshop.recipes.SpinningWheelRecipe;
 import xyz.brassgoggledcoders.workshop.registries.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes;
@@ -19,10 +21,8 @@ import javax.annotation.Nonnull;
 
 public class SpinningWheelTile extends ActiveTile<SpinningWheelTile> {
 
-    @Save
-    private SidedInventoryComponent inputInventory;
-    @Save
-    private SidedInventoryComponent outputInventory;
+    private SidedInventoryComponent<SpinningWheelTile> inputInventory;
+    private SidedInventoryComponent<SpinningWheelTile> outputInventory;
 
     private SpinningWheelRecipe currentRecipe;
 
@@ -37,6 +37,21 @@ public class SpinningWheelTile extends ActiveTile<SpinningWheelTile> {
         this.addInventory(this.outputInventory = (SidedInventoryComponent) new SidedInventoryComponent("outputInventory", 102, 44, 1, 0)
                 .setColor(DyeColor.BLACK)
                 .setInputFilter((stack, integer) -> false));
+    }
+
+    @Override
+    public void read(CompoundNBT compound) {
+        inputInventory.deserializeNBT(compound.getCompound("inputInventory"));
+        outputInventory.deserializeNBT(compound.getCompound("outputInventory"));
+        super.read(compound);
+    }
+
+    @Override
+    @Nonnull
+    public CompoundNBT write(CompoundNBT compound) {
+        compound.put("inputInventory", inputInventory.serializeNBT());
+        compound.put("outputInventory", outputInventory.serializeNBT());
+        return super.write(compound);
     }
 
     private void checkForRecipe() {

@@ -6,6 +6,7 @@ import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
@@ -19,13 +20,9 @@ public class SeasoningBarrelTile extends WorkshopGUIMachine<SeasoningBarrelTile>
 
     private static final int tankSize = 4000; // mB
 
-    @Save
     private SidedInventoryComponent<SeasoningBarrelTile> inputInventory;
-    @Save
     private SidedFluidTankComponent<SeasoningBarrelTile> inputFluidTank;
-    @Save
     private SidedInventoryComponent<SeasoningBarrelTile> outputInventory;
-    @Save
     private SidedFluidTankComponent<SeasoningBarrelTile> outputFluidTank;
 
     private SeasoningBarrelRecipe currentRecipe;
@@ -45,6 +42,25 @@ public class SeasoningBarrelTile extends WorkshopGUIMachine<SeasoningBarrelTile>
         this.addTank(this.outputFluidTank = (SidedFluidTankComponent) new SidedFluidTankComponent("outputFluidTank", tankSize, 105, 20, 1)
                 .setColor(DyeColor.BLACK)
                 .setTankAction(SidedFluidTankComponent.Action.DRAIN));
+    }
+
+    @Override
+    public void read(CompoundNBT compound) {
+        inputInventory.deserializeNBT(compound.getCompound("inputInventory"));
+        inputFluidTank.readFromNBT(compound.getCompound("inputFluidTank"));
+        outputInventory.deserializeNBT(compound.getCompound("outputInventory"));
+        outputFluidTank.readFromNBT(compound.getCompound("outputFluidTank"));
+        super.read(compound);
+    }
+
+    @Override
+    @Nonnull
+    public CompoundNBT write(CompoundNBT compound) {
+        compound.put("inputInventory", inputInventory.serializeNBT());
+        compound.put("inputFluidTank", inputFluidTank.writeToNBT(new CompoundNBT()));
+        compound.put("outputInventory", outputInventory.serializeNBT());
+        compound.put("outputFluidTank", outputFluidTank.writeToNBT(new CompoundNBT()));
+        return super.write(compound);
     }
 
     @Override

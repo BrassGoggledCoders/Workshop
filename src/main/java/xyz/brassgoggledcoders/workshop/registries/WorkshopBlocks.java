@@ -1,5 +1,6 @@
 package xyz.brassgoggledcoders.workshop.registries;
 
+import com.hrznstudio.titanium.nbthandler.NBTManager;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -25,6 +26,7 @@ import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
 import java.util.function.Function;
 
+@SuppressWarnings("unused")
 public class WorkshopBlocks {
     private static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, MOD_ID);
     private static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES =
