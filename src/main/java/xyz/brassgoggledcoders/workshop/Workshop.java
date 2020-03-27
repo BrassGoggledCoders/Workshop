@@ -43,14 +43,13 @@ public class Workshop extends ModuleController {
         WorkshopBlocks.register(modBus);
     }
 
-
     @Override
     protected void initModules() {
 
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        //ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.PRESS.getTileEntityType(), PressTileEntityRenderer::new);
-        //ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.SINTERING_FURNACE.getTileEntityType(), SinteringTileEntityRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.PRESS.getTileEntityType(), PressTileEntityRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.SINTERING_FURNACE.getTileEntityType(), SinteringTileEntityRenderer::new);
     }
 }

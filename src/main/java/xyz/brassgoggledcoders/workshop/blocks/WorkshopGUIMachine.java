@@ -7,17 +7,23 @@ import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import com.hrznstudio.titanium.nbthandler.NBTManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
+import xyz.brassgoggledcoders.workshop.registries.BlockRegistryObjectGroup;
 
 import javax.annotation.Nonnull;
 
 public abstract class WorkshopGUIMachine<T extends ActiveTile<T>> extends ActiveTile<T> {
     private ProgressBarComponent progressBar;
 
-    public WorkshopGUIMachine(BasicTileBlock base, int x, int y, int maxProgress, ProgressBarComponent.BarDirection direction) {
-        super(base);
+    public WorkshopGUIMachine(BlockRegistryObjectGroup group, int x, int y, int maxProgress, ProgressBarComponent.BarDirection direction) {
+        super(group.getTileEntityType(), (BasicTileBlock<T>) group.getBlock());
         this.addProgressBar(progressBar = new ProgressBarComponent(x, y, maxProgress)
                 .setBarDirection(direction)
                 .setCanReset(tileEntity -> true)

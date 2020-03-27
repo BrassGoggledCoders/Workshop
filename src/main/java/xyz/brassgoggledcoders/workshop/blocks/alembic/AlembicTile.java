@@ -39,7 +39,7 @@ public class AlembicTile extends WorkshopGUIMachine<AlembicTile> {
     private int maxTemp = 5000;
 
     public AlembicTile() {
-        super(WorkshopBlocks.ALEMBIC.get(), 76, 42, 100, ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT);
+        super(WorkshopBlocks.ALEMBIC, 76, 42, 100, ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT);
         this.addInventory(this.input = (SidedInventoryComponent) new SidedInventoryComponent("input", 34, 25, 3, 0)
                 .setColor(DyeColor.RED)
                 .setRange(1, 3));

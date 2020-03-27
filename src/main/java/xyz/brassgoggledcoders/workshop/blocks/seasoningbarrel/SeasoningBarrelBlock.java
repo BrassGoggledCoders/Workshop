@@ -10,6 +10,7 @@ import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
+import xyz.brassgoggledcoders.workshop.Workshop;
 
 public class SeasoningBarrelBlock extends BasicTileBlock<SeasoningBarrelTile> {
 

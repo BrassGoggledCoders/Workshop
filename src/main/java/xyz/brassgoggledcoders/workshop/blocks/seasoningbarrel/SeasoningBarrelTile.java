@@ -28,7 +28,7 @@ public class SeasoningBarrelTile extends WorkshopGUIMachine<SeasoningBarrelTile>
     private SeasoningBarrelRecipe currentRecipe;
 
     public SeasoningBarrelTile() {
-        super(WorkshopBlocks.SEASONING_BARREL.getBlock(), 76, 42, 100, ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT);
+        super(WorkshopBlocks.SEASONING_BARREL, 76, 42, 100, ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT);
         this.addInventory(this.inputInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("inputInventory", 29, 42, 1, 0)
                 .setColor(DyeColor.LIGHT_BLUE)
                 .setOnSlotChanged((stack, integer) -> checkForRecipe()));

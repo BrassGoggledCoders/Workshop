@@ -29,7 +29,7 @@ public class SpinningWheelTile extends ActiveTile<SpinningWheelTile> {
     private int progress = 0;
 
     public SpinningWheelTile() {
-        super(WorkshopBlocks.SPINNING_WHEEL.getBlock());
+        super(WorkshopBlocks.SPINNING_WHEEL.getTileEntityType(), WorkshopBlocks.SPINNING_WHEEL.getBlock());
         this.addInventory(this.inputInventory = (SidedInventoryComponent) new SidedInventoryComponent("inputInventory", 34, 25, 3, 0)
                 .setColor(DyeColor.RED)
                 .setRange(1, 3)

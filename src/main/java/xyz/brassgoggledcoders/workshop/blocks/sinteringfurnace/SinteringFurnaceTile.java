@@ -28,8 +28,7 @@ public class SinteringFurnaceTile extends WorkshopGUIMachine<SinteringFurnaceTil
     private SinteringFurnaceRecipe currentRecipe;
 
     public SinteringFurnaceTile() {
-        super(WorkshopBlocks.SINTERING_FURNACE.getBlock(), 76, 42, 100, ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT);
-
+        super(WorkshopBlocks.SINTERING_FURNACE, 76, 42, 100, ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT);
         this.addInventory(this.powderInventory = (SidedInventoryComponent) new SidedInventoryComponent("powderInventory", 70, 19, 2, 0)
                 .setColor(DyeColor.ORANGE)
                 .setOnSlotChanged((stack, integer) -> checkForRecipe()));

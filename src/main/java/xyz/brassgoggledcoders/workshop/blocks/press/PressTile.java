@@ -30,7 +30,7 @@ public class PressTile extends ActiveTile<PressTile> {
     private PressRecipe currentRecipe;
 
     public PressTile() {
-        super(WorkshopBlocks.PRESS.getBlock());
+        super(WorkshopBlocks.PRESS.getTileEntityType(), WorkshopBlocks.PRESS.getBlock());
         this.addProgressBar(progressBar = new ProgressBarComponent(0, 0, 120).
                 setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT).
                 setCanReset(tileEntity -> true).
