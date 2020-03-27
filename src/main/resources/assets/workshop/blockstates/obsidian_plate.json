@@ -1,15 +1,15 @@
 {
-    "defaults": {
-      "textures": {
-        "texture": "minecraft:block/obsidian"
-      },
-      "model": "minecraft:block/pressure_plate_up"
-    },
     "variants": {
         "powered=true": {
+          "textures": {
+            "texture": "minecraft:block/obsidian"
+          },
           "model": "minecraft:block/pressure_plate_down"
         },
         "powered=false": {
+          "textures": {
+            "texture": "minecraft:block/obsidian"
+          },
           "model": "minecraft:block/pressure_plate_up"
         }
     }

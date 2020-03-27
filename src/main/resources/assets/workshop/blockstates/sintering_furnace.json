@@ -1,22 +1,26 @@
 {
-  "defaults": {
-    "model": "workshop:block/sintering_furnace"
-  },
   "variants": {
-      "facing=north": {},
+      "facing=north": {
+        "model": "workshop:block/sintering_furnace"
+      },
       "facing=south": {
+        "model": "workshop:block/sintering_furnace",
         "y": 180
       },
       "facing=west": {
+        "model": "workshop:block/sintering_furnace",
         "y": 270
       },
       "facing=east": {
+        "model": "workshop:block/sintering_furnace",
         "y": 90
       },
       "facing=up": {
+        "model": "workshop:block/sintering_furnace",
         "x": -90
       },
       "facing=down": {
+        "model": "workshop:block/sintering_furnace",
         "x": 90
       }
   }

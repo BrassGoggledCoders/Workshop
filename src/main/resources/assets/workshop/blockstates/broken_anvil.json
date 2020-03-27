@@ -1,14 +1,34 @@
 {
-    "defaults": {
-      "textures": {
-        "body": "minecraft:block/anvil",
-        "top": "minecraft:block/damaged_anvil_top"
-      }
-     },
      "variants": {
-        "facing=south": { "model": "workshop:block/broken_anvil" },
-        "facing=west": { "model": "workshop:block/broken_anvil", "y": 90 },
-        "facing=north": { "model": "workshop:block/broken_anvil", "y": 180 },
-        "facing=east": { "model": "workshop:block/broken_anvil", "y": 270 }
+        "facing=south": {
+          "textures": {
+          "body": "minecraft:block/anvil",
+          "top": "minecraft:block/damaged_anvil_top"
+          },
+          "model": "workshop:block/broken_anvil"
+        },
+        "facing=west": {
+          "textures": {
+            "body": "minecraft:block/anvil",
+            "top": "minecraft:block/damaged_anvil_top"
+          },
+          "model": "workshop:block/broken_anvil",
+          "y": 90
+        },
+        "facing=north": {
+          "textures": {
+            "body": "minecraft:block/anvil",
+            "top": "minecraft:block/damaged_anvil_top"
+          },
+          "model": "workshop:block/broken_anvil",
+          "y": 180
+        },
+        "facing=east": {
+          "textures": {
+            "body": "minecraft:block/anvil",
+            "top": "minecraft:block/damaged_anvil_top"
+          },
+          "model": "workshop:block/broken_anvil",
+          "y": 270 }
     }
 }
