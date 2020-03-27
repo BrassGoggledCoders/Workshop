@@ -1,26 +1,23 @@
 {
-  "forge_marker": 1,
   "defaults": {
     "model": "workshop:block/sintering_furnace"
   },
   "variants": {
-    "facing": {
-      "north": {},
-      "south": {
+      "facing=north": {},
+      "facing=south": {
         "y": 180
       },
-      "west": {
+      "facing=west": {
         "y": 270
       },
-      "east": {
+      "facing=east": {
         "y": 90
       },
-      "up": {
+      "facing=up": {
         "x": -90
       },
-      "down": {
+      "facing=down": {
         "x": 90
       }
-    }
   }
 }

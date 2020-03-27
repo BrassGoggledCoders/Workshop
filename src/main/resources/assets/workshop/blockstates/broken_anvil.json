@@ -1,5 +1,4 @@
 {
-    "forge_marker": 1,
     "defaults": {
       "textures": {
         "body": "minecraft:block/anvil",
