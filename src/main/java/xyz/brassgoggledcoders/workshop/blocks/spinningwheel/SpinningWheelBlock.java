@@ -13,19 +13,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import xyz.brassgoggledcoders.workshop.blocks.TileBlock;
 
-public class SpinningWheelBlock extends BasicTileBlock<SpinningWheelTile> {
+public class SpinningWheelBlock extends TileBlock {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public SpinningWheelBlock() {
-        super(Properties.from(Blocks.OAK_PLANKS).notSolid(), SpinningWheelTile.class);
+        super(Properties.from(Blocks.OAK_PLANKS).notSolid(), SpinningWheelTile::new);
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH));
-    }
-
-    @Override
-    public IFactory<SpinningWheelTile> getTileEntityFactory() {
-        return SpinningWheelTile::new;
     }
 
     @Override

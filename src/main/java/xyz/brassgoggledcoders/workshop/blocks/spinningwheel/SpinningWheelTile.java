@@ -2,6 +2,7 @@ package xyz.brassgoggledcoders.workshop.blocks.spinningwheel;
 
 import com.hrznstudio.titanium.block.tile.ActiveTile;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
+import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
@@ -10,14 +11,16 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.items.ItemHandlerHelper;
+import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
 import xyz.brassgoggledcoders.workshop.recipes.SpinningWheelRecipe;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 
 import javax.annotation.Nonnull;
 
-public class SpinningWheelTile extends ActiveTile<SpinningWheelTile> {
+public class SpinningWheelTile extends WorkshopGUIMachine<SpinningWheelTile> {
 
     private SidedInventoryComponent<SpinningWheelTile> inputInventory;
     private SidedInventoryComponent<SpinningWheelTile> outputInventory;
@@ -27,12 +30,12 @@ public class SpinningWheelTile extends ActiveTile<SpinningWheelTile> {
     private int progress = 0;
 
     public SpinningWheelTile() {
-        super(WorkshopBlocks.SPINNING_WHEEL.getTileEntityType(), WorkshopBlocks.SPINNING_WHEEL.getBlock());
-        this.addInventory(this.inputInventory = (SidedInventoryComponent) new SidedInventoryComponent("inputInventory", 34, 25, 3, 0)
+        super(WorkshopBlocks.SPINNING_WHEEL.getTileEntityType(), new ProgressBarComponent<>(0,0,0));
+        this.getMachineComponent().addInventory(this.inputInventory = (SidedInventoryComponent) new SidedInventoryComponent("inputInventory", 34, 25, 3, 0)
                 .setColor(DyeColor.RED)
                 .setRange(1, 3)
                 .setOnSlotChanged((stack, integer) -> checkForRecipe()));
-        this.addInventory(this.outputInventory = (SidedInventoryComponent) new SidedInventoryComponent("outputInventory", 102, 44, 1, 0)
+        this.getMachineComponent().addInventory(this.outputInventory = (SidedInventoryComponent) new SidedInventoryComponent("outputInventory", 102, 44, 1, 0)
                 .setColor(DyeColor.BLACK)
                 .setInputFilter((stack, integer) -> false));
     }
@@ -54,7 +57,7 @@ public class SpinningWheelTile extends ActiveTile<SpinningWheelTile> {
     }
 
     private void checkForRecipe() {
-        if (isServer()) {
+        if (!this.getWorld().isRemote()) {
             if (currentRecipe == null || !currentRecipe.matches(inputInventory)) {
                 currentRecipe = this.getWorld().getRecipeManager()
                         .getRecipes()
@@ -73,33 +76,36 @@ public class SpinningWheelTile extends ActiveTile<SpinningWheelTile> {
         return wheelRecipe.matches(inputInventory);
     }
 
-    private void onFinish() {
-        if (currentRecipe != null) {
-            SpinningWheelRecipe wheelRecipe = currentRecipe;
-            for (Ingredient.IItemList iItemList : wheelRecipe.itemsIn) {
-                boolean found = false;
-                for (ItemStack stack : iItemList.getStacks()) {
-                    int i = 0;
-                    for (; i < inputInventory.getSlots(); i++) {
-                        ItemStack stack2 = inputInventory.getStackInSlot(i);
-                        if (stack2.isItemEqual(stack)) {
-                            found = true;
+    @Override
+    public Runnable onFinish() {
+        return () -> {
+            if (currentRecipe != null) {
+                SpinningWheelRecipe wheelRecipe = currentRecipe;
+                for (Ingredient.IItemList iItemList : wheelRecipe.itemsIn) {
+                    boolean found = false;
+                    for (ItemStack stack : iItemList.getStacks()) {
+                        int i = 0;
+                        for (; i < inputInventory.getSlots(); i++) {
+                            ItemStack stack2 = inputInventory.getStackInSlot(i);
+                            if (stack2.isItemEqual(stack)) {
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (found) {
+                            ItemStack stack2 = inputInventory.getStackInSlot(i);
+                            stack2.shrink(1);
                             break;
                         }
                     }
-                    if (found) {
-                        ItemStack stack2 = inputInventory.getStackInSlot(i);
-                        stack2.shrink(1);
-                        break;
-                    }
                 }
+                if (wheelRecipe.itemOut != null && !wheelRecipe.itemOut.isEmpty()) {
+                    ItemHandlerHelper.insertItem(outputInventory, wheelRecipe.itemOut.copy(), false);
+                    //checkForRecipe();
+                }
+                checkForRecipe();
             }
-            if (wheelRecipe.itemOut != null && !wheelRecipe.itemOut.isEmpty()) {
-                ItemHandlerHelper.insertItem(outputInventory, wheelRecipe.itemOut.copy(), false);
-                //checkForRecipe();
-            }
-            checkForRecipe();
-        }
+        };
     }
 
     private boolean fullProgress() {
@@ -107,8 +113,8 @@ public class SpinningWheelTile extends ActiveTile<SpinningWheelTile> {
     }
 
     @Override
-    public ActionResultType onActivated(PlayerEntity playerIn, Hand hand, Direction facing, double hitX, double hitY, double hitZ) {
-        if (!world.isRemote) {
+    public ActionResultType onActivated(PlayerEntity playerIn, Hand hand, BlockRayTraceResult hit) {
+        if (!this.getWorld().isRemote()) {
             if (!playerIn.isCrouching()) {
                 extractInsertItem(playerIn, hand);
             } else {
@@ -126,10 +132,9 @@ public class SpinningWheelTile extends ActiveTile<SpinningWheelTile> {
         return ActionResultType.PASS;
     }
 
-    @Nonnull
     @Override
-    public SpinningWheelTile getSelf() {
-        return this;
+    public boolean canIncrease() {
+        return true;
     }
 
     public void extractInsertItem(PlayerEntity player, Hand hand) {

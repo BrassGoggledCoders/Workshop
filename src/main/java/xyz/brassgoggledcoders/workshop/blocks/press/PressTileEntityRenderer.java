@@ -38,7 +38,7 @@ public class PressTileEntityRenderer extends TileEntityRenderer<PressTile> {
         //Item Visuals
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
         ItemStack item = pressTile.getInputInventory().getStackInSlot(0);
-        float f = pressTile.getFacingDirection().getHorizontalAngle();
+        float f = pressTile.getWorld().getBlockState(pressTile.getPos()).get(PressBlock.FACING).getHorizontalAngle();
         if(!item.isEmpty() && !pressTile.isActive()){
             GlStateManager.pushMatrix();
             //GlStateManager.translated(x + 0.5, y + 0.5, z + 0.5);

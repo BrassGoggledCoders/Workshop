@@ -12,15 +12,17 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
 import xyz.brassgoggledcoders.workshop.recipes.PressRecipe;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 
 import javax.annotation.Nonnull;
 
-public class PressTile extends ActiveTile<PressTile> {
+public class PressTile extends WorkshopGUIMachine<PressTile> {
 
     private ProgressBarComponent<PressTile> progressBar;
     private SidedInventoryComponent<PressTile> inputInventory;
@@ -29,17 +31,12 @@ public class PressTile extends ActiveTile<PressTile> {
     private PressRecipe currentRecipe;
 
     public PressTile() {
-        super(WorkshopBlocks.PRESS.getTileEntityType(), WorkshopBlocks.PRESS.getBlock());
-        this.addProgressBar(progressBar = new ProgressBarComponent(0, 0, 120).
-                setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT).
-                setCanReset(tileEntity -> true).
-                setOnStart(() -> progressBar.setMaxProgress(getMaxProgress())).
-                setCanIncrease(tileEntity -> canIncrease()).
-                setOnFinishWork(() -> onFinish().run()));
-        this.addInventory(this.inputInventory = (SidedInventoryComponent) new SidedInventoryComponent("inputInventory", 34, 25, 1, 0)
+        super(WorkshopBlocks.PRESS.getTileEntityType(), new ProgressBarComponent(0, 0, 120).
+                setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
+        this.getMachineComponent().addInventory(this.inputInventory = (SidedInventoryComponent) new SidedInventoryComponent("inputInventory", 34, 25, 1, 0)
                 .setColor(DyeColor.RED)
                 .setOnSlotChanged((stack, integer) -> checkForRecipe()));
-        this.addTank(this.outputFluid = (SidedFluidTankComponent) new SidedFluidTankComponent("output_fluid", 4000, 149, 20, 3).
+        this.getMachineComponent().addTank(this.outputFluid = (SidedFluidTankComponent) new SidedFluidTankComponent("output_fluid", 4000, 149, 20, 3).
                 setColor(DyeColor.MAGENTA).
                 setTankAction(SidedFluidTankComponent.Action.DRAIN));
     }
@@ -62,7 +59,8 @@ public class PressTile extends ActiveTile<PressTile> {
         return super.write(compound);
     }
 
-    private Runnable onFinish() {
+    @Override
+    public Runnable onFinish() {
         return () -> {
             if (currentRecipe != null) {
                 PressRecipe pressRecipes = currentRecipe;
@@ -80,7 +78,7 @@ public class PressTile extends ActiveTile<PressTile> {
     }
 
     @Override
-    public ActionResultType onActivated(PlayerEntity playerIn, Hand hand, Direction facing, double hitX, double hitY, double hitZ) {
+    public ActionResultType onActivated(PlayerEntity playerIn, Hand hand, BlockRayTraceResult hit) {
             ItemStack heldItem = playerIn.getHeldItem(hand);
             FluidStack fluidOut = outputFluid.getFluid();
             if (heldItem.isItemEqual(Items.BUCKET.getDefaultInstance())) {
@@ -111,18 +109,8 @@ public class PressTile extends ActiveTile<PressTile> {
         return ActionResultType.PASS;
     }
 
-    @Nonnull
-    @Override
-    public PressTile getSelf() {
-        return this;
-    }
-
-    public int getMaxProgress() {
-        return 120;
-    }
-
     private void checkForRecipe() {
-        if (isServer()) {
+        if (!this.getWorld().isRemote) {
             if (currentRecipe == null || !currentRecipe.matches(inputInventory)) {
                 currentRecipe = this.getWorld().getRecipeManager()
                         .getRecipes()

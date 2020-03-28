@@ -24,6 +24,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -58,7 +59,7 @@ public class MachineComponent<T extends IComponentHarness> implements IScreenAdd
     }
 
     @ParametersAreNonnullByDefault
-    public ActionResultType onActivated(PlayerEntity player, Hand hand, Direction facing, double hitX, double hitY, double hitZ) {
+    public ActionResultType onActivated(PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         if (this.multiTankComponent != null) {
             return this.multiTankComponent.getCapabilityForSide(null)
                     .map(value -> (IFluidHandler) value)

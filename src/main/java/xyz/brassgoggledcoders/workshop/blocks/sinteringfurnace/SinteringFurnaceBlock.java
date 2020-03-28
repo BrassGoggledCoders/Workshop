@@ -9,20 +9,15 @@ import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
+import xyz.brassgoggledcoders.workshop.blocks.TileBlock;
 
-//TODO: Return to using Titanium base class when it has the right constructor
-public class SinteringFurnaceBlock extends BasicTileBlock<SinteringFurnaceTile> {
+public class SinteringFurnaceBlock extends TileBlock {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public SinteringFurnaceBlock() {
-        super(Properties.from(Blocks.FURNACE), SinteringFurnaceTile.class);
+        super(Properties.from(Blocks.FURNACE), SinteringFurnaceTile::new);
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH));
-    }
-
-    @Override
-    public IFactory<SinteringFurnaceTile> getTileEntityFactory() {
-        return SinteringFurnaceTile::new;
     }
 
     @Override

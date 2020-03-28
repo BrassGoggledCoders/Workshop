@@ -4,16 +4,12 @@ import com.hrznstudio.titanium.api.IFactory;
 import com.hrznstudio.titanium.block.BasicTileBlock;
 import net.minecraft.block.Blocks;
 import xyz.brassgoggledcoders.workshop.Workshop;
+import xyz.brassgoggledcoders.workshop.blocks.TileBlock;
 
-public class AlembicBlock extends BasicTileBlock<AlembicTile> {
+public class AlembicBlock extends TileBlock {
 
     public AlembicBlock() {
-        super(Properties.from(Blocks.IRON_BLOCK), AlembicTile.class);
-        this.setItemGroup(Workshop.ITEM_GROUP);
+        super(Properties.from(Blocks.IRON_BLOCK), AlembicTile::new);
     }
 
-    @Override
-    public IFactory<AlembicTile> getTileEntityFactory() {
-        return AlembicTile::new;
-    }
 }

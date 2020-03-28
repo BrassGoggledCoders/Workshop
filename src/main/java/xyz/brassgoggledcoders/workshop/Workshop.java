@@ -21,7 +21,7 @@ import xyz.brassgoggledcoders.workshop.content.*;
 
 //Main Class
 @Mod(MOD_ID)
-public class Workshop extends ModuleController {
+public class Workshop {
     public static final String MOD_ID = "workshop";
 
     public static Logger LOGGER = LogManager.getLogger();
@@ -36,11 +36,6 @@ public class Workshop extends ModuleController {
         WorkshopRecipes.register(modBus);
         WorkshopItems.register(modBus);
         WorkshopBlocks.register(modBus);
-    }
-
-    @Override
-    protected void initModules() {
-
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

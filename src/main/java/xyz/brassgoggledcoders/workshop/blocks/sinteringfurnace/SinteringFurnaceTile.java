@@ -111,19 +111,19 @@ public class SinteringFurnaceTile extends WorkshopGUIMachine<SinteringFurnaceTil
     }
 
     @Override
-    public void onFinish() {
-        if (currentRecipe != null) {
-            SinteringFurnaceRecipe sinteringFurnaceRecipe = currentRecipe;
-            for (int i = 0; i < powderInventory.getSlots(); i++) {
-                powderInventory.getStackInSlot(i).shrink(1);
+    public Runnable onFinish() {
+        return () -> {
+            if (currentRecipe != null) {
+                SinteringFurnaceRecipe sinteringFurnaceRecipe = currentRecipe;
+                for (int i = 0; i < powderInventory.getSlots(); i++) {
+                    powderInventory.getStackInSlot(i).shrink(1);
+                }
+                targetInputInventory.getStackInSlot(0).shrink(1);
+                if (sinteringFurnaceRecipe.itemOut != null && !sinteringFurnaceRecipe.itemOut.isEmpty()) {
+                    ItemHandlerHelper.insertItem(outputInventory, sinteringFurnaceRecipe.itemOut.copy(), false);
+                }
             }
-            targetInputInventory.getStackInSlot(0).shrink(1);
-            if (sinteringFurnaceRecipe.itemOut != null && !sinteringFurnaceRecipe.itemOut.isEmpty()) {
-                ItemHandlerHelper.insertItem(outputInventory, sinteringFurnaceRecipe.itemOut.copy(), false);
-                //checkForRecipe();
-            }
-        }
-
+        };
     }
 
     public SidedInventoryComponent<SinteringFurnaceTile> getOutputInventory() {

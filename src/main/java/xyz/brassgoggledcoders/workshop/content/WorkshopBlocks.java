@@ -10,6 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.blocks.BrokenAnvilBlock;
 import xyz.brassgoggledcoders.workshop.blocks.ObsidianPlateBlock;
+import xyz.brassgoggledcoders.workshop.blocks.TileBlock;
 import xyz.brassgoggledcoders.workshop.blocks.alembic.AlembicBlock;
 import xyz.brassgoggledcoders.workshop.blocks.alembic.AlembicTile;
 import xyz.brassgoggledcoders.workshop.blocks.press.PressBlock;

@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.assets.HeatBarComponent;
 import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
@@ -27,10 +28,10 @@ public class AlembicTile extends WorkshopGUIMachine<AlembicTile> {
 
     private SidedInventoryComponent<AlembicTile> input;
     private SidedInventoryComponent<AlembicTile> container;
-    private SidedInventoryComponent<?> residue;
-    private SidedInventoryComponent<?> output;
-    private SidedInventoryComponent<?> coldItem;
-    private HeatBarComponent<?> alembicTemp;
+    private SidedInventoryComponent<AlembicTile> residue;
+    private SidedInventoryComponent<AlembicTile> output;
+    private SidedInventoryComponent<AlembicTile> coldItem;
+    private HeatBarComponent<AlembicTile> alembicTemp;
 
     private AlembicRecipe currentRecipe;
     private int coldTime;
@@ -38,23 +39,23 @@ public class AlembicTile extends WorkshopGUIMachine<AlembicTile> {
     private int maxTemp = 5000;
 
     public AlembicTile() {
-        super(WorkshopBlocks.ALEMBIC, 76, 42, 100, ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT);
-        this.addInventory(this.input = (SidedInventoryComponent<AlembicTile>) new SidedInventoryComponent<AlembicTile>("input", 34, 25, 3, 0)
+        super(WorkshopBlocks.ALEMBIC.getTileEntityType(), new ProgressBarComponent(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
+        this.getMachineComponent().addInventory(this.input = (SidedInventoryComponent<AlembicTile>) new SidedInventoryComponent<AlembicTile>("input", 34, 25, 3, 0)
                 .setColor(DyeColor.RED)
                 .setRange(1, 3));
-        this.addInventory(this.container = (SidedInventoryComponent<AlembicTile>) new SidedInventoryComponent<AlembicTile>("container", 56, 43, 1, 0)
+        this.getMachineComponent().addInventory(this.container = (SidedInventoryComponent<AlembicTile>) new SidedInventoryComponent<AlembicTile>("container", 56, 43, 1, 0)
                 .setColor(DyeColor.WHITE)
-                .setInputFilter((stack, integer) -> stack.getItem().isIn(FLUIDCONTAINER))); //TODO Casting should not be necessary
-        this.addInventory(this.residue = (SidedInventoryComponent<AlembicTile>) new SidedInventoryComponent<AlembicTile>("residue", 125, 25, 3, 0)
+                .setInputFilter((stack, integer) -> stack.getItem().isIn(FLUIDCONTAINER)));
+        this.getMachineComponent().addInventory(this.residue = (SidedInventoryComponent) new SidedInventoryComponent("residue", 125, 25, 3, 0)
                 .setColor(DyeColor.YELLOW)
                 .setRange(1, 3)
                 .setInputFilter((stack, integer) -> false));
-        this.addInventory(this.output = (SidedInventoryComponent<AlembicTile>) new SidedInventoryComponent<AlembicTile>("output", 102, 44, 1, 0)
+        this.getMachineComponent().addInventory(this.output = (SidedInventoryComponent<AlembicTile>) new SidedInventoryComponent<AlembicTile>("output", 102, 44, 1, 0)
                 .setColor(DyeColor.BLACK)
                 .setInputFilter((stack, integer) -> false));
-        this.addInventory((InventoryComponent<AlembicTile>) (this.coldItem =(SidedInventoryComponent<AlembicTile>) new SidedInventoryComponent<AlembicTile>("coldItem", 79, 20, 1, 0)
+        this.getMachineComponent().addInventory(this.coldItem =(SidedInventoryComponent<AlembicTile>) new SidedInventoryComponent<AlembicTile>("coldItem", 79, 20, 1, 0)
                         .setColor(DyeColor.LIGHT_BLUE)
-                        .setInputFilter((stack, integer) -> stack.getItem().isIn(COLD))));
+                        .setInputFilter((stack, integer) -> stack.getItem().isIn(COLD)));
         this.alembicTemp = new HeatBarComponent<AlembicTile>(100, 20, temp, getMaxTemp()).setColor(DyeColor.LIGHT_BLUE);
     }
 
@@ -82,7 +83,7 @@ public class AlembicTile extends WorkshopGUIMachine<AlembicTile> {
     }
 
     private void checkForRecipe() {
-        if (isServer()) {
+        if (!this.getWorld().isRemote) {
             if (currentRecipe == null || !currentRecipe.matches(input, container)) {
                 currentRecipe = this.getWorld().getRecipeManager().getRecipes().stream()
                         .filter(recipe -> recipe.getType() == WorkshopRecipes.ALEMBIC).map(recipe -> (AlembicRecipe) recipe)
@@ -152,22 +153,13 @@ public class AlembicTile extends WorkshopGUIMachine<AlembicTile> {
     }
 
     @Override
-    public ActionResultType onActivated(PlayerEntity playerIn, Hand hand, Direction facing, double hitX, double hitY,
-                                        double hitZ) {
+    public ActionResultType onActivated(PlayerEntity playerIn, Hand hand, BlockRayTraceResult hit) {
         getTemp();
-        openGui(playerIn);
-        return ActionResultType.SUCCESS;
-    }
-
-    @Nonnull
-    @Override
-    public AlembicTile getSelf() {
-        return this;
+        return super.onActivated(playerIn, hand, hit);
     }
 
     @Override
     public boolean canIncrease() {
         return false;
     }
-
 }

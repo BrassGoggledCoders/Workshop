@@ -13,20 +13,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import xyz.brassgoggledcoders.workshop.blocks.TileBlock;
 
-//TODO: Return to using Titanium base rotation class when it has the right constructor
-public class PressBlock extends BasicTileBlock<PressTile> {
+public class PressBlock extends TileBlock {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public PressBlock() {
-        super(Properties.from(Blocks.IRON_BLOCK).notSolid(), PressTile.class);
+        super(Properties.from(Blocks.IRON_BLOCK).notSolid(), PressTile::new);
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH));
-    }
-
-    @Override
-    public IFactory<PressTile> getTileEntityFactory() {
-        return PressTile::new;
     }
 
     @Override

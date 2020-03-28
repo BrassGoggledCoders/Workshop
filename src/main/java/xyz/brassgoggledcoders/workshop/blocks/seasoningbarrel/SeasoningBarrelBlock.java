@@ -11,19 +11,15 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import xyz.brassgoggledcoders.workshop.Workshop;
+import xyz.brassgoggledcoders.workshop.blocks.TileBlock;
 
-public class SeasoningBarrelBlock extends BasicTileBlock<SeasoningBarrelTile> {
+public class SeasoningBarrelBlock extends TileBlock {
 
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     public SeasoningBarrelBlock() {
-        super(Properties.from(Blocks.OAK_PLANKS).notSolid(), SeasoningBarrelTile.class);
+        super(Properties.from(Blocks.OAK_PLANKS).notSolid(), SeasoningBarrelTile::new);
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.DOWN));
-    }
-
-    @Override
-    public IFactory<SeasoningBarrelTile> getTileEntityFactory() {
-        return SeasoningBarrelTile::new;
     }
 
     @Override
