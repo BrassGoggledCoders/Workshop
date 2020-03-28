@@ -2,6 +2,10 @@ package xyz.brassgoggledcoders.workshop;
 
 import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
+import com.hrznstudio.titanium.client.screen.container.BasicContainerScreen;
+import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.extensions.IForgeContainerType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,6 +19,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import xyz.brassgoggledcoders.workshop.blocks.MachineTileContainer;
 import xyz.brassgoggledcoders.workshop.blocks.press.PressTileEntityRenderer;
 import xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace.SinteringTileEntityRenderer;
 import xyz.brassgoggledcoders.workshop.content.*;
@@ -36,10 +41,13 @@ public class Workshop {
         WorkshopRecipes.register(modBus);
         WorkshopItems.register(modBus);
         WorkshopBlocks.register(modBus);
+        WorkshopContainers.register(modBus);
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.PRESS.getTileEntityType(), PressTileEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.SINTERING_FURNACE.getTileEntityType(), SinteringTileEntityRenderer::new);
+
+        ScreenManager.registerFactory(WorkshopContainers.MACHINE.get(), MachineScreen::new);
     }
 }

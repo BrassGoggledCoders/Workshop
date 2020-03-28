@@ -2,8 +2,11 @@ package xyz.brassgoggledcoders.workshop.blocks;
 
 import com.hrznstudio.titanium.component.IComponentHarness;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import com.hrznstudio.titanium.container.impl.BasicTileContainer;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -22,6 +25,7 @@ import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.components.MachineComponent;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public abstract class WorkshopGUIMachine<T extends WorkshopGUIMachine<T>> extends TileEntity implements IComponentHarness, ITickableTileEntity, INamedContainerProvider {
     private final MachineComponent<T> machineComponent;
@@ -95,5 +99,11 @@ public abstract class WorkshopGUIMachine<T extends WorkshopGUIMachine<T>> extend
     @Override
     public ITextComponent getDisplayName() {
         return new TranslationTextComponent("");
+    }
+
+    @Nullable
+    @Override
+    public Container createMenu(int menu, PlayerInventory inventoryPlayer, PlayerEntity entityPlayer) {
+        return new MachineTileContainer(this, inventoryPlayer, menu);
     }
 }

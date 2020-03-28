@@ -30,7 +30,7 @@ public class SpinningWheelTile extends WorkshopGUIMachine<SpinningWheelTile> {
     private int progress = 0;
 
     public SpinningWheelTile() {
-        super(WorkshopBlocks.SPINNING_WHEEL.getTileEntityType(), new ProgressBarComponent<>(0,0,0));
+        super(WorkshopBlocks.SPINNING_WHEEL.getTileEntityType(), new ProgressBarComponent<>(0,0,100));
         this.getMachineComponent().addInventory(this.inputInventory = (SidedInventoryComponent) new SidedInventoryComponent("inputInventory", 34, 25, 3, 0)
                 .setColor(DyeColor.RED)
                 .setRange(1, 3)

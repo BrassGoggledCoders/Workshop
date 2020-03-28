@@ -42,7 +42,6 @@ public class TileBlock extends Block {
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if(!player.isCrouching()) {
-            Workshop.LOGGER.warn("1");
             handleTileEntity(worldIn, pos, workshopGUIMachine -> workshopGUIMachine.onActivated(player, handIn, hit));
             return ActionResultType.SUCCESS;
         }
