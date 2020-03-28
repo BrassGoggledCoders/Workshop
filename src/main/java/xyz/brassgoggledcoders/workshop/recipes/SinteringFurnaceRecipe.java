@@ -1,6 +1,6 @@
 package xyz.brassgoggledcoders.workshop.recipes;
 
-import static xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes.SINTERING_FURNACE_SERIALIZER;
+import static xyz.brassgoggledcoders.workshop.content.WorkshopRecipes.SINTERING_FURNACE_SERIALIZER;
 
 import java.util.ArrayList;
 import java.util.List;

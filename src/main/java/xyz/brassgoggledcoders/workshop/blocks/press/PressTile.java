@@ -1,6 +1,5 @@
 package xyz.brassgoggledcoders.workshop.blocks.press;
 
-import com.hrznstudio.titanium.annotation.Save;
 import com.hrznstudio.titanium.block.tile.ActiveTile;
 import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
@@ -16,8 +15,8 @@ import net.minecraft.util.Hand;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import xyz.brassgoggledcoders.workshop.recipes.PressRecipe;
-import xyz.brassgoggledcoders.workshop.registries.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes;
+import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
+import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 
 import javax.annotation.Nonnull;
 

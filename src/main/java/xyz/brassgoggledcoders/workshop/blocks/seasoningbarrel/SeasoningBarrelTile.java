@@ -1,6 +1,5 @@
 package xyz.brassgoggledcoders.workshop.blocks.seasoningbarrel;
 
-import com.hrznstudio.titanium.annotation.Save;
 import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
@@ -11,8 +10,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
 import xyz.brassgoggledcoders.workshop.recipes.SeasoningBarrelRecipe;
-import xyz.brassgoggledcoders.workshop.registries.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes;
+import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
+import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 
 import javax.annotation.Nonnull;
 

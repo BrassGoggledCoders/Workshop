@@ -1,6 +1,6 @@
 package xyz.brassgoggledcoders.workshop.recipes;
 
-import static xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes.SPINNING_WHEEL_SERIALIZER;
+import static xyz.brassgoggledcoders.workshop.content.WorkshopRecipes.SPINNING_WHEEL_SERIALIZER;
 
 import java.util.ArrayList;
 import java.util.List;

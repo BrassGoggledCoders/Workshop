@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.util;
+package xyz.brassgoggledcoders.workshop.content;
 
 import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.tags.*;
 import net.minecraft.util.ResourceLocation;
 
-public class WorkTags {
+public class WorkshopTags {
 
     public static class Items {
         public static final Tag<Item> COLD = tag("cold");

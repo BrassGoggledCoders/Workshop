@@ -2,11 +2,9 @@ package xyz.brassgoggledcoders.workshop;
 
 import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
-import com.hrznstudio.titanium.nbthandler.NBTManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.hrznstudio.titanium.module.Module;
 import com.hrznstudio.titanium.module.ModuleController;
 import com.hrznstudio.titanium.tab.TitaniumTab;
 
@@ -17,12 +15,9 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import xyz.brassgoggledcoders.workshop.blocks.alembic.AlembicTile;
-import xyz.brassgoggledcoders.workshop.blocks.press.PressTile;
 import xyz.brassgoggledcoders.workshop.blocks.press.PressTileEntityRenderer;
-import xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace.SinteringFurnaceTile;
 import xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace.SinteringTileEntityRenderer;
-import xyz.brassgoggledcoders.workshop.registries.*;
+import xyz.brassgoggledcoders.workshop.content.*;
 
 //Main Class
 @Mod(MOD_ID)

@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.registries;
+package xyz.brassgoggledcoders.workshop.content;
 
 import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
@@ -10,6 +10,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.Workshop;
 
+@SuppressWarnings("UNUSED")
 public class WorkshopItems {
 
     private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MOD_ID);
@@ -34,7 +35,10 @@ public class WorkshopItems {
 
 */
 
-    public static final RegistryObject<Item> CARAMEL_APPLE = ITEMS.register("caramel_apple", () -> new Item(new Item.Properties().group(Workshop.ITEM_GROUP).food(Items.APPLE.getFood())));
+    public static final RegistryObject<Item> CARAMEL_APPLE = ITEMS.register("caramel_apple",
+            () -> new Item(new Item.Properties()
+                    .group(Workshop.ITEM_GROUP)
+                    .food(Items.APPLE.getFood())));
 
     public static void register(IEventBus bus) {
         ITEMS.register(bus);

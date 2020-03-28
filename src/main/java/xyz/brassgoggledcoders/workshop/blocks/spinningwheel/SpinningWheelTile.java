@@ -1,6 +1,5 @@
 package xyz.brassgoggledcoders.workshop.blocks.spinningwheel;
 
-import com.hrznstudio.titanium.annotation.Save;
 import com.hrznstudio.titanium.block.tile.ActiveTile;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,10 +11,9 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraftforge.items.ItemHandlerHelper;
-import sun.security.provider.ConfigFile;
 import xyz.brassgoggledcoders.workshop.recipes.SpinningWheelRecipe;
-import xyz.brassgoggledcoders.workshop.registries.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes;
+import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
+import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 
 import javax.annotation.Nonnull;
 
@@ -38,6 +36,7 @@ public class SpinningWheelTile extends ActiveTile<SpinningWheelTile> {
                 .setColor(DyeColor.BLACK)
                 .setInputFilter((stack, integer) -> false));
     }
+
 
     @Override
     public void read(CompoundNBT compound) {

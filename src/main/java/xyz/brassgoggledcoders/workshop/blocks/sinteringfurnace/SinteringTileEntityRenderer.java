@@ -28,7 +28,7 @@ public class SinteringTileEntityRenderer extends TileEntityRenderer<SinteringFur
         ItemStack output = furnace.getOutputInventory().getStackInSlot(0);
         ItemStack powder1 = furnace.getPowderInventory().getStackInSlot(0);
         ItemStack powder2 = furnace.getPowderInventory().getStackInSlot(1);
-        Direction direction = furnace.getFacingDirection();
+        Direction direction = furnace.getMachineComponent().getFacingDirection();
         float f = direction.getHorizontalAngle();
         if (!furnace.isActive()) {
             if (!output.isEmpty()) {

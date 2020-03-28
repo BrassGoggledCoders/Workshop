@@ -1,9 +1,8 @@
 package xyz.brassgoggledcoders.workshop.blocks.alembic;
 
-import com.hrznstudio.titanium.annotation.Save;
+import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
-import com.hrznstudio.titanium.nbthandler.NBTManager;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeColor;
@@ -16,22 +15,22 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.assets.HeatBarComponent;
 import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
 import xyz.brassgoggledcoders.workshop.recipes.AlembicRecipe;
-import xyz.brassgoggledcoders.workshop.registries.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes;
+import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
+import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 
 import javax.annotation.Nonnull;
 
-import static xyz.brassgoggledcoders.workshop.util.WorkTags.Items.COLD;
-import static xyz.brassgoggledcoders.workshop.util.WorkTags.Items.FLUIDCONTAINER;
+import static xyz.brassgoggledcoders.workshop.content.WorkshopTags.Items.COLD;
+import static xyz.brassgoggledcoders.workshop.content.WorkshopTags.Items.FLUIDCONTAINER;
 
 public class AlembicTile extends WorkshopGUIMachine<AlembicTile> {
 
-    private SidedInventoryComponent input;
-    private SidedInventoryComponent container;
-    private SidedInventoryComponent residue;
-    private SidedInventoryComponent output;
-    private SidedInventoryComponent coldItem;
-    private HeatBarComponent alembicTemp;
+    private SidedInventoryComponent<AlembicTile> input;
+    private SidedInventoryComponent<AlembicTile> container;
+    private SidedInventoryComponent<?> residue;
+    private SidedInventoryComponent<?> output;
+    private SidedInventoryComponent<?> coldItem;
+    private HeatBarComponent<?> alembicTemp;
 
     private AlembicRecipe currentRecipe;
     private int coldTime;
@@ -40,23 +39,23 @@ public class AlembicTile extends WorkshopGUIMachine<AlembicTile> {
 
     public AlembicTile() {
         super(WorkshopBlocks.ALEMBIC, 76, 42, 100, ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT);
-        this.addInventory(this.input = (SidedInventoryComponent) new SidedInventoryComponent("input", 34, 25, 3, 0)
+        this.addInventory(this.input = (SidedInventoryComponent<AlembicTile>) new SidedInventoryComponent<AlembicTile>("input", 34, 25, 3, 0)
                 .setColor(DyeColor.RED)
                 .setRange(1, 3));
-        this.addInventory(this.container = (SidedInventoryComponent) new SidedInventoryComponent("container", 56, 43, 1, 0)
+        this.addInventory(this.container = (SidedInventoryComponent<AlembicTile>) new SidedInventoryComponent<AlembicTile>("container", 56, 43, 1, 0)
                 .setColor(DyeColor.WHITE)
-                .setInputFilter((stack, integer) -> ((ItemStack)stack).getItem().isIn(FLUIDCONTAINER))); //TODO Casting should not be necessary
-        this.addInventory(this.residue = (SidedInventoryComponent) new SidedInventoryComponent("residue", 125, 25, 3, 0)
+                .setInputFilter((stack, integer) -> stack.getItem().isIn(FLUIDCONTAINER))); //TODO Casting should not be necessary
+        this.addInventory(this.residue = (SidedInventoryComponent<AlembicTile>) new SidedInventoryComponent<AlembicTile>("residue", 125, 25, 3, 0)
                 .setColor(DyeColor.YELLOW)
                 .setRange(1, 3)
                 .setInputFilter((stack, integer) -> false));
-        this.addInventory(this.output = (SidedInventoryComponent) new SidedInventoryComponent("output", 102, 44, 1, 0)
+        this.addInventory(this.output = (SidedInventoryComponent<AlembicTile>) new SidedInventoryComponent<AlembicTile>("output", 102, 44, 1, 0)
                 .setColor(DyeColor.BLACK)
                 .setInputFilter((stack, integer) -> false));
-        this.addInventory(this.coldItem = (SidedInventoryComponent) new SidedInventoryComponent("coldItem", 79, 20, 1, 0)
-                .setColor(DyeColor.LIGHT_BLUE)
-                .setInputFilter((stack, integer) -> ((ItemStack)stack).getItem().isIn(COLD)));
-        this.alembicTemp = new HeatBarComponent(100, 20, temp, getMaxTemp()).setColor(DyeColor.LIGHT_BLUE);
+        this.addInventory((InventoryComponent<AlembicTile>) (this.coldItem =(SidedInventoryComponent<AlembicTile>) new SidedInventoryComponent<AlembicTile>("coldItem", 79, 20, 1, 0)
+                        .setColor(DyeColor.LIGHT_BLUE)
+                        .setInputFilter((stack, integer) -> stack.getItem().isIn(COLD))));
+        this.alembicTemp = new HeatBarComponent<AlembicTile>(100, 20, temp, getMaxTemp()).setColor(DyeColor.LIGHT_BLUE);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.registries;
+package xyz.brassgoggledcoders.workshop.content;
 
 import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 

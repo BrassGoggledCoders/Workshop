@@ -1,23 +1,17 @@
-package xyz.brassgoggledcoders.workshop.registries;
+package xyz.brassgoggledcoders.workshop.content;
 
-import com.hrznstudio.titanium.block.BasicTileBlock;
-import com.hrznstudio.titanium.block.tile.BasicTile;
-import com.hrznstudio.titanium.module.api.RegistryManager;
-import com.hrznstudio.titanium.nbthandler.NBTManager;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
-import xyz.brassgoggledcoders.workshop.Workshop;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-@Deprecated //TODO Remove when Sky copies into Titanium
 public class BlockRegistryObjectGroup<B extends Block, I extends Item, T extends TileEntity> implements Supplier<B> {
     private final String name;
     private final Supplier<B> blockCreator;
@@ -60,6 +54,7 @@ public class BlockRegistryObjectGroup<B extends Block, I extends Item, T extends
         return this;
     }
 
+    @SuppressWarnings("ConstantConditions")
     public BlockRegistryObjectGroup<B, I, T> register(DeferredRegister<Block> blockRegistry,
                                                       DeferredRegister<Item> itemRegistry,
                                                       DeferredRegister<TileEntityType<?>> tileEntityTypeRegistry) {

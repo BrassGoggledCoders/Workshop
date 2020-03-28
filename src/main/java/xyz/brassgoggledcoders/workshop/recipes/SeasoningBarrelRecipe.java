@@ -12,7 +12,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 
-import static xyz.brassgoggledcoders.workshop.registries.WorkshopRecipes.SEASONING_BARREL_SERIALIZER;
+import static xyz.brassgoggledcoders.workshop.content.WorkshopRecipes.SEASONING_BARREL_SERIALIZER;
 
 public class SeasoningBarrelRecipe extends SerializableRecipe {
     public ItemStack itemIn = ItemStack.EMPTY;
