@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.recipes;
+package xyz.brassgoggledcoders.workshop.recipe;
 
 import com.hrznstudio.titanium.component.fluid.FluidTankComponent;
 import com.hrznstudio.titanium.recipe.serializer.GenericSerializer;

@@ -9,8 +9,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.items.SlotItemHandler;
-import xyz.brassgoggledcoders.workshop.components.machine.IMachineHarness;
-import xyz.brassgoggledcoders.workshop.components.machine.MachineComponent;
+import xyz.brassgoggledcoders.workshop.component.machine.IMachineHarness;
+import xyz.brassgoggledcoders.workshop.component.machine.MachineComponent;
 import xyz.brassgoggledcoders.workshop.content.WorkshopContainers;
 
 import javax.annotation.Nonnull;

@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
-import xyz.brassgoggledcoders.workshop.recipes.SinteringFurnaceRecipe;
+import xyz.brassgoggledcoders.workshop.recipe.SinteringFurnaceRecipe;
 import xyz.brassgoggledcoders.workshop.tileentity.SinteringFurnaceTileEntity;
 
 public class SinteringTileEntityRenderer extends TileEntityRenderer<SinteringFurnaceTileEntity> {

@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.assets;
+package xyz.brassgoggledcoders.workshop.asset;
 
 import com.hrznstudio.titanium.api.client.*;
 

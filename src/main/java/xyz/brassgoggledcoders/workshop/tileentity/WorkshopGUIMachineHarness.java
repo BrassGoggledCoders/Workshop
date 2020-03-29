@@ -20,8 +20,8 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 import xyz.brassgoggledcoders.workshop.container.MachineContainer;
-import xyz.brassgoggledcoders.workshop.components.machine.IMachineHarness;
-import xyz.brassgoggledcoders.workshop.components.machine.MachineComponent;
+import xyz.brassgoggledcoders.workshop.component.machine.IMachineHarness;
+import xyz.brassgoggledcoders.workshop.component.machine.MachineComponent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

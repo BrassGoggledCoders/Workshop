@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.recipes;
+package xyz.brassgoggledcoders.workshop.recipe;
 
 import static xyz.brassgoggledcoders.workshop.content.WorkshopRecipes.SPINNING_WHEEL_SERIALIZER;
 

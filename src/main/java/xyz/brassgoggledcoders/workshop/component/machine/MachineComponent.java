@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.components.machine;
+package xyz.brassgoggledcoders.workshop.component.machine;
 
 import com.hrznstudio.titanium.api.IFactory;
 import com.hrznstudio.titanium.api.client.IScreenAddon;

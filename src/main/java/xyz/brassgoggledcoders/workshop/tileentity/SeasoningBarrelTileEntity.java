@@ -10,7 +10,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
-import xyz.brassgoggledcoders.workshop.recipes.SeasoningBarrelRecipe;
+import xyz.brassgoggledcoders.workshop.recipe.SeasoningBarrelRecipe;
 
 import javax.annotation.Nonnull;
 

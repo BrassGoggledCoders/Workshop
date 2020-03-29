@@ -12,10 +12,10 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.items.ItemHandlerHelper;
-import xyz.brassgoggledcoders.workshop.assets.HeatBarComponent;
+import xyz.brassgoggledcoders.workshop.asset.HeatBarComponent;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
-import xyz.brassgoggledcoders.workshop.recipes.AlembicRecipe;
+import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
 
 import javax.annotation.Nonnull;
 

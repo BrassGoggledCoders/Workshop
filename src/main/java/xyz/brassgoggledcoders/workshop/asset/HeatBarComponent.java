@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.assets;
+package xyz.brassgoggledcoders.workshop.asset;
 
 import com.hrznstudio.titanium.api.IFactory;
 import com.hrznstudio.titanium.api.client.IAsset;
@@ -13,6 +13,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.INBTSerializable;
+import xyz.brassgoggledcoders.workshop.component.HeatBarScreenAddon;
 
 import java.awt.*;
 import java.util.ArrayList;

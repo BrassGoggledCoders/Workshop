@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.components.engine;
+package xyz.brassgoggledcoders.workshop.component.engine;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.IntNBT;

@@ -17,7 +17,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
-import xyz.brassgoggledcoders.workshop.blocks.press.PressBlock;
+import xyz.brassgoggledcoders.workshop.block.press.PressBlock;
 import xyz.brassgoggledcoders.workshop.tileentity.PressTileEntity;
 
 public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity> {

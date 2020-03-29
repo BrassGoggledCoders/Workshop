@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
-import xyz.brassgoggledcoders.workshop.recipes.SpinningWheelRecipe;
+import xyz.brassgoggledcoders.workshop.recipe.SpinningWheelRecipe;
 
 import javax.annotation.Nonnull;
 

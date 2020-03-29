@@ -1,9 +1,10 @@
-package xyz.brassgoggledcoders.workshop.assets;
+package xyz.brassgoggledcoders.workshop.component;
 
 import com.hrznstudio.titanium.client.screen.addon.BasicScreenAddon;
 import com.hrznstudio.titanium.client.screen.asset.IAssetProvider;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.TextFormatting;
+import xyz.brassgoggledcoders.workshop.asset.HeatBarComponent;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

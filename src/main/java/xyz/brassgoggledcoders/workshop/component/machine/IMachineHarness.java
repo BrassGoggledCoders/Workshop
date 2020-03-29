@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.components.machine;
+package xyz.brassgoggledcoders.workshop.component.machine;
 
 import com.hrznstudio.titanium.component.IComponentHarness;
 import com.hrznstudio.titanium.network.locator.LocatorInstance;

@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.assets;
+package xyz.brassgoggledcoders.workshop.asset;
 
 import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 

@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.components.engine;
+package xyz.brassgoggledcoders.workshop.component.engine;
 
 public class EngineComponent {
     public void tick() {

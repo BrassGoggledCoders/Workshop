@@ -1,7 +1,5 @@
-package xyz.brassgoggledcoders.workshop.blocks.press;
+package xyz.brassgoggledcoders.workshop.block.press;
 
-import com.hrznstudio.titanium.api.IFactory;
-import com.hrznstudio.titanium.block.RotatableBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.DirectionProperty;

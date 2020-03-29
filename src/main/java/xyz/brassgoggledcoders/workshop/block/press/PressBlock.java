@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.blocks;
+package xyz.brassgoggledcoders.workshop.block.press;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -8,18 +8,21 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import xyz.brassgoggledcoders.workshop.tileentity.SpinningWheelTileEntity;
+import xyz.brassgoggledcoders.workshop.block.TileBlock;
+import xyz.brassgoggledcoders.workshop.tileentity.PressTileEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public class SpinningWheelBlock extends TileBlock {
+public class PressBlock extends TileBlock {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
-    public SpinningWheelBlock() {
-        super(Properties.from(Blocks.OAK_PLANKS).notSolid(), SpinningWheelTileEntity::new);
+    public PressBlock() {
+        super(Properties.from(Blocks.IRON_BLOCK).notSolid(), PressTileEntity::new);
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH));
     }
 
@@ -28,6 +31,13 @@ public class SpinningWheelBlock extends TileBlock {
     @ParametersAreNonnullByDefault
     public boolean isNormalCube(BlockState state, IBlockReader world, BlockPos pos) {
         return false;
+    }
+
+    @Override
+    @Nonnull
+    @SuppressWarnings("deprecation")
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 32.0D, 16.0D);
     }
 
     @Override

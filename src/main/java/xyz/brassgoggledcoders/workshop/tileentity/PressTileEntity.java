@@ -15,7 +15,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
-import xyz.brassgoggledcoders.workshop.recipes.PressRecipe;
+import xyz.brassgoggledcoders.workshop.recipe.PressRecipe;
 
 import javax.annotation.Nonnull;
 
