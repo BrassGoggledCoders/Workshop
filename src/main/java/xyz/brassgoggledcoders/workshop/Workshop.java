@@ -35,7 +35,6 @@ public class Workshop {
         WorkshopItems.register(modBus);
         WorkshopFluids.register(modBus);
         WorkshopBlocks.register(modBus);
-        WorkshopContainers.register(modBus);
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
