@@ -7,6 +7,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -22,7 +23,7 @@ import javax.annotation.Nonnull;
 import static xyz.brassgoggledcoders.workshop.content.WorkshopTags.Items.COLD;
 import static xyz.brassgoggledcoders.workshop.content.WorkshopTags.Items.FLUIDCONTAINER;
 
-public class AlembicTileEntity extends WorkshopGUIMachineHarness<AlembicTileEntity> {
+public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity, AlembicRecipe> {
 
     private InventoryComponent<AlembicTileEntity> input;
     private InventoryComponent<AlembicTileEntity> container;
@@ -109,7 +110,33 @@ public class AlembicTileEntity extends WorkshopGUIMachineHarness<AlembicTileEnti
     }
 
     @Override
-    public int getMaxProgress() {
+    public ActionResultType onActivated(PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        getTemp();
+        return super.onActivated(player, hand, hit);
+    }
+
+    @Override
+    public AlembicTileEntity getSelf() {
+        return this;
+    }
+
+    @Override
+    public boolean hasInputs() {
+        return false;
+    }
+
+    @Override
+    public boolean checkRecipe(IRecipe<?> recipe) {
+        return false;
+    }
+
+    @Override
+    public AlembicRecipe castRecipe(IRecipe<?> iRecipe) {
+        return null;
+    }
+
+    @Override
+    public int getProcessingTime(AlembicRecipe currentRecipe) {
         int coldtime = 0;
         if (coldItem == null) {
             coldtime = currentRecipe != null ? currentRecipe.cooldownTime : 100;
@@ -122,46 +149,32 @@ public class AlembicTileEntity extends WorkshopGUIMachineHarness<AlembicTileEnti
     }
 
     @Override
-    public void onFinish() {
-        if (currentRecipe != null) {
-            AlembicRecipe alembicRecipe = currentRecipe;
-            for (int i = 0; i < input.getSlots(); i++) {
-                input.getStackInSlot(i).shrink(1);
-            }
-            for (int i = 0; i < container.getSlots(); i++) {
-                container.getStackInSlot(i).shrink(1);
-            }
-            if (this.coldTime < currentRecipe.cooldownTime) {
-                for (int i = 0; i < coldItem.getSlots(); i++) {
-                    coldItem.getStackInSlot(i).shrink(1);
-                }
-            }
-            if (alembicRecipe.output != null && !alembicRecipe.output.isEmpty()) {
-                ItemHandlerHelper.insertItem(output, alembicRecipe.output.copy(), false);
-                int size = alembicRecipe.residue.length;
-                for (int i = 0; i < size; ++i) {
-                    for (ItemStack residueIn : alembicRecipe.residue) {
-                        ItemHandlerHelper.insertItem(residue, residueIn, false);
-                    }
-                }
-                // checkForRecipe();
-            }
-        }
-    }
-
-    @Override
-    public ActionResultType onActivated(PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        getTemp();
-        return super.onActivated(player, hand, hit);
-    }
-
-    @Override
-    public boolean canIncrease() {
+    public boolean matchesInputs(AlembicRecipe currentRecipe) {
         return false;
     }
 
     @Override
-    public AlembicTileEntity getSelf() {
-        return this;
+    public void handleComplete(AlembicRecipe currentRecipe) {
+        for (int i = 0; i < input.getSlots(); i++) {
+            input.getStackInSlot(i).shrink(1);
+        }
+        for (int i = 0; i < container.getSlots(); i++) {
+            container.getStackInSlot(i).shrink(1);
+        }
+        if (this.coldTime < currentRecipe.cooldownTime) {
+            for (int i = 0; i < coldItem.getSlots(); i++) {
+                coldItem.getStackInSlot(i).shrink(1);
+            }
+        }
+        if (currentRecipe.output != null && !currentRecipe.output.isEmpty()) {
+            ItemHandlerHelper.insertItem(output, currentRecipe.output.copy(), false);
+            int size = currentRecipe.residue.length;
+            for (int i = 0; i < size; ++i) {
+                for (ItemStack residueIn : currentRecipe.residue) {
+                    ItemHandlerHelper.insertItem(residue, residueIn, false);
+                }
+            }
+            // checkForRecipe();
+        }
     }
 }

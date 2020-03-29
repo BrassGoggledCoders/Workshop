@@ -19,7 +19,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HeatBarComponent<T extends IComponentHarness> implements INBTSerializable<CompoundNBT>, IScreenAddonProvider {
+public class HeatBarComponent<T extends IComponentHarness> implements INBTSerializable<CompoundNBT>,
+        IScreenAddonProvider {
 
     private T componentHarness;
     private int posX;
@@ -61,7 +62,7 @@ public class HeatBarComponent<T extends IComponentHarness> implements INBTSerial
     public void setTemp(int temp) {
         this.temp = temp;
         if (componentHarness != null) {
-            componentHarness.markComponentForUpdate();
+            componentHarness.markComponentForUpdate(true);
         }
 
     }

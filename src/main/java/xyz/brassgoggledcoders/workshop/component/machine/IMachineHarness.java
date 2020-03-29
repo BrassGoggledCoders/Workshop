@@ -8,16 +8,19 @@ import com.hrznstudio.titanium.container.addon.IContainerAddon;
 import com.hrznstudio.titanium.container.addon.IContainerAddonProvider;
 import com.hrznstudio.titanium.network.locator.LocatorInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.IContainerProvider;
+import net.minecraft.item.crafting.IRecipe;
+import xyz.brassgoggledcoders.workshop.recipe.IMachineRecipe;
 
 import java.util.List;
 
-public interface IMachineHarness<T extends IMachineHarness<T>> extends IComponentHarness, IScreenAddonProvider,
+public interface IMachineHarness<T extends IMachineHarness<T, U>, U extends IRecipe<IInventory>> extends IComponentHarness, IScreenAddonProvider,
         IContainerAddonProvider {
 
     LocatorInstance getLocatorInstance();
 
-    MachineComponent<T> getMachineComponent();
+    MachineComponent<T, U> getMachineComponent();
 
     boolean canInteractWith(PlayerEntity player);
 
@@ -30,4 +33,16 @@ public interface IMachineHarness<T extends IMachineHarness<T>> extends IComponen
     default List<IFactory<? extends IContainerAddon>> getContainerAddons() {
         return this.getMachineComponent().getContainerAddons();
     }
+
+    boolean hasInputs();
+
+    boolean checkRecipe(IRecipe<?> recipe);
+
+    U castRecipe(IRecipe<?> iRecipe);
+
+    int getProcessingTime(U currentRecipe);
+
+    boolean matchesInputs(U currentRecipe);
+
+    void handleComplete(U currentRecipe);
 }

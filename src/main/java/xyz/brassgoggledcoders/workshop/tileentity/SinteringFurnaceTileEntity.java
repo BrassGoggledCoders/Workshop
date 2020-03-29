@@ -5,6 +5,7 @@ import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -15,7 +16,7 @@ import xyz.brassgoggledcoders.workshop.recipe.SinteringFurnaceRecipe;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
-public class SinteringFurnaceTileEntity extends WorkshopGUIMachineHarness<SinteringFurnaceTileEntity> {
+public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<SinteringFurnaceTileEntity, SinteringFurnaceRecipe> {
 
     private SidedInventoryComponent<SinteringFurnaceTileEntity> powderInventory;
     private SidedInventoryComponent<SinteringFurnaceTileEntity> targetInputInventory;
@@ -76,11 +77,6 @@ public class SinteringFurnaceTileEntity extends WorkshopGUIMachineHarness<Sinter
         return this;
     }
 
-    @Override
-    public boolean canIncrease() {
-        return isActive() && currentRecipe != null && ItemHandlerHelper.insertItem(outputInventory, currentRecipe.itemOut.copy(), true).isEmpty();
-    }
-
     public boolean isActive() {
         return burnTime > 0;
     }
@@ -91,11 +87,6 @@ public class SinteringFurnaceTileEntity extends WorkshopGUIMachineHarness<Sinter
             this.burnTime = ForgeHooks.getBurnTime(stack);
             fuelInventory.getStackInSlot(0).shrink(1);
         }
-    }
-
-    @Override
-    public int getMaxProgress() {
-        return currentRecipe != null ? currentRecipe.meltTime : 100;
     }
 
     private void checkForRecipe() {
@@ -109,20 +100,6 @@ public class SinteringFurnaceTileEntity extends WorkshopGUIMachineHarness<Sinter
                         .filter(recipe -> recipe.matches(powderInventory, targetInputInventory))
                         .findFirst()
                         .orElse(null);
-            }
-        }
-    }
-
-    @Override
-    public void onFinish() {
-        if (currentRecipe != null) {
-            SinteringFurnaceRecipe sinteringFurnaceRecipe = currentRecipe;
-            for (int i = 0; i < powderInventory.getSlots(); i++) {
-                powderInventory.getStackInSlot(i).shrink(1);
-            }
-            targetInputInventory.getStackInSlot(0).shrink(1);
-            if (sinteringFurnaceRecipe.itemOut != null && !sinteringFurnaceRecipe.itemOut.isEmpty()) {
-                ItemHandlerHelper.insertItem(outputInventory, sinteringFurnaceRecipe.itemOut.copy(), false);
             }
         }
     }
@@ -141,5 +118,41 @@ public class SinteringFurnaceTileEntity extends WorkshopGUIMachineHarness<Sinter
 
     public SinteringFurnaceRecipe getCurrentRecipe() {
         return currentRecipe;
+    }
+
+    @Override
+    public boolean hasInputs() {
+        return false;
+    }
+
+    @Override
+    public boolean checkRecipe(IRecipe<?> recipe) {
+        return false;
+    }
+
+    @Override
+    public SinteringFurnaceRecipe castRecipe(IRecipe<?> iRecipe) {
+        return null;
+    }
+
+    @Override
+    public int getProcessingTime(SinteringFurnaceRecipe currentRecipe) {
+        return 0;
+    }
+
+    @Override
+    public boolean matchesInputs(SinteringFurnaceRecipe currentRecipe) {
+        return false;
+    }
+
+    @Override
+    public void handleComplete(SinteringFurnaceRecipe currentRecipe) {
+        for (int i = 0; i < powderInventory.getSlots(); i++) {
+            powderInventory.getStackInSlot(i).shrink(1);
+        }
+        targetInputInventory.getStackInSlot(0).shrink(1);
+        if (currentRecipe.itemOut != null && !currentRecipe.itemOut.isEmpty()) {
+            ItemHandlerHelper.insertItem(outputInventory, currentRecipe.itemOut.copy(), false);
+        }
     }
 }

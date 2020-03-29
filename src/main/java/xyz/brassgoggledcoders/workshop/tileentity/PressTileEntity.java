@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -19,7 +20,7 @@ import xyz.brassgoggledcoders.workshop.recipe.PressRecipe;
 
 import javax.annotation.Nonnull;
 
-public class PressTileEntity extends WorkshopGUIMachineHarness<PressTileEntity> {
+public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, PressRecipe> {
 
     private ProgressBarComponent<PressTileEntity> progressBar;
     private SidedInventoryComponent<PressTileEntity> inputInventory;
@@ -54,17 +55,6 @@ public class PressTileEntity extends WorkshopGUIMachineHarness<PressTileEntity> 
         compound.put("input", inputInventory.serializeNBT());
         compound.put("output", outputFluid.writeToNBT(new CompoundNBT()));
         return super.write(compound);
-    }
-
-    @Override
-    public void onFinish() {
-        if (currentRecipe != null) {
-            PressRecipe pressRecipes = currentRecipe;
-            int count = currentRecipe.itemIn.getCount();
-            inputInventory.getStackInSlot(0).shrink(count);
-            outputFluid.fillForced(pressRecipes.fluidOut.copy(), IFluidHandler.FluidAction.EXECUTE);
-        }
-        checkForRecipe();
     }
 
     @Override
@@ -140,4 +130,35 @@ public class PressTileEntity extends WorkshopGUIMachineHarness<PressTileEntity> 
         return true;
     }
 
+    @Override
+    public boolean hasInputs() {
+        return false;
+    }
+
+    @Override
+    public boolean checkRecipe(IRecipe<?> recipe) {
+        return false;
+    }
+
+    @Override
+    public PressRecipe castRecipe(IRecipe<?> iRecipe) {
+        return null;
+    }
+
+    @Override
+    public int getProcessingTime(PressRecipe currentRecipe) {
+        return 0;
+    }
+
+    @Override
+    public boolean matchesInputs(PressRecipe currentRecipe) {
+        return false;
+    }
+
+    @Override
+    public void handleComplete(PressRecipe currentRecipe) {
+        int count = currentRecipe.itemIn.getCount();
+        inputInventory.getStackInSlot(0).shrink(count);
+        outputFluid.fillForced(currentRecipe.fluidOut.copy(), IFluidHandler.FluidAction.EXECUTE);
+    }
 }

@@ -1,5 +1,7 @@
 package xyz.brassgoggledcoders.workshop.recipe;
 
+import com.hrznstudio.titanium.component.fluid.FluidTankComponent;
+import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.recipe.serializer.GenericSerializer;
 import com.hrznstudio.titanium.recipe.serializer.SerializableRecipe;
 import net.minecraft.inventory.IInventory;
@@ -16,7 +18,7 @@ import javax.annotation.Nonnull;
 
 import static xyz.brassgoggledcoders.workshop.content.WorkshopRecipes.SEASONING_BARREL_SERIALIZER;
 
-public class SeasoningBarrelRecipe extends SerializableRecipe {
+public class SeasoningBarrelRecipe extends SerializableRecipe implements IMachineRecipe {
     public Ingredient itemIn = Ingredient.EMPTY;
     public ItemStack itemOut = ItemStack.EMPTY;
     public FluidStack fluidInput = FluidStack.EMPTY;
@@ -27,9 +29,9 @@ public class SeasoningBarrelRecipe extends SerializableRecipe {
         super(resourceLocation);
     }
 
-    public boolean matches(@Nonnull IItemHandler handler,@Nonnull IFluidHandler tank) {
+    public boolean matches(@Nonnull IItemHandler handler, @Nonnull FluidTankComponent<?> tank) {
         return itemIn.test(handler.getStackInSlot(0)) &&
-                tank.drain(fluidInput, IFluidHandler.FluidAction.SIMULATE).getAmount() == fluidInput.getAmount();
+                tank.drainForced(fluidInput, IFluidHandler.FluidAction.SIMULATE).getAmount() == fluidInput.getAmount();
     }
 
     @Override
@@ -55,6 +57,7 @@ public class SeasoningBarrelRecipe extends SerializableRecipe {
     }
 
     @Override
+    @Nonnull
     public GenericSerializer<? extends SerializableRecipe> getSerializer() {
         return SEASONING_BARREL_SERIALIZER.get();
     }
@@ -63,5 +66,10 @@ public class SeasoningBarrelRecipe extends SerializableRecipe {
     @Nonnull
     public IRecipeType<?> getType() {
         return SEASONING_BARREL_SERIALIZER.get().getRecipeType();
+    }
+
+    @Override
+    public int getProcessingTime() {
+        return seasoningTime;
     }
 }

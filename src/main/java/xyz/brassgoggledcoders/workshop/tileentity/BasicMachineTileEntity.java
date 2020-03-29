@@ -1,15 +1,20 @@
 package xyz.brassgoggledcoders.workshop.tileentity;
 
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import com.hrznstudio.titanium.component.sideness.IFacingComponent;
+import com.hrznstudio.titanium.component.sideness.IFacingComponentHarness;
 import com.hrznstudio.titanium.container.BasicAddonContainer;
+import com.hrznstudio.titanium.network.IButtonHandler;
 import com.hrznstudio.titanium.network.locator.LocatorFactory;
 import com.hrznstudio.titanium.network.locator.LocatorInstance;
 import com.hrznstudio.titanium.network.locator.instance.TileEntityLocatorInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -25,45 +30,25 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 import xyz.brassgoggledcoders.workshop.component.machine.IMachineHarness;
 import xyz.brassgoggledcoders.workshop.component.machine.MachineComponent;
+import xyz.brassgoggledcoders.workshop.recipe.IMachineRecipe;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Objects;
 
-public abstract class WorkshopGUIMachineHarness<T extends WorkshopGUIMachineHarness<T>> extends TileEntity implements IMachineHarness<T>, ITickableTileEntity, INamedContainerProvider {
-    private final MachineComponent<T> machineComponent;
-    private ProgressBarComponent<T> progressBar;
+public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T, U>, U extends IRecipe<IInventory>>
+        extends TileEntity implements IMachineHarness<T, U>, ITickableTileEntity, INamedContainerProvider, IButtonHandler,
+        IFacingComponentHarness {
+    private final MachineComponent<T, U> machineComponent;
 
-    public WorkshopGUIMachineHarness(TileEntityType<T> tTileEntityType, ProgressBarComponent<T> progressBar) {
-        super(tTileEntityType);
-        this.machineComponent = new MachineComponent<>(this.getSelf(), this::getPos);
-        this.machineComponent.addProgressBar(this.progressBar = progressBar
-                .setOnStart(() -> progressBar.setMaxProgress(getMaxProgress()))
-                .setCanIncrease(tileEntity -> canIncrease())
-                .setMaxProgress(1000)
-                .setOnFinishWork(this::onFinish));
+    public BasicMachineTileEntity(TileEntityType<T> tileEntityType, ProgressBarComponent<T> progressBar) {
+        super(tileEntityType);
+        this.machineComponent = new MachineComponent<>(this.getSelf(), this::getPos, progressBar);
     }
 
-    public MachineComponent<T> getMachineComponent() {
+    public MachineComponent<T, U> getMachineComponent() {
         return this.machineComponent;
-    }
-
-    public ProgressBarComponent<T> getProgressBar() {
-        return progressBar;
-    }
-
-    @Override
-    public void read(CompoundNBT compound) {
-        progressBar.deserializeNBT(compound.getCompound("progress"));
-        super.read(compound);
-    }
-
-    @Override
-    @Nonnull
-    public CompoundNBT write(CompoundNBT compound) {
-        compound.put("progress", progressBar.serializeNBT());
-        return super.write(compound);
     }
 
     public ActionResultType onActivated(PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
@@ -76,22 +61,16 @@ public abstract class WorkshopGUIMachineHarness<T extends WorkshopGUIMachineHarn
         return result;
     }
 
-    public abstract boolean canIncrease();
-
-    public int getMaxProgress() {
-        return 100;
-    }
-
-    public abstract void onFinish();
-
+    @Override
     public World getComponentWorld() {
         return this.world;
     }
 
-    public void markComponentForUpdate() {
-
+    @Override
+    public void markComponentForUpdate(boolean reference) {
     }
 
+    @Override
     public void markComponentDirty() {
         this.markDirty();
     }
@@ -127,4 +106,14 @@ public abstract class WorkshopGUIMachineHarness<T extends WorkshopGUIMachineHarn
     }
 
     public abstract T getSelf();
+
+    @Override
+    public void handleButtonMessage(int i, PlayerEntity playerEntity, CompoundNBT compoundNBT) {
+        this.machineComponent.handleButtonMessage(i, playerEntity, compoundNBT);
+    }
+
+    @Override
+    public IFacingComponent getHandlerFromName(String name) {
+        return this.machineComponent.getHandlerFromName(name);
+    }
 }

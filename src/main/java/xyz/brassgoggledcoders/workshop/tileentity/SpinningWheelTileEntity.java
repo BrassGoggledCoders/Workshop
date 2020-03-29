@@ -6,6 +6,7 @@ import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
@@ -18,7 +19,7 @@ import xyz.brassgoggledcoders.workshop.recipe.SpinningWheelRecipe;
 
 import javax.annotation.Nonnull;
 
-public class SpinningWheelTileEntity extends WorkshopGUIMachineHarness<SpinningWheelTileEntity> {
+public class SpinningWheelTileEntity extends BasicMachineTileEntity<SpinningWheelTileEntity, SpinningWheelRecipe> {
 
     private InventoryComponent<SpinningWheelTileEntity> inputInventory;
     private InventoryComponent<SpinningWheelTileEntity> outputInventory;
@@ -76,36 +77,6 @@ public class SpinningWheelTileEntity extends WorkshopGUIMachineHarness<SpinningW
     }
 
     @Override
-    public void onFinish() {
-        if (currentRecipe != null) {
-            SpinningWheelRecipe wheelRecipe = currentRecipe;
-            for (Ingredient.IItemList iItemList : wheelRecipe.itemsIn) {
-                boolean found = false;
-                for (ItemStack stack : iItemList.getStacks()) {
-                    int i = 0;
-                    for (; i < inputInventory.getSlots(); i++) {
-                        ItemStack stack2 = inputInventory.getStackInSlot(i);
-                        if (stack2.isItemEqual(stack)) {
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (found) {
-                        ItemStack stack2 = inputInventory.getStackInSlot(i);
-                        stack2.shrink(1);
-                        break;
-                    }
-                }
-            }
-            if (wheelRecipe.itemOut != null && !wheelRecipe.itemOut.isEmpty()) {
-                ItemHandlerHelper.insertItem(outputInventory, wheelRecipe.itemOut.copy(), false);
-                //checkForRecipe();
-            }
-            checkForRecipe();
-        }
-    }
-
-    @Override
     public SpinningWheelTileEntity getSelf() {
         return this;
     }
@@ -123,7 +94,7 @@ public class SpinningWheelTileEntity extends WorkshopGUIMachineHarness<SpinningW
                 if (!fullProgress() && currentRecipe != null) {
                     progress += 1;
                     if (fullProgress()) {
-                        onFinish();
+                        //onFinish();
                         progress = 0;
                     }
                 } else {
@@ -132,11 +103,6 @@ public class SpinningWheelTileEntity extends WorkshopGUIMachineHarness<SpinningW
             }
         }
         return ActionResultType.PASS;
-    }
-
-    @Override
-    public boolean canIncrease() {
-        return true;
     }
 
     public void extractInsertItem(PlayerEntity player, Hand hand) {
@@ -176,5 +142,35 @@ public class SpinningWheelTileEntity extends WorkshopGUIMachineHarness<SpinningW
                 }
             }
         }
+    }
+
+    @Override
+    public boolean hasInputs() {
+        return false;
+    }
+
+    @Override
+    public boolean checkRecipe(IRecipe<?> recipe) {
+        return false;
+    }
+
+    @Override
+    public SpinningWheelRecipe castRecipe(IRecipe<?> iRecipe) {
+        return null;
+    }
+
+    @Override
+    public int getProcessingTime(SpinningWheelRecipe currentRecipe) {
+        return 0;
+    }
+
+    @Override
+    public boolean matchesInputs(SpinningWheelRecipe currentRecipe) {
+        return false;
+    }
+
+    @Override
+    public void handleComplete(SpinningWheelRecipe currentRecipe) {
+
     }
 }
