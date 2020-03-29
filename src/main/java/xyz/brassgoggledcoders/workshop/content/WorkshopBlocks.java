@@ -16,7 +16,6 @@ import xyz.brassgoggledcoders.workshop.block.press.PressBlock;
 import xyz.brassgoggledcoders.workshop.tileentity.PressTileEntity;
 import xyz.brassgoggledcoders.workshop.block.SeasoningBarrelBlock;
 import xyz.brassgoggledcoders.workshop.tileentity.SeasoningBarrelTileEntity;
-import xyz.brassgoggledcoders.workshop.block.SinteringFurnaceBlock;
 import xyz.brassgoggledcoders.workshop.tileentity.SinteringFurnaceTileEntity;
 import xyz.brassgoggledcoders.workshop.block.SpinningWheelBlock;
 import xyz.brassgoggledcoders.workshop.tileentity.SpinningWheelTileEntity;

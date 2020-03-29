@@ -31,7 +31,7 @@ public class Workshop {
             () -> new ItemStack(net.minecraft.block.Blocks.ANVIL));// TODO ICON
 
     public Workshop() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         WorkshopRecipes.register(modBus);
@@ -45,5 +45,8 @@ public class Workshop {
         ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.SINTERING_FURNACE.getTileEntityType(), SinteringTileEntityRenderer::new);
 
         ScreenManager.registerFactory(WorkshopContainers.MACHINE.get(), MachineScreen::new);
+
+        RenderTypeLookup.setRenderLayer(WorkshopBlocks.SINTERING_FURNACE.getBlock(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(WorkshopBlocks.PRESS.getBlock(), RenderType.getCutout());
     }
 }
