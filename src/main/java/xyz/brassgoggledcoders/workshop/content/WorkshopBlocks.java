@@ -8,16 +8,12 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.Workshop;
-import xyz.brassgoggledcoders.workshop.block.BrokenAnvilBlock;
-import xyz.brassgoggledcoders.workshop.block.ObsidianPlateBlock;
-import xyz.brassgoggledcoders.workshop.block.AlembicBlock;
+import xyz.brassgoggledcoders.workshop.block.*;
 import xyz.brassgoggledcoders.workshop.tileentity.AlembicTileEntity;
 import xyz.brassgoggledcoders.workshop.block.press.PressBlock;
 import xyz.brassgoggledcoders.workshop.tileentity.PressTileEntity;
-import xyz.brassgoggledcoders.workshop.block.SeasoningBarrelBlock;
 import xyz.brassgoggledcoders.workshop.tileentity.SeasoningBarrelTileEntity;
 import xyz.brassgoggledcoders.workshop.tileentity.SinteringFurnaceTileEntity;
-import xyz.brassgoggledcoders.workshop.block.SpinningWheelBlock;
 import xyz.brassgoggledcoders.workshop.tileentity.SpinningWheelTileEntity;
 
 import java.util.function.Function;
