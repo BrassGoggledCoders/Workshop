@@ -115,10 +115,10 @@ public class SpinningWheelTileEntity extends WorkshopGUIMachineHarness<SpinningW
     }
 
     @Override
-    public ActionResultType onActivated(PlayerEntity playerIn, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType onActivated(PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         if (this.getWorld() != null && !this.getWorld().isRemote()) {
-            if (!playerIn.isCrouching()) {
-                extractInsertItem(playerIn, hand);
+            if (!player.isCrouching()) {
+                extractInsertItem(player, hand);
             } else {
                 if (!fullProgress() && currentRecipe != null) {
                     progress += 1;

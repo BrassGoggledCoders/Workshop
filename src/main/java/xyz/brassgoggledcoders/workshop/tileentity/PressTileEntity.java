@@ -78,13 +78,13 @@ public class PressTileEntity extends WorkshopGUIMachineHarness<PressTileEntity> 
     }
 
     @Override
-    public ActionResultType onActivated(PlayerEntity playerIn, Hand hand, BlockRayTraceResult hit) {
-        ItemStack heldItem = playerIn.getHeldItem(hand);
+    public ActionResultType onActivated(PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        ItemStack heldItem = player.getHeldItem(hand);
         FluidStack fluidOut = outputFluid.getFluid();
         if (heldItem.isItemEqual(Items.BUCKET.getDefaultInstance())) {
             if (fluidOut.getAmount() >= 1000) {
                 ItemStack item = outputFluid.getFluid().getFluid().getFilledBucket().getDefaultInstance();
-                playerIn.inventory.addItemStackToInventory(item);
+                player.inventory.addItemStackToInventory(item);
                 heldItem.shrink(1);
                 outputFluid.drain(1000, IFluidHandler.FluidAction.EXECUTE);
                 return ActionResultType.SUCCESS;
@@ -102,7 +102,7 @@ public class PressTileEntity extends WorkshopGUIMachineHarness<PressTileEntity> 
             if (!inputStack.isEmpty()) {
                 int count = inputStack.getCount();
                 ItemStack stack = inputInventory.extractItem(0, count, false);
-                playerIn.addItemStackToInventory(stack);
+                player.addItemStackToInventory(stack);
             }
             return ActionResultType.SUCCESS;
         }

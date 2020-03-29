@@ -150,9 +150,9 @@ public class AlembicTileEntity extends WorkshopGUIMachineHarness<AlembicTileEnti
     }
 
     @Override
-    public ActionResultType onActivated(PlayerEntity playerIn, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType onActivated(PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         getTemp();
-        return super.onActivated(playerIn, hand, hit);
+        return super.onActivated(player, hand, hit);
     }
 
     @Override

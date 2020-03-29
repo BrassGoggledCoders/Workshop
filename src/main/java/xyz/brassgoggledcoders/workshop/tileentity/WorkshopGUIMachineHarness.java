@@ -61,10 +61,11 @@ public abstract class WorkshopGUIMachineHarness<T extends WorkshopGUIMachineHarn
         return super.write(compound);
     }
 
-    public ActionResultType onActivated(PlayerEntity playerIn, Hand hand, BlockRayTraceResult hit) {
-        ActionResultType result = this.getMachineComponent().onActivated(playerIn, hand, hit);
-        if (result == ActionResultType.PASS && playerIn instanceof ServerPlayerEntity) {
-            NetworkHooks.openGui((ServerPlayerEntity) playerIn, this, this.getPos());
+    public ActionResultType onActivated(PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        ActionResultType result = this.getMachineComponent().onActivated(player, hand, hit);
+        if (result == ActionResultType.PASS && player instanceof ServerPlayerEntity) {
+            NetworkHooks.openGui((ServerPlayerEntity) player, this, packetBuffer ->
+                    new TileEntityLocatorInstance(this.pos).toBytes(packetBuffer));
             result = ActionResultType.SUCCESS;
         }
         return result;

@@ -22,7 +22,6 @@ import xyz.brassgoggledcoders.workshop.renderer.SinteringTileEntityRenderer;
 import xyz.brassgoggledcoders.workshop.content.*;
 import xyz.brassgoggledcoders.workshop.screen.MachineScreen;
 
-//Main Class
 @Mod(MOD_ID)
 public class Workshop {
     public static final String MOD_ID = "workshop";
