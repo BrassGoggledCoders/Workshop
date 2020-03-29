@@ -65,7 +65,7 @@ public abstract class WorkshopGUIMachineHarness<T extends WorkshopGUIMachineHarn
         ActionResultType result = this.getMachineComponent().onActivated(player, hand, hit);
         if (result == ActionResultType.PASS && player instanceof ServerPlayerEntity) {
             NetworkHooks.openGui((ServerPlayerEntity) player, this, packetBuffer ->
-                    new TileEntityLocatorInstance(this.pos).toBytes(packetBuffer));
+                    LocatorFactory.writePacketBuffer(packetBuffer, new TileEntityLocatorInstance(this.pos)));
             result = ActionResultType.SUCCESS;
         }
         return result;
