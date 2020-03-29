@@ -80,8 +80,7 @@ public class SeasoningBarrelTileEntity extends WorkshopGUIMachineHarness<Seasoni
             SeasoningBarrelRecipe seasoningBarrelRecipe = currentRecipe;
             inputFluidTank.drainForced(seasoningBarrelRecipe.fluidInput, IFluidHandler.FluidAction.EXECUTE);
             for (int i = 0; i < inputInventory.getSlots(); i++) {
-                int count = seasoningBarrelRecipe.itemIn.getCount();
-                inputInventory.getStackInSlot(i).shrink(count);
+                inputInventory.getStackInSlot(i).shrink(1);
             }
             if (outputFluidTank.getFluid().equals(seasoningBarrelRecipe.fluidOut) || outputFluidTank.isEmpty()) {
                 int capacity = outputFluidTank.getCapacity();

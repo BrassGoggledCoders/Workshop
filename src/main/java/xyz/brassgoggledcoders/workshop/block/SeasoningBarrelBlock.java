@@ -11,7 +11,6 @@ import net.minecraft.util.Direction;
 import xyz.brassgoggledcoders.workshop.tileentity.SeasoningBarrelTileEntity;
 
 public class SeasoningBarrelBlock extends TileBlock {
-
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     public SeasoningBarrelBlock() {
@@ -21,7 +20,6 @@ public class SeasoningBarrelBlock extends TileBlock {
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        super.fillStateContainer(builder);
         builder.add(FACING);
     }
 
