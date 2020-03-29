@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace;
+package xyz.brassgoggledcoders.workshop.tileentity;
 
 
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
@@ -8,7 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.ItemHandlerHelper;
-import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipes.SinteringFurnaceRecipe;
@@ -16,21 +15,21 @@ import xyz.brassgoggledcoders.workshop.recipes.SinteringFurnaceRecipe;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
-public class SinteringFurnaceTile extends WorkshopGUIMachine<SinteringFurnaceTile> {
+public class SinteringFurnaceTileEntity extends WorkshopGUIMachineHarness<SinteringFurnaceTileEntity> {
 
-    private SidedInventoryComponent<SinteringFurnaceTile> powderInventory;
-    private SidedInventoryComponent<SinteringFurnaceTile> targetInputInventory;
-    private SidedInventoryComponent<SinteringFurnaceTile> outputInventory;
-    private SidedInventoryComponent<SinteringFurnaceTile> fuelInventory;
+    private SidedInventoryComponent<SinteringFurnaceTileEntity> powderInventory;
+    private SidedInventoryComponent<SinteringFurnaceTileEntity> targetInputInventory;
+    private SidedInventoryComponent<SinteringFurnaceTileEntity> outputInventory;
+    private SidedInventoryComponent<SinteringFurnaceTileEntity> fuelInventory;
 
     private int burnTime = 0;
 
     private SinteringFurnaceRecipe currentRecipe;
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public SinteringFurnaceTile() {
+    public SinteringFurnaceTileEntity() {
         super(WorkshopBlocks.SINTERING_FURNACE.getTileEntityType(),
-                new ProgressBarComponent<SinteringFurnaceTile>(76, 42, 100)
+                new ProgressBarComponent<SinteringFurnaceTileEntity>(76, 42, 100)
                         .setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
         this.getMachineComponent().addInventory(this.powderInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("powderInventory", 70, 19, 2, 0)
                 .setColor(DyeColor.ORANGE)
@@ -66,10 +65,15 @@ public class SinteringFurnaceTile extends WorkshopGUIMachine<SinteringFurnaceTil
     @Override
     public void tick() {
         if (!isActive()) {
-            setBurnTime();
+            handleBurnTime();
         } else {
             --burnTime;
         }
+    }
+
+    @Override
+    public SinteringFurnaceTileEntity getSelf() {
+        return this;
     }
 
     @Override
@@ -81,13 +85,12 @@ public class SinteringFurnaceTile extends WorkshopGUIMachine<SinteringFurnaceTil
         return burnTime > 0;
     }
 
-    public int setBurnTime() {
+    public void handleBurnTime() {
         ItemStack stack = fuelInventory.getStackInSlot(0);
         if (!stack.isEmpty()) {
             this.burnTime = ForgeHooks.getBurnTime(stack);
             fuelInventory.getStackInSlot(0).shrink(1);
         }
-        return burnTime;
     }
 
     @Override
@@ -111,30 +114,28 @@ public class SinteringFurnaceTile extends WorkshopGUIMachine<SinteringFurnaceTil
     }
 
     @Override
-    public Runnable onFinish() {
-        return () -> {
-            if (currentRecipe != null) {
-                SinteringFurnaceRecipe sinteringFurnaceRecipe = currentRecipe;
-                for (int i = 0; i < powderInventory.getSlots(); i++) {
-                    powderInventory.getStackInSlot(i).shrink(1);
-                }
-                targetInputInventory.getStackInSlot(0).shrink(1);
-                if (sinteringFurnaceRecipe.itemOut != null && !sinteringFurnaceRecipe.itemOut.isEmpty()) {
-                    ItemHandlerHelper.insertItem(outputInventory, sinteringFurnaceRecipe.itemOut.copy(), false);
-                }
+    public void onFinish() {
+        if (currentRecipe != null) {
+            SinteringFurnaceRecipe sinteringFurnaceRecipe = currentRecipe;
+            for (int i = 0; i < powderInventory.getSlots(); i++) {
+                powderInventory.getStackInSlot(i).shrink(1);
             }
-        };
+            targetInputInventory.getStackInSlot(0).shrink(1);
+            if (sinteringFurnaceRecipe.itemOut != null && !sinteringFurnaceRecipe.itemOut.isEmpty()) {
+                ItemHandlerHelper.insertItem(outputInventory, sinteringFurnaceRecipe.itemOut.copy(), false);
+            }
+        }
     }
 
-    public SidedInventoryComponent<SinteringFurnaceTile> getOutputInventory() {
+    public SidedInventoryComponent<SinteringFurnaceTileEntity> getOutputInventory() {
         return outputInventory;
     }
 
-    public SidedInventoryComponent<SinteringFurnaceTile> getPowderInventory() {
+    public SidedInventoryComponent<SinteringFurnaceTileEntity> getPowderInventory() {
         return powderInventory;
     }
 
-    public SidedInventoryComponent<SinteringFurnaceTile> getTargetInputInventory() {
+    public SidedInventoryComponent<SinteringFurnaceTileEntity> getTargetInputInventory() {
         return targetInputInventory;
     }
 

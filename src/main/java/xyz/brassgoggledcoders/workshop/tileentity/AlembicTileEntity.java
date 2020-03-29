@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.blocks.alembic;
+package xyz.brassgoggledcoders.workshop.tileentity;
 
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
@@ -9,54 +9,53 @@ import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.assets.HeatBarComponent;
-import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
-import xyz.brassgoggledcoders.workshop.recipes.AlembicRecipe;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
+import xyz.brassgoggledcoders.workshop.recipes.AlembicRecipe;
 
 import javax.annotation.Nonnull;
 
 import static xyz.brassgoggledcoders.workshop.content.WorkshopTags.Items.COLD;
 import static xyz.brassgoggledcoders.workshop.content.WorkshopTags.Items.FLUIDCONTAINER;
 
-public class AlembicTile extends WorkshopGUIMachine<AlembicTile> {
+public class AlembicTileEntity extends WorkshopGUIMachineHarness<AlembicTileEntity> {
 
-    private SidedInventoryComponent<AlembicTile> input;
-    private SidedInventoryComponent<AlembicTile> container;
-    private SidedInventoryComponent<AlembicTile> residue;
-    private SidedInventoryComponent<AlembicTile> output;
-    private SidedInventoryComponent<AlembicTile> coldItem;
-    private HeatBarComponent<AlembicTile> alembicTemp;
+    private InventoryComponent<AlembicTileEntity> input;
+    private InventoryComponent<AlembicTileEntity> container;
+    private InventoryComponent<AlembicTileEntity> residue;
+    private InventoryComponent<AlembicTileEntity> output;
+    private InventoryComponent<AlembicTileEntity> coldItem;
+    private HeatBarComponent<AlembicTileEntity> alembicTemp;
 
     private AlembicRecipe currentRecipe;
     private int coldTime;
     private int temp;
     private int maxTemp = 5000;
 
-    public AlembicTile() {
-        super(WorkshopBlocks.ALEMBIC.getTileEntityType(), new ProgressBarComponent(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
-        this.getMachineComponent().addInventory(this.input = (SidedInventoryComponent<AlembicTile>) new SidedInventoryComponent<AlembicTile>("input", 34, 25, 3, 0)
+    public AlembicTileEntity() {
+        super(WorkshopBlocks.ALEMBIC.getTileEntityType(), new ProgressBarComponent<AlembicTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
+        this.getMachineComponent().addInventory(this.input = new SidedInventoryComponent<AlembicTileEntity>("input", 34, 25, 3, 0)
                 .setColor(DyeColor.RED)
                 .setRange(1, 3));
-        this.getMachineComponent().addInventory(this.container = (SidedInventoryComponent<AlembicTile>) new SidedInventoryComponent<AlembicTile>("container", 56, 43, 1, 0)
+        this.getMachineComponent().addInventory(this.container = new SidedInventoryComponent<AlembicTileEntity>("container", 56, 43, 1, 0)
                 .setColor(DyeColor.WHITE)
                 .setInputFilter((stack, integer) -> stack.getItem().isIn(FLUIDCONTAINER)));
-        this.getMachineComponent().addInventory(this.residue = (SidedInventoryComponent) new SidedInventoryComponent("residue", 125, 25, 3, 0)
+        this.getMachineComponent().addInventory(this.residue = new SidedInventoryComponent<AlembicTileEntity>(
+                "residue", 125, 25, 3, 0)
                 .setColor(DyeColor.YELLOW)
                 .setRange(1, 3)
                 .setInputFilter((stack, integer) -> false));
-        this.getMachineComponent().addInventory(this.output = (SidedInventoryComponent<AlembicTile>) new SidedInventoryComponent<AlembicTile>("output", 102, 44, 1, 0)
+        this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<AlembicTileEntity>("output", 102, 44, 1, 0)
                 .setColor(DyeColor.BLACK)
                 .setInputFilter((stack, integer) -> false));
-        this.getMachineComponent().addInventory(this.coldItem =(SidedInventoryComponent<AlembicTile>) new SidedInventoryComponent<AlembicTile>("coldItem", 79, 20, 1, 0)
-                        .setColor(DyeColor.LIGHT_BLUE)
-                        .setInputFilter((stack, integer) -> stack.getItem().isIn(COLD)));
-        this.alembicTemp = new HeatBarComponent<AlembicTile>(100, 20, temp, getMaxTemp()).setColor(DyeColor.LIGHT_BLUE);
+        this.getMachineComponent().addInventory(this.coldItem = new SidedInventoryComponent<AlembicTileEntity>("coldItem", 79, 20, 1, 0)
+                .setColor(DyeColor.LIGHT_BLUE)
+                .setInputFilter((stack, integer) -> stack.getItem().isIn(COLD)));
+        this.alembicTemp = new HeatBarComponent<AlembicTileEntity>(100, 20, temp, getMaxTemp()).setColor(DyeColor.LIGHT_BLUE);
     }
 
     @Override
@@ -123,33 +122,31 @@ public class AlembicTile extends WorkshopGUIMachine<AlembicTile> {
     }
 
     @Override
-    public Runnable onFinish() {
-        return () -> {
-            if (currentRecipe != null) {
-                AlembicRecipe alembicRecipe = currentRecipe;
-                for (int i = 0; i < input.getSlots(); i++) {
-                    input.getStackInSlot(i).shrink(1);
-                }
-                for (int i = 0; i < container.getSlots(); i++) {
-                    container.getStackInSlot(i).shrink(1);
-                }
-                if (this.coldTime < currentRecipe.cooldownTime) {
-                    for (int i = 0; i < coldItem.getSlots(); i++) {
-                        coldItem.getStackInSlot(i).shrink(1);
-                    }
-                }
-                if (alembicRecipe.output != null && !alembicRecipe.output.isEmpty()) {
-                    ItemHandlerHelper.insertItem(output, alembicRecipe.output.copy(), false);
-                    int size = alembicRecipe.residue.length;
-                    for (int i = 0; i < size; ++i) {
-                        for (ItemStack residueIn : alembicRecipe.residue) {
-                            ItemHandlerHelper.insertItem(residue, residueIn, false);
-                        }
-                    }
-                    // checkForRecipe();
+    public void onFinish() {
+        if (currentRecipe != null) {
+            AlembicRecipe alembicRecipe = currentRecipe;
+            for (int i = 0; i < input.getSlots(); i++) {
+                input.getStackInSlot(i).shrink(1);
+            }
+            for (int i = 0; i < container.getSlots(); i++) {
+                container.getStackInSlot(i).shrink(1);
+            }
+            if (this.coldTime < currentRecipe.cooldownTime) {
+                for (int i = 0; i < coldItem.getSlots(); i++) {
+                    coldItem.getStackInSlot(i).shrink(1);
                 }
             }
-        };
+            if (alembicRecipe.output != null && !alembicRecipe.output.isEmpty()) {
+                ItemHandlerHelper.insertItem(output, alembicRecipe.output.copy(), false);
+                int size = alembicRecipe.residue.length;
+                for (int i = 0; i < size; ++i) {
+                    for (ItemStack residueIn : alembicRecipe.residue) {
+                        ItemHandlerHelper.insertItem(residue, residueIn, false);
+                    }
+                }
+                // checkForRecipe();
+            }
+        }
     }
 
     @Override
@@ -161,5 +158,10 @@ public class AlembicTile extends WorkshopGUIMachine<AlembicTile> {
     @Override
     public boolean canIncrease() {
         return false;
+    }
+
+    @Override
+    public AlembicTileEntity getSelf() {
+        return this;
     }
 }

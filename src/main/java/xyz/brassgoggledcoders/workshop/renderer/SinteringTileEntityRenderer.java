@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace;
+package xyz.brassgoggledcoders.workshop.renderer;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -10,8 +10,9 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import xyz.brassgoggledcoders.workshop.recipes.SinteringFurnaceRecipe;
+import xyz.brassgoggledcoders.workshop.tileentity.SinteringFurnaceTileEntity;
 
-public class SinteringTileEntityRenderer extends TileEntityRenderer<SinteringFurnaceTile> {
+public class SinteringTileEntityRenderer extends TileEntityRenderer<SinteringFurnaceTileEntity> {
 
     public SinteringTileEntityRenderer(TileEntityRendererDispatcher dispatcher) {
         super(dispatcher);
@@ -19,7 +20,7 @@ public class SinteringTileEntityRenderer extends TileEntityRenderer<SinteringFur
 
     @Deprecated
     @Override
-    public void render(SinteringFurnaceTile furnace, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int i, int i1) {
+    public void render(SinteringFurnaceTileEntity furnace, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int i, int i1) {
         if (!furnace.hasWorld()) {
             return;
         }

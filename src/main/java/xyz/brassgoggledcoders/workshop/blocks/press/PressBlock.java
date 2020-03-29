@@ -1,7 +1,5 @@
 package xyz.brassgoggledcoders.workshop.blocks.press;
 
-import com.hrznstudio.titanium.api.IFactory;
-import com.hrznstudio.titanium.block.BasicTileBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -14,22 +12,30 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import xyz.brassgoggledcoders.workshop.blocks.TileBlock;
+import xyz.brassgoggledcoders.workshop.tileentity.PressTileEntity;
+
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 public class PressBlock extends TileBlock {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public PressBlock() {
-        super(Properties.from(Blocks.IRON_BLOCK).notSolid(), PressTile::new);
+        super(Properties.from(Blocks.IRON_BLOCK).notSolid(), PressTileEntity::new);
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH));
     }
 
     @Override
-    public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
+    @SuppressWarnings("deprecation")
+    @ParametersAreNonnullByDefault
+    public boolean isNormalCube(BlockState state, IBlockReader world, BlockPos pos) {
         return false;
     }
 
     @Override
+    @Nonnull
+    @SuppressWarnings("deprecation")
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 32.0D, 16.0D);
     }

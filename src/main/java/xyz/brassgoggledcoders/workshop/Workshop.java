@@ -2,14 +2,10 @@ package xyz.brassgoggledcoders.workshop;
 
 import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
-import com.hrznstudio.titanium.client.screen.container.BasicContainerScreen;
 import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.extensions.IForgeContainerType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.hrznstudio.titanium.module.ModuleController;
 import com.hrznstudio.titanium.tab.TitaniumTab;
 
 import net.minecraft.item.ItemGroup;
@@ -19,10 +15,10 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import xyz.brassgoggledcoders.workshop.blocks.MachineTileContainer;
-import xyz.brassgoggledcoders.workshop.blocks.press.PressTileEntityRenderer;
-import xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace.SinteringTileEntityRenderer;
+import xyz.brassgoggledcoders.workshop.renderer.PressTileEntityRenderer;
+import xyz.brassgoggledcoders.workshop.renderer.SinteringTileEntityRenderer;
 import xyz.brassgoggledcoders.workshop.content.*;
+import xyz.brassgoggledcoders.workshop.screen.MachineScreen;
 
 //Main Class
 @Mod(MOD_ID)

@@ -1,8 +1,8 @@
-package xyz.brassgoggledcoders.workshop.blocks;
+package xyz.brassgoggledcoders.workshop.tileentity;
 
-import com.hrznstudio.titanium.component.IComponentHarness;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
-import com.hrznstudio.titanium.container.impl.BasicTileContainer;
+import com.hrznstudio.titanium.network.locator.LocatorInstance;
+import com.hrznstudio.titanium.network.locator.instance.TileEntityLocatorInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -13,28 +13,27 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
-import xyz.brassgoggledcoders.workshop.Workshop;
-import xyz.brassgoggledcoders.workshop.components.MachineComponent;
+import xyz.brassgoggledcoders.workshop.container.MachineContainer;
+import xyz.brassgoggledcoders.workshop.components.machine.IMachineHarness;
+import xyz.brassgoggledcoders.workshop.components.machine.MachineComponent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
-public abstract class WorkshopGUIMachine<T extends WorkshopGUIMachine<T>> extends TileEntity implements IComponentHarness, ITickableTileEntity, INamedContainerProvider {
+public abstract class WorkshopGUIMachineHarness<T extends WorkshopGUIMachineHarness<T>> extends TileEntity implements IMachineHarness<T>, ITickableTileEntity, INamedContainerProvider {
     private final MachineComponent<T> machineComponent;
     private ProgressBarComponent<T> progressBar;
 
-    @SuppressWarnings("unchecked")
-    public WorkshopGUIMachine(TileEntityType<T> tTileEntityType, ProgressBarComponent<T> progressBar) {
+    public WorkshopGUIMachineHarness(TileEntityType<T> tTileEntityType, ProgressBarComponent<T> progressBar) {
         super(tTileEntityType);
-        this.machineComponent = new MachineComponent<>((T) this, this::getPos);
+        this.machineComponent = new MachineComponent<>(this.getSelf(), this::getPos);
         this.machineComponent.addProgressBar(this.progressBar = progressBar
                 .setOnStart(() -> progressBar.setMaxProgress(getMaxProgress()))
                 .setCanIncrease(tileEntity -> canIncrease())
@@ -63,11 +62,12 @@ public abstract class WorkshopGUIMachine<T extends WorkshopGUIMachine<T>> extend
     }
 
     public ActionResultType onActivated(PlayerEntity playerIn, Hand hand, BlockRayTraceResult hit) {
-        this.getMachineComponent().onActivated(playerIn, hand, hit);
-        if (playerIn instanceof ServerPlayerEntity) {
+        ActionResultType result = this.getMachineComponent().onActivated(playerIn, hand, hit);
+        if (result == ActionResultType.PASS && playerIn instanceof ServerPlayerEntity) {
             NetworkHooks.openGui((ServerPlayerEntity) playerIn, this, this.getPos());
+            result = ActionResultType.SUCCESS;
         }
-        return ActionResultType.SUCCESS;
+        return result;
     }
 
     public abstract boolean canIncrease();
@@ -76,7 +76,7 @@ public abstract class WorkshopGUIMachine<T extends WorkshopGUIMachine<T>> extend
         return 100;
     }
 
-    public abstract Runnable onFinish();
+    public abstract void onFinish();
 
     public World getComponentWorld() {
         return this.world;
@@ -95,15 +95,28 @@ public abstract class WorkshopGUIMachine<T extends WorkshopGUIMachine<T>> extend
         this.getMachineComponent().tick();
     }
 
-    //TODO
     @Override
+    @Nonnull
     public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("");
+        return new TranslationTextComponent(this.getBlockState().getBlock().getTranslationKey());
     }
 
     @Nullable
     @Override
+    @ParametersAreNonnullByDefault
     public Container createMenu(int menu, PlayerInventory inventoryPlayer, PlayerEntity entityPlayer) {
-        return new MachineTileContainer(this, inventoryPlayer, menu);
+        return new MachineContainer(this, inventoryPlayer, menu);
     }
+
+    @Override
+    public boolean canInteractWith(PlayerEntity player) {
+        return true;
+    }
+
+    @Override
+    public LocatorInstance getLocatorInstance() {
+        return new TileEntityLocatorInstance(this.pos);
+    }
+
+    public abstract T getSelf();
 }

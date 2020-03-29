@@ -13,6 +13,8 @@ import net.minecraft.util.math.shapes.*;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class BrokenAnvilBlock extends FallingBlock {
     public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
     private static final VoxelShape PART_BASE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 4.0D, 14.0D);
@@ -48,6 +50,8 @@ public class BrokenAnvilBlock extends FallingBlock {
     }
 
     @Override
+    @Nonnull
+    @SuppressWarnings("deprecation")
     public BlockState rotate(BlockState state, Rotation rot) {
         return state.with(FACING, rot.rotate(state.get(FACING)));
     }
@@ -58,6 +62,8 @@ public class BrokenAnvilBlock extends FallingBlock {
     }
 
     @Override
+    @Nonnull
+    @SuppressWarnings("deprecation")
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         Direction direction = state.get(FACING);
         return direction.getAxis() == Direction.Axis.X ? X_AXIS_AABB : Z_AXIS_AABB;

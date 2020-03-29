@@ -10,17 +10,16 @@ import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.blocks.BrokenAnvilBlock;
 import xyz.brassgoggledcoders.workshop.blocks.ObsidianPlateBlock;
-import xyz.brassgoggledcoders.workshop.blocks.TileBlock;
-import xyz.brassgoggledcoders.workshop.blocks.alembic.AlembicBlock;
-import xyz.brassgoggledcoders.workshop.blocks.alembic.AlembicTile;
+import xyz.brassgoggledcoders.workshop.blocks.AlembicBlock;
+import xyz.brassgoggledcoders.workshop.tileentity.AlembicTileEntity;
 import xyz.brassgoggledcoders.workshop.blocks.press.PressBlock;
-import xyz.brassgoggledcoders.workshop.blocks.press.PressTile;
-import xyz.brassgoggledcoders.workshop.blocks.seasoningbarrel.SeasoningBarrelBlock;
-import xyz.brassgoggledcoders.workshop.blocks.seasoningbarrel.SeasoningBarrelTile;
-import xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace.SinteringFurnaceBlock;
-import xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace.SinteringFurnaceTile;
-import xyz.brassgoggledcoders.workshop.blocks.spinningwheel.SpinningWheelBlock;
-import xyz.brassgoggledcoders.workshop.blocks.spinningwheel.SpinningWheelTile;
+import xyz.brassgoggledcoders.workshop.tileentity.PressTileEntity;
+import xyz.brassgoggledcoders.workshop.blocks.SeasoningBarrelBlock;
+import xyz.brassgoggledcoders.workshop.tileentity.SeasoningBarrelTileEntity;
+import xyz.brassgoggledcoders.workshop.blocks.SinteringFurnaceBlock;
+import xyz.brassgoggledcoders.workshop.tileentity.SinteringFurnaceTileEntity;
+import xyz.brassgoggledcoders.workshop.blocks.SpinningWheelBlock;
+import xyz.brassgoggledcoders.workshop.tileentity.SpinningWheelTileEntity;
 
 import java.util.function.Function;
 
@@ -41,27 +40,27 @@ public class WorkshopBlocks {
             new BlockRegistryObjectGroup<>("broken_anvil", BrokenAnvilBlock::new, blockItemCreator())
                     .register(BLOCKS, ITEMS);
 
-    public static final BlockRegistryObjectGroup<AlembicBlock, BlockItem, AlembicTile> ALEMBIC =
-            new BlockRegistryObjectGroup<>("alembic", AlembicBlock::new, blockItemCreator(), AlembicTile::new)
+    public static final BlockRegistryObjectGroup<AlembicBlock, BlockItem, AlembicTileEntity> ALEMBIC =
+            new BlockRegistryObjectGroup<>("alembic", AlembicBlock::new, blockItemCreator(), AlembicTileEntity::new)
                     .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
-    public static final BlockRegistryObjectGroup<PressBlock, BlockItem, PressTile> PRESS =
-            new BlockRegistryObjectGroup<>("press", PressBlock::new, blockItemCreator(), PressTile::new)
+    public static final BlockRegistryObjectGroup<PressBlock, BlockItem, PressTileEntity> PRESS =
+            new BlockRegistryObjectGroup<>("press", PressBlock::new, blockItemCreator(), PressTileEntity::new)
                     .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
-    public static final BlockRegistryObjectGroup<SeasoningBarrelBlock, BlockItem, SeasoningBarrelTile> SEASONING_BARREL =
+    public static final BlockRegistryObjectGroup<SeasoningBarrelBlock, BlockItem, SeasoningBarrelTileEntity> SEASONING_BARREL =
             new BlockRegistryObjectGroup<>("seasoning_barrel", SeasoningBarrelBlock::new, blockItemCreator(),
-                    SeasoningBarrelTile::new)
+                    SeasoningBarrelTileEntity::new)
                     .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
-    public static final BlockRegistryObjectGroup<SinteringFurnaceBlock, BlockItem, SinteringFurnaceTile> SINTERING_FURNACE =
+    public static final BlockRegistryObjectGroup<SinteringFurnaceBlock, BlockItem, SinteringFurnaceTileEntity> SINTERING_FURNACE =
             new BlockRegistryObjectGroup<>("sintering_furnace", SinteringFurnaceBlock::new, blockItemCreator(),
-                    SinteringFurnaceTile::new)
+                    SinteringFurnaceTileEntity::new)
                     .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
-    public static final BlockRegistryObjectGroup<SpinningWheelBlock, BlockItem, SpinningWheelTile> SPINNING_WHEEL =
+    public static final BlockRegistryObjectGroup<SpinningWheelBlock, BlockItem, SpinningWheelTileEntity> SPINNING_WHEEL =
             new BlockRegistryObjectGroup<>("spinning_wheel", SpinningWheelBlock::new, blockItemCreator(),
-                    SpinningWheelTile::new)
+                    SpinningWheelTileEntity::new)
                     .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
     public static void register(IEventBus bus) {

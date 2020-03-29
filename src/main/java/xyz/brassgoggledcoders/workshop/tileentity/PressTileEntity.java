@@ -1,6 +1,5 @@
-package xyz.brassgoggledcoders.workshop.blocks.press;
+package xyz.brassgoggledcoders.workshop.tileentity;
 
-import com.hrznstudio.titanium.block.tile.ActiveTile;
 import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
@@ -10,27 +9,25 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
-import xyz.brassgoggledcoders.workshop.recipes.PressRecipe;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
+import xyz.brassgoggledcoders.workshop.recipes.PressRecipe;
 
 import javax.annotation.Nonnull;
 
-public class PressTile extends WorkshopGUIMachine<PressTile> {
+public class PressTileEntity extends WorkshopGUIMachineHarness<PressTileEntity> {
 
-    private ProgressBarComponent<PressTile> progressBar;
-    private SidedInventoryComponent<PressTile> inputInventory;
-    private SidedFluidTankComponent<PressTile> outputFluid;
+    private ProgressBarComponent<PressTileEntity> progressBar;
+    private SidedInventoryComponent<PressTileEntity> inputInventory;
+    private SidedFluidTankComponent<PressTileEntity> outputFluid;
 
     private PressRecipe currentRecipe;
 
-    public PressTile() {
+    public PressTileEntity() {
         super(WorkshopBlocks.PRESS.getTileEntityType(), new ProgressBarComponent(0, 0, 120).
                 setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
         this.getMachineComponent().addInventory(this.inputInventory = (SidedInventoryComponent) new SidedInventoryComponent("inputInventory", 34, 25, 1, 0)
@@ -60,16 +57,19 @@ public class PressTile extends WorkshopGUIMachine<PressTile> {
     }
 
     @Override
-    public Runnable onFinish() {
-        return () -> {
-            if (currentRecipe != null) {
-                PressRecipe pressRecipes = currentRecipe;
-                int count = currentRecipe.itemIn.getCount();
-                inputInventory.getStackInSlot(0).shrink(count);
-                outputFluid.fillForced(pressRecipes.fluidOut.copy(), IFluidHandler.FluidAction.EXECUTE);
-            }
-            checkForRecipe();
-        };
+    public void onFinish() {
+        if (currentRecipe != null) {
+            PressRecipe pressRecipes = currentRecipe;
+            int count = currentRecipe.itemIn.getCount();
+            inputInventory.getStackInSlot(0).shrink(count);
+            outputFluid.fillForced(pressRecipes.fluidOut.copy(), IFluidHandler.FluidAction.EXECUTE);
+        }
+        checkForRecipe();
+    }
+
+    @Override
+    public PressTileEntity getSelf() {
+        return this;
     }
 
 
@@ -79,33 +79,33 @@ public class PressTile extends WorkshopGUIMachine<PressTile> {
 
     @Override
     public ActionResultType onActivated(PlayerEntity playerIn, Hand hand, BlockRayTraceResult hit) {
-            ItemStack heldItem = playerIn.getHeldItem(hand);
-            FluidStack fluidOut = outputFluid.getFluid();
-            if (heldItem.isItemEqual(Items.BUCKET.getDefaultInstance())) {
-                if (fluidOut.getAmount() >= 1000) {
-                    ItemStack item = outputFluid.getFluid().getFluid().getFilledBucket().getDefaultInstance();
-                    playerIn.inventory.addItemStackToInventory(item);
-                    heldItem.shrink(1);
-                    outputFluid.drain(1000, IFluidHandler.FluidAction.EXECUTE);
-                    return ActionResultType.SUCCESS;
-                }
-            } else if (!heldItem.isEmpty()) {
-                if (inputInventory.getStackInSlot(0).isEmpty()) {
-                    inputInventory.insertItem(0, heldItem.copy(), false);
-                    int count = heldItem.getCount();
-                    heldItem.shrink(count);
-                    checkForRecipe();
-                    return ActionResultType.SUCCESS;
-                }
-            } else if(heldItem.isEmpty()) {
-                ItemStack inputStack = inputInventory.getStackInSlot(0);
-                if (!inputStack.isEmpty()) {
-                    int count = inputStack.getCount();
-                    ItemStack stack = inputInventory.extractItem(0, count, false);
-                    playerIn.addItemStackToInventory(stack);
-                }
+        ItemStack heldItem = playerIn.getHeldItem(hand);
+        FluidStack fluidOut = outputFluid.getFluid();
+        if (heldItem.isItemEqual(Items.BUCKET.getDefaultInstance())) {
+            if (fluidOut.getAmount() >= 1000) {
+                ItemStack item = outputFluid.getFluid().getFluid().getFilledBucket().getDefaultInstance();
+                playerIn.inventory.addItemStackToInventory(item);
+                heldItem.shrink(1);
+                outputFluid.drain(1000, IFluidHandler.FluidAction.EXECUTE);
                 return ActionResultType.SUCCESS;
             }
+        } else if (!heldItem.isEmpty()) {
+            if (inputInventory.getStackInSlot(0).isEmpty()) {
+                inputInventory.insertItem(0, heldItem.copy(), false);
+                int count = heldItem.getCount();
+                heldItem.shrink(count);
+                checkForRecipe();
+                return ActionResultType.SUCCESS;
+            }
+        } else if (heldItem.isEmpty()) {
+            ItemStack inputStack = inputInventory.getStackInSlot(0);
+            if (!inputStack.isEmpty()) {
+                int count = inputStack.getCount();
+                ItemStack stack = inputInventory.extractItem(0, count, false);
+                playerIn.addItemStackToInventory(stack);
+            }
+            return ActionResultType.SUCCESS;
+        }
         return ActionResultType.PASS;
     }
 
@@ -136,7 +136,7 @@ public class PressTile extends WorkshopGUIMachine<PressTile> {
         return pressRecipe.matches(inputInventory);
     }
 
-    public boolean isActive(){
+    public boolean isActive() {
         return true;
     }
 

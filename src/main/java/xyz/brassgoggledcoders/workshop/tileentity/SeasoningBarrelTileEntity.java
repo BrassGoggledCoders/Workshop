@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.blocks.seasoningbarrel;
+package xyz.brassgoggledcoders.workshop.tileentity;
 
 import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
@@ -8,26 +8,25 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
-import xyz.brassgoggledcoders.workshop.blocks.WorkshopGUIMachine;
-import xyz.brassgoggledcoders.workshop.recipes.SeasoningBarrelRecipe;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
+import xyz.brassgoggledcoders.workshop.recipes.SeasoningBarrelRecipe;
 
 import javax.annotation.Nonnull;
 
-public class SeasoningBarrelTile extends WorkshopGUIMachine<SeasoningBarrelTile> {
+public class SeasoningBarrelTileEntity extends WorkshopGUIMachineHarness<SeasoningBarrelTileEntity> {
 
     private static final int tankSize = 4000; // mB
 
-    private SidedInventoryComponent<SeasoningBarrelTile> inputInventory;
-    private SidedFluidTankComponent<SeasoningBarrelTile> inputFluidTank;
-    private SidedInventoryComponent<SeasoningBarrelTile> outputInventory;
-    private SidedFluidTankComponent<SeasoningBarrelTile> outputFluidTank;
+    private SidedInventoryComponent<SeasoningBarrelTileEntity> inputInventory;
+    private SidedFluidTankComponent<SeasoningBarrelTileEntity> inputFluidTank;
+    private SidedInventoryComponent<SeasoningBarrelTileEntity> outputInventory;
+    private SidedFluidTankComponent<SeasoningBarrelTileEntity> outputFluidTank;
 
     private SeasoningBarrelRecipe currentRecipe;
 
-    public SeasoningBarrelTile() {
-        super(WorkshopBlocks.SEASONING_BARREL.getTileEntityType(), new ProgressBarComponent<SeasoningBarrelTile>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
+    public SeasoningBarrelTileEntity() {
+        super(WorkshopBlocks.SEASONING_BARREL.getTileEntityType(), new ProgressBarComponent<SeasoningBarrelTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
         this.getMachineComponent().addInventory(this.inputInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("inputInventory", 29, 42, 1, 0)
                 .setColor(DyeColor.LIGHT_BLUE)
                 .setOnSlotChanged((stack, integer) -> checkForRecipe()));
@@ -67,7 +66,7 @@ public class SeasoningBarrelTile extends WorkshopGUIMachine<SeasoningBarrelTile>
         return currentRecipe != null
                 && ItemHandlerHelper.insertItem(outputInventory, currentRecipe.itemOut.copy(), true).isEmpty()
                 && outputFluidTank.fillForced(currentRecipe.fluidOut.copy(),
-                        IFluidHandler.FluidAction.SIMULATE) == currentRecipe.fluidOut.getAmount();
+                IFluidHandler.FluidAction.SIMULATE) == currentRecipe.fluidOut.getAmount();
     }
 
     @Override
@@ -76,36 +75,39 @@ public class SeasoningBarrelTile extends WorkshopGUIMachine<SeasoningBarrelTile>
     }
 
     @Override
-    public Runnable onFinish() {
-        return () -> {
-            if(currentRecipe != null) {
-                SeasoningBarrelRecipe seasoningBarrelRecipe = currentRecipe;
-                inputFluidTank.drainForced(seasoningBarrelRecipe.fluidInput, IFluidHandler.FluidAction.EXECUTE);
-                for(int i = 0; i < inputInventory.getSlots(); i++) {
-                    int count = seasoningBarrelRecipe.itemIn.getCount();
-                    inputInventory.getStackInSlot(i).shrink(count);
-                }
-                if(outputFluidTank.getFluid().equals(seasoningBarrelRecipe.fluidOut) || outputFluidTank.isEmpty()) {
-                    int capacity = outputFluidTank.getCapacity();
-                    if(capacity >= outputFluidTank.getFluid().getAmount()
-                            + seasoningBarrelRecipe.fluidOut.getAmount()) {
-                        outputFluidTank.fillForced(seasoningBarrelRecipe.fluidOut.copy(),
-                                IFluidHandler.FluidAction.EXECUTE);
-                    }
-                }
-                for(int i = 0; i < outputInventory.getSlots(); i++) {
-                    ItemStack itemOut = seasoningBarrelRecipe.itemOut;
-                    if(itemOut != null) {
-                        outputInventory.insertItem(0, itemOut, false);
-                    }
+    public void onFinish() {
+        if (currentRecipe != null) {
+            SeasoningBarrelRecipe seasoningBarrelRecipe = currentRecipe;
+            inputFluidTank.drainForced(seasoningBarrelRecipe.fluidInput, IFluidHandler.FluidAction.EXECUTE);
+            for (int i = 0; i < inputInventory.getSlots(); i++) {
+                int count = seasoningBarrelRecipe.itemIn.getCount();
+                inputInventory.getStackInSlot(i).shrink(count);
+            }
+            if (outputFluidTank.getFluid().equals(seasoningBarrelRecipe.fluidOut) || outputFluidTank.isEmpty()) {
+                int capacity = outputFluidTank.getCapacity();
+                if (capacity >= outputFluidTank.getFluid().getAmount()
+                        + seasoningBarrelRecipe.fluidOut.getAmount()) {
+                    outputFluidTank.fillForced(seasoningBarrelRecipe.fluidOut.copy(),
+                            IFluidHandler.FluidAction.EXECUTE);
                 }
             }
-        };
+            for (int i = 0; i < outputInventory.getSlots(); i++) {
+                ItemStack itemOut = seasoningBarrelRecipe.itemOut;
+                if (itemOut != null) {
+                    outputInventory.insertItem(0, itemOut, false);
+                }
+            }
+        }
+    }
+
+    @Override
+    public SeasoningBarrelTileEntity getSelf() {
+        return this;
     }
 
     private void checkForRecipe() {
-        if(!this.getWorld().isRemote()) {
-            if(currentRecipe == null || !currentRecipe.matches(inputInventory, inputFluidTank)) {
+        if (this.getWorld() != null && !this.getWorld().isRemote()) {
+            if (currentRecipe == null || !currentRecipe.matches(inputInventory, inputFluidTank)) {
                 currentRecipe = this.getWorld().getRecipeManager().getRecipes().stream()
                         .filter(recipe -> recipe.getType() == WorkshopRecipes.SEASONING_BARREL)
                         .map(recipe -> (SeasoningBarrelRecipe) recipe).filter(recipe -> recipe.matches(inputInventory, inputFluidTank)).findFirst().orElse(null);

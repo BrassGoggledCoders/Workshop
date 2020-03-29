@@ -1,11 +1,10 @@
-package xyz.brassgoggledcoders.workshop.components;
+package xyz.brassgoggledcoders.workshop.components.machine;
 
 import com.hrznstudio.titanium.api.IFactory;
 import com.hrznstudio.titanium.api.client.IScreenAddon;
 import com.hrznstudio.titanium.api.client.IScreenAddonProvider;
 import com.hrznstudio.titanium.api.filter.IFilter;
 import com.hrznstudio.titanium.client.screen.asset.IAssetProvider;
-import com.hrznstudio.titanium.component.IComponentHarness;
 import com.hrznstudio.titanium.component.button.ButtonComponent;
 import com.hrznstudio.titanium.component.button.MultiButtonComponent;
 import com.hrznstudio.titanium.component.filter.MultiFilterComponent;
@@ -41,7 +40,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class MachineComponent<T extends IComponentHarness> implements IScreenAddonProvider {
+public class MachineComponent<T extends IMachineHarness<T>> implements IScreenAddonProvider {
     private MultiInventoryComponent<T> multiInventoryComponent;
     private MultiProgressBarHandler<T> multiProgressBarHandler;
     private MultiTankComponent<T> multiTankComponent;
@@ -58,6 +57,7 @@ public class MachineComponent<T extends IComponentHarness> implements IScreenAdd
         this.posSupplier = posSupplier;
     }
 
+    @Nonnull
     @ParametersAreNonnullByDefault
     public ActionResultType onActivated(PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         if (this.multiTankComponent != null) {

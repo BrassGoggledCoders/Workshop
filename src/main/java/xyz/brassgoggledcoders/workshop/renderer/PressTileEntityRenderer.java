@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.blocks.press;
+package xyz.brassgoggledcoders.workshop.renderer;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -17,8 +17,10 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
+import xyz.brassgoggledcoders.workshop.blocks.press.PressBlock;
+import xyz.brassgoggledcoders.workshop.tileentity.PressTileEntity;
 
-public class PressTileEntityRenderer extends TileEntityRenderer<PressTile> {
+public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity> {
 
     public PressTileEntityRenderer(TileEntityRendererDispatcher dispatcher) {
         super(dispatcher);
@@ -26,31 +28,31 @@ public class PressTileEntityRenderer extends TileEntityRenderer<PressTile> {
 
     @Deprecated
     @Override
-    public void render(PressTile pressTile, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int i, int i1) {
-        if (!pressTile.hasWorld()) {
+    public void render(PressTileEntity pressTileEntity, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int i, int i1) {
+        if (!pressTileEntity.hasWorld()) {
             return;
         }
         //Fluid Visuals
-        if(!pressTile.getOutputFluid().isEmpty()) {
-            renderFluidBlock(pressTile);
+        if(!pressTileEntity.getOutputFluid().isEmpty()) {
+            renderFluidBlock(pressTileEntity);
         }
 
         //Item Visuals
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-        ItemStack item = pressTile.getInputInventory().getStackInSlot(0);
-        float f = pressTile.getWorld().getBlockState(pressTile.getPos()).get(PressBlock.FACING).getHorizontalAngle();
-        if(!item.isEmpty() && !pressTile.isActive()){
+        ItemStack item = pressTileEntity.getInputInventory().getStackInSlot(0);
+        float f = pressTileEntity.getWorld().getBlockState(pressTileEntity.getPos()).get(PressBlock.FACING).getHorizontalAngle();
+        if(!item.isEmpty() && !pressTileEntity.isActive()){
             GlStateManager.pushMatrix();
             //GlStateManager.translated(x + 0.5, y + 0.5, z + 0.5);
             GlStateManager.rotatef(f, 0, 1, 0.0F);
             GlStateManager.scalef(0.4f, 0.4f, 0.4f);
             itemRenderer.renderItem(null, item, ItemCameraTransforms.TransformType.FIXED, false, matrixStack, iRenderTypeBuffer,
-                    pressTile.getWorld(), i, i1);
+                    pressTileEntity.getWorld(), i, i1);
             GlStateManager.popMatrix();
         }
     }
 
-    public void renderFluidBlock(PressTile tile){
+    public void renderFluidBlock(PressTileEntity tile){
         BlockPos pos = tile.getPos();
         FluidStack fluid = tile.getOutputFluid().getFluid();
         int amount = fluid.getAmount();
