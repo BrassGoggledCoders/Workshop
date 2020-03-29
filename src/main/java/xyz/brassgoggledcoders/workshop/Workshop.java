@@ -37,6 +37,7 @@ public class Workshop {
 
         WorkshopRecipes.register(modBus);
         WorkshopItems.register(modBus);
+        WorkshopFluids.register(modBus);
         WorkshopBlocks.register(modBus);
         WorkshopContainers.register(modBus);
     }
