@@ -15,6 +15,8 @@ import com.hrznstudio.titanium.component.inventory.MultiInventoryComponent;
 import com.hrznstudio.titanium.component.progress.MultiProgressBarHandler;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import com.hrznstudio.titanium.component.sideness.IFacingComponent;
+import com.hrznstudio.titanium.container.addon.IContainerAddon;
+import com.hrznstudio.titanium.container.addon.IContainerAddonProvider;
 import com.hrznstudio.titanium.util.FacingUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -40,7 +42,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class MachineComponent<T extends IMachineHarness<T>> implements IScreenAddonProvider {
+public class MachineComponent<T extends IMachineHarness<T>> implements IScreenAddonProvider, IContainerAddonProvider {
     private MultiInventoryComponent<T> multiInventoryComponent;
     private MultiProgressBarHandler<T> multiProgressBarHandler;
     private MultiTankComponent<T> multiTankComponent;
@@ -149,6 +151,24 @@ public class MachineComponent<T extends IMachineHarness<T>> implements IScreenAd
 
         if (this.multiFilterComponent != null) {
             addons.addAll(this.multiFilterComponent.getScreenAddons());
+        }
+
+        return addons;
+    }
+
+    @Override
+    public List<IFactory<? extends IContainerAddon>> getContainerAddons() {
+        List<IFactory<? extends IContainerAddon>> addons = new ArrayList<>();
+        if (this.multiInventoryComponent != null) {
+            addons.addAll(this.multiInventoryComponent.getContainerAddons());
+        }
+
+        if (this.multiProgressBarHandler != null) {
+            addons.addAll(this.multiProgressBarHandler.getContainerAddons());
+        }
+
+        if (this.multiTankComponent != null) {
+            addons.addAll(this.multiTankComponent.getContainerAddons());
         }
 
         return addons;

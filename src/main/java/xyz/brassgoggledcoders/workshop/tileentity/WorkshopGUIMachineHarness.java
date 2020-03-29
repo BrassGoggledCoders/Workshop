@@ -1,6 +1,8 @@
 package xyz.brassgoggledcoders.workshop.tileentity;
 
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import com.hrznstudio.titanium.container.BasicAddonContainer;
+import com.hrznstudio.titanium.network.locator.LocatorFactory;
 import com.hrznstudio.titanium.network.locator.LocatorInstance;
 import com.hrznstudio.titanium.network.locator.instance.TileEntityLocatorInstance;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,18 +16,20 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
-import xyz.brassgoggledcoders.workshop.container.MachineContainer;
 import xyz.brassgoggledcoders.workshop.component.machine.IMachineHarness;
 import xyz.brassgoggledcoders.workshop.component.machine.MachineComponent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Objects;
 
 public abstract class WorkshopGUIMachineHarness<T extends WorkshopGUIMachineHarness<T>> extends TileEntity implements IMachineHarness<T>, ITickableTileEntity, INamedContainerProvider {
     private final MachineComponent<T> machineComponent;
@@ -37,6 +41,7 @@ public abstract class WorkshopGUIMachineHarness<T extends WorkshopGUIMachineHarn
         this.machineComponent.addProgressBar(this.progressBar = progressBar
                 .setOnStart(() -> progressBar.setMaxProgress(getMaxProgress()))
                 .setCanIncrease(tileEntity -> canIncrease())
+                .setMaxProgress(1000)
                 .setOnFinishWork(this::onFinish));
     }
 
@@ -99,14 +104,16 @@ public abstract class WorkshopGUIMachineHarness<T extends WorkshopGUIMachineHarn
     @Override
     @Nonnull
     public ITextComponent getDisplayName() {
-        return new TranslationTextComponent(this.getBlockState().getBlock().getTranslationKey());
+        return new TranslationTextComponent(this.getBlockState().getBlock().getTranslationKey())
+                .applyTextStyle(TextFormatting.BLACK);
     }
 
     @Nullable
     @Override
     @ParametersAreNonnullByDefault
     public Container createMenu(int menu, PlayerInventory inventoryPlayer, PlayerEntity entityPlayer) {
-        return new MachineContainer(this, inventoryPlayer, menu);
+        return new BasicAddonContainer(this, IWorldPosCallable.of(Objects.requireNonNull(this.getWorld()),
+                this.getPos()), inventoryPlayer, menu);
     }
 
     @Override
