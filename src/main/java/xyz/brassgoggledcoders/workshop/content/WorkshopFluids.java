@@ -37,7 +37,6 @@ public class WorkshopFluids {
             .block(BRINE::getBlock)
             .bucket(BRINE::getBucket);
 
-
     public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> DISTILLED_WATER = new FluidRegistryObjectGroup<>("distilled_water",
             () -> new ForgeFlowingFluid.Source(WorkshopFluids.DISTILLED_WATER_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.DISTILLED_WATER_PROPERTIES))
             .register(FLUIDS, BLOCKS, ITEMS);
@@ -49,6 +48,18 @@ public class WorkshopFluids {
             .color(16777215))
             .block(DISTILLED_WATER::getBlock)
             .bucket(DISTILLED_WATER::getBucket);
+
+    public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> SEED_OIL = new FluidRegistryObjectGroup<>("seed_oil",
+            () -> new ForgeFlowingFluid.Source(WorkshopFluids.SEED_OIL_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.SEED_OIL_PROPERTIES));
+
+    public static final ForgeFlowingFluid.Properties SEED_OIL_PROPERTIES = new ForgeFlowingFluid.Properties(SEED_OIL, SEED_OIL::getFlowing,
+            FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
+            new ResourceLocation("minecraft", "block/water_flow"))
+            .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
+            .color(5184271))
+            .block(SEED_OIL::getBlock)
+            .bucket(SEED_OIL::getBucket);
+
 
     public static void register(IEventBus modBus) {
         FLUIDS.register(modBus);
