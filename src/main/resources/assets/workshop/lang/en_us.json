@@ -2,6 +2,7 @@
   "block.workshop.alembic": "Alembic",
   "block.workshop.brine": "Brine",
   "block.workshop.broken_anvil": "Broken Anvil",
+  "block.workshop.distilled_water": "Distilled Water",
   "block.workshop.obsidian_plate": "Obsidian Plate",
   "block.workshop.press": "Press",
   "block.workshop.seasoning_barrel": "Seasoning Barrel",
@@ -11,6 +12,7 @@
   "guide.workshop.name": "Workshop Guide",
   "item.workshop.brine_bucket": "Bucket of Brine",
   "item.workshop.caramel_apple": "Caramel Apple",
+  "item.workshop.distilled_water_bucket": "Bucket of Distilled Water",
   "item.workshop.salt": "Salt",
   "itemGroup.workshop": "Workshop"
 }

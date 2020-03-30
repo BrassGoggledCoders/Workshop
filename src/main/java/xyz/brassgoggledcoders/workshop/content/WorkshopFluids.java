@@ -5,6 +5,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -45,6 +46,18 @@ public class WorkshopFluids {
             .color(2980986))
             .block(BRINE_BLOCK)
             .bucket(BRINE_BUCKET);
+
+
+    public static final FluidRegistryObjectGroup<FlowingFluid, FlowingFluid> DISTILLED_WATER = new FluidRegistryObjectGroup<>("distilled_water",
+            () -> new ForgeFlowingFluid.Source(WorkshopFluids.DISTILLED_WATER_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.DISTILLED_WATER_PROPERTIES));
+
+    public static final ForgeFlowingFluid.Properties DISTILLED_WATER_PROPERTIES = new ForgeFlowingFluid.Properties(DISTILLED_WATER, DISTILLED_WATER::getFlowing,
+            FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
+            new ResourceLocation("minecraft", "block/water_flow"))
+            .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
+            .color(16777215))
+            .block(DISTILLED_WATER::getBlock)
+            .bucket(DISTILLED_WATER::getBucket);
 
     public static void register(IEventBus modBus) {
         FLUIDS.register(modBus);
