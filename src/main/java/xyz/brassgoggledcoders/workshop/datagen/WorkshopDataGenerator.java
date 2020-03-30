@@ -8,6 +8,8 @@ import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.datagen.langauge.WorkshopGBLanguageProvider;
 import xyz.brassgoggledcoders.workshop.datagen.langauge.WorkshopUSLanguageProvider;
 import xyz.brassgoggledcoders.workshop.datagen.loot.WorkshopLootTableProvider;
+import xyz.brassgoggledcoders.workshop.datagen.recipe.SeasoningBarrelRecipeProvider;
+import xyz.brassgoggledcoders.workshop.datagen.recipe.WorkshopRecipeProvider;
 
 @Mod.EventBusSubscriber(modid = Workshop.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class WorkshopDataGenerator {
@@ -23,6 +25,8 @@ public class WorkshopDataGenerator {
 
         if (event.includeServer()) {
             dataGenerator.addProvider(new WorkshopLootTableProvider(dataGenerator));
+            dataGenerator.addProvider(new WorkshopRecipeProvider(dataGenerator));
+            dataGenerator.addProvider(new SeasoningBarrelRecipeProvider(dataGenerator));
         }
     }
 }

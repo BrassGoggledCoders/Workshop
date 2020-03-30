@@ -1,7 +1,6 @@
 package xyz.brassgoggledcoders.workshop.recipe;
 
 import com.hrznstudio.titanium.component.fluid.FluidTankComponent;
-import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.recipe.serializer.GenericSerializer;
 import com.hrznstudio.titanium.recipe.serializer.SerializableRecipe;
 import net.minecraft.inventory.IInventory;
@@ -15,13 +14,14 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import static xyz.brassgoggledcoders.workshop.content.WorkshopRecipes.SEASONING_BARREL_SERIALIZER;
 
 public class SeasoningBarrelRecipe extends SerializableRecipe implements IMachineRecipe {
     public Ingredient itemIn = Ingredient.EMPTY;
     public ItemStack itemOut = ItemStack.EMPTY;
-    public FluidStack fluidInput = FluidStack.EMPTY;
+    public FluidStack fluidIn = FluidStack.EMPTY;
     public FluidStack fluidOut = FluidStack.EMPTY;
     public int seasoningTime = 1000;
 
@@ -29,9 +29,18 @@ public class SeasoningBarrelRecipe extends SerializableRecipe implements IMachin
         super(resourceLocation);
     }
 
+    public SeasoningBarrelRecipe(ResourceLocation resourceLocation, Ingredient itemIn, ItemStack itemOut, FluidStack fluidIn, FluidStack fluidOut, int seasoningTime) {
+        this(resourceLocation);
+        this.itemIn = itemIn;
+        this.itemOut = itemOut;
+        this.fluidIn = fluidIn;
+        this.fluidOut = fluidOut;
+        this.seasoningTime = seasoningTime;
+    }
+
     public boolean matches(@Nonnull IItemHandler handler, @Nonnull FluidTankComponent<?> tank) {
         return itemIn.test(handler.getStackInSlot(0)) &&
-                tank.drainForced(fluidInput, IFluidHandler.FluidAction.SIMULATE).getAmount() == fluidInput.getAmount();
+                tank.drainForced(fluidIn, IFluidHandler.FluidAction.SIMULATE).getAmount() == fluidIn.getAmount();
     }
 
     @Override

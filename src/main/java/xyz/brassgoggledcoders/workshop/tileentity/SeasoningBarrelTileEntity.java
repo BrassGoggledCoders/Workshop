@@ -77,7 +77,7 @@ public class SeasoningBarrelTileEntity extends BasicMachineTileEntity<SeasoningB
 
     @Override
     public void handleComplete(SeasoningBarrelRecipe currentRecipe) {
-        inputFluidTank.drainForced(currentRecipe.fluidInput, IFluidHandler.FluidAction.EXECUTE);
+        inputFluidTank.drainForced(currentRecipe.fluidIn, IFluidHandler.FluidAction.EXECUTE);
         for (int i = 0; i < inputInventory.getSlots(); i++) {
             inputInventory.getStackInSlot(i).shrink(1);
         }
