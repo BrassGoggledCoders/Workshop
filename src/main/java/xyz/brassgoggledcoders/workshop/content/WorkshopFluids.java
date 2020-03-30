@@ -27,7 +27,7 @@ public class WorkshopFluids {
     public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> BRINE = new FluidRegistryObjectGroup<>("brine", () ->
             new ForgeFlowingFluid.Source(WorkshopFluids.BRINE_PROPERTIES), () ->
             new ForgeFlowingFluid.Flowing(WorkshopFluids.BRINE_PROPERTIES)
-    );
+    ).register(FLUIDS, BLOCKS, ITEMS);
 
     public static final ForgeFlowingFluid.Properties BRINE_PROPERTIES = new ForgeFlowingFluid.Properties(BRINE,
             BRINE::getFlowing, FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
@@ -50,7 +50,7 @@ public class WorkshopFluids {
             .bucket(DISTILLED_WATER::getBucket);
 
     public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> SEED_OIL = new FluidRegistryObjectGroup<>("seed_oil",
-            () -> new ForgeFlowingFluid.Source(WorkshopFluids.SEED_OIL_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.SEED_OIL_PROPERTIES));
+            () -> new ForgeFlowingFluid.Source(WorkshopFluids.SEED_OIL_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.SEED_OIL_PROPERTIES)).register(FLUIDS, BLOCKS, ITEMS);
 
     public static final ForgeFlowingFluid.Properties SEED_OIL_PROPERTIES = new ForgeFlowingFluid.Properties(SEED_OIL, SEED_OIL::getFlowing,
             FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
