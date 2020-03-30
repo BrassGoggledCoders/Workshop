@@ -33,6 +33,8 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         //region Fluids
         this.addBlock(WorkshopFluids.BRINE_BLOCK, "Brine");
         this.addItem(WorkshopFluids.BRINE_BUCKET, "Bucket of Brine");
+        this.addBlock(WorkshopFluids.DISTILLED_WATER::getBlock, "Distilled Water");
+        this.addItem(WorkshopFluids.DISTILLED_WATER::getBucket, "Bucket of Distilled Water");
         //endregion
 
         //region Guide
