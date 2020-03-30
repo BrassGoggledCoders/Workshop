@@ -1,15 +1,10 @@
 package xyz.brassgoggledcoders.workshop;
 
-import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
-
+import com.hrznstudio.titanium.tab.TitaniumTab;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import com.hrznstudio.titanium.module.ModuleController;
-import com.hrznstudio.titanium.tab.TitaniumTab;
-
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -17,13 +12,15 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import xyz.brassgoggledcoders.workshop.blocks.press.PressTileEntityRenderer;
-import xyz.brassgoggledcoders.workshop.blocks.sinteringfurnace.SinteringTileEntityRenderer;
-import xyz.brassgoggledcoders.workshop.registries.*;
+import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
+import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
+import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
+import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
+import xyz.brassgoggledcoders.workshop.renderer.PressTileEntityRenderer;
+import xyz.brassgoggledcoders.workshop.renderer.SinteringTileEntityRenderer;
 
-//Main Class
-@Mod(MOD_ID)
-public class Workshop extends ModuleController {
+@Mod(Workshop.MOD_ID)
+public class Workshop {
     public static final String MOD_ID = "workshop";
 
     public static Logger LOGGER = LogManager.getLogger();
@@ -37,12 +34,8 @@ public class Workshop extends ModuleController {
 
         WorkshopRecipes.register(modBus);
         WorkshopItems.register(modBus);
+        WorkshopFluids.register(modBus);
         WorkshopBlocks.register(modBus);
-    }
-
-    @Override
-    protected void initModules() {
-
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {

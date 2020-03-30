@@ -1,0 +1,8 @@
+{
+  "itemIn": {
+    "item": "workshop:salt"
+  },
+  "fluidInput": "{FluidName:\"minecraft:water\",Amount:100}",
+  "fluidOut": "{FluidName:\"workshop:brine\",Amount:100}",
+  "type": "workshop:seasoning_barrel"
+}

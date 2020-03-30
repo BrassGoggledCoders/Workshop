@@ -9,6 +9,9 @@
     "block.workshop.obsidian_plate": "Obsidian Plate",
     "block.workshop.broken_anvil": "Broken Anvil",
 
+    "fluid.workshop.brine": "Brine",
+
+    "item.workshop.brine_bucket": "Bucket of Brine",
     "item.workshop.caramel_apple": "Caramel Apple",
     
     "guide.workshop.name": "Workshop Guide",
