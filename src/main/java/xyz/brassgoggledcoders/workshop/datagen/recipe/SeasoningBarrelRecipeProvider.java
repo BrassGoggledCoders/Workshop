@@ -12,6 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
+import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 import xyz.brassgoggledcoders.workshop.recipe.SeasoningBarrelRecipe;
 
 import javax.annotation.Resource;
@@ -29,13 +30,11 @@ public class SeasoningBarrelRecipeProvider extends TitaniumSerializableProvider 
 
     @Override
     public void add(Map<IJsonFile, IJSONGenerator> serializables) {
-
-        SeasoningBarrelRecipe testRecipe = new SeasoningBarrelRecipe(new ResourceLocation(Workshop.MOD_ID, "test"), Ingredient.fromStacks(new ItemStack(Items.DIAMOND)),
-                ItemStack.EMPTY, new FluidStack(WorkshopFluids.DISTILLED_WATER.get(), 100), new FluidStack(Fluids.LAVA, 100), 500);
-        recipes.add(new Builder("test2")
-                .setItemIn(Ingredient.fromStacks(new ItemStack(Items.ANDESITE)))
+        recipes.add(new Builder("water_to_brine")
+                .setItemIn(Ingredient.fromItems(WorkshopItems.SALT.get()))
                 .setFluidIn(new FluidStack(Fluids.WATER, 100))
-                .setItemOut(new ItemStack(Items.DIAMOND)).build());
+                .setFluidOut(new FluidStack(WorkshopFluids.BRINE.getFluid(), 100))
+                .build());
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }
 
