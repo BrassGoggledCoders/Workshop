@@ -1,6 +1,8 @@
 package xyz.brassgoggledcoders.workshop.asset;
 
-import com.hrznstudio.titanium.api.client.*;
+import com.hrznstudio.titanium.api.client.GenericAssetType;
+import com.hrznstudio.titanium.api.client.IAsset;
+import com.hrznstudio.titanium.api.client.IAssetType;
 
 public class WorkshopAssetTypes {
     public static final IAssetType<IAsset> THERMOMETER_VERTICAL_EMPTY;

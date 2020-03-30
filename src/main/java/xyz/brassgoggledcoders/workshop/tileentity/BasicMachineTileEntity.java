@@ -30,7 +30,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 import xyz.brassgoggledcoders.workshop.component.machine.IMachineHarness;
 import xyz.brassgoggledcoders.workshop.component.machine.MachineComponent;
-import xyz.brassgoggledcoders.workshop.recipe.IMachineRecipe;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

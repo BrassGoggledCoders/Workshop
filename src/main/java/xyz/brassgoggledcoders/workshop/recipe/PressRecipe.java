@@ -1,10 +1,7 @@
 package xyz.brassgoggledcoders.workshop.recipe;
 
-import static xyz.brassgoggledcoders.workshop.content.WorkshopRecipes.PRESS_SERIALIZER;
-
 import com.hrznstudio.titanium.recipe.serializer.GenericSerializer;
 import com.hrznstudio.titanium.recipe.serializer.SerializableRecipe;
-
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
@@ -12,6 +9,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandler;
+
+import static xyz.brassgoggledcoders.workshop.content.WorkshopRecipes.PRESS_SERIALIZER;
 
 
 public class PressRecipe extends SerializableRecipe {

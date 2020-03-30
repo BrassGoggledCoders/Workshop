@@ -3,8 +3,6 @@ package xyz.brassgoggledcoders.workshop.datagen.langauge;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
 import xyz.brassgoggledcoders.workshop.Workshop;
-import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 
 public class WorkshopGBLanguageProvider extends LanguageProvider {

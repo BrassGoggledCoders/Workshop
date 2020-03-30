@@ -1,16 +1,14 @@
 package xyz.brassgoggledcoders.workshop.asset;
 
-import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
-
-import java.awt.Rectangle;
-
-import javax.annotation.Nullable;
-
 import com.hrznstudio.titanium.api.client.IAsset;
 import com.hrznstudio.titanium.api.client.IAssetType;
-
 import com.hrznstudio.titanium.client.screen.asset.IAssetProvider;
 import net.minecraft.util.ResourceLocation;
+
+import javax.annotation.Nullable;
+import java.awt.*;
+
+import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
 public class WorkshopAssetProvider implements IAssetProvider {
 

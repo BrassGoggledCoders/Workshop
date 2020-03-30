@@ -9,9 +9,7 @@ import com.hrznstudio.titanium.container.addon.IContainerAddonProvider;
 import com.hrznstudio.titanium.network.locator.LocatorInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.IContainerProvider;
 import net.minecraft.item.crafting.IRecipe;
-import xyz.brassgoggledcoders.workshop.recipe.IMachineRecipe;
 
 import java.util.List;
 

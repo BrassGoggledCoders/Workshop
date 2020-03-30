@@ -1,9 +1,6 @@
 package xyz.brassgoggledcoders.workshop.content;
 
-import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
-
 import com.hrznstudio.titanium.recipe.serializer.GenericSerializer;
-
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -11,6 +8,8 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.recipe.*;
+
+import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
 public class WorkshopRecipes {
 
