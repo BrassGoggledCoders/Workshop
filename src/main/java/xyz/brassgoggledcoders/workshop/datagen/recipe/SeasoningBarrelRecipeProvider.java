@@ -6,7 +6,6 @@ import com.hrznstudio.titanium.recipe.generator.TitaniumSerializableProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
@@ -15,7 +14,6 @@ import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 import xyz.brassgoggledcoders.workshop.recipe.SeasoningBarrelRecipe;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -75,8 +73,17 @@ public class SeasoningBarrelRecipeProvider extends TitaniumSerializableProvider 
             return this;
         }
 
+        public void validate() {
+            if(Ingredient.EMPTY.equals(this.itemIn)) {
+                throw new IllegalArgumentException("Seasoning barrel recipe must have item input");
+            }
+            if(FluidStack.EMPTY.equals(this.fluidIn)) {
+                throw new IllegalArgumentException("Seasoning barrel recipe must have fluid input");
+            }
+        }
+
         public SeasoningBarrelRecipe build() {
-            //validate()
+            validate();
             return new SeasoningBarrelRecipe(name, itemIn, itemOut, fluidIn, fluidOut, seasoningTime);
         }
     }
