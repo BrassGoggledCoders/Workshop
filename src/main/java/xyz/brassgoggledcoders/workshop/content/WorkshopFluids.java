@@ -32,7 +32,7 @@ public class WorkshopFluids {
     );
 
     public static final RegistryObject<FlowingFluidBlock> BRINE_BLOCK = BLOCKS.register("brine", () ->
-            new FlowingFluidBlock(BRINE, Block.Properties.from(Blocks.WATER)));
+            new FlowingFluidBlock(BRINE, Block.Properties.from(Blocks.WATER).noDrops()));
 
     public static RegistryObject<Item> BRINE_BUCKET = ITEMS.register("brine_bucket", () ->
             new BucketItem(BRINE, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(Workshop.ITEM_GROUP))
