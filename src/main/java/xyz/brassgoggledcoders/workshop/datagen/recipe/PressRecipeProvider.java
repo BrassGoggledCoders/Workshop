@@ -8,6 +8,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.ForgeBlockTagsProvider;
+import net.minecraftforge.common.data.ForgeItemTagsProvider;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
@@ -30,6 +34,11 @@ public class PressRecipeProvider extends TitaniumSerializableProvider {
 
     @Override
     public void add(Map<IJsonFile, IJSONGenerator> serializables) {
+        recipes.add(new Builder("seeds_to_seed_oil")
+                .setInput(Ingredient.fromTag(Tags.Items.SEEDS))
+                .setOutput(new FluidStack(WorkshopFluids.SEED_OIL.getFluid(), FluidAttributes.BUCKET_VOLUME))
+                .build()
+        );
         recipes.add(new Builder("apple_juicing")
                 .setInput(Ingredient.fromItems(Items.APPLE))
                 .setOutput(new FluidStack(WorkshopFluids.APPLE_JUICE.getFluid(), WorkshopFluids.BOTTLE_VOLUME))

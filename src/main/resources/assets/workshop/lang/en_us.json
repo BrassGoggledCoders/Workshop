@@ -1,5 +1,6 @@
 {
   "block.workshop.alembic": "Alembic",
+  "block.workshop.apple_juice": "Apple Juice",
   "block.workshop.brine": "Brine",
   "block.workshop.broken_anvil": "Broken Anvil",
   "block.workshop.distilled_water": "Distilled Water",
@@ -11,6 +12,7 @@
   "block.workshop.spinning_wheel": "Spinning Wheel",
   "guide.workshop.landing_text": "A pocket handbook to the world of small scale manufacturing",
   "guide.workshop.name": "Workshop Guide",
+  "item.workshop.apple_juice_bucket": "Bucket of Apple Juice",
   "item.workshop.brine_bucket": "Bucket of Brine",
   "item.workshop.caramel_apple": "Caramel Apple",
   "item.workshop.distilled_water_bucket": "Bucket of Distilled Water",

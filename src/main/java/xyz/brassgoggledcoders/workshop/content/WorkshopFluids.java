@@ -2,6 +2,7 @@ package xyz.brassgoggledcoders.workshop.content;
 
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -57,6 +58,28 @@ public class WorkshopFluids {
             .block(SEED_OIL::getBlock)
             .bucket(SEED_OIL::getBucket);
 
+    public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> RESIN = new FluidRegistryObjectGroup<>("resin",
+            () -> new ForgeFlowingFluid.Source(WorkshopFluids.RESIN_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.RESIN_PROPERTIES)).register(FLUIDS, BLOCKS, ITEMS);
+
+    public static final ForgeFlowingFluid.Properties RESIN_PROPERTIES = new ForgeFlowingFluid.Properties(RESIN, RESIN::getFlowing,
+            FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
+                    new ResourceLocation("minecraft", "block/water_flow"))
+                    .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
+                    .color(16762920))
+            .block(RESIN::getBlock)
+            .bucket(RESIN::getBucket);
+
+    public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> ADHESIVE_OILS = new FluidRegistryObjectGroup<>("adhesive_oils",
+            () -> new ForgeFlowingFluid.Source(WorkshopFluids.ADHESIVE_OILS_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.ADHESIVE_OILS_PROPERTIES)).register(FLUIDS, BLOCKS, ITEMS);
+
+    public static final ForgeFlowingFluid.Properties ADHESIVE_OILS_PROPERTIES = new ForgeFlowingFluid.Properties(ADHESIVE_OILS, ADHESIVE_OILS::getFlowing,
+            FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
+                    new ResourceLocation("minecraft", "block/water_flow"))
+                    .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
+                    .color(655360))
+            .block(ADHESIVE_OILS::getBlock)
+            .bucket(ADHESIVE_OILS::getBucket);
+
     public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> APPLE_JUICE = new FluidRegistryObjectGroup<>("apple_juice",
             () -> new ForgeFlowingFluid.Source(WorkshopFluids.APPLE_JUICE_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.APPLE_JUICE_PROPERTIES)).register(FLUIDS, BLOCKS, ITEMS);
 
@@ -67,6 +90,28 @@ public class WorkshopFluids {
                     .color(16724530))
             .block(APPLE_JUICE::getBlock)
             .bucket(APPLE_JUICE::getBucket);
+
+    public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> CHERRY_JUICE = new FluidRegistryObjectGroup<>("cherry_juice",
+            () -> new ForgeFlowingFluid.Source(WorkshopFluids.CHERRY_JUICE_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.CHERRY_JUICE_PROPERTIES)).register(FLUIDS, BLOCKS, ITEMS);
+
+    public static final ForgeFlowingFluid.Properties CHERRY_JUICE_PROPERTIES = new ForgeFlowingFluid.Properties(CHERRY_JUICE, CHERRY_JUICE::getFlowing,
+            FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
+                    new ResourceLocation("minecraft", "block/water_flow"))
+                    .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
+                    .color(11797765))
+            .block(CHERRY_JUICE::getBlock)
+            .bucket(CHERRY_JUICE::getBucket);
+
+    public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> GLACIAL_WATER = new FluidRegistryObjectGroup<>("glacial_water",
+            () -> new ForgeFlowingFluid.Source(WorkshopFluids.GLACIAL_WATER_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.GLACIAL_WATER_PROPERTIES)).register(FLUIDS, BLOCKS, ITEMS);
+
+    public static final ForgeFlowingFluid.Properties GLACIAL_WATER_PROPERTIES = new ForgeFlowingFluid.Properties(GLACIAL_WATER, GLACIAL_WATER::getFlowing,
+            FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
+                    new ResourceLocation("minecraft", "block/water_flow"))
+                    .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
+                    .color(2631935))
+            .block(GLACIAL_WATER::getBlock)
+            .bucket(GLACIAL_WATER::getBucket);
 
     public static void register(IEventBus modBus) {
         FLUIDS.register(modBus);

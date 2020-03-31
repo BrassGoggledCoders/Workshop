@@ -8,6 +8,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
@@ -33,6 +34,13 @@ public class SeasoningBarrelRecipeProvider extends TitaniumSerializableProvider 
                 .setFluidIn(new FluidStack(Fluids.WATER, 100))
                 .setFluidOut(new FluidStack(WorkshopFluids.BRINE.getFluid(), 100))
                 .build());
+        recipes.add(new Builder("seed_oil_to_resin")
+                .setFluidIn(new FluidStack(WorkshopFluids.SEED_OIL.getFluid(), FluidAttributes.BUCKET_VOLUME))
+                .setFluidOut(new FluidStack(WorkshopFluids.RESIN.getFluid(), FluidAttributes.BUCKET_VOLUME))
+                .setItemOut(new ItemStack(WorkshopItems.ROSIN.get()))
+                .setTime(10 * 20)
+                .build()
+        );
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }
 
@@ -74,11 +82,8 @@ public class SeasoningBarrelRecipeProvider extends TitaniumSerializableProvider 
         }
 
         public void validate() {
-            if(Ingredient.EMPTY.equals(this.itemIn)) {
-                throw new IllegalArgumentException("Seasoning barrel recipe must have item input");
-            }
-            if(FluidStack.EMPTY.equals(this.fluidIn)) {
-                throw new IllegalArgumentException("Seasoning barrel recipe must have fluid input");
+            if(Ingredient.EMPTY.equals(this.itemIn) && FluidStack.EMPTY.equals(this.fluidIn)) {
+                throw new IllegalArgumentException("Seasoning barrel recipe must have an input");
             }
         }
 

@@ -1,0 +1,7 @@
+{
+  "itemIn": {
+    "tag": "forge:seeds"
+  },
+  "fluidOut": "{FluidName:\"workshop:seed_oil\",Amount:1000}",
+  "type": "workshop:press"
+}
