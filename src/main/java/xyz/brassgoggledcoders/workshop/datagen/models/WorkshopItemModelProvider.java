@@ -8,6 +8,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.fml.RegistryObject;
 import xyz.brassgoggledcoders.workshop.Workshop;
+import xyz.brassgoggledcoders.workshop.content.BlockRegistryObjectGroup;
+import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 
 import javax.annotation.Resource;
@@ -26,6 +28,9 @@ public class WorkshopItemModelProvider extends ModelProvider<PropertiedItemModel
             if(fluid.get().isSource(fluid.get().getDefaultState())) {
                 bucket(fluid.getId());
             }
+        }
+        for(BlockRegistryObjectGroup concrete : WorkshopBlocks.CONCRETES) {
+            this.withExistingParent(concrete.getItem().getRegistryName().getPath(), modLoc(BLOCK_FOLDER + "/" + concrete.getName()));
         }
     }
 

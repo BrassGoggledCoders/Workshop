@@ -6,6 +6,7 @@ import com.hrznstudio.titanium.recipe.generator.TitaniumSerializableProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -38,7 +39,21 @@ public class SeasoningBarrelRecipeProvider extends TitaniumSerializableProvider 
                 .setFluidIn(new FluidStack(WorkshopFluids.SEED_OIL.getFluid(), FluidAttributes.BUCKET_VOLUME))
                 .setFluidOut(new FluidStack(WorkshopFluids.RESIN.getFluid(), FluidAttributes.BUCKET_VOLUME))
                 .setItemOut(new ItemStack(WorkshopItems.ROSIN.get()))
-                .setTime(10 * 20)
+                .setTime(WorkshopRecipeProvider.timeInTicks(0, 10))
+                .build()
+        );
+        recipes.add(new Builder("pickles")
+                .setFluidIn(new FluidStack(WorkshopFluids.BRINE.getFluid(), FluidAttributes.BUCKET_VOLUME / 10))
+                .setItemIn(Ingredient.fromItems(Items.SEA_PICKLE))
+                .setItemOut(new ItemStack(WorkshopItems.PICKLE.get()))
+                .setFluidOut(new FluidStack(WorkshopFluids.BRINE.getFluid(), FluidAttributes.BUCKET_VOLUME / 10))
+                .setTime(WorkshopRecipeProvider.timeInTicks(0, 15))
+                .build()
+        );
+        recipes.add(new Builder("apple_juice_to_cider")
+                .setFluidIn(new FluidStack(WorkshopFluids.APPLE_JUICE.getFluid(), FluidAttributes.BUCKET_VOLUME))
+                .setFluidOut(new FluidStack(WorkshopFluids.CIDER.getFluid(), FluidAttributes.BUCKET_VOLUME))
+                .setTime(WorkshopRecipeProvider.timeInTicks(5,0))
                 .build()
         );
         recipes.forEach(recipe -> serializables.put(recipe, recipe));

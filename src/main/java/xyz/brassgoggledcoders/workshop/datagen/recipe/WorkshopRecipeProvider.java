@@ -27,4 +27,8 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .build(consumer);
         //endsection
     }
+
+    public static int timeInTicks(int minutes, int seconds) {
+        return (minutes * 60) * seconds * 20;
+    }
 }

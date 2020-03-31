@@ -1,0 +1,13 @@
+{
+  "itemIn": {
+    "item": "minecraft:sea_pickle"
+  },
+  "itemOut": {
+    "item": "workshop:pickle",
+    "count": 1
+  },
+  "fluidIn": "{FluidName:\"workshop:brine\",Amount:100}",
+  "fluidOut": "{FluidName:\"workshop:brine\",Amount:100}",
+  "seasoningTime": 0,
+  "type": "workshop:seasoning_barrel"
+}

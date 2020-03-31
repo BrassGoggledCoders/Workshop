@@ -6,6 +6,6 @@
   },
   "fluidIn": "{FluidName:\"workshop:seed_oil\",Amount:1000}",
   "fluidOut": "{FluidName:\"workshop:resin\",Amount:1000}",
-  "seasoningTime": 200,
+  "seasoningTime": 0,
   "type": "workshop:seasoning_barrel"
 }

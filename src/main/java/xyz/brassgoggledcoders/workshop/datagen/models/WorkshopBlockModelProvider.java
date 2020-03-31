@@ -9,6 +9,8 @@ import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.fml.RegistryObject;
 import xyz.brassgoggledcoders.workshop.Workshop;
+import xyz.brassgoggledcoders.workshop.content.BlockRegistryObjectGroup;
+import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 
 import java.util.function.Function;
@@ -25,6 +27,9 @@ public class WorkshopBlockModelProvider extends ModelProvider<BlockModelBuilder>
             if(fluid.get().isSource(fluid.get().getDefaultState())) {
                 this.singleTexture(fluid.getId().getPath(), mcLoc("water"), "particle", mcLoc("block/water_still"));
             }
+        }
+        for(BlockRegistryObjectGroup concrete : WorkshopBlocks.CONCRETES) {
+            this.cubeAll(concrete.getName(), new ResourceLocation("minecraft", BLOCK_FOLDER + "/" + concrete.getName().replace("_rebarred_", "_")));
         }
     }
 

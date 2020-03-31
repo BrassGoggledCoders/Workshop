@@ -1,12 +1,12 @@
 package xyz.brassgoggledcoders.workshop.datagen.langauge;
 
+import com.hrznstudio.titanium.util.StringUtil;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.item.DyeColor;
 import net.minecraftforge.common.data.LanguageProvider;
+import org.codehaus.plexus.util.StringUtils;
 import xyz.brassgoggledcoders.workshop.Workshop;
-import xyz.brassgoggledcoders.workshop.content.FluidRegistryObjectGroup;
-import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
-import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
+import xyz.brassgoggledcoders.workshop.content.*;
 
 public class WorkshopUSLanguageProvider extends LanguageProvider {
     public WorkshopUSLanguageProvider(DataGenerator gen) {
@@ -23,12 +23,20 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.add(WorkshopBlocks.SEASONING_BARREL.getBlock(), "Seasoning Barrel");
         this.add(WorkshopBlocks.SINTERING_FURNACE.getBlock(), "Sintering Furnace");
         this.add(WorkshopBlocks.SPINNING_WHEEL.getBlock(), "Spinning Wheel");
+        int i = 0;
+        for(BlockRegistryObjectGroup concrete : WorkshopBlocks.CONCRETES) {
+            //TODO Dye names, plus grey vs gray
+            this.add(concrete.getBlock(), String.format("%s Rebarred Concrete", StringUtils.capitalise(DyeColor.values()[i++].getName().replace("_", " "))));
+        }
         //endregion
 
         //region Items
         this.add("itemGroup.workshop", "Workshop");
         this.addItem(WorkshopItems.CARAMEL_APPLE, "Caramel Apple");
         this.addItem(WorkshopItems.SALT, "Salt");
+        this.addItem(WorkshopItems.ASH, "Ash");
+        this.addItem(WorkshopItems.ROSIN, "Rosin");
+        this.addItem(WorkshopItems.PICKLE, "Pickle");
         //endregion
 
         //region Fluids
@@ -36,6 +44,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addFluid(WorkshopFluids.DISTILLED_WATER, "Distilled Water");
         this.addFluid(WorkshopFluids.SEED_OIL, "Seed Oil");
         this.addFluid(WorkshopFluids.APPLE_JUICE, "Apple Juice");
+        this.addFluid(WorkshopFluids.CIDER, "Cider");
         //endregion
 
         //region Guide

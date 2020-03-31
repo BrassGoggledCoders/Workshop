@@ -1,0 +1,11 @@
+{
+  "itemIn": [],
+  "itemOut": {
+    "item": "minecraft:air",
+    "count": 0
+  },
+  "fluidIn": "{FluidName:\"workshop:apple_juice\",Amount:1000}",
+  "fluidOut": "{FluidName:\"workshop:cider\",Amount:1000}",
+  "seasoningTime": 0,
+  "type": "workshop:seasoning_barrel"
+}

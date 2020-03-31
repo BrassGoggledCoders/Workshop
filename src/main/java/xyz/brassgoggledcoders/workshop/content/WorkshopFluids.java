@@ -91,6 +91,17 @@ public class WorkshopFluids {
             .block(APPLE_JUICE::getBlock)
             .bucket(APPLE_JUICE::getBucket);
 
+    public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> CIDER = new FluidRegistryObjectGroup<>("cider",
+            () -> new ForgeFlowingFluid.Source(WorkshopFluids.CIDER_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.CIDER_PROPERTIES)).register(FLUIDS, BLOCKS, ITEMS);
+
+    public static final ForgeFlowingFluid.Properties CIDER_PROPERTIES = new ForgeFlowingFluid.Properties(CIDER, CIDER::getFlowing,
+            FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
+                    new ResourceLocation("minecraft", "block/water_flow"))
+                    .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
+                    .color(16762880))
+            .block(CIDER::getBlock)
+            .bucket(CIDER::getBucket);
+
     public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> CHERRY_JUICE = new FluidRegistryObjectGroup<>("cherry_juice",
             () -> new ForgeFlowingFluid.Source(WorkshopFluids.CHERRY_JUICE_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.CHERRY_JUICE_PROPERTIES)).register(FLUIDS, BLOCKS, ITEMS);
 

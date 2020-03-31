@@ -9,6 +9,8 @@ import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import javax.annotation.Nonnull;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class WorkshopBlockLootTables extends BlockLootTables {
     @Override
@@ -26,9 +28,14 @@ public class WorkshopBlockLootTables extends BlockLootTables {
 
     @Override
     protected void addTables() {
-        this.registerLootTable(WorkshopBlocks.ALEMBIC.getBlock(), BlockLootTables::droppingWithName);
+        StreamSupport.stream(this.getKnownBlocks().spliterator(), false)
+                .filter(block -> block.getRegistryName().getPath()
+                        .contains("concrete")).forEach(block -> registerDropSelfLootTable(block));
+
         this.registerDropSelfLootTable(WorkshopBlocks.BROKEN_ANVIL.getBlock());
         this.registerDropSelfLootTable(WorkshopBlocks.OBSIDIAN_PLATE.getBlock());
+
+        this.registerLootTable(WorkshopBlocks.ALEMBIC.getBlock(), BlockLootTables::droppingWithName);
         this.registerLootTable(WorkshopBlocks.PRESS.getBlock(), BlockLootTables::droppingWithName);
         this.registerLootTable(WorkshopBlocks.SEASONING_BARREL.getBlock(), BlockLootTables::droppingWithName);
         this.registerLootTable(WorkshopBlocks.SINTERING_FURNACE.getBlock(), BlockLootTables::droppingWithName);

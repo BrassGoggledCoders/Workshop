@@ -15,20 +15,20 @@ public class WorkshopItems {
 
     private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MOD_ID);
 
-    public static final RegistryObject<Item> SALT = ITEMS.register("salt", () -> new Item(new Item.Properties()
-            .group(Workshop.ITEM_GROUP))
-    );
-
-    public static final RegistryObject<Item> CARAMEL_APPLE = ITEMS.register("caramel_apple",
-            () -> new Item(new Item.Properties()
-                    .group(Workshop.ITEM_GROUP)
-                    .food(Foods.APPLE)
-            )
-    );
-
+    //region Ingredients
+    public static final RegistryObject<Item> SALT = ITEMS.register("salt", () -> new Item(new Item.Properties().group(Workshop.ITEM_GROUP)));
     public static final RegistryObject<Item> ROSIN = ITEMS.register("rosin", () -> new Item(new Item.Properties().group(Workshop.ITEM_GROUP)));
-
     public static final RegistryObject<Item> ASH = ITEMS.register("ash", () -> new Item(new Item.Properties().group(Workshop.ITEM_GROUP)));
+    //endregion
+
+    //region Foods
+    public static final RegistryObject<Item> PICKLE = ITEMS.register("pickle", () -> new Item(new Item.Properties()
+            .group(Workshop.ITEM_GROUP)
+            .food(Foods.CARROT)));
+    public static final RegistryObject<Item> CARAMEL_APPLE = ITEMS.register("caramel_apple", () -> new Item(new Item.Properties()
+                .group(Workshop.ITEM_GROUP)
+                .food(Foods.APPLE)));
+    //endregion
 
     public static void register(IEventBus bus) {
         ITEMS.register(bus);
