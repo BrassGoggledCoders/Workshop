@@ -54,6 +54,16 @@ public class WorkshopFluids {
             .block(SEED_OIL::getBlock)
             .bucket(SEED_OIL::getBucket);
 
+    public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> APPLE_JUICE = new FluidRegistryObjectGroup<>("apple_juice",
+            () -> new ForgeFlowingFluid.Source(WorkshopFluids.APPLE_JUICE_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.APPLE_JUICE_PROPERTIES)).register(FLUIDS, BLOCKS, ITEMS);
+
+    public static final ForgeFlowingFluid.Properties APPLE_JUICE_PROPERTIES = new ForgeFlowingFluid.Properties(APPLE_JUICE, APPLE_JUICE::getFlowing,
+            FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
+                    new ResourceLocation("minecraft", "block/water_flow"))
+                    .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
+                    .color(16724530))
+            .block(APPLE_JUICE::getBlock)
+            .bucket(APPLE_JUICE::getBucket);
 
     public static void register(IEventBus modBus) {
         FLUIDS.register(modBus);

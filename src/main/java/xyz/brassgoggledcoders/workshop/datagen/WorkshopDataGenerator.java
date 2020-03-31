@@ -14,6 +14,7 @@ import xyz.brassgoggledcoders.workshop.datagen.langauge.WorkshopGBLanguageProvid
 import xyz.brassgoggledcoders.workshop.datagen.langauge.WorkshopUSLanguageProvider;
 import xyz.brassgoggledcoders.workshop.datagen.loot.WorkshopLootTableProvider;
 import xyz.brassgoggledcoders.workshop.datagen.recipe.AlembicRecipeProvider;
+import xyz.brassgoggledcoders.workshop.datagen.recipe.PressRecipeProvider;
 import xyz.brassgoggledcoders.workshop.datagen.recipe.SeasoningBarrelRecipeProvider;
 import xyz.brassgoggledcoders.workshop.datagen.recipe.WorkshopRecipeProvider;
 
@@ -55,6 +56,7 @@ public class WorkshopDataGenerator {
             dataGenerator.addProvider(new WorkshopRecipeProvider(dataGenerator));
             dataGenerator.addProvider(new SeasoningBarrelRecipeProvider(dataGenerator));
             dataGenerator.addProvider(new AlembicRecipeProvider(dataGenerator));
+            dataGenerator.addProvider(new PressRecipeProvider(dataGenerator));
         }
     }
 }

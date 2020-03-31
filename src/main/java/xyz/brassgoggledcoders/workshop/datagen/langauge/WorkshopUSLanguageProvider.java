@@ -3,6 +3,7 @@ package xyz.brassgoggledcoders.workshop.datagen.langauge;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
 import xyz.brassgoggledcoders.workshop.Workshop;
+import xyz.brassgoggledcoders.workshop.content.FluidRegistryObjectGroup;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
@@ -31,12 +32,10 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         //endregion
 
         //region Fluids
-        this.addBlock(WorkshopFluids.BRINE::getBlock, "Brine");
-        this.addItem(WorkshopFluids.BRINE::getBucket, "Bucket of Brine");
-        this.addBlock(WorkshopFluids.DISTILLED_WATER::getBlock, "Distilled Water");
-        this.addItem(WorkshopFluids.DISTILLED_WATER::getBucket, "Bucket of Distilled Water");
-        this.addBlock(WorkshopFluids.SEED_OIL::getBlock, "Seed Oil");
-        this.addItem(WorkshopFluids.SEED_OIL::getBucket, "Bucket of Seed Oil");
+        this.addFluid(WorkshopFluids.BRINE, "Brine");
+        this.addFluid(WorkshopFluids.DISTILLED_WATER, "Distilled Water");
+        this.addFluid(WorkshopFluids.SEED_OIL, "Seed Oil");
+        this.addFluid(WorkshopFluids.APPLE_JUICE, "Apple Juice");
         //endregion
 
         //region Guide
@@ -52,5 +51,10 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.add(prefix + "colditem","Cooling Source");
         this.add(prefix + "container", "Container");
         //endregion
+    }
+
+    public void addFluid(FluidRegistryObjectGroup fluid, String name) {
+        this.addBlock(fluid::getBlock, name);
+        this.addItem(fluid::getBucket, String.format("Bucket of %s", name));
     }
 }

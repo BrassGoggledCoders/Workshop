@@ -34,14 +34,14 @@ public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity>
         }
         //Fluid Visuals
         if(!pressTileEntity.getOutputFluid().isEmpty()) {
-            renderFluidBlock(pressTileEntity);
+            //renderFluidBlock(pressTileEntity);
         }
 
         //Item Visuals
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
         ItemStack item = pressTileEntity.getInputInventory().getStackInSlot(0);
         float f = pressTileEntity.getWorld().getBlockState(pressTileEntity.getPos()).get(PressBlock.FACING).getHorizontalAngle();
-        if(!item.isEmpty() && !pressTileEntity.isActive()){
+        if(!item.isEmpty()){
             GlStateManager.pushMatrix();
             //GlStateManager.translated(x + 0.5, y + 0.5, z + 0.5);
             GlStateManager.rotatef(f, 0, 1, 0.0F);
@@ -73,12 +73,12 @@ public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity>
 
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.translated(pos.getX(), pos.getY(), pos.getZ());
-            renderSide(renderer, still, 0, 0, 0, 0, 0, 0, Direction.NORTH, color, false);
-            renderSide(renderer, still, 0, 0, 0, 0, 0, 0, Direction.SOUTH, color, false);
-            renderSide(renderer, still, 0, 0, 0, 0, 0, 0, Direction.EAST, color, false);
-            renderSide(renderer, still, 0, 0, 0, 0, 0, 0, Direction.WEST, color, false);
-            renderSide(renderer, still, 0, 0, 0, 0, 0, 0, Direction.UP, color, false);
-            renderSide(renderer, still, 0, 0, 0, 0, 0, 0, Direction.DOWN, color, false);
+            //renderSide(renderer, still, 0, 0, 0, 0, 0, 0, Direction.NORTH, color, false);
+            //renderSide(renderer, still, 0, 0, 0, 0, 0, 0, Direction.SOUTH, color, false);
+            //renderSide(renderer, still, 0, 0, 0, 0, 0, 0, Direction.EAST, color, false);
+            //renderSide(renderer, still, 0, 0, 0, 0, 0, 0, Direction.WEST, color, false);
+            //renderSide(renderer, still, 0, 0, 0, 0, 0, 0, Direction.UP, color, false);
+            //renderSide(renderer, still, 0, 0, 0, 0, 0, 0, Direction.DOWN, color, false);
             GlStateManager.disableBlend();
             RenderHelper.enableStandardItemLighting();
             GlStateManager.popMatrix();

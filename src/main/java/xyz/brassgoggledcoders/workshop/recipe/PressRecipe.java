@@ -5,6 +5,7 @@ import com.hrznstudio.titanium.recipe.serializer.SerializableRecipe;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
@@ -15,15 +16,21 @@ import static xyz.brassgoggledcoders.workshop.content.WorkshopRecipes.PRESS_SERI
 
 public class PressRecipe extends SerializableRecipe {
 
-    public ItemStack itemIn = ItemStack.EMPTY;
+    public Ingredient itemIn = Ingredient.EMPTY;
     public FluidStack fluidOut = FluidStack.EMPTY;
 
     public PressRecipe(ResourceLocation resourceLocation) {
         super(resourceLocation);
     }
 
-    public boolean matches(IItemHandler inv) {
-        return this.itemIn.isItemEqual(inv.getStackInSlot(0));
+    public PressRecipe(ResourceLocation resourceLocation, Ingredient itemIn, FluidStack fluidOut) {
+        this(resourceLocation);
+        this.itemIn = itemIn;
+        this.fluidOut = fluidOut;
+    }
+
+    public boolean matches(IItemHandler handler) {
+        return itemIn.test(handler.getStackInSlot(0));
     }
 
     @Override
