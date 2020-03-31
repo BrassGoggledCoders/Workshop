@@ -59,6 +59,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.add(prefix + "residue", "Residue");
         this.add(prefix + "colditem","Cooling Source");
         this.add(prefix + "container", "Container");
+        this.add(prefix + "powderinventory", "Powder");
         //endregion
     }
 

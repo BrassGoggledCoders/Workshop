@@ -11,15 +11,15 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
+import xyz.brassgoggledcoders.workshop.recipe.PressRecipe;
 import xyz.brassgoggledcoders.workshop.recipe.SinteringFurnaceRecipe;
 
 import javax.annotation.Nonnull;
-import java.util.Objects;
 
 public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<SinteringFurnaceTileEntity, SinteringFurnaceRecipe> {
 
     private SidedInventoryComponent<SinteringFurnaceTileEntity> powderInventory;
-    private SidedInventoryComponent<SinteringFurnaceTileEntity> targetInputInventory;
+    private SidedInventoryComponent<SinteringFurnaceTileEntity> inputInventory;
     private SidedInventoryComponent<SinteringFurnaceTileEntity> outputInventory;
     private SidedInventoryComponent<SinteringFurnaceTileEntity> fuelInventory;
 
@@ -35,10 +35,10 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
         int pos = 0;
         this.getMachineComponent().addInventory(this.powderInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("powderInventory", 70, 19, 2, pos++)
                 .setColor(DyeColor.ORANGE)
-                .setOnSlotChanged((stack, integer) -> checkForRecipe()));
-        this.getMachineComponent().addInventory(this.targetInputInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("targetInputInventory", 34, 42, 1, pos++)
+                .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
+        this.getMachineComponent().addInventory(this.inputInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("targetInputInventory", 34, 42, 1, pos++)
                 .setColor(DyeColor.YELLOW)
-                .setOnSlotChanged((stack, integer) -> checkForRecipe()));
+                .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
         this.getMachineComponent().addInventory(this.outputInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("outputInventory", 120, 42, 1, pos++)
                 .setColor(DyeColor.BLACK));
         this.getMachineComponent().addInventory(this.fuelInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("fuelInventory", 78, 70, 1, pos++)
@@ -48,7 +48,7 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
     @Override
     public void read(CompoundNBT compound) {
         powderInventory.deserializeNBT(compound.getCompound("powderInventory"));
-        targetInputInventory.deserializeNBT(compound.getCompound("targetInputInventory"));
+        inputInventory.deserializeNBT(compound.getCompound("targetInputInventory"));
         outputInventory.deserializeNBT(compound.getCompound("outputInventory"));
         fuelInventory.deserializeNBT(compound.getCompound("fuelInventory"));
         super.read(compound);
@@ -58,12 +58,13 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
     @Nonnull
     public CompoundNBT write(CompoundNBT compound) {
         compound.put("powderInventory", powderInventory.serializeNBT());
-        compound.put("targetInputInventory", targetInputInventory.serializeNBT());
+        compound.put("targetInputInventory", inputInventory.serializeNBT());
         compound.put("outputInventory", outputInventory.serializeNBT());
         compound.put("fuelInventory", fuelInventory.serializeNBT());
         return super.write(compound);
     }
 
+    //TODO Refactor this into machine component
     @Override
     public void tick() {
         if (!isActive()) {
@@ -71,6 +72,7 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
         } else {
             --burnTime;
         }
+        super.tick();
     }
 
     @Override
@@ -90,21 +92,6 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
         }
     }
 
-    private void checkForRecipe() {
-        if (!Objects.requireNonNull(this.getWorld()).isRemote()) {
-            if (currentRecipe == null || !currentRecipe.matches(powderInventory, targetInputInventory)) {
-                currentRecipe = this.getWorld().getRecipeManager()
-                        .getRecipes()
-                        .stream()
-                        .filter(recipe -> recipe.getType() == WorkshopRecipes.SINTERING_FURNACE)
-                        .map(recipe -> (SinteringFurnaceRecipe) recipe)
-                        .filter(recipe -> recipe.matches(powderInventory, targetInputInventory))
-                        .findFirst()
-                        .orElse(null);
-            }
-        }
-    }
-
     public SidedInventoryComponent<SinteringFurnaceTileEntity> getOutputInventory() {
         return outputInventory;
     }
@@ -113,8 +100,8 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
         return powderInventory;
     }
 
-    public SidedInventoryComponent<SinteringFurnaceTileEntity> getTargetInputInventory() {
-        return targetInputInventory;
+    public SidedInventoryComponent<SinteringFurnaceTileEntity> getInputInventory() {
+        return inputInventory;
     }
 
     public SinteringFurnaceRecipe getCurrentRecipe() {
@@ -123,27 +110,27 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
 
     @Override
     public boolean hasInputs() {
-        return false;
+        return !inputInventory.getStackInSlot(0).isEmpty() && !powderInventory.getStackInSlot(0).isEmpty();
     }
 
     @Override
     public boolean checkRecipe(IRecipe<?> recipe) {
-        return false;
+        return recipe.getType() == WorkshopRecipes.SINTERING_FURNACE && recipe instanceof SinteringFurnaceRecipe;
     }
 
     @Override
     public SinteringFurnaceRecipe castRecipe(IRecipe<?> iRecipe) {
-        return null;
+        return (SinteringFurnaceRecipe) iRecipe;
     }
 
     @Override
     public int getProcessingTime(SinteringFurnaceRecipe currentRecipe) {
-        return 0;
+        return currentRecipe.getProcessingTime();
     }
 
     @Override
     public boolean matchesInputs(SinteringFurnaceRecipe currentRecipe) {
-        return false;
+        return currentRecipe.matches(inputInventory, powderInventory);
     }
 
     @Override
@@ -151,7 +138,7 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
         for (int i = 0; i < powderInventory.getSlots(); i++) {
             powderInventory.getStackInSlot(i).shrink(1);
         }
-        targetInputInventory.getStackInSlot(0).shrink(1);
+        inputInventory.getStackInSlot(0).shrink(1);
         if (currentRecipe.itemOut != null && !currentRecipe.itemOut.isEmpty()) {
             ItemHandlerHelper.insertItem(outputInventory, currentRecipe.itemOut.copy(), false);
         }

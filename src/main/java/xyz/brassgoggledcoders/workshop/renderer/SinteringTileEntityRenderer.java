@@ -25,7 +25,7 @@ public class SinteringTileEntityRenderer extends TileEntityRenderer<SinteringFur
             return;
         }
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-        ItemStack input = furnace.getTargetInputInventory().getStackInSlot(0);
+        ItemStack input = furnace.getInputInventory().getStackInSlot(0);
         ItemStack output = furnace.getOutputInventory().getStackInSlot(0);
         ItemStack powder1 = furnace.getPowderInventory().getStackInSlot(0);
         ItemStack powder2 = furnace.getPowderInventory().getStackInSlot(1);

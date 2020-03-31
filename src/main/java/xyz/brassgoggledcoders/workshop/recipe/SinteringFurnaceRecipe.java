@@ -10,15 +10,16 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
 import static xyz.brassgoggledcoders.workshop.content.WorkshopRecipes.SINTERING_FURNACE_SERIALIZER;
 
-public class SinteringFurnaceRecipe extends SerializableRecipe {
+public class SinteringFurnaceRecipe extends SerializableRecipe implements IMachineRecipe {
 
-    public Ingredient.IItemList[] powderIn;
-    public ItemStack itemIn = ItemStack.EMPTY;
+    public Ingredient powderIn = Ingredient.EMPTY;
+    public Ingredient itemIn = Ingredient.EMPTY;
     public ItemStack itemOut = ItemStack.EMPTY;
     public int meltTime = 240;
 
@@ -26,29 +27,8 @@ public class SinteringFurnaceRecipe extends SerializableRecipe {
         super(resourceLocation);
     }
 
-    public boolean matches(IItemHandler powder, IItemHandler itemInv) {
-        List<ItemStack> handlerItems = new ArrayList<>();
-        for (int i = 0; i < powder.getSlots(); i++) {
-            if (!powder.getStackInSlot(i).isEmpty()) handlerItems.add(powder.getStackInSlot(i).copy());
-        }
-        for (Ingredient.IItemList iItemList : powderIn) {
-            boolean found = false;
-            for (ItemStack stack : iItemList.getStacks()) {
-                int i = 0;
-                for (; i < handlerItems.size(); i++) {
-                    if (handlerItems.get(i).isItemEqual(stack)) {
-                        found = true;
-                        break;
-                    }
-                }
-                if (found) {
-                    handlerItems.remove(i);
-                    break;
-                }
-            }
-            if (!found) return false;
-        }
-        return handlerItems.size() == 0 && itemInv.getStackInSlot(0).isItemEqual(itemIn);
+    public boolean matches(@Nonnull IItemHandler input, @Nonnull IItemHandler powder) {
+        return itemIn.test(input.getStackInSlot(0)) && powderIn.test(powder.getStackInSlot(0));
     }
 
     @Override
@@ -58,7 +38,7 @@ public class SinteringFurnaceRecipe extends SerializableRecipe {
 
     @Override
     public ItemStack getCraftingResult(IInventory inv) {
-        return ItemStack.EMPTY;
+        return itemOut;
     }
 
     @Override
@@ -81,4 +61,8 @@ public class SinteringFurnaceRecipe extends SerializableRecipe {
         return SINTERING_FURNACE_SERIALIZER.get().getRecipeType();
     }
 
+    @Override
+    public int getProcessingTime() {
+        return meltTime;
+    }
 }
