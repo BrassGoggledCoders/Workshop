@@ -12,8 +12,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.Workshop;
 
-import java.rmi.registry.Registry;
-import java.util.ArrayList;
 import java.util.Collection;
 
 public class WorkshopFluids {
@@ -79,4 +77,8 @@ public class WorkshopFluids {
     public static Collection<RegistryObject<Fluid>> getAllFluids() {
         return FLUIDS.getEntries();
     }
-}
+
+    public static Collection<RegistryObject<Block>> getAllBlocks() {
+        return BLOCKS.getEntries();
+    }
+ }

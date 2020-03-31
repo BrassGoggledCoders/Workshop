@@ -55,7 +55,7 @@ public class WorkshopDataGenerator {
             dataGenerator.addProvider(new WorkshopGBLanguageProvider(dataGenerator));
             dataGenerator.addProvider(new WorkshopItemModelProvider(dataGenerator, existingFileHelper));
             dataGenerator.addProvider(new WorkshopBlockModelProvider(dataGenerator, existingFileHelper));
-            //dataGenerator.addProvider(new WorkshopBlockstateProvider(dataGenerator, existingFileHelper));
+            dataGenerator.addProvider(new WorkshopBlockstateProvider(dataGenerator, existingFileHelper));
         }
 
         if (event.includeServer()) {

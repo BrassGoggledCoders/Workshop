@@ -21,9 +21,11 @@ public class WorkshopBlockModelProvider extends ModelProvider<BlockModelBuilder>
 
     @Override
     protected void registerModels() {
-        //for(RegistryObject<Block> fluidBlock : WorkshopFluids.getAllFluids()) {
-        //    this.singleTexture(fluidBlock.getId().getPath(), mcLoc(BLOCK_FOLDER), mcLoc("block/water_still"));
-        //}
+        for(RegistryObject<Fluid> fluid : WorkshopFluids.getAllFluids()) {
+            if(fluid.get().isSource(fluid.get().getDefaultState())) {
+                this.singleTexture(fluid.getId().getPath(), mcLoc("water"), "particle", mcLoc("block/water_still"));
+            }
+        }
     }
 
     @Override

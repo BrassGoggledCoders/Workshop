@@ -1,6 +1,7 @@
 package xyz.brassgoggledcoders.workshop.datagen.models;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.client.renderer.model.Variant;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.fluid.Fluid;
@@ -9,6 +10,8 @@ import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.fml.RegistryObject;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
+
+import static net.minecraftforge.client.model.generators.ModelProvider.BLOCK_FOLDER;
 
 public class WorkshopBlockstateProvider extends BlockStateProvider {
 
@@ -25,12 +28,12 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        for(RegistryObject<Fluid> fluid : WorkshopFluids.getAllFluids()) {
-            /*getVariantBuilder(fluidBlock.get())
-                    .partialState()
-                    .setModels(ConfiguredModel
-                            .builder()
-                            .modelFile(new ModelFile.ExistingModelFile(getModel(fluidBlock.get()), helper)).buildLast());*/
+        for(RegistryObject<Block> block : WorkshopFluids.getAllBlocks()) {
+            FlowingFluidBlock fluidBlock = (FlowingFluidBlock) block.get();
+            Fluid fluid = fluidBlock.getFluid();
+            if(fluid.isSource(fluid.getDefaultState())) {
+                this.simpleBlock(block.get(), new ModelFile.ExistingModelFile(modLoc(BLOCK_FOLDER + "/" + fluid.getRegistryName().getPath()), helper));
+            }
         }
     }
 }
