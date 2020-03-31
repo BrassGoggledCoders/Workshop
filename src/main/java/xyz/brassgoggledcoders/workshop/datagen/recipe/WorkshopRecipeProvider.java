@@ -17,6 +17,7 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
 
     @Override
     public void register(Consumer<IFinishedRecipe> consumer) {
+        //section Machine Self Recipes
         TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SEASONING_BARREL.getBlock())
                 .patternLine("LSL")
                 .patternLine("L L")
@@ -24,5 +25,6 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('L', Blocks.STRIPPED_OAK_LOG)
                 .key('S', Blocks.OAK_SLAB)
                 .build(consumer);
+        //endsection
     }
 }

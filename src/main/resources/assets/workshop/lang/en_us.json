@@ -6,6 +6,7 @@
   "block.workshop.obsidian_plate": "Obsidian Plate",
   "block.workshop.press": "Press",
   "block.workshop.seasoning_barrel": "Seasoning Barrel",
+  "block.workshop.seed_oil": "Seed Oil",
   "block.workshop.sintering_furnace": "Sintering Furnace",
   "block.workshop.spinning_wheel": "Spinning Wheel",
   "guide.workshop.landing_text": "A pocket handbook to the world of small scale manufacturing",
@@ -14,5 +15,11 @@
   "item.workshop.caramel_apple": "Caramel Apple",
   "item.workshop.distilled_water_bucket": "Bucket of Distilled Water",
   "item.workshop.salt": "Salt",
-  "itemGroup.workshop": "Workshop"
+  "item.workshop.seed_oil_bucket": "Bucket of Seed Oil",
+  "itemGroup.workshop": "Workshop",
+  "tooltip.titanium.facing_handler.colditem": "Cooling Source",
+  "tooltip.titanium.facing_handler.container": "Container",
+  "tooltip.titanium.facing_handler.input": "Input",
+  "tooltip.titanium.facing_handler.output": "Output",
+  "tooltip.titanium.facing_handler.residue": "Residue"
 }

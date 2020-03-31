@@ -32,15 +32,16 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
         super(WorkshopBlocks.SINTERING_FURNACE.getTileEntityType(),
                 new ProgressBarComponent<SinteringFurnaceTileEntity>(76, 42, 100)
                         .setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
-        this.getMachineComponent().addInventory(this.powderInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("powderInventory", 70, 19, 2, 0)
+        int pos = 0;
+        this.getMachineComponent().addInventory(this.powderInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("powderInventory", 70, 19, 2, pos++)
                 .setColor(DyeColor.ORANGE)
                 .setOnSlotChanged((stack, integer) -> checkForRecipe()));
-        this.getMachineComponent().addInventory(this.targetInputInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("targetInputInventory", 34, 42, 1, 0)
+        this.getMachineComponent().addInventory(this.targetInputInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("targetInputInventory", 34, 42, 1, pos++)
                 .setColor(DyeColor.YELLOW)
                 .setOnSlotChanged((stack, integer) -> checkForRecipe()));
-        this.getMachineComponent().addInventory(this.outputInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("outputInventory", 120, 42, 1, 0)
+        this.getMachineComponent().addInventory(this.outputInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("outputInventory", 120, 42, 1, pos++)
                 .setColor(DyeColor.BLACK));
-        this.getMachineComponent().addInventory(this.fuelInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("fuelInventory", 78, 70, 1, 0)
+        this.getMachineComponent().addInventory(this.fuelInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("fuelInventory", 78, 70, 1, pos++)
                 .setColor(DyeColor.RED));
     }
 

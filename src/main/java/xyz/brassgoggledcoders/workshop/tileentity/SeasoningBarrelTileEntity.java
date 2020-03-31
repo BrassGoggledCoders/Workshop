@@ -27,21 +27,22 @@ public class SeasoningBarrelTileEntity extends BasicMachineTileEntity<SeasoningB
 
     public SeasoningBarrelTileEntity() {
         super(WorkshopBlocks.SEASONING_BARREL.getTileEntityType(), new ProgressBarComponent<SeasoningBarrelTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
+        int pos = 0;
         this.getMachineComponent().addInventory(this.inputInventory = new SidedInventoryComponent<SeasoningBarrelTileEntity>(
-                "inputInventory", 29, 42, 1, 0)
+                "inputInventory", 29, 42, 1, pos++)
                 .setColor(DyeColor.LIGHT_BLUE)
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
         this.getMachineComponent().addTank(this.inputFluidTank = new SidedFluidTankComponent<SeasoningBarrelTileEntity>(
-                "inputFluidTank", tankSize, 52, 20, 1)
+                "inputFluidTank", tankSize, 52, 20, pos++)
                 .setColor(DyeColor.BROWN)
                 .setTankAction(SidedFluidTankComponent.Action.FILL)
                 .setOnContentChange(this.getMachineComponent()::forceRecipeRecheck));
         this.getMachineComponent().addInventory(this.outputInventory = new SidedInventoryComponent<SeasoningBarrelTileEntity>(
-                "outputInventory", 130, 42, 1, 2)
+                "outputInventory", 130, 42, 1, pos++)
                 .setColor(DyeColor.BLUE)
                 .setInputFilter((stack, integer) -> false));
         this.getMachineComponent().addTank(this.outputFluidTank = new SidedFluidTankComponent<SeasoningBarrelTileEntity>(
-                "outputFluidTank", tankSize, 105, 20, 1)
+                "outputFluidTank", tankSize, 105, 20, pos++)
                 .setColor(DyeColor.BLACK)
                 .setTankAction(SidedFluidTankComponent.Action.DRAIN));
     }
@@ -104,7 +105,7 @@ public class SeasoningBarrelTileEntity extends BasicMachineTileEntity<SeasoningB
 
     @Override
     public int getProcessingTime(SeasoningBarrelRecipe currentRecipe) {
-        return currentRecipe.seasoningTime;
+        return currentRecipe.getProcessingTime();
     }
 
     @Override

@@ -36,7 +36,7 @@ public class SeasoningBarrelRecipeProvider extends TitaniumSerializableProvider 
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }
 
-    public static class Builder {
+    protected static class Builder {
         private ResourceLocation name;
         private Ingredient itemIn = Ingredient.EMPTY;
         private ItemStack itemOut = ItemStack.EMPTY;

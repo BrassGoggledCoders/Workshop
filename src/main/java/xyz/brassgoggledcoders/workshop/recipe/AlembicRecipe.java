@@ -2,53 +2,56 @@ package xyz.brassgoggledcoders.workshop.recipe;
 
 import com.hrznstudio.titanium.recipe.serializer.GenericSerializer;
 import com.hrznstudio.titanium.recipe.serializer.SerializableRecipe;
+import com.hrznstudio.titanium.util.ArrayUtil;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandler;
+import org.apache.commons.lang3.ArrayUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.annotation.Nonnull;
+
+import java.util.Arrays;
+import java.util.stream.IntStream;
 
 import static xyz.brassgoggledcoders.workshop.content.WorkshopRecipes.ALEMBIC_SERIALIZER;
 
-public class AlembicRecipe extends SerializableRecipe {
+public class AlembicRecipe extends SerializableRecipe implements IMachineRecipe {
 
-    public Ingredient.IItemList input;
-    public ItemStack container;
-    public ItemStack output;
+    public Ingredient[] input;
+    public FluidStack output;
     public ItemStack[] residue;
-    public int cooldownTime;
+    public int processingTime;
 
     public AlembicRecipe(ResourceLocation resourceLocation) {
         super(resourceLocation);
     }
 
-    public boolean matches(IItemHandler itemIn, IItemHandler containerIn) {
-        List<ItemStack> handlerItems = new ArrayList<>();
-        for (int i = 0; i < itemIn.getSlots(); i++) {
-            if (!itemIn.getStackInSlot(i).isEmpty()) handlerItems.add(itemIn.getStackInSlot(i).copy());
-        }
-        for (ItemStack stack : input.getStacks()) {
-            boolean found = false;
-            int i = 0;
-            for (; i < handlerItems.size(); i++) {
-                if (handlerItems.get(i).isItemEqual(stack)) {
-                    found = true;
-                    break;
-                }
-            }
-            if (found) {
-                handlerItems.remove(i);
-                break;
-            }
+    public AlembicRecipe(ResourceLocation name, Ingredient[] input, FluidStack output, ItemStack[] residue, int cooldownTime) {
+        this(name);
+        this.input = input;
+        this.output = output;
+        this.residue = residue;
+        this.processingTime = cooldownTime;
+    }
 
-            if (!found) return false;
-        }
-        return handlerItems.size() == 0 && this.container.isItemEqual(containerIn.getStackInSlot(0));
+    public boolean matches(@Nonnull IItemHandler handler) {
+        //For each ingredient in the input list check if any of the slots in the handler match the Ingredient predicate
+        return Arrays.stream(input) //Stream the list
+                //Check that every Ingredient in the list matches against one of the slots
+                .allMatch(ingredient ->
+                        //Stream the slots for each ingredient
+                        IntStream.range(0, handler.getSlots() - 1)
+                        //Get the stack in each slot
+                        .mapToObj(slotIndex -> handler.getStackInSlot(slotIndex))
+                        //Filter out empties
+                        .filter(stack -> !stack.isEmpty())
+                        //Check if any of them match the Ingredient
+                        .anyMatch(stack -> ingredient.test(stack)));
     }
 
     @Override
@@ -68,7 +71,7 @@ public class AlembicRecipe extends SerializableRecipe {
 
     @Override
     public ItemStack getRecipeOutput() {
-        return output;
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -79,5 +82,10 @@ public class AlembicRecipe extends SerializableRecipe {
     @Override
     public IRecipeType<?> getType() {
         return ALEMBIC_SERIALIZER.get().getRecipeType();
+    }
+
+    @Override
+    public int getProcessingTime() {
+        return this.processingTime;
     }
 }

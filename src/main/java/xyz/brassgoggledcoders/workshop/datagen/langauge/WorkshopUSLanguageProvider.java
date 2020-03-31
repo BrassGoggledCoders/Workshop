@@ -43,5 +43,14 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.add("guide.workshop.name", "Workshop Guide");
         this.add("guide.workshop.landing_text", "A pocket handbook to the world of small scale manufacturing");
         //endregion
+
+        //region Tooltips
+        String prefix = "tooltip.titanium.facing_handler.";
+        this.add(prefix + "input", "Input");
+        this.add(prefix + "output", "Output");
+        this.add(prefix + "residue", "Residue");
+        this.add(prefix + "colditem","Cooling Source");
+        this.add(prefix + "container", "Container");
+        //endregion
     }
 }
