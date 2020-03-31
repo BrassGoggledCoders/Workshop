@@ -6,6 +6,7 @@ import com.hrznstudio.titanium.recipe.serializer.JSONSerializableDataHandler;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
@@ -13,6 +14,9 @@ import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.datagen.langauge.WorkshopGBLanguageProvider;
 import xyz.brassgoggledcoders.workshop.datagen.langauge.WorkshopUSLanguageProvider;
 import xyz.brassgoggledcoders.workshop.datagen.loot.WorkshopLootTableProvider;
+import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopBlockModelProvider;
+import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopBlockstateProvider;
+import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopItemModelProvider;
 import xyz.brassgoggledcoders.workshop.datagen.recipe.AlembicRecipeProvider;
 import xyz.brassgoggledcoders.workshop.datagen.recipe.PressRecipeProvider;
 import xyz.brassgoggledcoders.workshop.datagen.recipe.SeasoningBarrelRecipeProvider;
@@ -43,11 +47,15 @@ public class WorkshopDataGenerator {
 
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
-        DataGenerator dataGenerator = event.getGenerator();
+        final DataGenerator dataGenerator = event.getGenerator();
+        final ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
         if (event.includeClient()) {
             dataGenerator.addProvider(new WorkshopUSLanguageProvider(dataGenerator));
             dataGenerator.addProvider(new WorkshopGBLanguageProvider(dataGenerator));
+            dataGenerator.addProvider(new WorkshopItemModelProvider(dataGenerator, existingFileHelper));
+            dataGenerator.addProvider(new WorkshopBlockModelProvider(dataGenerator, existingFileHelper));
+            //dataGenerator.addProvider(new WorkshopBlockstateProvider(dataGenerator, existingFileHelper));
         }
 
         if (event.includeServer()) {

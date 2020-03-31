@@ -7,9 +7,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.Workshop;
+
+import java.rmi.registry.Registry;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class WorkshopFluids {
     private static final DeferredRegister<Fluid> FLUIDS = new DeferredRegister<>(ForgeRegistries.FLUIDS, Workshop.MOD_ID);
@@ -69,5 +74,9 @@ public class WorkshopFluids {
         FLUIDS.register(modBus);
         BLOCKS.register(modBus);
         ITEMS.register(modBus);
+    }
+
+    public static Collection<RegistryObject<Fluid>> getAllFluids() {
+        return FLUIDS.getEntries();
     }
 }
