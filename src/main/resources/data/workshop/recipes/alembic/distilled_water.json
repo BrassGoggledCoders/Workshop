@@ -4,7 +4,7 @@
       "item": "minecraft:water_bucket"
     }
   ],
-  "output": "{FluidName:\"workshop:distilled_water\",Amount:333}",
+  "output": "{FluidName:\"workshop:distilled_water\",Amount:1000}",
   "residue": [
     {
       "item": "minecraft:bucket",

@@ -45,7 +45,7 @@ public class AlembicRecipe extends SerializableRecipe implements IMachineRecipe 
                 //Check that every Ingredient in the list matches against one of the slots
                 .allMatch(ingredient ->
                         //Stream the slots for each ingredient
-                        IntStream.range(0, handler.getSlots() - 1)
+                        IntStream.range(0, handler.getSlots())
                         //Get the stack in each slot
                         .mapToObj(slotIndex -> handler.getStackInSlot(slotIndex))
                         //Filter out empties
