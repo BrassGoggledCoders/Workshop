@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "workshop:block/tea_stage0"
+    },
+    "age=1": {
+      "model": "workshop:block/tea_stage1"
+    }
+  }
+}

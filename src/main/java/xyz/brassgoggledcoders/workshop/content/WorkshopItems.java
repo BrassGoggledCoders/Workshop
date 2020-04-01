@@ -28,6 +28,8 @@ public class WorkshopItems {
     public static final RegistryObject<Item> CARAMEL_APPLE = ITEMS.register("caramel_apple", () -> new Item(new Item.Properties()
                 .group(Workshop.ITEM_GROUP)
                 .food(Foods.APPLE)));
+    public static final RegistryObject<Item> TEA_LEAVES = ITEMS.register("tea_leaves", () -> new Item(new Item.Properties()
+            .group(Workshop.ITEM_GROUP)));
     //endregion
 
     public static void register(IEventBus bus) {

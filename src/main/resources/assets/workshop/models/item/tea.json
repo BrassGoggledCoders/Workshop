@@ -1,0 +1,6 @@
+{
+  "parent":"item/generated",
+  "textures": {
+    "layer0": "workshop:items/tea_seeds"
+  }
+}

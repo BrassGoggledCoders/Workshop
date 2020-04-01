@@ -16,18 +16,19 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         //region Blocks
-        this.add(WorkshopBlocks.ALEMBIC.getBlock(), "Alembic");
-        this.add(WorkshopBlocks.BROKEN_ANVIL.getBlock(), "Broken Anvil");
-        this.add(WorkshopBlocks.OBSIDIAN_PLATE.getBlock(), "Obsidian Plate");
-        this.add(WorkshopBlocks.PRESS.getBlock(), "Press");
-        this.add(WorkshopBlocks.SEASONING_BARREL.getBlock(), "Seasoning Barrel");
-        this.add(WorkshopBlocks.SINTERING_FURNACE.getBlock(), "Sintering Furnace");
-        this.add(WorkshopBlocks.SPINNING_WHEEL.getBlock(), "Spinning Wheel");
+        this.addBlock(WorkshopBlocks.ALEMBIC, "Alembic");
+        this.addBlock(WorkshopBlocks.BROKEN_ANVIL, "Broken Anvil");
+        this.addBlock(WorkshopBlocks.OBSIDIAN_PLATE, "Obsidian Plate");
+        this.addBlock(WorkshopBlocks.PRESS, "Press");
+        this.addBlock(WorkshopBlocks.SEASONING_BARREL, "Seasoning Barrel");
+        this.addBlock(WorkshopBlocks.SINTERING_FURNACE, "Sintering Furnace");
+        this.addBlock(WorkshopBlocks.SPINNING_WHEEL, "Spinning Wheel");
         int i = 0;
         for(BlockRegistryObjectGroup concrete : WorkshopBlocks.CONCRETES) {
             //TODO Dye names, plus grey vs gray
-            this.add(concrete.getBlock(), String.format("%s Rebarred Concrete", StringUtils.capitalise(DyeColor.values()[i++].getName().replace("_", " "))));
+            this.addBlock(concrete, String.format("%s Rebarred Concrete", StringUtils.capitalise(DyeColor.values()[i++].getName().replace("_", " "))));
         }
+        this.addBlock(WorkshopBlocks.TEA_PLANT, "Tea");
         //endregion
 
         //region Items
@@ -37,6 +38,8 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addItem(WorkshopItems.ASH, "Ash");
         this.addItem(WorkshopItems.ROSIN, "Rosin");
         this.addItem(WorkshopItems.PICKLE, "Pickle");
+        this.addItem(WorkshopBlocks.TEA_PLANT::getItem, "Tea Seeds");
+        this.addItem(WorkshopItems.TEA_LEAVES, "Tea Leaves");
         //endregion
 
         //region Fluids

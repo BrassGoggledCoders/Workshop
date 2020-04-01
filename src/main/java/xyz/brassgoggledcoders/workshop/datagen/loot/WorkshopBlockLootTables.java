@@ -1,10 +1,17 @@
 package xyz.brassgoggledcoders.workshop.datagen.loot;
 
+import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.CropsBlock;
 import net.minecraft.data.loot.BlockLootTables;
+import net.minecraft.item.Items;
+import net.minecraft.world.storage.loot.conditions.BlockStateProperty;
+import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
+import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
@@ -34,6 +41,9 @@ public class WorkshopBlockLootTables extends BlockLootTables {
 
         this.registerDropSelfLootTable(WorkshopBlocks.BROKEN_ANVIL.getBlock());
         this.registerDropSelfLootTable(WorkshopBlocks.OBSIDIAN_PLATE.getBlock());
+
+        this.registerLootTable(WorkshopBlocks.TEA_PLANT.getBlock(), droppingAndBonusWhen(WorkshopBlocks.TEA_PLANT.getBlock(), WorkshopItems.TEA_LEAVES.get(), WorkshopBlocks.TEA_PLANT.getItem(),
+                BlockStateProperty.builder(WorkshopBlocks.TEA_PLANT.getBlock()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(CropsBlock.AGE, 1))));
 
         this.registerLootTable(WorkshopBlocks.ALEMBIC.getBlock(), BlockLootTables::droppingWithName);
         this.registerLootTable(WorkshopBlocks.PRESS.getBlock(), BlockLootTables::droppingWithName);
