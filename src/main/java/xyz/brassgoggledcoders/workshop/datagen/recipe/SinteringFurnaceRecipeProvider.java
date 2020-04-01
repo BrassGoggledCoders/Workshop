@@ -37,7 +37,7 @@ public class SinteringFurnaceRecipeProvider extends TitaniumSerializableProvider
     @Override
     public void add(Map<IJsonFile, IJSONGenerator> serializables) {
         for(BlockRegistryObjectGroup concrete : WorkshopBlocks.CONCRETES) {
-            ResourceLocation location = new ResourceLocation("minecraft", concrete.getName().replace("_rebarred_", "_"));
+            ResourceLocation location = new ResourceLocation("minecraft", concrete.getName().replace("_rebarred_", "_") + "_powder");
             recipes.add(new Builder(concrete.getName())
                     .setInput(Ingredient.fromItems(Blocks.IRON_BARS))
                     .setPowder(Ingredient.fromItems(ForgeRegistries.BLOCKS.getValue(location)))
@@ -45,6 +45,19 @@ public class SinteringFurnaceRecipeProvider extends TitaniumSerializableProvider
                     .setTime(30 * 20)
                     .build());
         }
+        recipes.add(new Builder("caramel_apple")
+                    .setInput(Ingredient.fromItems(Items.APPLE))
+                    .setPowder(Ingredient.fromStacks(new ItemStack(Items.SUGAR, 2)))
+                    .setOutput(new ItemStack(WorkshopItems.CARAMEL_APPLE.get()))
+                    .setTime(40)
+                    .build()
+        );
+        recipes.add(new Builder("obsidian_plate")
+                .setInput(Ingredient.fromStacks(new ItemStack(Items.FLINT, 4)))
+                .setPowder(Ingredient.fromItems(Items.BLAZE_POWDER))
+                .setTime(60 * 20)
+                .build()
+        );
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }
 

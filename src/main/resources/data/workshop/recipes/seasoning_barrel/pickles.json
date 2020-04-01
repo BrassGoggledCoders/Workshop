@@ -8,6 +8,6 @@
   },
   "fluidIn": "{FluidName:\"workshop:brine\",Amount:100}",
   "fluidOut": "{FluidName:\"workshop:brine\",Amount:100}",
-  "seasoningTime": 0,
+  "seasoningTime": 300,
   "type": "workshop:seasoning_barrel"
 }

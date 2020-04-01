@@ -12,10 +12,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
-import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
-import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
+import xyz.brassgoggledcoders.workshop.content.*;
 import xyz.brassgoggledcoders.workshop.renderer.PressTileEntityRenderer;
 import xyz.brassgoggledcoders.workshop.renderer.SinteringTileEntityRenderer;
 
@@ -32,6 +29,7 @@ public class Workshop {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        WorkshopMaterials.init();
         WorkshopRecipes.register(modBus);
         WorkshopItems.register(modBus);
         WorkshopFluids.register(modBus);

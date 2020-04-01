@@ -1,7 +1,7 @@
 {
-  "powderIn": [{
+  "powderIn": {
     "item": "minecraft:sugar"
-  }],
+  },
   "itemIn": {
     "item": "minecraft:apple"
   },
@@ -9,5 +9,6 @@
     "item": "workshop:caramel_apple",
     "count": 1
   },
+  "meltTime": 40,
   "type": "workshop:sintering_furnace"
 }

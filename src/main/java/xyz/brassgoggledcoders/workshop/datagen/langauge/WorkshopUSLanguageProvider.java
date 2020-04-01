@@ -56,18 +56,36 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         //endregion
 
         //region Tooltips
-        String prefix = "tooltip.titanium.facing_handler.";
-        this.add(prefix + "input", "Input");
-        this.add(prefix + "output", "Output");
-        this.add(prefix + "residue", "Residue");
-        this.add(prefix + "colditem","Cooling Source");
-        this.add(prefix + "container", "Container");
-        this.add(prefix + "powderinventory", "Powder");
+        this.addTooltip("input", "Input");
+        this.addTooltip("output", "Output");
+        this.addTooltip("residue", "Residue");
+        this.addTooltip("colditem","Cooling Source");
+        this.addTooltip("container", "Container");
+        this.addTooltip("powderinventory", "Powder");
+        //endregion
+
+        //region Resources
+        this.add("itemGroup.resources", "Titanium Resources");
+        this.add("resource.titanium.material.iron", "Iron");
+        this.add("resource.titanium.material.gold", "Gold");
+        this.addResource("dust", "%s Powder");
+        this.addResource("film", "%s Film");
+        this.addResource("pipe", "%s Pipe");
         //endregion
     }
 
     public void addFluid(FluidRegistryObjectGroup fluid, String name) {
         this.addBlock(fluid::getBlock, name);
         this.addItem(fluid::getBucket, String.format("Bucket of %s", name));
+    }
+
+    public void addTooltip(String key, String name) {
+        String prefix = "tooltip.titanium.facing_handler.";
+        this.add(prefix + key, name);
+    }
+
+    public void addResource(String key, String name) {
+        String prefix = "resource.titanium.type.";
+        this.add(prefix + key, name);
     }
 }

@@ -1,5 +1,6 @@
 package xyz.brassgoggledcoders.workshop.datagen.models;
 
+import com.hrznstudio.titanium.Titanium;
 import net.minecraft.block.Block;
 import net.minecraft.block.FletchingTableBlock;
 import net.minecraft.data.DataGenerator;
@@ -32,6 +33,10 @@ public class WorkshopItemModelProvider extends ModelProvider<PropertiedItemModel
         for(BlockRegistryObjectGroup concrete : WorkshopBlocks.CONCRETES) {
             this.withExistingParent(concrete.getItem().getRegistryName().getPath(), modLoc(BLOCK_FOLDER + "/" + concrete.getName()));
         }
+        //Manually for now
+        //TODO these two need to be in titaniun folder
+        this.singleTexture("iron_dust", mcLoc("item/generated"), new ResourceLocation(Titanium.MODID, "items/resource/dust"));
+        this.singleTexture("gold_dust", mcLoc("item/generated"), new ResourceLocation(Titanium.MODID, "items/resource/dust"));
     }
 
     private void bucket(ResourceLocation fluidName) {
