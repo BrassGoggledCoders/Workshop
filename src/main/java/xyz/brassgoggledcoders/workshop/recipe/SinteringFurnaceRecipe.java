@@ -27,6 +27,14 @@ public class SinteringFurnaceRecipe extends SerializableRecipe implements IMachi
         super(resourceLocation);
     }
 
+    public SinteringFurnaceRecipe(ResourceLocation resourceLocation, Ingredient powderIn, Ingredient itemIn, ItemStack itemOut, int processingTime) {
+        this(resourceLocation);
+        this.powderIn = powderIn;
+        this.itemIn = itemIn;
+        this.itemOut = itemOut;
+        this.meltTime = processingTime;
+    }
+
     public boolean matches(@Nonnull IItemHandler input, @Nonnull IItemHandler powder) {
         return itemIn.test(input.getStackInSlot(0)) && powderIn.test(powder.getStackInSlot(0));
     }

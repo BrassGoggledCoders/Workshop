@@ -1,0 +1,14 @@
+{
+  "powderIn": {
+    "item": "minecraft:orange_concrete"
+  },
+  "itemIn": {
+    "item": "minecraft:iron_bars"
+  },
+  "itemOut": {
+    "item": "workshop:orange_rebarred_concrete",
+    "count": 1
+  },
+  "meltTime": 600,
+  "type": "workshop:sintering_furnace"
+}

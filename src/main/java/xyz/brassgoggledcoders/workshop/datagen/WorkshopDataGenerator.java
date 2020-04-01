@@ -17,10 +17,7 @@ import xyz.brassgoggledcoders.workshop.datagen.loot.WorkshopLootTableProvider;
 import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopBlockModelProvider;
 import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopBlockstateProvider;
 import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopItemModelProvider;
-import xyz.brassgoggledcoders.workshop.datagen.recipe.AlembicRecipeProvider;
-import xyz.brassgoggledcoders.workshop.datagen.recipe.PressRecipeProvider;
-import xyz.brassgoggledcoders.workshop.datagen.recipe.SeasoningBarrelRecipeProvider;
-import xyz.brassgoggledcoders.workshop.datagen.recipe.WorkshopRecipeProvider;
+import xyz.brassgoggledcoders.workshop.datagen.recipe.*;
 
 import java.util.Iterator;
 
@@ -65,6 +62,7 @@ public class WorkshopDataGenerator {
             dataGenerator.addProvider(new SeasoningBarrelRecipeProvider(dataGenerator));
             dataGenerator.addProvider(new AlembicRecipeProvider(dataGenerator));
             dataGenerator.addProvider(new PressRecipeProvider(dataGenerator));
+            dataGenerator.addProvider(new SinteringFurnaceRecipeProvider(dataGenerator));
         }
     }
 }
