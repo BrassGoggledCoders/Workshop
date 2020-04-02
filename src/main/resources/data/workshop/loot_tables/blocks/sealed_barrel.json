@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "workshop:sealed_barrel"
+        }
+      ],
+      "functions": [
+        {
+          "function": "minecraft:copy_nbt",
+          "source": "block_entity",
+          "ops": [
+            {
+              "source": "capability",
+              "target": "BlockEntityTag.capability",
+              "op": "replace"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

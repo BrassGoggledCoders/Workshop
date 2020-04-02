@@ -12,6 +12,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.workshop.tileentity.BasicMachineTileEntity;
+import xyz.brassgoggledcoders.workshop.tileentity.GUITile;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -19,10 +20,10 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class TileBlock extends Block {
-    private final Supplier<? extends BasicMachineTileEntity> tileSupplier;
+public class TileBlock<T extends TileEntity & GUITile> extends Block {
+    private final Supplier<T> tileSupplier;
 
-    public TileBlock(Properties properties, Supplier<? extends BasicMachineTileEntity> tileSupplier) {
+    public TileBlock(Properties properties, Supplier<T> tileSupplier) {
         super(properties);
         this.tileSupplier = tileSupplier;
     }
@@ -43,17 +44,17 @@ public class TileBlock extends Block {
     @SuppressWarnings("deprecation")
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if(!player.isCrouching()) {
-            handleTileEntity(worldIn, pos, workshopGUIMachine -> workshopGUIMachine.onActivated(player, handIn, hit));
+            handleTileEntity(worldIn, pos, tile -> tile.onActivated(player, handIn, hit));
             return ActionResultType.SUCCESS;
         }
         return ActionResultType.PASS;
     }
 
     @SuppressWarnings("rawtypes")
-    private void handleTileEntity(IWorld world, BlockPos pos, Consumer<BasicMachineTileEntity> tileEntityConsumer) {
+    private void handleTileEntity(IWorld world, BlockPos pos, Consumer<? super GUITile> tileEntityConsumer) {
         Optional.ofNullable(world.getTileEntity(pos))
-                .filter(tileEntity -> tileEntity instanceof BasicMachineTileEntity)
-                .map(BasicMachineTileEntity.class::cast)
+                .filter(tileEntity -> tileEntity instanceof GUITile)
+                .map(GUITile.class::cast)
                 .ifPresent(tileEntityConsumer);
     }
 }

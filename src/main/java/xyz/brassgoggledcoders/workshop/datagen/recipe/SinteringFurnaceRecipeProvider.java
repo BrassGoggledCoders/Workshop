@@ -85,6 +85,13 @@ public class SinteringFurnaceRecipeProvider extends TitaniumSerializableProvider
                 }
             }
         }
+        recipes.add(new Builder("sealed_barrel")
+                .setInput(Ingredient.fromItems(Blocks.BARREL))
+                .setPowder(Ingredient.fromItems(WorkshopItems.ROSIN.get()))
+                .setOutput(new ItemStack(WorkshopBlocks.SEALED_BARREL.getItem()))
+                .setTime(60)
+                .build()
+        );
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }
 

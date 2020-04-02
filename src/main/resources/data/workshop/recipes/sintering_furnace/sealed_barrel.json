@@ -1,0 +1,14 @@
+{
+  "powderIn": {
+    "item": "workshop:rosin"
+  },
+  "itemIn": {
+    "item": "minecraft:barrel"
+  },
+  "itemOut": {
+    "item": "workshop:sealed_barrel",
+    "count": 1
+  },
+  "meltTime": 60,
+  "type": "workshop:sintering_furnace"
+}

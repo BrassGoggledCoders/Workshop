@@ -29,6 +29,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
             this.addBlock(concrete, String.format("%s Rebarred Concrete", StringUtils.capitalise(DyeColor.values()[i++].getName().replace("_", " "))));
         }
         this.addBlock(WorkshopBlocks.TEA_PLANT, "Tea");
+        this.addBlock(WorkshopBlocks.SEALED_BARREL, "Sealed Barrel");
         //endregion
 
         //region Items

@@ -27,13 +27,13 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
     private SidedFluidTankComponent<PressTileEntity> outputFluid;
 
     public PressTileEntity() {
-        super(WorkshopBlocks.PRESS.getTileEntityType(), new ProgressBarComponent(0, 0, 120).
+        super(WorkshopBlocks.PRESS.getTileEntityType(), new ProgressBarComponent<PressTileEntity>(0, 0, 120).
                 setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
         int pos = 0;
-        this.getMachineComponent().addInventory(this.inputInventory = (SidedInventoryComponent) new SidedInventoryComponent("inputInventory", 34, 25, 1, pos++)
+        this.getMachineComponent().addInventory(this.inputInventory = (SidedInventoryComponent<PressTileEntity>) new SidedInventoryComponent<PressTileEntity>("inputInventory", 34, 25, 1, pos++)
                 .setColor(DyeColor.RED)
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
-        this.getMachineComponent().addTank(this.outputFluid = (SidedFluidTankComponent) new SidedFluidTankComponent("output_fluid", 4000, 149, 20, pos++).
+        this.getMachineComponent().addTank(this.outputFluid = (SidedFluidTankComponent<PressTileEntity>) new SidedFluidTankComponent<PressTileEntity>("output_fluid", 4000, 149, 20, pos++).
                 setColor(DyeColor.MAGENTA).
                 setTankAction(SidedFluidTankComponent.Action.DRAIN));
     }

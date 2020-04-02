@@ -68,8 +68,10 @@ public class MachineComponent<T extends IMachineHarness<T, U>, U extends IRecipe
         this.componentHarness = componentHarness;
         this.posSupplier = posSupplier;
         this.primaryBar = primaryBar;
-        this.primaryBar.setCanIncrease(value -> currentRecipe != null);
-        this.addProgressBar(primaryBar);
+        if(primaryBar != null) {
+            this.primaryBar.setCanIncrease(value -> currentRecipe != null);
+            this.addProgressBar(primaryBar);
+        }
     }
 
     @Nonnull

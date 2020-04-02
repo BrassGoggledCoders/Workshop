@@ -38,7 +38,7 @@ import java.util.Objects;
 
 public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T, U>, U extends IRecipe<IInventory>>
         extends TileEntity implements IMachineHarness<T, U>, ITickableTileEntity, INamedContainerProvider, IButtonHandler,
-        IFacingComponentHarness {
+        IFacingComponentHarness, GUITile {
     private final MachineComponent<T, U> machineComponent;
 
     public BasicMachineTileEntity(TileEntityType<T> tileEntityType, ProgressBarComponent<T> progressBar) {
@@ -50,6 +50,7 @@ public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T,
         return this.machineComponent;
     }
 
+    @Override
     public ActionResultType onActivated(PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         ActionResultType result = this.getMachineComponent().onActivated(player, hand, hit);
         if (result == ActionResultType.PASS && player instanceof ServerPlayerEntity) {
