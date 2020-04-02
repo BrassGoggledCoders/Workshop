@@ -1,23 +1,27 @@
 package xyz.brassgoggledcoders.workshop.datagen.recipe;
 
+import com.hrznstudio.titanium.material.ResourceMaterial;
+import com.hrznstudio.titanium.material.ResourceRegistry;
 import com.hrznstudio.titanium.recipe.generator.IJSONGenerator;
 import com.hrznstudio.titanium.recipe.generator.IJsonFile;
 import com.hrznstudio.titanium.recipe.generator.TitaniumSerializableProvider;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 import xyz.brassgoggledcoders.workshop.Workshop;
-import xyz.brassgoggledcoders.workshop.content.BlockRegistryObjectGroup;
-import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
-import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
+import xyz.brassgoggledcoders.workshop.content.*;
 import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
 import xyz.brassgoggledcoders.workshop.recipe.SinteringFurnaceRecipe;
 import xyz.brassgoggledcoders.workshop.tileentity.AlembicTileEntity;
@@ -58,6 +62,29 @@ public class SinteringFurnaceRecipeProvider extends TitaniumSerializableProvider
                 .setTime(60 * 20)
                 .build()
         );
+        for (ResourceMaterial material : ResourceRegistry.getMaterials()) {
+            Map<String, ForgeRegistryEntry> generated = material.getGenerated();
+            if (generated.containsKey("dust")) {
+                if (generated.containsKey("film")) {
+                    recipes.add(new Builder(material.getMaterialType() + "_" + WorkshopResourceType.FILM.toString().toLowerCase())
+                            .setPowder(Ingredient.fromTag(ItemTags.getCollection().getOrCreate(new ResourceLocation("forge", "dusts/" + material.getMaterialType()))))
+                            .setInput(Ingredient.fromItems(Items.PAPER))
+                            //TODO Eugh
+                            .setOutput(new ItemStack(((ForgeRegistryEntry<Item>)generated.get("film")).delegate.get()))
+                            .setTime(20)
+                            .build());
+                }
+                if(generated.containsKey("pipe")) {
+                    recipes.add(new Builder(material.getMaterialType() + "_" + WorkshopResourceType.PIPE.toString().toLowerCase())
+                            .setPowder(Ingredient.fromTag(ItemTags.getCollection().getOrCreate(new ResourceLocation("forge", "dusts/" + material.getMaterialType()))))
+                            .setInput(Ingredient.fromItems(Items.BAMBOO))
+                            //TODO Eugh
+                            .setOutput(new ItemStack(((ForgeRegistryEntry<Item>)generated.get("pipe")).delegate.get()))
+                            .setTime(20)
+                            .build());
+                }
+            }
+        }
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }
 
