@@ -61,11 +61,12 @@ import java.util.stream.IntStream;
 public class SealedBarrelTileEntity extends TileEntity implements INamedContainerProvider, IComponentHarness, GUITile, IScreenAddonProvider,
         IContainerAddonProvider {
 
+    public static final int tankCapacity = 4000;//mB;
     private SidedFluidTankComponent<SealedBarrelTileEntity> tank;
 
     public SealedBarrelTileEntity() {
         super(WorkshopBlocks.SEALED_BARREL.getTileEntityType());
-        this.tank = (SidedFluidTankComponent<SealedBarrelTileEntity>) new SidedFluidTankComponent<SealedBarrelTileEntity>("tank", 4000, 100, 20, 0).
+        this.tank = (SidedFluidTankComponent<SealedBarrelTileEntity>) new SidedFluidTankComponent<SealedBarrelTileEntity>("tank", tankCapacity, 80, 20, 0).
                 setColor(DyeColor.MAGENTA).
                 setTankAction(SidedFluidTankComponent.Action.BOTH)
                 .setValidator(fluidStack -> fluidStack.getFluid().getFluid().getAttributes().getTemperature() < Fluids.LAVA.getAttributes().getTemperature());
