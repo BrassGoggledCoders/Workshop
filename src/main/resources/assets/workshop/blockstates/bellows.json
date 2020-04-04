@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "powered=true": {
+          "model": "workshop:block/bellows_pressed"
+        },
+        "powered=false": {
+          "model": "workshop:block/bellows"
+        }
+    }
+}

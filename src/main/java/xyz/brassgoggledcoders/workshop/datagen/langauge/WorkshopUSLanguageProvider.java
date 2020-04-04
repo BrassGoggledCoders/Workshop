@@ -1,6 +1,5 @@
 package xyz.brassgoggledcoders.workshop.datagen.langauge;
 
-import com.hrznstudio.titanium.util.StringUtil;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.DyeColor;
 import net.minecraftforge.common.data.LanguageProvider;
@@ -30,6 +29,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         }
         this.addBlock(WorkshopBlocks.TEA_PLANT, "Tea");
         this.addBlock(WorkshopBlocks.SEALED_BARREL, "Sealed Barrel");
+        this.addBlock(WorkshopBlocks.BELLOWS, "Bellows");
         //endregion
 
         //region Items

@@ -120,6 +120,9 @@ public class WorkshopBlocks {
             new BlockRegistryObjectGroup<>("tea", TeaPlantBlock::new, (block) ->
                     new BlockNamedItem(WorkshopBlocks.TEA_PLANT.getBlock(), new Item.Properties().group(Workshop.ITEM_GROUP))).register(BLOCKS, ITEMS);
 
+    public static final BlockRegistryObjectGroup<BellowsBlock, BlockItem, ?> BELLOWS = new BlockRegistryObjectGroup<>("bellows", BellowsBlock::new, blockItemCreator())
+            .register(BLOCKS, ITEMS);
+
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);
         TILE_ENTITIES.register(bus);
