@@ -5,12 +5,15 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FarmlandBlock;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.AbstractFurnaceTileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -19,6 +22,7 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import java.util.List;
 import java.util.Random;
 
 public class BellowsBlock extends Block {
@@ -51,13 +55,22 @@ public class BellowsBlock extends Block {
         if (!worldIn.isRemote) {
             if (!state.get(PRESSED)) {
                 this.updateState(worldIn, pos, state, true);
-                if(worldIn.getTileEntity(pos.offset(state.get(FACING))) instanceof AbstractFurnaceTileEntity) {
+                Direction facing = state.get(FACING);
+                BlockPos offsetPos = pos.offset(facing);
+                if(worldIn.getTileEntity(offsetPos) instanceof AbstractFurnaceTileEntity) {
                     AbstractFurnaceTileEntity furnace = (AbstractFurnaceTileEntity) worldIn.getTileEntity(pos.offset(state.get(FACING)));
                     furnace.cookTime += 20;
                     //Prevent overflowing as the furnace doesn't do that itself.
                     if(furnace.cookTime >= furnace.cookTimeTotal) {
                         furnace.cookTime = furnace.cookTimeTotal - 1; //Furnace does an == check not an >= check.
                     }
+                }
+                else if(worldIn.isAirBlock(offsetPos)) {
+                    List<Entity> entityList = worldIn.getEntitiesWithinAABB(Entity.class,
+                            new AxisAlignedBB(offsetPos), entity -> entity instanceof ItemEntity || entity.canBePushed());
+                    final double divisor = 0.25D;
+                    entityList.forEach(entity -> entity.setMotion(facing.getXOffset() + (worldIn.getRandom().nextGaussian()*divisor) - (worldIn.getRandom().nextGaussian()*divisor),
+                            worldIn.getRandom().nextGaussian()*divisor, facing.getZOffset() + (worldIn.getRandom().nextGaussian()*divisor) - (worldIn.getRandom().nextGaussian()*divisor)));
                 }
             }
         }
