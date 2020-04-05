@@ -9,11 +9,13 @@ import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.AbstractFurnaceTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -49,6 +51,14 @@ public class BellowsBlock extends Block {
         if (!worldIn.isRemote) {
             if (!state.get(PRESSED)) {
                 this.updateState(worldIn, pos, state, true);
+                if(worldIn.getTileEntity(pos.offset(state.get(FACING))) instanceof AbstractFurnaceTileEntity) {
+                    AbstractFurnaceTileEntity furnace = (AbstractFurnaceTileEntity) worldIn.getTileEntity(pos.offset(state.get(FACING)));
+                    furnace.cookTime += 20;
+                    //Prevent overflowing as the furnace doesn't do that itself.
+                    if(furnace.cookTime >= furnace.cookTimeTotal) {
+                        furnace.cookTime = furnace.cookTimeTotal - 1; //Furnace does an == check not an >= check.
+                    }
+                }
             }
         }
     }
@@ -67,5 +77,10 @@ public class BellowsBlock extends Block {
         worldIn.notifyNeighborsOfStateChange(pos.down(), this);
         worldIn.markBlockRangeForRenderUpdate(pos, state, blockstate);
         worldIn.getPendingBlockTicks().scheduleTick(new BlockPos(pos), this, this.tickRate(worldIn));
+    }
+
+    @Override
+    public int tickRate(IWorldReader worldIn) {
+        return 5; //Quarter of a second, should be quick enough to make it smooth when jumped on
     }
 }
