@@ -91,7 +91,7 @@ public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T,
     @Override
     @ParametersAreNonnullByDefault
     public Container createMenu(int menu, PlayerInventory inventoryPlayer, PlayerEntity entityPlayer) {
-        return new BasicAddonContainer(this, IWorldPosCallable.of(Objects.requireNonNull(this.getWorld()),
+        return new BasicAddonContainer(this, new TileEntityLocatorInstance(this.pos), IWorldPosCallable.of(Objects.requireNonNull(this.getWorld()),
                 this.getPos()), inventoryPlayer, menu);
     }
 
