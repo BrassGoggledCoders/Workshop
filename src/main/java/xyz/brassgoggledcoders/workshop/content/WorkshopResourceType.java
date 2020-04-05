@@ -14,17 +14,13 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 import javax.annotation.Nullable;
 
 public enum WorkshopResourceType implements IResourceType, IStringSerializable {
-    PIPE,
-    FILM;
+    PIPE("pipes"),
+    FILM("films");
 
     private final String tag;
 
     WorkshopResourceType(String tag) {
         this.tag = tag;
-    }
-
-    WorkshopResourceType() {
-        this.tag = getName();
     }
 
     @Override

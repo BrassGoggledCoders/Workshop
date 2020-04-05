@@ -1,9 +1,12 @@
 package xyz.brassgoggledcoders.workshop.content;
 
 import com.hrznstudio.titanium.annotation.MaterialReference;
+import com.hrznstudio.titanium.event.custom.ResourceRegistrationEvent;
 import com.hrznstudio.titanium.material.ResourceRegistry;
 import com.hrznstudio.titanium.material.ResourceType;
 import net.minecraft.item.Item;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 public class WorkshopMaterials {
 
@@ -25,6 +28,7 @@ public class WorkshopMaterials {
     public static void init() {
         ResourceRegistry.getOrCreate("iron").addAll(ResourceType.DUST, WorkshopResourceType.FILM, WorkshopResourceType.PIPE);
         ResourceRegistry.getOrCreate("gold").addAll(ResourceType.DUST, WorkshopResourceType.FILM, WorkshopResourceType.PIPE);
+        ResourceRegistry.getOrCreate("test").addAll(ResourceType.METAL_BLOCK);
     }
 
 }
