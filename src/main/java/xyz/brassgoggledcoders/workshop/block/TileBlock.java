@@ -51,7 +51,7 @@ public class TileBlock<T extends TileEntity & GUITile> extends Block {
     }
 
     @SuppressWarnings("rawtypes")
-    private void handleTileEntity(IWorld world, BlockPos pos, Consumer<? super GUITile> tileEntityConsumer) {
+    protected void handleTileEntity(IWorld world, BlockPos pos, Consumer<? super GUITile> tileEntityConsumer) {
         Optional.ofNullable(world.getTileEntity(pos))
                 .filter(tileEntity -> tileEntity instanceof GUITile)
                 .map(GUITile.class::cast)

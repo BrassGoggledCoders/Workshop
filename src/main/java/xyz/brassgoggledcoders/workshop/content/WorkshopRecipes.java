@@ -35,6 +35,10 @@ public class WorkshopRecipes {
     public static final RegistryObject<GenericSerializer<SinteringFurnaceRecipe>> SINTERING_FURNACE_SERIALIZER = RECIPE_SERIALIZER.register("sintering_furnace",
             () -> new GenericSerializer<>(SINTERING_FURNACE, SinteringFurnaceRecipe.class));
 
+    public static final IRecipeType<CollectorRecipe> COLLECTOR = IRecipeType.register(MOD_ID + "collector");
+    public static final RegistryObject<GenericSerializer<CollectorRecipe>> COLLECTOR_SERIALIZER = RECIPE_SERIALIZER.register("collector",
+            () -> new GenericSerializer<>(COLLECTOR, CollectorRecipe.class));
+
     public static void register(IEventBus bus) {
         RECIPE_SERIALIZER.register(bus);
     }

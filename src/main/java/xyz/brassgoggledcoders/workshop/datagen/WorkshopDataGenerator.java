@@ -2,14 +2,19 @@ package xyz.brassgoggledcoders.workshop.datagen;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.hrznstudio.titanium.recipe.serializer.JSONSerializableDataHandler;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.datagen.langauge.WorkshopGBLanguageProvider;
 import xyz.brassgoggledcoders.workshop.datagen.langauge.WorkshopUSLanguageProvider;
@@ -26,6 +31,8 @@ public class WorkshopDataGenerator {
 
     //TODO Move to Titanium?
     static {
+        JSONSerializableDataHandler.map(TileEntityType.class, (type) -> new JsonPrimitive(type.getRegistryName().toString()),
+                (element) -> ForgeRegistries.TILE_ENTITIES.getValue(new ResourceLocation(element.getAsString())));
         JSONSerializableDataHandler.map(ItemStack[].class, (stacks) -> {
             JsonArray array = new JsonArray();
             for (ItemStack stack : stacks) {
@@ -50,8 +57,8 @@ public class WorkshopDataGenerator {
         if (event.includeClient()) {
             dataGenerator.addProvider(new WorkshopUSLanguageProvider(dataGenerator));
             dataGenerator.addProvider(new WorkshopGBLanguageProvider(dataGenerator));
-            dataGenerator.addProvider(new WorkshopItemModelProvider(dataGenerator, existingFileHelper));
             dataGenerator.addProvider(new WorkshopBlockModelProvider(dataGenerator, existingFileHelper));
+            dataGenerator.addProvider(new WorkshopItemModelProvider(dataGenerator, existingFileHelper));
             dataGenerator.addProvider(new WorkshopBlockstateProvider(dataGenerator, existingFileHelper));
         }
 
@@ -63,6 +70,7 @@ public class WorkshopDataGenerator {
             dataGenerator.addProvider(new AlembicRecipeProvider(dataGenerator));
             dataGenerator.addProvider(new PressRecipeProvider(dataGenerator));
             dataGenerator.addProvider(new SinteringFurnaceRecipeProvider(dataGenerator));
+            dataGenerator.addProvider(new CollectorRecipeProvider(dataGenerator));
         }
     }
 }

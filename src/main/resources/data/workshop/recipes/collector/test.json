@@ -1,0 +1,12 @@
+{
+  "targetTileType": "minecraft:furnace",
+  "input": {
+    "item": "minecraft:coal"
+  },
+  "output": {
+    "item": "minecraft:diamond",
+    "count": 1
+  },
+  "processingTime": 10,
+  "type": "workshop:collector"
+}

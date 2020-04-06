@@ -43,7 +43,6 @@ public class WorkshopBlockLootTables extends BlockLootTables {
         StreamSupport.stream(this.getKnownBlocks().spliterator(), false)
                 .filter(block -> block.getRegistryName().getPath()
                         .contains("concrete")).forEach(block -> registerDropSelfLootTable(block));
-
         this.registerDropSelfLootTable(WorkshopBlocks.BROKEN_ANVIL.getBlock());
         this.registerDropSelfLootTable(WorkshopBlocks.OBSIDIAN_PLATE.getBlock());
         this.registerDropSelfLootTable(WorkshopBlocks.BELLOWS.getBlock());
@@ -65,5 +64,7 @@ public class WorkshopBlockLootTables extends BlockLootTables {
                         .addEntry(ItemLootEntry.builder(WorkshopBlocks.SEALED_BARREL.getBlock()))
                 )
         );
+
+        this.registerDropSelfLootTable(WorkshopBlocks.COLLECTOR.getBlock());
     }
 }

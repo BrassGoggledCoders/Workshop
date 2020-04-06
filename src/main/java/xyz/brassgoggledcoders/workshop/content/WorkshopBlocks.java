@@ -123,6 +123,9 @@ public class WorkshopBlocks {
     public static final BlockRegistryObjectGroup<BellowsBlock, BlockItem, ?> BELLOWS = new BlockRegistryObjectGroup<>("bellows", BellowsBlock::new, blockItemCreator())
             .register(BLOCKS, ITEMS);
 
+    public static final BlockRegistryObjectGroup<CollectorBlock, BlockItem, CollectorTileEntity> COLLECTOR = new BlockRegistryObjectGroup<>("collector", CollectorBlock::new, blockItemCreator(), CollectorTileEntity::new)
+            .register(BLOCKS, ITEMS, TILE_ENTITIES);
+
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);
         TILE_ENTITIES.register(bus);
