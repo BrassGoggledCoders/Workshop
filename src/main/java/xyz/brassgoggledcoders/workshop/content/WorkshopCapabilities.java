@@ -32,7 +32,6 @@ public class WorkshopCapabilities {
         if(event.getObject() instanceof FurnaceTileEntity) {
             event.addCapability(new ResourceLocation(Workshop.MOD_ID, "collector_target"),
                     new FurnaceCapabilityProvider((FurnaceTileEntity) event.getObject()));
-            Workshop.LOGGER.warn("Attached cap to furnace");
         }
     }
 }

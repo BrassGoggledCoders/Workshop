@@ -1,0 +1,12 @@
+{
+  "targetTileType": "minecraft:furnace",
+  "input": {
+    "tag": "minecraft:saplings"
+  },
+  "output": {
+    "item": "workshop:ash",
+    "count": 1
+  },
+  "processingTime": 10,
+  "type": "workshop:collector"
+}

@@ -61,7 +61,10 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
         if(tile.getType().equals(currentRecipe.targetTileType)) {
             LazyOptional<ICollectorTarget> cap = tile.getCapability(WorkshopCapabilities.COLLECTOR_TARGET);
                 return cap.map(target -> {
-                    return Stream.of(target.getCollectables()).anyMatch(stack -> currentRecipe.input.test(stack));
+                    if(target.isActive()) {
+                        return Stream.of(target.getCollectables()).anyMatch(stack -> currentRecipe.input.test(stack));
+                    }
+                    return false;
                 }).orElse(false);
         }
         return false;

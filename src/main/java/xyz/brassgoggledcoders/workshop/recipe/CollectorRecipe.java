@@ -16,7 +16,7 @@ public class CollectorRecipe extends SerializableRecipe implements IMachineRecip
     public TileEntityType targetTileType;
     public Ingredient input;
     public ItemStack output;
-    public int processingTime;
+    public int processingTime = 500;
 
     public CollectorRecipe(ResourceLocation resourceLocation, TileEntityType targetType, Ingredient input, ItemStack output, int processingTime) {
         this(resourceLocation);

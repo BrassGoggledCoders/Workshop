@@ -20,4 +20,9 @@ public class FurnaceCollectorTarget implements ICollectorTarget {
         //Both fuel and input
         return ArrayUtils.addAll(new ItemStack[2], tile.getStackInSlot(0), tile.getStackInSlot(1));
     }
+
+    @Override
+    public boolean isActive() {
+        return tile.isBurning();
+    }
 }

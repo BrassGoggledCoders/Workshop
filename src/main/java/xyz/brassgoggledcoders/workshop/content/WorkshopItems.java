@@ -19,6 +19,7 @@ public class WorkshopItems {
     public static final RegistryObject<Item> SALT = ITEMS.register("salt", () -> new Item(new Item.Properties().group(Workshop.ITEM_GROUP)));
     public static final RegistryObject<Item> ROSIN = ITEMS.register("rosin", () -> new Item(new Item.Properties().group(Workshop.ITEM_GROUP)));
     public static final RegistryObject<Item> ASH = ITEMS.register("ash", () -> new Item(new Item.Properties().group(Workshop.ITEM_GROUP)));
+    public static final RegistryObject<Item> TALLOW = ITEMS.register("tallow", () -> new Item(new Item.Properties().group(Workshop.ITEM_GROUP)));
     //endregion
 
     //region Foods

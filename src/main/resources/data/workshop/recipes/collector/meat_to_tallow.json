@@ -1,0 +1,12 @@
+{
+  "targetTileType": "minecraft:furnace",
+  "input": {
+    "tag": "forge:raw_meats"
+  },
+  "output": {
+    "item": "workshop:tallow",
+    "count": 1
+  },
+  "processingTime": 10,
+  "type": "workshop:collector"
+}

@@ -7,14 +7,17 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
+import xyz.brassgoggledcoders.workshop.datagen.WorkshopItemTagsProvider;
 import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
 import xyz.brassgoggledcoders.workshop.recipe.CollectorRecipe;
 import xyz.brassgoggledcoders.workshop.tileentity.AlembicTileEntity;
@@ -33,12 +36,16 @@ public class CollectorRecipeProvider extends TitaniumSerializableProvider {
 
     @Override
     public void add(Map<IJsonFile, IJSONGenerator> serializables) {
-        recipes.add(new Builder("test")
-                    .setTarget(TileEntityType.FURNACE)
-                    .setInput(Ingredient.fromItems(Items.COAL))
-                    .setOutput(new ItemStack(Items.DIAMOND))
-                    .build()
-        );
+        recipes.add(new Builder("meat_to_tallow")
+                .setTarget(TileEntityType.FURNACE)
+                .setInput(Ingredient.fromTag(WorkshopItemTagsProvider.RAW_MEAT))
+                .setOutput(new ItemStack(WorkshopItems.TALLOW.get()))
+                .build());
+        recipes.add(new Builder("saplings_to_ash")
+                .setTarget(TileEntityType.FURNACE)
+                .setInput(Ingredient.fromTag(ItemTags.SAPLINGS))
+                .setOutput(new ItemStack(WorkshopItems.ASH.get()))
+                .build());
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }
 

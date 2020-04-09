@@ -71,6 +71,8 @@ public class WorkshopDataGenerator {
             dataGenerator.addProvider(new PressRecipeProvider(dataGenerator));
             dataGenerator.addProvider(new SinteringFurnaceRecipeProvider(dataGenerator));
             dataGenerator.addProvider(new CollectorRecipeProvider(dataGenerator));
+
+            dataGenerator.addProvider(new WorkshopItemTagsProvider(dataGenerator));
         }
     }
 }
