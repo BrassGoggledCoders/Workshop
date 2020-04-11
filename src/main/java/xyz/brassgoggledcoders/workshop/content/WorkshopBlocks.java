@@ -16,7 +16,10 @@ import xyz.brassgoggledcoders.workshop.block.*;
 import xyz.brassgoggledcoders.workshop.block.press.PressBlock;
 import xyz.brassgoggledcoders.workshop.tileentity.*;
 
+import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
@@ -35,55 +38,10 @@ public class WorkshopBlocks {
             new BlockRegistryObjectGroup<>("broken_anvil", BrokenAnvilBlock::new, blockItemCreator())
                     .register(BLOCKS, ITEMS);
 
-    public static final BlockRegistryObjectGroup<Block, BlockItem, ?>[] CONCRETES = new BlockRegistryObjectGroup[DyeColor.values().length];
-    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> WHITE_REBARRED_CONCRETE =
-            CONCRETES[0] = new BlockRegistryObjectGroup<>("white_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, DyeColor.WHITE).hardnessAndResistance(5F)), blockItemCreator())
-                    .register(BLOCKS, ITEMS);
-    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> ORANGE_REBARRED_CONCRETE =
-            CONCRETES[1] = new BlockRegistryObjectGroup<>("orange_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, DyeColor.ORANGE).hardnessAndResistance(5F)), blockItemCreator())
-                    .register(BLOCKS, ITEMS);
-    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> MAGENTA_REBARRED_CONCRETE =
-            CONCRETES[2] = new BlockRegistryObjectGroup<>("magenta_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, DyeColor.MAGENTA).hardnessAndResistance(5F)), blockItemCreator())
-                    .register(BLOCKS, ITEMS);
-    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> LIGHT_BLUE_REBARRED_CONCRETE =
-            CONCRETES[3] = new BlockRegistryObjectGroup<>("light_blue_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, DyeColor.LIGHT_BLUE).hardnessAndResistance(5F)), blockItemCreator())
-                    .register(BLOCKS, ITEMS);
-    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> YELLOW_REBARRED_CONCRETE =
-            CONCRETES[4] = new BlockRegistryObjectGroup<>("yellow_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, DyeColor.YELLOW).hardnessAndResistance(5F)), blockItemCreator())
-                    .register(BLOCKS, ITEMS);
-    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> LIME_REBARRED_CONCRETE =
-            CONCRETES[5] = new BlockRegistryObjectGroup<>("lime_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, DyeColor.LIME).hardnessAndResistance(5F)), blockItemCreator())
-                    .register(BLOCKS, ITEMS);
-    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> PINK_REBARRED_CONCRETE =
-            CONCRETES[6] = new BlockRegistryObjectGroup<>("pink_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, DyeColor.PINK).hardnessAndResistance(5F)), blockItemCreator())
-                    .register(BLOCKS, ITEMS);
-    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> GRAY_REBARRED_CONCRETE =
-            CONCRETES[7] = new BlockRegistryObjectGroup<>("gray_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, DyeColor.GRAY).hardnessAndResistance(5F)), blockItemCreator())
-                    .register(BLOCKS, ITEMS);
-    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> LIGHT_GRAY_REBARRED_CONCRETE =
-            CONCRETES[8] = new BlockRegistryObjectGroup<>("light_gray_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, DyeColor.LIGHT_GRAY).hardnessAndResistance(5F)), blockItemCreator())
-                    .register(BLOCKS, ITEMS);
-    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> CYAN_REBARRED_CONCRETE =
-            CONCRETES[9] = new BlockRegistryObjectGroup<>("cyan_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, DyeColor.CYAN).hardnessAndResistance(5F)), blockItemCreator())
-                    .register(BLOCKS, ITEMS);
-    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> PURPLE_REBARRED_CONCRETE =
-            CONCRETES[10] = new BlockRegistryObjectGroup<>("purple_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, DyeColor.PURPLE).hardnessAndResistance(5F)), blockItemCreator())
-                    .register(BLOCKS, ITEMS);
-    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> BLUE_REBARRED_CONCRETE =
-            CONCRETES[11] = new BlockRegistryObjectGroup<>("blue_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, DyeColor.BLUE).hardnessAndResistance(5F)), blockItemCreator())
-                    .register(BLOCKS, ITEMS);
-    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> BROWN_REBARRED_CONCRETE =
-            CONCRETES[12] = new BlockRegistryObjectGroup<>("brown_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, DyeColor.BROWN).hardnessAndResistance(5F)), blockItemCreator())
-                    .register(BLOCKS, ITEMS);
-    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> GREEN_REBARRED_CONCRETE =
-            CONCRETES[13] = new BlockRegistryObjectGroup<>("green_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, DyeColor.GREEN).hardnessAndResistance(5F)), blockItemCreator())
-                    .register(BLOCKS, ITEMS);
-    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> RED_REBARRED_CONCRETE =
-            CONCRETES[14] = new BlockRegistryObjectGroup<>("red_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, DyeColor.RED).hardnessAndResistance(5F)), blockItemCreator())
-                    .register(BLOCKS, ITEMS);
-    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> BLACK_REBARRED_CONCRETE =
-            CONCRETES[15] = new BlockRegistryObjectGroup<>("black_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, DyeColor.BLACK).hardnessAndResistance(5F)), blockItemCreator())
-                    .register(BLOCKS, ITEMS);
+    public static final List<BlockRegistryObjectGroup<Block, BlockItem, ?>> CONCRETES = Stream.of(DyeColor.values())
+            .map(dyeColor -> new BlockRegistryObjectGroup<>(dyeColor.getName() + "_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, dyeColor).hardnessAndResistance(5F)), blockItemCreator())
+                .register(BLOCKS, ITEMS))
+            .collect(Collectors.toList());
 
     public static final BlockRegistryObjectGroup<AlembicBlock, BlockItem, AlembicTileEntity> ALEMBIC =
             new BlockRegistryObjectGroup<>("alembic", AlembicBlock::new, blockItemCreator(), AlembicTileEntity::new)
