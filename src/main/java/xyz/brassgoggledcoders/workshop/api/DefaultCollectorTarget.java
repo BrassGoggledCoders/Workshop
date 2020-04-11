@@ -7,4 +7,9 @@ public class DefaultCollectorTarget implements ICollectorTarget {
     public ItemStack[] getCollectables() {
         return new ItemStack[0];
     }
+
+    @Override
+    public boolean isActive() {
+        return false;
+    }
 }

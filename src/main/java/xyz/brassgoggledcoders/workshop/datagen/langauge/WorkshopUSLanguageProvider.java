@@ -29,7 +29,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         int i = 0;
         for(BlockRegistryObjectGroup concrete : WorkshopBlocks.CONCRETES) {
             //TODO Dye names, plus grey vs gray
-            this.addBlock(concrete, String.format("%s Rebarred Concrete", StringUtils.capitalise(DyeColor.values()[i++].getName().replace("_", " "))));
+            this.addBlock(concrete, String.format("%s Rebarred Concrete", StringUtils.capitaliseAllWords(DyeColor.values()[i++].getName().replace("_", " "))));
         }
         this.addBlock(WorkshopBlocks.TEA_PLANT, "Tea");
         this.addBlock(WorkshopBlocks.SEALED_BARREL, "Sealed Barrel");
