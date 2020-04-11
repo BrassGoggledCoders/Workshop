@@ -1,21 +1,17 @@
 package xyz.brassgoggledcoders.workshop.datagen.models;
 
 import com.hrznstudio.titanium.Titanium;
-import net.minecraft.block.Block;
-import net.minecraft.block.FletchingTableBlock;
+import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.generators.*;
+import net.minecraftforge.client.model.generators.ExistingFileHelper;
+import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.fml.RegistryObject;
 import xyz.brassgoggledcoders.workshop.Workshop;
-import xyz.brassgoggledcoders.workshop.content.BlockRegistryObjectGroup;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
-
-import javax.annotation.Resource;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
 public class WorkshopItemModelProvider extends ModelProvider<PropertiedItemModelBuilder> {
 

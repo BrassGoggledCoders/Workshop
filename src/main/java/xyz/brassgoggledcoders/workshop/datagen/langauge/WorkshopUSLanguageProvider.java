@@ -1,11 +1,15 @@
 package xyz.brassgoggledcoders.workshop.datagen.langauge;
 
+import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.DyeColor;
 import net.minecraftforge.common.data.LanguageProvider;
 import org.codehaus.plexus.util.StringUtils;
 import xyz.brassgoggledcoders.workshop.Workshop;
-import xyz.brassgoggledcoders.workshop.content.*;
+import xyz.brassgoggledcoders.workshop.content.FluidRegistryObjectGroup;
+import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
+import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
+import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 
 public class WorkshopUSLanguageProvider extends LanguageProvider {
     public WorkshopUSLanguageProvider(DataGenerator gen) {
