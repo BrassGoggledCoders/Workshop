@@ -1,13 +1,11 @@
-package xyz.brassgoggledcoders.workshop.api;
+package xyz.brassgoggledcoders.workshop.capabilities;
 
 
-import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopCapabilities;
 
 import javax.annotation.Nonnull;

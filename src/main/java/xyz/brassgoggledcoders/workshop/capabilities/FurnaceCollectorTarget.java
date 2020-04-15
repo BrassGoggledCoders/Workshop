@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.api;
+package xyz.brassgoggledcoders.workshop.capabilities;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.FurnaceTileEntity;

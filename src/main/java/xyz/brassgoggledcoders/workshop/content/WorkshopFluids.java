@@ -20,7 +20,7 @@ public class WorkshopFluids {
     private static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Workshop.MOD_ID);
     private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Workshop.MOD_ID);
 
-    public static final int BOTTLE_VOLUME = Math.round(FluidAttributes.BUCKET_VOLUME / 3);
+    public static final int BOTTLE_VOLUME = FluidAttributes.BUCKET_VOLUME / 3;
 
     public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> BRINE = new FluidRegistryObjectGroup<>("brine", () ->
             new ForgeFlowingFluid.Source(WorkshopFluids.BRINE_PROPERTIES), () ->

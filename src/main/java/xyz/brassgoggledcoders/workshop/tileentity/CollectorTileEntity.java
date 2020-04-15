@@ -8,7 +8,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemHandlerHelper;
-import xyz.brassgoggledcoders.workshop.api.ICollectorTarget;
+import xyz.brassgoggledcoders.workshop.capabilities.ICollectorTarget;
 import xyz.brassgoggledcoders.workshop.block.CollectorBlock;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopCapabilities;
