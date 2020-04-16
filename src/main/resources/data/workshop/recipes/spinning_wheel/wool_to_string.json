@@ -1,0 +1,13 @@
+{
+  "inputs": [
+    {
+      "tag": "minecraft:wool"
+    }
+  ],
+  "output": {
+    "item": "minecraft:string",
+    "count": 2
+  },
+  "processingTime": 500,
+  "type": "workshop:spinning_wheel"
+}

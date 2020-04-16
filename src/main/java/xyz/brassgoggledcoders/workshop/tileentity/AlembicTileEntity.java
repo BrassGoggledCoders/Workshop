@@ -17,6 +17,7 @@ import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
+import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
 import javax.annotation.Nonnull;
 import java.util.stream.IntStream;
@@ -90,9 +91,7 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
 
     @Override
     public boolean hasInputs() {
-        return IntStream.range(0, this.input.getSlots())
-                .mapToObj(slotIndex -> this.input.getStackInSlot(slotIndex))
-                .anyMatch(stack -> !stack.isEmpty()) && !this.container.getStackInSlot(0).isEmpty();
+        return InventoryUtil.anySlotsHaveItems(input) && !this.container.getStackInSlot(0).isEmpty();
     }
 
     @Override

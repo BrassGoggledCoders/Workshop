@@ -90,12 +90,12 @@ public class SeasoningBarrelTileEntity extends BasicMachineTileEntity<SeasoningB
                         IFluidHandler.FluidAction.EXECUTE);
             }
         }
-        for (int i = 0; i < outputInventory.getSlots(); i++) {
-            ItemStack itemOut = currentRecipe.itemOut;
-            if (itemOut != null) {
-                outputInventory.insertItem(0, itemOut, false);
-            }
+        //for (int i = 0; i < outputInventory.getSlots(); i++) {
+        ItemStack itemOut = currentRecipe.itemOut;
+        if (itemOut != null) {
+            outputInventory.insertItem(0, itemOut, false);
         }
+        //}
     }
 
     @Override

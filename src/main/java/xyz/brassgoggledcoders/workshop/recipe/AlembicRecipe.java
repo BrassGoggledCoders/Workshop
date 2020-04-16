@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandler;
 import org.apache.commons.lang3.ArrayUtils;
+import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
 import javax.annotation.Nonnull;
 
@@ -41,17 +42,7 @@ public class AlembicRecipe extends SerializableRecipe implements IMachineRecipe 
 
     public boolean matches(@Nonnull IItemHandler handler) {
         //For each ingredient in the input list check if any of the slots in the handler match the Ingredient predicate
-        return Arrays.stream(input) //Stream the list
-                //Check that every Ingredient in the list matches against one of the slots
-                .allMatch(ingredient ->
-                        //Stream the slots for each ingredient
-                        IntStream.range(0, handler.getSlots())
-                        //Get the stack in each slot
-                        .mapToObj(slotIndex -> handler.getStackInSlot(slotIndex))
-                        //Filter out empties
-                        .filter(stack -> !stack.isEmpty())
-                        //Check if any of them match the Ingredient
-                        .anyMatch(stack -> ingredient.test(stack)));
+        return InventoryUtil.inventoryHasIngredients(handler, input);
     }
 
     @Override
