@@ -2,20 +2,19 @@ package xyz.brassgoggledcoders.workshop.capabilities;
 
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.PotionItem;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 
 import javax.annotation.Nonnull;
@@ -48,7 +47,7 @@ public class BottleCapabilityProvider implements IFluidHandlerItem, ICapabilityP
     @Nonnull
     public FluidStack getFluid() {
         Item item = container.getItem();
-        if (item instanceof PotionItem && PotionUtils.getEffectsFromStack(container).contains(Potions.WATER)) {
+        if (item instanceof PotionItem && Potions.WATER.equals(PotionUtils.getPotionFromItem(container))) {
             return new FluidStack(Fluids.WATER, WorkshopFluids.BOTTLE_VOLUME);
         } else {
             return FluidStack.EMPTY;
@@ -144,7 +143,6 @@ public class BottleCapabilityProvider implements IFluidHandlerItem, ICapabilityP
     public static ItemStack getFilledBottle(@Nonnull FluidStack fluidStack) {
         Fluid fluid = fluidStack.getFluid();
 
-        Workshop.LOGGER.warn(fluidStack.getFluid().getRegistryName().toString());
         if (!fluidStack.hasTag() || fluidStack.getTag().isEmpty()) {
             if (fluid == Fluids.WATER) {
                 return PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER);

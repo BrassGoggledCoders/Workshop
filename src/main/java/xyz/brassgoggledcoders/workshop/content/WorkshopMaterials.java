@@ -1,12 +1,9 @@
 package xyz.brassgoggledcoders.workshop.content;
 
 import com.hrznstudio.titanium.annotation.MaterialReference;
-import com.hrznstudio.titanium.event.custom.ResourceRegistrationEvent;
 import com.hrznstudio.titanium.material.ResourceRegistry;
 import com.hrznstudio.titanium.material.ResourceType;
 import net.minecraft.item.Item;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 public class WorkshopMaterials {
 

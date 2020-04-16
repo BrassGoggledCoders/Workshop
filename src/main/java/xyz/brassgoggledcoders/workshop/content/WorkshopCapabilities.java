@@ -2,8 +2,6 @@ package xyz.brassgoggledcoders.workshop.content;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.PotionItem;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.tileentity.FurnaceTileEntity;
@@ -12,11 +10,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.CapabilityProvider;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import xyz.brassgoggledcoders.workshop.Workshop;
@@ -36,7 +31,7 @@ public class WorkshopCapabilities {
     @SubscribeEvent
     public static void attachItemCapabilities(AttachCapabilitiesEvent<ItemStack> event) {
         if(event.getObject().getItem() == Items.GLASS_BOTTLE ||
-                (event.getObject().getItem() == Items.POTION && PotionUtils.getEffectsFromStack(event.getObject()).contains(Potions.WATER))) {
+                (event.getObject().getItem() == Items.POTION && Potions.WATER.equals(PotionUtils.getPotionFromItem(event.getObject())))) {
             event.addCapability(new ResourceLocation(Workshop.MOD_ID, "fluid_handler_item"),
                     new BottleCapabilityProvider(event.getObject()));
         }

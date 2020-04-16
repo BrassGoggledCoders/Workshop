@@ -3,9 +3,7 @@ package xyz.brassgoggledcoders.workshop.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.FarmlandBlock;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
@@ -52,26 +50,24 @@ public class BellowsBlock extends Block {
 
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        if (!worldIn.isRemote) {
-            if (!state.get(PRESSED)) {
-                this.updateState(worldIn, pos, state, true);
-                Direction facing = state.get(FACING);
-                BlockPos offsetPos = pos.offset(facing);
-                if(worldIn.getTileEntity(offsetPos) instanceof AbstractFurnaceTileEntity) {
-                    AbstractFurnaceTileEntity furnace = (AbstractFurnaceTileEntity) worldIn.getTileEntity(pos.offset(state.get(FACING)));
-                    furnace.cookTime += 20;
-                    //Prevent overflowing as the furnace doesn't do that itself.
-                    if(furnace.cookTime >= furnace.cookTimeTotal) {
-                        furnace.cookTime = furnace.cookTimeTotal - 1; //Furnace does an == check not an >= check.
-                    }
+        if (!worldIn.isRemote && !state.get(PRESSED)) {
+            this.updateState(worldIn, pos, state, true);
+            Direction facing = state.get(FACING);
+            BlockPos offsetPos = pos.offset(facing);
+            if(worldIn.getTileEntity(offsetPos) instanceof AbstractFurnaceTileEntity) {
+                AbstractFurnaceTileEntity furnace = (AbstractFurnaceTileEntity) worldIn.getTileEntity(pos.offset(state.get(FACING)));
+                furnace.cookTime += 20;
+                //Prevent overflowing as the furnace doesn't do that itself.
+                if(furnace.cookTime >= furnace.cookTimeTotal) {
+                    furnace.cookTime = furnace.cookTimeTotal - 1; //Furnace does an == check not an >= check.
                 }
-                else if(worldIn.isAirBlock(offsetPos)) {
-                    List<Entity> entityList = worldIn.getEntitiesWithinAABB(Entity.class,
-                            new AxisAlignedBB(offsetPos), entity -> entity instanceof ItemEntity || entity.canBePushed());
-                    final double divisor = 0.25D;
-                    entityList.forEach(entity -> entity.setMotion(facing.getXOffset() + (worldIn.getRandom().nextGaussian()*divisor) - (worldIn.getRandom().nextGaussian()*divisor),
-                            worldIn.getRandom().nextGaussian()*divisor, facing.getZOffset() + (worldIn.getRandom().nextGaussian()*divisor) - (worldIn.getRandom().nextGaussian()*divisor)));
-                }
+            }
+            else if(worldIn.isAirBlock(offsetPos)) {
+                List<Entity> entityList = worldIn.getEntitiesWithinAABB(Entity.class,
+                        new AxisAlignedBB(offsetPos), entity -> entity instanceof ItemEntity || entity.canBePushed());
+                final double divisor = 0.25D;
+                entityList.forEach(entity -> entity.setMotion(facing.getXOffset() + (worldIn.getRandom().nextGaussian()*divisor) - (worldIn.getRandom().nextGaussian()*divisor),
+                        worldIn.getRandom().nextGaussian()*divisor, facing.getZOffset() + (worldIn.getRandom().nextGaussian()*divisor) - (worldIn.getRandom().nextGaussian()*divisor)));
             }
         }
     }

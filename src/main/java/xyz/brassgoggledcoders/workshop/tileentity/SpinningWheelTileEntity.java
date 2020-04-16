@@ -17,7 +17,6 @@ import xyz.brassgoggledcoders.workshop.recipe.SpinningWheelRecipe;
 import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
 import javax.annotation.Nonnull;
-import java.util.stream.IntStream;
 
 public class SpinningWheelTileEntity extends BasicMachineTileEntity<SpinningWheelTileEntity, SpinningWheelRecipe> {
 

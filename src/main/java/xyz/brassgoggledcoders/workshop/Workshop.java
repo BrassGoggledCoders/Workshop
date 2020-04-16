@@ -20,9 +20,9 @@ import xyz.brassgoggledcoders.workshop.renderer.SinteringTileEntityRenderer;
 public class Workshop {
     public static final String MOD_ID = "workshop";
 
-    public static Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger();
 
-    public static ItemGroup ITEM_GROUP = new TitaniumTab(MOD_ID,
+    public static final ItemGroup ITEM_GROUP = new TitaniumTab(MOD_ID,
             () -> new ItemStack(net.minecraft.block.Blocks.ANVIL));// TODO ICON
 
     public Workshop() {

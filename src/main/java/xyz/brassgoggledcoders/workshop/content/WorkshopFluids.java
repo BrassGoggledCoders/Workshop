@@ -2,7 +2,6 @@ package xyz.brassgoggledcoders.workshop.content;
 
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
