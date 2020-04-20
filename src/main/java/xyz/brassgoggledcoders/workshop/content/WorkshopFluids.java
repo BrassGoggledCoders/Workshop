@@ -122,6 +122,17 @@ public class WorkshopFluids {
                     .color(2631935))
             .block(GLACIAL_WATER::getBlock)
             .bucket(GLACIAL_WATER::getBucket);
+    
+    public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> TEA = new FluidRegistryObjectGroup<>("tea_liquid",
+            () -> new ForgeFlowingFluid.Source(WorkshopFluids.TEA_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.TEA_PROPERTIES)).register(FLUIDS, BLOCKS, ITEMS);
+
+    public static final ForgeFlowingFluid.Properties TEA_PROPERTIES = new ForgeFlowingFluid.Properties(TEA, TEA::getFlowing,
+            FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
+                    new ResourceLocation("minecraft", "block/water_flow"))
+                    .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
+                    .color(13125120))
+            .block(TEA::getBlock)
+            .bucket(TEA::getBucket);
 
     public static void register(IEventBus modBus) {
         FLUIDS.register(modBus);

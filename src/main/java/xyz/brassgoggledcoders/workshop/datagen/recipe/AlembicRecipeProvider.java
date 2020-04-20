@@ -44,8 +44,15 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
                 .setOutput(new FluidStack(WorkshopFluids.ADHESIVE_OILS.getFluid(), FluidAttributes.BUCKET_VOLUME))
                 .setResidue(new ItemStack(Items.BUCKET), new ItemStack(WorkshopItems.ASH.get(), 4))
                 .setTime(8 * 20)
-                .build()
-        );
+                .build());
+        recipes.add(new Builder("adhesive_oil_alt")
+                .setInputs(Ingredient.fromStacks(FluidUtil.getFilledBucket(new FluidStack(WorkshopFluids.RESIN.getFluid(), FluidAttributes.BUCKET_VOLUME))),
+                        Ingredient.fromItems(Items.SEAGRASS),
+                        Ingredient.fromItems(WorkshopItems.SALT.get()))
+                .setOutput(new FluidStack(WorkshopFluids.ADHESIVE_OILS.getFluid(), FluidAttributes.BUCKET_VOLUME))
+                .setResidue(new ItemStack(Items.BUCKET), new ItemStack(WorkshopItems.ASH.get(), 4))
+                .setTime(8 * 20)
+                .build());
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }
 

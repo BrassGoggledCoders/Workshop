@@ -13,9 +13,12 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
+import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
+import xyz.brassgoggledcoders.workshop.item.BottleItem;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -148,7 +151,6 @@ public class BottleCapabilityProvider implements IFluidHandlerItem, ICapabilityP
                 return PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER);
             }
         }
-        return ItemStack.EMPTY;
-        //return fluid.getAttributes().getBucket(fluidStack);
+        return new ItemStack(WorkshopItems.BOTTLES.get(fluid).get());
     }
 }
