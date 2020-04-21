@@ -29,8 +29,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addBlock(WorkshopBlocks.SINTERING_FURNACE, "Sintering Furnace");
         this.addBlock(WorkshopBlocks.SPINNING_WHEEL, "Spinning Wheel");
         int i = 0;
-        for(BlockRegistryObjectGroup concrete : WorkshopBlocks.CONCRETES) {
-            //TODO Dye names, plus grey vs gray
+        for(BlockRegistryObjectGroup<?, ?, ?> concrete : WorkshopBlocks.CONCRETES) {
             this.addBlock(concrete, String.format("%s Rebarred Concrete", StringUtils.capitaliseAllWords(DyeColor.values()[i++].getName().replace("_", " "))));
         }
         this.addBlock(WorkshopBlocks.TEA_PLANT, "Tea");
@@ -48,7 +47,8 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addItem(WorkshopItems.PICKLE, "Pickle");
         this.addItem(WorkshopBlocks.TEA_PLANT::getItem, "Tea Seeds");
         this.addItem(WorkshopItems.TEA_LEAVES, "Tea Leaves");
-        this.addItem(WorkshopItems.MEDICINAL_ROOT, "Medicinal Roots");
+        this.addItem(WorkshopItems.MEDICINAL_ROOT, "Medicinal Root");
+        this.addItem(WorkshopItems.TANNIN, "Tannin");
         //endregion
 
         //region Fluids

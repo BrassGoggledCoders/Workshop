@@ -3,6 +3,9 @@ package xyz.brassgoggledcoders.workshop.datagen.recipe;
 import com.hrznstudio.titanium.recipe.generator.TitaniumRecipeProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
+import net.minecraft.data.ShapelessRecipeBuilder;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 
 import java.util.function.Consumer;
 

@@ -2,6 +2,7 @@ package xyz.brassgoggledcoders.workshop.recipe;
 
 import com.hrznstudio.titanium.recipe.serializer.GenericSerializer;
 import com.hrznstudio.titanium.recipe.serializer.SerializableRecipe;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
@@ -18,10 +19,10 @@ import static xyz.brassgoggledcoders.workshop.content.WorkshopRecipes.ALEMBIC_SE
 
 public class AlembicRecipe extends SerializableRecipe implements IMachineRecipe {
 
-    public Ingredient[] input;
-    public FluidStack output;
-    public ItemStack[] residue;
-    public int processingTime;
+    public Ingredient[] input = new Ingredient[0];
+    public FluidStack output = FluidStack.EMPTY;
+    public ItemStack[] residue = new ItemStack[0];
+    public int processingTime = 0;
 
     public AlembicRecipe(ResourceLocation resourceLocation) {
         super(resourceLocation);

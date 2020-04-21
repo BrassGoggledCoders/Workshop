@@ -12,6 +12,7 @@ import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import xyz.brassgoggledcoders.workshop.Workshop;
+import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
@@ -51,6 +52,12 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
                         Ingredient.fromItems(WorkshopItems.SALT.get()))
                 .setOutput(new FluidStack(WorkshopFluids.ADHESIVE_OILS.getFluid(), FluidAttributes.BUCKET_VOLUME))
                 .setResidue(new ItemStack(Items.BUCKET), new ItemStack(WorkshopItems.ASH.get(), 4))
+                .setTime(8 * 20)
+                .build());
+        recipes.add(new Builder("tannin")
+                .setInputs(Ingredient.fromItems(WorkshopItems.MEDICINAL_ROOT.get()), Ingredient.fromItems(WorkshopItems.TEA_LEAVES.get()))
+                .setOutput(FluidStack.EMPTY) //TODO
+                .setResidue(new ItemStack(WorkshopItems.TANNIN.get()), new ItemStack(WorkshopItems.ASH.get(), 2))
                 .setTime(8 * 20)
                 .build());
         recipes.forEach(recipe -> serializables.put(recipe, recipe));

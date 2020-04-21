@@ -30,6 +30,7 @@ public class WorkshopItems {
     public static final RegistryObject<Item> ASH = ITEMS.register("ash", () -> new Item(new Item.Properties().group(Workshop.ITEM_GROUP)));
     public static final RegistryObject<Item> TALLOW = ITEMS.register("tallow", () -> new Item(new Item.Properties().group(Workshop.ITEM_GROUP)));
     public static final RegistryObject<Item> MEDICINAL_ROOT = ITEMS.register("medicinal_root", () -> new Item(new Item.Properties().group(Workshop.ITEM_GROUP)));
+    public static final RegistryObject<Item> TANNIN = ITEMS.register("tannin", () -> new Item(new Item.Properties().group(Workshop.ITEM_GROUP)));
     //endregion
 
     //region Foods
