@@ -2,6 +2,7 @@ package xyz.brassgoggledcoders.workshop.content;
 
 import net.minecraft.item.Foods;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -40,8 +41,9 @@ public class WorkshopItems {
     //endregion
 
     //region Fluid Items
-    public static final Map<FluidRegistryObjectGroup<?, ?>, RegistryObject<BottleItem>> BOTTLES = Stream.of(WorkshopFluids.ADHESIVE_OILS, WorkshopFluids.CIDER, WorkshopFluids.TEA)
-            .map(fluid -> Pair.of(fluid, ITEMS.register(fluid.getName() + "_bottle", () -> new BottleItem(fluid, new Item.Properties()
+    public static final Map<ResourceLocation, RegistryObject<BottleItem>> BOTTLES = WorkshopFluids.getAllFluids().stream()
+            .filter(fluid -> !fluid.getId().getPath().contains("flowing"))
+            .map(fluid -> Pair.of(fluid.getId(), ITEMS.register(fluid.getId().getPath() + "_bottle", () -> new BottleItem(fluid, new Item.Properties()
                             .group(Workshop.ITEM_GROUP)))))
             //Can't get the fluid from the stack because the stack isn't registered yet
             .collect(Collectors.toMap(Pair::getKey, Pair::getValue));

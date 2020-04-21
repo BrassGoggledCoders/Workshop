@@ -24,6 +24,7 @@ public class WorkshopItemModelProvider extends ModelProvider<PropertiedItemModel
         for(RegistryObject<Fluid> fluid : WorkshopFluids.getAllFluids()) {
             if(fluid.get().isSource(fluid.get().getDefaultState())) {
                 bucket(fluid.getId());
+                bottle(fluid.getId());
             }
         }
         for(BlockRegistryObjectGroup concrete : WorkshopBlocks.CONCRETES) {
@@ -41,6 +42,13 @@ public class WorkshopItemModelProvider extends ModelProvider<PropertiedItemModel
     private void bucket(ResourceLocation fluidName) {
         getBuilder(fluidName.toString() + "_bucket")
                 .parent(new ModelFile.UncheckedModelFile("forge:" + ITEM_FOLDER + "/bucket_drip"))
+                .property("loader", "forge:bucket")
+                .property("fluid", fluidName.toString());
+    }
+
+    private void bottle(ResourceLocation fluidName) {
+        getBuilder(fluidName.toString() + "_bottle")
+                .parent(new ModelFile.UncheckedModelFile(modLoc(ITEM_FOLDER + "/bottle")))
                 .property("loader", "forge:bucket")
                 .property("fluid", fluidName.toString());
     }

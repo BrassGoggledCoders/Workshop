@@ -1,5 +1,5 @@
 {
   "parent": "workshop:item/bottle",
   "loader": "forge:bucket",
-  "fluid": "workshop:tea_liquid"
+  "fluid": "workshop:seed_oil"
 }

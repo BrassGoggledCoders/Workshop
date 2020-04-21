@@ -149,6 +149,6 @@ public class BottleCapabilityProvider implements IFluidHandlerItem, ICapabilityP
                 return PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER);
             }
         }
-        return new ItemStack(WorkshopItems.BOTTLES.get(fluid).get());
+        return new ItemStack(WorkshopItems.BOTTLES.get(fluid.getRegistryName()).get());
     }
 }

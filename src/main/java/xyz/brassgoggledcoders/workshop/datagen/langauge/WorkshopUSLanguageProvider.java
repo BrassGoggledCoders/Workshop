@@ -4,8 +4,10 @@ import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.DyeColor;
 import net.minecraftforge.common.data.LanguageProvider;
+import net.minecraftforge.fluids.FluidStack;
 import org.codehaus.plexus.util.StringUtils;
 import xyz.brassgoggledcoders.workshop.Workshop;
+import xyz.brassgoggledcoders.workshop.capabilities.BottleCapabilityProvider;
 import xyz.brassgoggledcoders.workshop.content.FluidRegistryObjectGroup;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
@@ -83,6 +85,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
     public void addFluid(FluidRegistryObjectGroup fluid, String name) {
         this.addBlock(fluid::getBlock, name);
         this.addItem(fluid::getBucket, String.format("Bucket of %s", name));
+        this.addItem(() -> BottleCapabilityProvider.getFilledBottle(new FluidStack(fluid.getFluid(), 1)).getItem(), String.format("Bottle of %s", name));
     }
 
     public void addTooltip(String key, String name) {
