@@ -1,28 +1,17 @@
 package xyz.brassgoggledcoders.workshop.item;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IBucketPickupHandler;
-import net.minecraft.block.ILiquidContainer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.item.*;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
 import net.minecraft.stats.Stats;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
+import xyz.brassgoggledcoders.workshop.api.WorkshopAPI;
 import xyz.brassgoggledcoders.workshop.capabilities.BottleCapabilityProvider;
-import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
@@ -61,36 +50,25 @@ public class BottleItem extends BucketItem {
 
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-        PlayerEntity playerentity = entityLiving instanceof PlayerEntity ? (PlayerEntity)entityLiving : null;
-        if (playerentity instanceof ServerPlayerEntity) {
-            CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity)playerentity, stack);
-        }
+        if(entityLiving instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) entityLiving;
 
-        if (!worldIn.isRemote) {
-            //TODO give the fluid control over this
-            if(WorkshopFluids.TEA.get().equals(this.getFluid())) {
-                Potions.SWIFTNESS.getEffects().forEach(effect -> effect.getPotion().affectEntity(playerentity, playerentity, entityLiving, effect.getAmplifier(), 1.0D));
-            }
-        }
-
-        //TODO Refactor
-        if (playerentity != null) {
-            playerentity.addStat(Stats.ITEM_USED.get(this));
-            if (!playerentity.abilities.isCreativeMode) {
-                stack.shrink(1);
-            }
-        }
-
-        if (playerentity == null || !playerentity.abilities.isCreativeMode) {
-            if (stack.isEmpty()) {
-                return new ItemStack(Items.GLASS_BOTTLE);
+            if (playerEntity instanceof ServerPlayerEntity) {
+                CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) playerEntity, stack);
             }
 
-            if (playerentity != null) {
-                playerentity.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
+            if (!worldIn.isRemote && WorkshopAPI.getDrinkableFluidBehaviors().containsKey(this.getFluid())) {
+                WorkshopAPI.getDrinkableFluidBehaviors().get(this.getFluid()).onFluidDrunk(stack, worldIn, entityLiving);
+                playerEntity.addStat(Stats.ITEM_USED.get(this));
+                if (!playerEntity.abilities.isCreativeMode) {
+                    stack.shrink(1);
+                    playerEntity.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
+                    if (stack.isEmpty()) {
+                        return new ItemStack(Items.GLASS_BOTTLE);
+                    }
+                }
             }
         }
-
         return stack;
     }
 

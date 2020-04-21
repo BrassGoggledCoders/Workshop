@@ -1,0 +1,5 @@
+{
+  "parent": "workshop:item/bottle",
+  "loader": "workshop:bottle",
+  "fluid": "workshop:tea_liquid"
+}

@@ -9,11 +9,9 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.data.ForgeItemTagsProvider;
 import net.minecraftforge.fluids.FluidStack;
 import xyz.brassgoggledcoders.workshop.capabilities.BottleCapabilityProvider;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
-import xyz.brassgoggledcoders.workshop.item.BottleItem;
 
 import javax.annotation.Nonnull;
 

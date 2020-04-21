@@ -1,0 +1,7 @@
+{
+  "parent": "forge:item/default",
+  "textures": {
+    "base": "item/glass_bottle",
+    "fluid": "forge:item/mask/bucket_fluid"
+  }
+}

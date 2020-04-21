@@ -1,6 +1,5 @@
 package xyz.brassgoggledcoders.workshop.content;
 
-import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Foods;
 import net.minecraft.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
