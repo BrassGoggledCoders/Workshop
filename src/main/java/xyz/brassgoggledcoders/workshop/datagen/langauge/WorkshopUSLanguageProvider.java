@@ -48,6 +48,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addItem(WorkshopItems.PICKLE, "Pickle");
         this.addItem(WorkshopBlocks.TEA_PLANT::getItem, "Tea Seeds");
         this.addItem(WorkshopItems.TEA_LEAVES, "Tea Leaves");
+        this.addItem(WorkshopItems.MEDICINAL_ROOT, "Medicinal Roots");
         //endregion
 
         //region Fluids
