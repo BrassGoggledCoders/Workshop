@@ -7,7 +7,14 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.potion.PotionUtils;
+import net.minecraft.potion.Potions;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.storage.loot.*;
+import net.minecraft.world.storage.loot.functions.SetCount;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.crafting.NBTIngredient;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -33,9 +40,13 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
     @Override
     public void add(Map<IJsonFile, IJSONGenerator> serializables) {
         recipes.add(new Builder("distilled_water")
-                .setInputs(Ingredient.fromItems(Items.WATER_BUCKET))
+                .setInputs(new NBTIngredientPublic(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER)))
                 .setOutput(new FluidStack(WorkshopFluids.DISTILLED_WATER.getFluid(), WorkshopFluids.BOTTLE_VOLUME))
-                .setResidue(new ItemStack(Items.BUCKET), new ItemStack(WorkshopItems.SALT.get()))
+                .setResidue(LootTable.builder()
+                        .addLootPool(new LootPool.Builder().addEntry(ItemLootEntry.builder(Items.GLASS_BOTTLE)))
+                        .addLootPool(new LootPool.Builder().addEntry(ItemLootEntry.builder(WorkshopItems.SALT.get())).acceptFunction(SetCount.builder(RandomValueRange.of(1, 2))))
+                        .build())
+                //.setResidue(new ItemStack(Items.BUCKET), new ItemStack(WorkshopItems.SALT.get()))
                 .setTime(500)
                 .build());
         recipes.add(new Builder("adhesive_oil")
@@ -43,7 +54,7 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
                         Ingredient.fromItems(Items.KELP),
                         Ingredient.fromItems(WorkshopItems.SALT.get()))
                 .setOutput(new FluidStack(WorkshopFluids.ADHESIVE_OILS.getFluid(), FluidAttributes.BUCKET_VOLUME))
-                .setResidue(new ItemStack(Items.BUCKET), new ItemStack(WorkshopItems.ASH.get(), 4))
+                //.setResidue(new ItemStack(Items.BUCKET), new ItemStack(WorkshopItems.ASH.get(), 4))
                 .setTime(8 * 20)
                 .build());
         recipes.add(new Builder("adhesive_oil_alt")
@@ -51,14 +62,20 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
                         Ingredient.fromItems(Items.SEAGRASS),
                         Ingredient.fromItems(WorkshopItems.SALT.get()))
                 .setOutput(new FluidStack(WorkshopFluids.ADHESIVE_OILS.getFluid(), FluidAttributes.BUCKET_VOLUME))
-                .setResidue(new ItemStack(Items.BUCKET), new ItemStack(WorkshopItems.ASH.get(), 4))
+                //.setResidue(new ItemStack(Items.BUCKET), new ItemStack(WorkshopItems.ASH.get(), 4))
                 .setTime(8 * 20)
                 .build());
         recipes.add(new Builder("tannin")
                 .setInputs(Ingredient.fromItems(WorkshopItems.MEDICINAL_ROOT.get()), Ingredient.fromItems(WorkshopItems.TEA_LEAVES.get()))
                 .setOutput(FluidStack.EMPTY) //TODO
-                .setResidue(new ItemStack(WorkshopItems.TANNIN.get()), new ItemStack(WorkshopItems.ASH.get(), 2))
+                //.setResidue(new ItemStack(WorkshopItems.TANNIN.get(), 6), new ItemStack(WorkshopItems.ASH.get(), 2))
                 .setTime(8 * 20)
+                .build());
+        recipes.add(new Builder("rosin")
+                .setInputs(Ingredient.fromItems(Items.SPRUCE_LOG), Ingredient.fromTag(Tags.Items.SLIMEBALLS))
+                .setOutput(new FluidStack(WorkshopFluids.ADHESIVE_OILS.getFluid(), WorkshopFluids.BOTTLE_VOLUME))
+                //.setResidue(new ItemStack(Items.SLIME_BALL), new ItemStack(WorkshopItems.ROSIN.get(), 4))
+                .setTime(10 * 20)
                 .build());
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }
@@ -67,7 +84,7 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
         private ResourceLocation name;
         private Ingredient[] input;
         private FluidStack output;
-        private ItemStack[] residue;
+        private LootTable residue;
         private int processingTime;
 
         public Builder(String name) {
@@ -75,6 +92,7 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
         }
 
         public Builder setInputs(Ingredient... in) {
+            Workshop.LOGGER.warn(in[0].isVanilla());
             this.input = in;
             return this;
         }
@@ -84,7 +102,7 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
             return this;
         }
 
-        public Builder setResidue(ItemStack... out) {
+        public Builder setResidue(LootTable out) {
             this.residue = out;
             return this;
         }
@@ -98,9 +116,9 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
             if(this.input.length > AlembicTileEntity.inputSize) {
                 throw new IllegalArgumentException(String.format("Input list size %d is too large for alembic, must be smaller than %d", this.input.length, AlembicTileEntity.inputSize));
             }
-            if(this.residue != null && this.residue.length > AlembicTileEntity.residueSize) {
+            /*if(this.residue != null && this.residue.length > AlembicTileEntity.residueSize) {
                 throw new IllegalArgumentException(String.format("Residue list size %d is too large for alembic, must be smaller than %d", this.residue.length, AlembicTileEntity.residueSize));
-            }
+            }*/
             if(this.processingTime <= 0) {
                 throw new IllegalArgumentException("Processing time must be more than zero");
             }

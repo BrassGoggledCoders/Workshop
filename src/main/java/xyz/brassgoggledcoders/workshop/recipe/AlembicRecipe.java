@@ -9,6 +9,7 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandler;
 import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
@@ -21,14 +22,14 @@ public class AlembicRecipe extends SerializableRecipe implements IMachineRecipe 
 
     public Ingredient[] input = new Ingredient[0];
     public FluidStack output = FluidStack.EMPTY;
-    public ItemStack[] residue = new ItemStack[0];
+    public LootTable residue;
     public int processingTime = 0;
 
     public AlembicRecipe(ResourceLocation resourceLocation) {
         super(resourceLocation);
     }
 
-    public AlembicRecipe(ResourceLocation name, Ingredient[] input, FluidStack output, ItemStack[] residue, int cooldownTime) {
+    public AlembicRecipe(ResourceLocation name, Ingredient[] input, FluidStack output, LootTable residue, int cooldownTime) {
         this(name);
         this.input = input;
         this.output = output;

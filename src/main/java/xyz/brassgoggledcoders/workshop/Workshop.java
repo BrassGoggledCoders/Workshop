@@ -8,6 +8,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.storage.loot.LootFunction;
+import net.minecraft.world.storage.loot.LootTableManager;
+import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.client.model.DynamicBucketModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -21,6 +24,7 @@ import org.apache.logging.log4j.Logger;
 import xyz.brassgoggledcoders.workshop.api.PotionDrinkableFluidBehaviour;
 import xyz.brassgoggledcoders.workshop.api.WorkshopAPI;
 import xyz.brassgoggledcoders.workshop.content.*;
+import xyz.brassgoggledcoders.workshop.datagen.recipe.AlembicRecipeProvider;
 import xyz.brassgoggledcoders.workshop.renderer.PressTileEntityRenderer;
 import xyz.brassgoggledcoders.workshop.renderer.SinteringTileEntityRenderer;
 

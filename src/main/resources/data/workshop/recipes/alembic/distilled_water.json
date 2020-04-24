@@ -1,20 +1,42 @@
 {
   "input": [
     {
-      "item": "minecraft:water_bucket"
+      "item": "minecraft:potion"
     }
   ],
   "output": "{FluidName:\"workshop:distilled_water\",Amount:333}",
-  "residue": [
-    {
-      "item": "minecraft:bucket",
-      "count": 1
-    },
-    {
-      "item": "workshop:salt",
-      "count": 1
-    }
-  ],
+  "residue": {
+    "pools": [
+      {
+        "rolls": 1.0,
+        "entries": [
+          {
+            "type": "minecraft:item",
+            "name": "minecraft:bucket"
+          }
+        ]
+      },
+      {
+        "rolls": 1.0,
+        "entries": [
+          {
+            "type": "minecraft:item",
+            "name": "workshop:salt"
+          }
+        ],
+        "functions": [
+          {
+            "function": "minecraft:set_count",
+            "count": {
+              "min": 0.0,
+              "max": 2.0,
+              "type": "minecraft:uniform"
+            }
+          }
+        ]
+      }
+    ]
+  },
   "processingTime": 500,
   "type": "workshop:alembic"
 }

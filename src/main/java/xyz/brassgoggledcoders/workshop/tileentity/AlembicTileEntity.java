@@ -7,15 +7,19 @@ import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.storage.loot.*;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
+import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
 import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity, AlembicRecipe> {
 
@@ -72,8 +76,8 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
     public CompoundNBT write(CompoundNBT compound) {
         compound.put("input", input.serializeNBT());
         compound.put("container", container.serializeNBT());
-        compound.put("residue", container.serializeNBT());
-        compound.put("output", container.serializeNBT());
+        compound.put("residue", residue.serializeNBT());
+        compound.put("output", output.serializeNBT());
         //compound.put("coldItem", container.serializeNBT());
         //compound.put("temp", container.serializeNBT());
         return super.write(compound);
@@ -132,8 +136,11 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
                     }
                 });
             }
-            if(currentRecipe.residue != null) {
-                for (ItemStack residueIn : currentRecipe.residue) {
+            if(currentRecipe.residue != null && world instanceof ServerWorld) {
+                for (ItemStack residueIn : currentRecipe.residue.generate(new LootContext.Builder((ServerWorld) world).withParameter(LootParameters
+                        .POSITION, this.getPos())
+                        //.withParameter(LootParameters.BLOCK_STATE, this.getBlockState())
+                        .build(LootParameterSets.CHEST))) {
                     ItemHandlerHelper.insertItemStacked(residue, residueIn, false);
                 }
             }

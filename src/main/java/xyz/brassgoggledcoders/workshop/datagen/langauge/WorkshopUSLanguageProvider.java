@@ -49,6 +49,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addItem(WorkshopItems.TEA_LEAVES, "Tea Leaves");
         this.addItem(WorkshopItems.MEDICINAL_ROOT, "Medicinal Root");
         this.addItem(WorkshopItems.TANNIN, "Tannin");
+        this.addItem(WorkshopItems.TALLOW, "Tallow");
         //endregion
 
         //region Fluids

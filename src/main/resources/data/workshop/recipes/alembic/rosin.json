@@ -1,0 +1,13 @@
+{
+  "input": [
+    {
+      "item": "minecraft:spruce_log"
+    },
+    {
+      "tag": "forge:slimeballs"
+    }
+  ],
+  "output": "{FluidName:\"workshop:adhesive_oils\",Amount:333}",
+  "processingTime": 200,
+  "type": "workshop:alembic"
+}

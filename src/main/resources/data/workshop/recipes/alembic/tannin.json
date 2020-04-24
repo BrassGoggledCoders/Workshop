@@ -8,16 +8,6 @@
     }
   ],
   "output": "{FluidName:\"minecraft:empty\",Amount:0}",
-  "residue": [
-    {
-      "item": "workshop:tannin",
-      "count": 1
-    },
-    {
-      "item": "workshop:ash",
-      "count": 2
-    }
-  ],
   "processingTime": 160,
   "type": "workshop:alembic"
 }

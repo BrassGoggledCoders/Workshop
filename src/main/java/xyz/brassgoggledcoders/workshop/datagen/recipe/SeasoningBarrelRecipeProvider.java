@@ -40,22 +40,25 @@ public class SeasoningBarrelRecipeProvider extends TitaniumSerializableProvider 
                 .setFluidOut(new FluidStack(WorkshopFluids.RESIN.getFluid(), FluidAttributes.BUCKET_VOLUME))
                 .setItemOut(new ItemStack(WorkshopItems.ROSIN.get()))
                 .setTime(10 * 20)
-                .build()
-        );
+                .build());
         recipes.add(new Builder("pickles")
                 .setFluidIn(new FluidStack(WorkshopFluids.BRINE.getFluid(), FluidAttributes.BUCKET_VOLUME / 10))
                 .setItemIn(Ingredient.fromItems(Items.SEA_PICKLE))
                 .setItemOut(new ItemStack(WorkshopItems.PICKLE.get()))
                 .setFluidOut(new FluidStack(WorkshopFluids.BRINE.getFluid(), FluidAttributes.BUCKET_VOLUME / 10))
                 .setTime(15 * 20)
-                .build()
-        );
+                .build());
         recipes.add(new Builder("apple_juice_to_cider")
                 .setFluidIn(new FluidStack(WorkshopFluids.APPLE_JUICE.getFluid(), FluidAttributes.BUCKET_VOLUME))
                 .setFluidOut(new FluidStack(WorkshopFluids.CIDER.getFluid(), FluidAttributes.BUCKET_VOLUME))
                 .setTime(5 * 60 * 20)
-                .build()
-        );
+                .build());
+        recipes.add(new Builder("tea")
+                .setFluidIn(new FluidStack(Fluids.WATER, WorkshopFluids.BOTTLE_VOLUME))
+                .setFluidOut(new FluidStack(WorkshopFluids.TEA.getFluid(), WorkshopFluids.BOTTLE_VOLUME))
+                .setItemIn(Ingredient.fromItems(WorkshopItems.TEA_LEAVES.get()))
+                .setTime(60 * 20)
+                .build());
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }
 
