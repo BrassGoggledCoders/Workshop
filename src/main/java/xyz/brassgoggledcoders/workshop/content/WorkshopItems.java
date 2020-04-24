@@ -1,6 +1,5 @@
 package xyz.brassgoggledcoders.workshop.content;
 
-import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Foods;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -12,10 +11,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.item.BottleItem;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
@@ -31,6 +28,8 @@ public class WorkshopItems {
     public static final RegistryObject<Item> TALLOW = ITEMS.register("tallow", () -> new Item(new Item.Properties().group(Workshop.ITEM_GROUP)));
     public static final RegistryObject<Item> MEDICINAL_ROOT = ITEMS.register("medicinal_root", () -> new Item(new Item.Properties().group(Workshop.ITEM_GROUP)));
     public static final RegistryObject<Item> TANNIN = ITEMS.register("tannin", () -> new Item(new Item.Properties().group(Workshop.ITEM_GROUP)));
+    public static final RegistryObject<Item> SILT = ITEMS.register("silt", () -> new Item(new Item.Properties().group(Workshop.ITEM_GROUP)));
+    public static final RegistryObject<Item> CHALK = ITEMS.register("chalk", () -> new Item(new Item.Properties().group(Workshop.ITEM_GROUP)));
     //endregion
 
     //region Foods
@@ -38,8 +37,8 @@ public class WorkshopItems {
             .group(Workshop.ITEM_GROUP)
             .food(Foods.CARROT)));
     public static final RegistryObject<Item> CARAMEL_APPLE = ITEMS.register("caramel_apple", () -> new Item(new Item.Properties()
-                .group(Workshop.ITEM_GROUP)
-                .food(Foods.APPLE)));
+            .group(Workshop.ITEM_GROUP)
+            .food(Foods.APPLE)));
     public static final RegistryObject<Item> TEA_LEAVES = ITEMS.register("tea_leaves", () -> new Item(new Item.Properties()
             .group(Workshop.ITEM_GROUP)));
     //endregion

@@ -1,7 +1,10 @@
 {
   "input": [
     {
-      "item": "minecraft:potion"
+      "type": "forge:nbt",
+      "item": "minecraft:potion",
+      "count": 1,
+      "nbt": "{Potion:\"minecraft:water\"}"
     }
   ],
   "output": "{FluidName:\"workshop:distilled_water\",Amount:333}",
@@ -12,7 +15,7 @@
         "entries": [
           {
             "type": "minecraft:item",
-            "name": "minecraft:bucket"
+            "name": "minecraft:glass_bottle"
           }
         ]
       },
@@ -28,8 +31,31 @@
           {
             "function": "minecraft:set_count",
             "count": {
-              "min": 0.0,
+              "min": 1.0,
               "max": 2.0,
+              "type": "minecraft:uniform"
+            }
+          }
+        ]
+      },
+      {
+        "rolls": 1.0,
+        "entries": [
+          {
+            "type": "minecraft:item",
+            "name": "workshop:silt"
+          },
+          {
+            "type": "minecraft:item",
+            "name": "workshop:chalk"
+          }
+        ],
+        "functions": [
+          {
+            "function": "minecraft:set_count",
+            "count": {
+              "min": 0.0,
+              "max": 1.0,
               "type": "minecraft:uniform"
             }
           }

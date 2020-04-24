@@ -8,11 +8,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.loot.*;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootParameterSets;
+import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
-import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
@@ -23,10 +24,10 @@ import java.util.List;
 
 public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity, AlembicRecipe> {
 
-    private InventoryComponent<AlembicTileEntity> input;
-    private InventoryComponent<AlembicTileEntity> container;
-    private InventoryComponent<AlembicTileEntity> residue;
-    private InventoryComponent<AlembicTileEntity> output;
+    private final InventoryComponent<AlembicTileEntity> input;
+    private final InventoryComponent<AlembicTileEntity> container;
+    private final InventoryComponent<AlembicTileEntity> residue;
+    private final InventoryComponent<AlembicTileEntity> output;
     //private InventoryComponent<AlembicTileEntity> coldItem;
     //private HeatBarComponent<AlembicTileEntity> alembicTemp;
 
@@ -137,10 +138,11 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
                 });
             }
             if(currentRecipe.residue != null && world instanceof ServerWorld) {
-                for (ItemStack residueIn : currentRecipe.residue.generate(new LootContext.Builder((ServerWorld) world).withParameter(LootParameters
+                List<ItemStack> list = currentRecipe.residue.generate(new LootContext.Builder((ServerWorld) world).withParameter(LootParameters
                         .POSITION, this.getPos())
                         //.withParameter(LootParameters.BLOCK_STATE, this.getBlockState())
-                        .build(LootParameterSets.CHEST))) {
+                        .build(LootParameterSets.CHEST));
+                for (ItemStack residueIn : list) {
                     ItemHandlerHelper.insertItemStacked(residue, residueIn, false);
                 }
             }

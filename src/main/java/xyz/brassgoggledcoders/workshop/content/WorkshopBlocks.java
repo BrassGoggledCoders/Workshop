@@ -81,6 +81,9 @@ public class WorkshopBlocks {
     public static final BlockRegistryObjectGroup<CollectorBlock, BlockItem, CollectorTileEntity> COLLECTOR = new BlockRegistryObjectGroup<>("collector", CollectorBlock::new, blockItemCreator(), CollectorTileEntity::new)
             .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
+    public static final BlockRegistryObjectGroup<ScrapBinBlock, BlockItem, ScrapBinTileEntity> SCRAP_BIN = new BlockRegistryObjectGroup<ScrapBinBlock, BlockItem, ScrapBinTileEntity>("scrap_bin", ScrapBinBlock::new, blockItemCreator(), ScrapBinTileEntity::new)
+            .register(BLOCKS, ITEMS, TILE_ENTITIES);
+
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);
         TILE_ENTITIES.register(bus);
