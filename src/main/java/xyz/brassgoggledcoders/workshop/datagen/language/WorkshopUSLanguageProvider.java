@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.datagen.langauge;
+package xyz.brassgoggledcoders.workshop.datagen.language;
 
 import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
 import net.minecraft.data.DataGenerator;

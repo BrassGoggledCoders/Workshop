@@ -1,11 +1,20 @@
 package xyz.brassgoggledcoders.workshop.datagen.recipe;
 
 import com.hrznstudio.titanium.recipe.generator.TitaniumRecipeProvider;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
+import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.ForgeItemTagsProvider;
+import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 
 import java.util.function.Consumer;
 
@@ -18,14 +27,37 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
     @Override
     public void register(Consumer<IFinishedRecipe> consumer) {
         //section Machine Self Recipes
-        /*ShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SEASONING_BARREL.getBlock())
+        ShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SEASONING_BARREL.getBlock())
                 .patternLine("LSL")
                 .patternLine("L L")
                 .patternLine("LSL")
                 .key('L', Blocks.STRIPPED_OAK_LOG)
                 .key('S', Blocks.OAK_SLAB)
                 .build(consumer);
-         */
+        ShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SPINNING_WHEEL.getBlock())
+                .patternLine("W I")
+                .patternLine("WWW")
+                .patternLine("SSS")
+                .key('S', ItemTags.WOODEN_SLABS)
+                .key('W', ItemTags.PLANKS)
+                .key('I', Tags.Items.INGOTS_IRON)
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SINTERING_FURNACE.getBlock())
+                .patternLine("BDB")
+                .patternLine("G G")
+                .patternLine("BFB")
+                .key('B', Items.BRICKS)
+                .key('G', Tags.Items.GLASS)
+                .key('D', Blocks.DROPPER)
+                .key('F', Blocks.FURNACE)
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.BELLOWS.getBlock())
+                .patternLine("PPP")
+                .patternLine("WWW")
+                .patternLine("PPP")
+                .key('P', ItemTags.PLANKS)
+                .key('W', ItemTags.WOOL)
+                .build(consumer);
         //endsection
         //TODO the builder doesn't support ItemStack outputs, only Items...
         //CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(WorkshopBlocks.BROKEN_ANVIL.getItem()), new ItemStack(Blocks.IRON_BLOCK, 3), 0.1F, 300);

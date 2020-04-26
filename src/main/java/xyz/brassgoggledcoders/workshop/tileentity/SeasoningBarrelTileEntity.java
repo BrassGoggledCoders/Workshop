@@ -20,10 +20,10 @@ public class SeasoningBarrelTileEntity extends BasicMachineTileEntity<SeasoningB
 
     private static final int tankSize = 4000; // mB
 
-    private InventoryComponent<SeasoningBarrelTileEntity> inputInventory;
-    private FluidTankComponent<SeasoningBarrelTileEntity> inputFluidTank;
-    private InventoryComponent<SeasoningBarrelTileEntity> outputInventory;
-    private FluidTankComponent<SeasoningBarrelTileEntity> outputFluidTank;
+    private final InventoryComponent<SeasoningBarrelTileEntity> inputInventory;
+    private final FluidTankComponent<SeasoningBarrelTileEntity> inputFluidTank;
+    private final InventoryComponent<SeasoningBarrelTileEntity> outputInventory;
+    private final FluidTankComponent<SeasoningBarrelTileEntity> outputFluidTank;
 
     public SeasoningBarrelTileEntity() {
         super(WorkshopBlocks.SEASONING_BARREL.getTileEntityType(), new ProgressBarComponent<SeasoningBarrelTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));

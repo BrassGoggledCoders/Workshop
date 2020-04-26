@@ -17,14 +17,12 @@ import javax.annotation.Nonnull;
 
 public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<SinteringFurnaceTileEntity, SinteringFurnaceRecipe> {
 
-    private SidedInventoryComponent<SinteringFurnaceTileEntity> powderInventory;
-    private SidedInventoryComponent<SinteringFurnaceTileEntity> inputInventory;
-    private SidedInventoryComponent<SinteringFurnaceTileEntity> outputInventory;
-    private SidedInventoryComponent<SinteringFurnaceTileEntity> fuelInventory;
+    private final SidedInventoryComponent<SinteringFurnaceTileEntity> powderInventory;
+    private final SidedInventoryComponent<SinteringFurnaceTileEntity> inputInventory;
+    private final SidedInventoryComponent<SinteringFurnaceTileEntity> outputInventory;
+    private final SidedInventoryComponent<SinteringFurnaceTileEntity> fuelInventory;
 
     private int burnTime = 0;
-
-    private SinteringFurnaceRecipe currentRecipe;
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public SinteringFurnaceTileEntity() {
@@ -66,7 +64,7 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
     //TODO Refactor this into machine component
     @Override
     public void tick() {
-        if (!isActive()) {
+        if (isInactive()) {
             handleBurnTime();
         } else {
             --burnTime;
@@ -79,8 +77,8 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
         return this;
     }
 
-    public boolean isActive() {
-        return burnTime > 0;
+    public boolean isInactive() {
+        return burnTime <= 0;
     }
 
     public void handleBurnTime() {
@@ -101,10 +99,6 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
 
     public SidedInventoryComponent<SinteringFurnaceTileEntity> getInputInventory() {
         return inputInventory;
-    }
-
-    public SinteringFurnaceRecipe getCurrentRecipe() {
-        return currentRecipe;
     }
 
     @Override

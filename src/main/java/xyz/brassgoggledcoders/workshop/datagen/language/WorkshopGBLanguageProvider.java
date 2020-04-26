@@ -1,9 +1,8 @@
-package xyz.brassgoggledcoders.workshop.datagen.langauge;
+package xyz.brassgoggledcoders.workshop.datagen.language;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.DyeColor;
 import net.minecraftforge.common.data.LanguageProvider;
-import org.codehaus.plexus.util.StringUtils;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
