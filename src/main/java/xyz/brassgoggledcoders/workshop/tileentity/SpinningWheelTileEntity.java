@@ -20,30 +20,57 @@ import javax.annotation.Nonnull;
 
 public class SpinningWheelTileEntity extends BasicMachineTileEntity<SpinningWheelTileEntity, SpinningWheelRecipe> {
 
-    private InventoryComponent<SpinningWheelTileEntity> input;
-    private InventoryComponent<SpinningWheelTileEntity> output;
+    private final InventoryComponent<SpinningWheelTileEntity> input;
+    private final InventoryComponent<SpinningWheelTileEntity> output;
 
-    private SpinningWheelRecipe currentRecipe;
+    private int workingTime = 0;
+    private int halfspeedWorkingTime = 0;
+    private boolean skipTick = true;
 
     public SpinningWheelTileEntity() {
-        super(WorkshopBlocks.SPINNING_WHEEL.getTileEntityType(), new ProgressBarComponent<>(0, 0, 100));
+        super(WorkshopBlocks.SPINNING_WHEEL.getTileEntityType(), new ProgressBarComponent<>(75, 25, 100));
         int pos = 0;
         this.getMachineComponent().addInventory(this.input = new SidedInventoryComponent<SpinningWheelTileEntity>(
-                "inputInventory", 34, 25, 3, pos++)
+                "input", 34, 25, 3, pos++)
                 .setColor(DyeColor.RED)
                 .setRange(1, 3)
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
         this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<SpinningWheelTileEntity>(
-                "outputInventory", 102, 44, 1, pos++)
+                "output", 102, 44, 1, pos++)
                 .setColor(DyeColor.BLACK)
                 .setInputFilter((stack, integer) -> false));
+        this.getMachineComponent().getPrimaryBar().setOnTickWork(() -> {
+            if (workingTime >= 0) {
+                this.workingTime--;
+            } else if (halfspeedWorkingTime >= 0) {
+                this.halfspeedWorkingTime--;
+            }
+        });
+        this.getMachineComponent().getPrimaryBar().setCanIncrease(tileEntity -> {
+            if (workingTime > 0) {
+                return true;
+            } else if (halfspeedWorkingTime > 0) {
+                skipTick = !skipTick;
+                return !skipTick;
+            } else {
+                return false;
+            }
+        });
+        this.getMachineComponent().getPrimaryBar().setCanReset(tileEntity -> false);
     }
 
+    public void setTimes(int workingTime, int halfspeedWorkingTime) {
+        this.workingTime = workingTime;
+        this.halfspeedWorkingTime = halfspeedWorkingTime;
+    }
 
     @Override
     public void read(CompoundNBT compound) {
         input.deserializeNBT(compound.getCompound("inputInventory"));
         output.deserializeNBT(compound.getCompound("outputInventory"));
+        workingTime = compound.getInt("workingTime");
+        halfspeedWorkingTime = compound.getInt("halfspeedWorkingTime");
+        skipTick = compound.getBoolean("skipTick");
         super.read(compound);
     }
 
@@ -52,6 +79,9 @@ public class SpinningWheelTileEntity extends BasicMachineTileEntity<SpinningWhee
     public CompoundNBT write(CompoundNBT compound) {
         compound.put("inputInventory", input.serializeNBT());
         compound.put("outputInventory", output.serializeNBT());
+        compound.putInt("workingTime", workingTime);
+        compound.putInt("halfspeedWorkingTime", halfspeedWorkingTime);
+        compound.putBoolean("skipTick", skipTick);
         return super.write(compound);
     }
 
@@ -64,10 +94,8 @@ public class SpinningWheelTileEntity extends BasicMachineTileEntity<SpinningWhee
     public ActionResultType onActivated(PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         if (this.getWorld() != null && !this.getWorld().isRemote()) {
             if (!player.isCrouching()) {
-                extractInsertItem(player, hand);
+                //extractInsertItem(player, hand); TODO
                 super.onActivated(player, hand, hit);
-            } else {
-
             }
         }
         return super.onActivated(player, hand, hit);
