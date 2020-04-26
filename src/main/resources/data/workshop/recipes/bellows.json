@@ -6,7 +6,7 @@
         {
           "values": [
             {
-              "item": "workshop:sintering_furnace",
+              "item": "workshop:bellows",
               "type": "forge:item_exists"
             }
           ],
@@ -16,26 +16,20 @@
       "recipe": {
         "type": "minecraft:crafting_shaped",
         "pattern": [
-          "BDB",
-          "G G",
-          "BFB"
+          "PPP",
+          "WWW",
+          "PPP"
         ],
         "key": {
-          "B": {
-            "item": "minecraft:bricks"
+          "P": {
+            "tag": "minecraft:planks"
           },
-          "G": {
-            "tag": "forge:glass"
-          },
-          "D": {
-            "item": "minecraft:dropper"
-          },
-          "F": {
-            "item": "minecraft:furnace"
+          "W": {
+            "tag": "minecraft:wool"
           }
         },
         "result": {
-          "item": "workshop:sintering_furnace"
+          "item": "workshop:bellows"
         }
       }
     }

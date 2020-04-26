@@ -31,9 +31,7 @@ public class WorkshopLootTableProvider extends LootTableProvider {
     @Override
     @Nonnull
     protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootParameterSet>> getTables() {
-        return Lists.newArrayList(
-                Pair.of(WorkshopBlockLootTables::new, LootParameterSets.BLOCK)
-        );
+        return Lists.newArrayList(Pair.of(WorkshopBlockLootTables::new, LootParameterSets.BLOCK), Pair.of(WorkshopGiftLootTables::new, LootParameterSets.GIFT));
     }
 
     @Override

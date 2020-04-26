@@ -10,6 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.tuple.Pair;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.item.BottleItem;
+import xyz.brassgoggledcoders.workshop.item.ScrapBagItem;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -51,6 +52,8 @@ public class WorkshopItems {
             //Can't get the fluid from the stack because the stack isn't registered yet
             .collect(Collectors.toMap(Pair::getKey, Pair::getValue));
     //endregion
+
+    public static final RegistryObject<Item> SCRAP_BAG = ITEMS.register("scrap_bag", () -> new ScrapBagItem(new Item.Properties().group(Workshop.ITEM_GROUP)));
 
     public static void register(IEventBus bus) {
         ITEMS.register(bus);

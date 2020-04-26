@@ -1,8 +1,11 @@
 package xyz.brassgoggledcoders.workshop.block;
 
+import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -11,6 +14,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import xyz.brassgoggledcoders.workshop.tileentity.BasicMachineTileEntity;
 import xyz.brassgoggledcoders.workshop.tileentity.GUITile;
 
 import javax.annotation.Nonnull;
@@ -18,6 +22,7 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import java.util.stream.IntStream;
 
 public class TileBlock<T extends TileEntity & GUITile> extends Block {
     private final Supplier<T> tileSupplier;
@@ -55,5 +60,20 @@ public class TileBlock<T extends TileEntity & GUITile> extends Block {
                 .filter(tileEntity -> tileEntity instanceof GUITile)
                 .map(GUITile.class::cast)
                 .ifPresent(tileEntityConsumer);
+    }
+
+    @Override
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock()) {
+            TileEntity tileentity = worldIn.getTileEntity(pos);
+            if (tileentity instanceof BasicMachineTileEntity) {
+                for (InventoryComponent<?> inventoryComponent : ((BasicMachineTileEntity<?,? >) tileentity).getMachineComponent().getMultiInventoryComponent().getInventoryHandlers())  {
+                    IntStream.of(inventoryComponent.getSlots()).mapToObj(inventoryComponent::getStackInSlot).forEach(stack -> InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack));
+                }
+                worldIn.updateComparatorOutputLevel(pos, this);
+            }
+
+            super.onReplaced(state, worldIn, pos, newState, isMoving);
+        }
     }
 }

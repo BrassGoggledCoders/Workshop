@@ -8,6 +8,44 @@
     }
   ],
   "output": "{FluidName:\"workshop:adhesive_oils\",Amount:333}",
+  "residue": {
+    "pools": [
+      {
+        "rolls": 1.0,
+        "entries": [
+          {
+            "type": "minecraft:item",
+            "name": "minecraft:slime_ball"
+          }
+        ],
+        "functions": [
+          {
+            "function": "minecraft:set_count",
+            "count": {
+              "min": 0.0,
+              "max": 2.0,
+              "type": "minecraft:uniform"
+            }
+          }
+        ]
+      },
+      {
+        "rolls": 1.0,
+        "entries": [
+          {
+            "type": "minecraft:item",
+            "name": "workshop:rosin"
+          }
+        ],
+        "functions": [
+          {
+            "function": "minecraft:set_count",
+            "count": 4
+          }
+        ]
+      }
+    ]
+  },
   "processingTime": 200,
   "type": "workshop:alembic"
 }

@@ -11,6 +11,38 @@
     }
   ],
   "output": "{FluidName:\"workshop:adhesive_oils\",Amount:1000}",
+  "residue": {
+    "pools": [
+      {
+        "rolls": 1.0,
+        "entries": [
+          {
+            "type": "minecraft:item",
+            "name": "minecraft:bucket"
+          }
+        ]
+      },
+      {
+        "rolls": 1.0,
+        "entries": [
+          {
+            "type": "minecraft:item",
+            "name": "workshop:salt"
+          }
+        ],
+        "functions": [
+          {
+            "function": "minecraft:set_count",
+            "count": {
+              "min": 1.0,
+              "max": 3.0,
+              "type": "minecraft:uniform"
+            }
+          }
+        ]
+      }
+    ]
+  },
   "processingTime": 160,
   "type": "workshop:alembic"
 }

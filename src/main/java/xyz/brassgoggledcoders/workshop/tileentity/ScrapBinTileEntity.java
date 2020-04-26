@@ -5,6 +5,7 @@ import com.hrznstudio.titanium.api.client.IScreenAddon;
 import com.hrznstudio.titanium.api.client.IScreenAddonProvider;
 import com.hrznstudio.titanium.component.IComponentHarness;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
+import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import com.hrznstudio.titanium.container.BasicAddonContainer;
 import com.hrznstudio.titanium.container.addon.IContainerAddon;
 import com.hrznstudio.titanium.container.addon.IContainerAddonProvider;
@@ -29,8 +30,10 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
+import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -40,27 +43,33 @@ import java.util.*;
 public class ScrapBinTileEntity extends TileEntity implements INamedContainerProvider, IComponentHarness, GUITile, IScreenAddonProvider,
         IContainerAddonProvider {
     private final SidedInventoryComponent<ScrapBinTileEntity> inventoryComponent;
+    private final SidedInventoryComponent<ScrapBinTileEntity> scrapOutput;
+    private final ProgressBarComponent<ScrapBinTileEntity> scrapValue;
     //TODO NBT Sensitivity
     private final Map<Item, Integer> totalPerItemType = new HashMap<>();
 
     public ScrapBinTileEntity() {
         super(WorkshopBlocks.SCRAP_BIN.getTileEntityType());
         int pos = 0;
-        this.inventoryComponent = (SidedInventoryComponent<ScrapBinTileEntity>) new SidedInventoryComponent<ScrapBinTileEntity>("inventory", 34, 25, 27, pos++)
-                .setColor(DyeColor.WHITE)
-                .setOnSlotChanged((stack, slotNum) -> {
-                    Item item = stack.getItem();
-                    if (totalPerItemType.containsKey(item)) {
-                        totalPerItemType.put(item, totalPerItemType.get(item) + stack.getCount());
-                        if (totalPerItemType.get(item) > 64) {
-                            stack.setCount(0);
-                        }
-                    } else {
-                        totalPerItemType.put(item, stack.getCount());
-                    }
-                    Workshop.LOGGER.error(stack.getDisplayName().getString() + slotNum);
-                    totalPerItemType.forEach((s, sN) -> Workshop.LOGGER.warn(s.getName().getString() + sN));
-                });
+        this.inventoryComponent = new SidedInventoryComponent<ScrapBinTileEntity>("inventory", 34, 25, 27, pos++)
+                .setColor(DyeColor.WHITE);
+        this.scrapOutput = new SidedInventoryComponent<>("output", 100, 100, 1, pos++);
+        this.scrapValue = new ProgressBarComponent<>(0, 100, 100);
+        this.inventoryComponent.setOnSlotChanged((stack, slotNum) -> {
+            Item item = stack.getItem();
+            if (totalPerItemType.containsKey(item)) {
+                totalPerItemType.put(item, totalPerItemType.get(item) + stack.getCount());
+                if (totalPerItemType.get(item) > 64) {
+                    stack.setCount(0);
+                    this.scrapValue.setProgress(this.scrapValue.getProgress() + 1);
+                }
+            } else {
+                totalPerItemType.put(item, stack.getCount());
+            }
+        });
+        this.scrapValue.setOnFinishWork(() -> {
+            ItemHandlerHelper.insertItem(scrapOutput, new ItemStack(WorkshopItems.SCRAP_BAG.get()), true);
+        });
     }
 
     @Override

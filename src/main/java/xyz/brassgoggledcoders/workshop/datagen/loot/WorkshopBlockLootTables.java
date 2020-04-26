@@ -62,5 +62,7 @@ public class WorkshopBlockLootTables extends BlockLootTables {
         );
 
         this.registerDropSelfLootTable(WorkshopBlocks.COLLECTOR.getBlock());
+
+        this.registerDropSelfLootTable(WorkshopBlocks.SCRAP_BIN.getBlock());
     }
 }

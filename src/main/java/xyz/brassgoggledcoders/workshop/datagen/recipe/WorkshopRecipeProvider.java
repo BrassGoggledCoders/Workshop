@@ -1,6 +1,7 @@
 package xyz.brassgoggledcoders.workshop.datagen.recipe;
 
 import com.hrznstudio.titanium.recipe.generator.TitaniumRecipeProvider;
+import com.hrznstudio.titanium.recipe.generator.TitaniumShapedRecipeBuilder;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
@@ -27,14 +28,14 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
     @Override
     public void register(Consumer<IFinishedRecipe> consumer) {
         //section Machine Self Recipes
-        ShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SEASONING_BARREL.getBlock())
+        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SEASONING_BARREL.getBlock())
                 .patternLine("LSL")
                 .patternLine("L L")
                 .patternLine("LSL")
                 .key('L', Blocks.STRIPPED_OAK_LOG)
                 .key('S', Blocks.OAK_SLAB)
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SPINNING_WHEEL.getBlock())
+        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SPINNING_WHEEL.getBlock())
                 .patternLine("W I")
                 .patternLine("WWW")
                 .patternLine("SSS")
@@ -42,7 +43,7 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('W', ItemTags.PLANKS)
                 .key('I', Tags.Items.INGOTS_IRON)
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SINTERING_FURNACE.getBlock())
+        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SINTERING_FURNACE.getBlock())
                 .patternLine("BDB")
                 .patternLine("G G")
                 .patternLine("BFB")
@@ -51,7 +52,7 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('D', Blocks.DROPPER)
                 .key('F', Blocks.FURNACE)
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.BELLOWS.getBlock())
+        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.BELLOWS.getBlock())
                 .patternLine("PPP")
                 .patternLine("WWW")
                 .patternLine("PPP")

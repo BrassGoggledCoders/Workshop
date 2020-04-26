@@ -6,7 +6,7 @@
         {
           "values": [
             {
-              "item": "workshop:sintering_furnace",
+              "item": "workshop:spinning_wheel",
               "type": "forge:item_exists"
             }
           ],
@@ -16,26 +16,23 @@
       "recipe": {
         "type": "minecraft:crafting_shaped",
         "pattern": [
-          "BDB",
-          "G G",
-          "BFB"
+          "W I",
+          "WWW",
+          "SSS"
         ],
         "key": {
-          "B": {
-            "item": "minecraft:bricks"
+          "S": {
+            "tag": "minecraft:wooden_slabs"
           },
-          "G": {
-            "tag": "forge:glass"
+          "W": {
+            "tag": "minecraft:planks"
           },
-          "D": {
-            "item": "minecraft:dropper"
-          },
-          "F": {
-            "item": "minecraft:furnace"
+          "I": {
+            "tag": "forge:ingots/iron"
           }
         },
         "result": {
-          "item": "workshop:sintering_furnace"
+          "item": "workshop:spinning_wheel"
         }
       }
     }
