@@ -31,7 +31,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.ItemHandlerHelper;
-import xyz.brassgoggledcoders.workshop.Workshop;
+import xyz.brassgoggledcoders.workshop.content.WorkshopConfig;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 
@@ -51,10 +51,11 @@ public class ScrapBinTileEntity extends TileEntity implements INamedContainerPro
     public ScrapBinTileEntity() {
         super(WorkshopBlocks.SCRAP_BIN.getTileEntityType());
         int pos = 0;
-        this.inventoryComponent = new SidedInventoryComponent<ScrapBinTileEntity>("inventory", 34, 25, 27, pos++)
-                .setColor(DyeColor.WHITE);
-        this.scrapOutput = new SidedInventoryComponent<>("output", 100, 100, 1, pos++);
-        this.scrapValue = new ProgressBarComponent<>(0, 100, 100);
+        this.inventoryComponent = (SidedInventoryComponent<ScrapBinTileEntity>) new SidedInventoryComponent<ScrapBinTileEntity>("inventory", 0, 0, 27, pos++)
+                .setColor(DyeColor.WHITE)
+                .setRange(9, 3);
+        this.scrapOutput = new SidedInventoryComponent<ScrapBinTileEntity>("output", 50, 50, 1, pos++).setColor(DyeColor.BLACK);
+        this.scrapValue = new ProgressBarComponent<>(30, 30, WorkshopConfig.COMMON.itemsRequiredPerScrapBag.get());
         this.inventoryComponent.setOnSlotChanged((stack, slotNum) -> {
             Item item = stack.getItem();
             if (totalPerItemType.containsKey(item)) {
@@ -68,13 +69,15 @@ public class ScrapBinTileEntity extends TileEntity implements INamedContainerPro
             }
         });
         this.scrapValue.setOnFinishWork(() -> {
-            ItemHandlerHelper.insertItem(scrapOutput, new ItemStack(WorkshopItems.SCRAP_BAG.get()), true);
+            ItemHandlerHelper.insertItem(scrapOutput, new ItemStack(WorkshopItems.SCRAP_BAG.get()), false);
         });
     }
 
     @Override
     public void read(CompoundNBT compound) {
         inventoryComponent.deserializeNBT(compound.getCompound("inventory"));
+        scrapOutput.deserializeNBT(compound.getCompound("scrap"));
+        scrapValue.deserializeNBT(compound.getCompound("scrapValue"));
         super.read(compound);
     }
 
@@ -82,6 +85,8 @@ public class ScrapBinTileEntity extends TileEntity implements INamedContainerPro
     @Nonnull
     public CompoundNBT write(CompoundNBT compound) {
         compound.put("inventory", inventoryComponent.serializeNBT());
+        compound.put("scrap", scrapOutput.serializeNBT());
+        compound.put("scrapValue", scrapValue.serializeNBT());
         return super.write(compound);
     }
 
@@ -127,6 +132,8 @@ public class ScrapBinTileEntity extends TileEntity implements INamedContainerPro
     public List<IFactory<? extends IScreenAddon>> getScreenAddons() {
         List<IFactory<? extends IScreenAddon>> addons = new ArrayList<>();
         addons.addAll(this.inventoryComponent.getScreenAddons());
+        addons.addAll(this.scrapOutput.getScreenAddons());
+        addons.addAll(this.scrapValue.getScreenAddons());
         return addons;
     }
 
@@ -134,6 +141,8 @@ public class ScrapBinTileEntity extends TileEntity implements INamedContainerPro
     public List<IFactory<? extends IContainerAddon>> getContainerAddons() {
         List<IFactory<? extends IContainerAddon>> addons = new ArrayList<>();
         addons.addAll(this.inventoryComponent.getContainerAddons());
+        addons.addAll(this.scrapOutput.getContainerAddons());
+        addons.addAll(this.scrapValue.getContainerAddons());
         return addons;
     }
 }

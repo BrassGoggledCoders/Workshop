@@ -8,14 +8,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootFunction;
-import net.minecraft.world.storage.loot.LootTableManager;
-import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.client.model.DynamicBucketModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -23,8 +22,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import xyz.brassgoggledcoders.workshop.api.PotionDrinkableFluidBehaviour;
 import xyz.brassgoggledcoders.workshop.api.WorkshopAPI;
+import xyz.brassgoggledcoders.workshop.content.WorkshopConfig;
 import xyz.brassgoggledcoders.workshop.content.*;
-import xyz.brassgoggledcoders.workshop.datagen.recipe.AlembicRecipeProvider;
 import xyz.brassgoggledcoders.workshop.renderer.PressTileEntityRenderer;
 import xyz.brassgoggledcoders.workshop.renderer.SinteringTileEntityRenderer;
 
@@ -48,6 +47,8 @@ public class Workshop {
         WorkshopFluids.register(modBus);
         WorkshopItems.register(modBus);
         WorkshopBlocks.register(modBus);
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, WorkshopConfig.COMMON_SPEC);
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
