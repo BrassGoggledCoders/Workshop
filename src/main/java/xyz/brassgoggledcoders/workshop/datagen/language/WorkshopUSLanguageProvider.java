@@ -8,10 +8,7 @@ import net.minecraftforge.fluids.FluidStack;
 import org.codehaus.plexus.util.StringUtils;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.capabilities.BottleCapabilityProvider;
-import xyz.brassgoggledcoders.workshop.content.FluidRegistryObjectGroup;
-import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
-import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
+import xyz.brassgoggledcoders.workshop.content.*;
 
 public class WorkshopUSLanguageProvider extends LanguageProvider {
     public WorkshopUSLanguageProvider(DataGenerator gen) {
@@ -51,6 +48,8 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addItem(WorkshopItems.MEDICINAL_ROOT, "Medicinal Root");
         this.addItem(WorkshopItems.TANNIN, "Tannin");
         this.addItem(WorkshopItems.TALLOW, "Tallow");
+        this.addItem(WorkshopItems.SOAP, "Soap");
+        this.addItem(WorkshopItems.SCRAP_BAG, "Scrap Bag");
         //endregion
 
         //region Fluids
@@ -82,6 +81,10 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addResource("dust", "%s Powder");
         this.addResource("film", "%s Film");
         this.addResource("pipe", "%s Pipe");
+        //endregion
+
+        //region Effects
+        this.addEffect(WorkshopEffects.STINKY, "Stinky");
         //endregion
     }
 

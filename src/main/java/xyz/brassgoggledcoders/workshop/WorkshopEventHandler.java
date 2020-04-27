@@ -1,15 +1,29 @@
 package xyz.brassgoggledcoders.workshop;
 
+import net.minecraft.entity.merchant.IMerchant;
+import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootEntry;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.TableLootEntry;
 import net.minecraftforge.event.LootTableLoadEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import xyz.brassgoggledcoders.workshop.content.WorkshopEffects;
 
 @Mod.EventBusSubscriber(modid = Workshop.MOD_ID)
-public class LootEventHandler {
+public class WorkshopEventHandler {
+    @SubscribeEvent
+    public static void playerInteract(PlayerInteractEvent.EntityInteract event) {
+        if(event.getPlayer().getActivePotionEffect(WorkshopEffects.STINKY.get()) != null && event.getTarget() instanceof IMerchant) {
+            if(event.getTarget() instanceof AbstractVillagerEntity) {
+                ((AbstractVillagerEntity) event.getTarget()).setShakeHeadTicks(20);
+            }
+            event.setCanceled(true);
+        }
+    }
+
     @SubscribeEvent
     public static void lootLoad(LootTableLoadEvent event) {
         String prefix = "minecraft:";

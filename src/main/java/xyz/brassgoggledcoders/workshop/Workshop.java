@@ -47,6 +47,7 @@ public class Workshop {
         WorkshopFluids.register(modBus);
         WorkshopItems.register(modBus);
         WorkshopBlocks.register(modBus);
+        WorkshopEffects.register(modBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, WorkshopConfig.COMMON_SPEC);
     }
