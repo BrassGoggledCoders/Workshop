@@ -16,7 +16,6 @@ import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.SeasoningBarrelRecipe;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 public class SeasoningBarrelRecipeCategory implements IRecipeCategory<SeasoningBarrelRecipe> {

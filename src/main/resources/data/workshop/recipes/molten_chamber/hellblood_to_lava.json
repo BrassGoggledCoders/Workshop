@@ -1,0 +1,13 @@
+{
+  "itemIn": {
+    "item": "workshop:obsidian_plate"
+  },
+  "itemOut": {
+    "item": "minecraft:air",
+    "count": 0
+  },
+  "fluidIn": "{FluidName:\"workshop:hellblood\",Amount:1000}",
+  "fluidOut": "{FluidName:\"minecraft:lava\",Amount:1000}",
+  "seasoningTime": 1000,
+  "type": "workshop:molten_chamber"
+}

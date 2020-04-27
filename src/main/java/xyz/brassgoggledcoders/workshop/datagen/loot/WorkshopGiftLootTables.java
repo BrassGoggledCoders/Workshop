@@ -3,7 +3,10 @@ package xyz.brassgoggledcoders.workshop.datagen.loot;
 import net.minecraft.data.loot.GiftLootTables;
 import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.*;
+import net.minecraft.world.storage.loot.ConstantRange;
+import net.minecraft.world.storage.loot.ItemLootEntry;
+import net.minecraft.world.storage.loot.LootPool;
+import net.minecraft.world.storage.loot.LootTable;
 import xyz.brassgoggledcoders.workshop.Workshop;
 
 import java.util.function.BiConsumer;

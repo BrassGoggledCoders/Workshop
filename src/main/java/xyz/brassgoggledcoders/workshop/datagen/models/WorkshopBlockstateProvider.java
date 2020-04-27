@@ -50,5 +50,6 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
                         new ConfiguredModel(models().withExistingParent("obsidian_plate_down", mcLoc("block/pressure_plate_down")).texture("texture", mcLoc("block/obsidian"))))
                 .partialState().with(ObsidianPlateBlock.POWERED, false).addModels(
                 new ConfiguredModel(models().withExistingParent("obsidian_plate_up", mcLoc("block/pressure_plate_up")).texture("texture", mcLoc("block/obsidian"))));
+        //this.directionalBlock(WorkshopBlocks.MOLTEN_CHAMBER, );
     }
 }

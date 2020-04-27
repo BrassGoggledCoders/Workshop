@@ -1,12 +1,15 @@
 package xyz.brassgoggledcoders.workshop.datagen;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.hrznstudio.titanium.recipe.serializer.JSONSerializableDataHandler;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.*;
+import net.minecraft.world.storage.loot.LootTable;
+import net.minecraft.world.storage.loot.LootTableManager;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -70,6 +73,7 @@ public class WorkshopDataGenerator {
             dataGenerator.addProvider(new SinteringFurnaceRecipeProvider(dataGenerator));
             dataGenerator.addProvider(new CollectorRecipeProvider(dataGenerator));
             dataGenerator.addProvider(new SpinningWheelRecipeProvider(dataGenerator));
+            dataGenerator.addProvider(new MoltenChamberRecipeProvider(dataGenerator));
 
             dataGenerator.addProvider(new WorkshopItemTagsProvider(dataGenerator));
         }

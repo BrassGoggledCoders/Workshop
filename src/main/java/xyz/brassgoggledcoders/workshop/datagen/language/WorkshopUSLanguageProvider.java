@@ -23,6 +23,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addBlock(WorkshopBlocks.OBSIDIAN_PLATE, "Obsidian Plate");
         this.addBlock(WorkshopBlocks.PRESS, "Press");
         this.addBlock(WorkshopBlocks.SEASONING_BARREL, "Seasoning Barrel");
+        this.addBlock(WorkshopBlocks.MOLTEN_CHAMBER, "Molten Reaction Chamber");
         this.addBlock(WorkshopBlocks.SINTERING_FURNACE, "Sintering Furnace");
         this.addBlock(WorkshopBlocks.SPINNING_WHEEL, "Spinning Wheel");
         int i = 0;
@@ -58,6 +59,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addFluid(WorkshopFluids.SEED_OIL, "Seed Oil");
         this.addFluid(WorkshopFluids.APPLE_JUICE, "Apple Juice");
         this.addFluid(WorkshopFluids.CIDER, "Cider");
+        this.addFluid(WorkshopFluids.HELLBLOOD, "Hellblood");
         //endregion
 
         //region Guide

@@ -1,7 +1,5 @@
 package xyz.brassgoggledcoders.workshop.content;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.Foods;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -16,7 +14,6 @@ import xyz.brassgoggledcoders.workshop.item.ScrapBagItem;
 import xyz.brassgoggledcoders.workshop.item.SoapItem;
 
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;

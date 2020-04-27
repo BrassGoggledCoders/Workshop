@@ -39,6 +39,10 @@ public class WorkshopRecipes {
     public static final RegistryObject<GenericSerializer<CollectorRecipe>> COLLECTOR_SERIALIZER = RECIPE_SERIALIZER.register("collector",
             () -> new GenericSerializer<>(COLLECTOR, CollectorRecipe.class));
 
+    public static final IRecipeType<MoltenChamberRecipe> MOLTEN_CHAMBER = IRecipeType.register(MOD_ID + "molten_chamber");
+    public static final RegistryObject<GenericSerializer<MoltenChamberRecipe>> MOLTEN_CHAMBER_SERIALIZER = RECIPE_SERIALIZER.register("molten_chamber",
+            () -> new GenericSerializer<>(MOLTEN_CHAMBER, MoltenChamberRecipe.class));
+
     public static void register(IEventBus bus) {
         RECIPE_SERIALIZER.register(bus);
     }

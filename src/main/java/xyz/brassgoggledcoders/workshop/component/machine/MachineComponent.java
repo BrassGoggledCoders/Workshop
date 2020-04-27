@@ -36,6 +36,7 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
+import xyz.brassgoggledcoders.workshop.Workshop;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

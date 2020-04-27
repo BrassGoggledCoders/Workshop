@@ -12,7 +12,7 @@
               "source": "block_entity"
             }
           ],
-          "name": "workshop:scrap_bin"
+          "name": "workshop:molten_chamber"
         }
       ],
       "conditions": [

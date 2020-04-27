@@ -8,9 +8,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
-import xyz.brassgoggledcoders.workshop.datagen.recipe.SpinningWheelRecipeProvider;
-import xyz.brassgoggledcoders.workshop.recipe.SpinningWheelRecipe;
-import xyz.brassgoggledcoders.workshop.recipe.WorkshopRecipe;
 
 @JeiPlugin
 public class WorkshopJEIPlugin implements IModPlugin {

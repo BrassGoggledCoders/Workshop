@@ -2,7 +2,6 @@ package xyz.brassgoggledcoders.workshop.content;
 
 
 import com.hrznstudio.titanium.annotation.config.ConfigFile;
-import com.hrznstudio.titanium.annotation.config.ConfigVal;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;
 import org.apache.commons.lang3.tuple.Pair;

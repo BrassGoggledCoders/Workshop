@@ -8,13 +8,13 @@ import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
-import xyz.brassgoggledcoders.workshop.tileentity.SeasoningBarrelTileEntity;
+import xyz.brassgoggledcoders.workshop.tileentity.MoltenChamberTileEntity;
 
-public class SeasoningBarrelBlock extends TileBlock<SeasoningBarrelTileEntity> {
+public class MoltenChamberBlock extends TileBlock<MoltenChamberTileEntity> {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
-    public SeasoningBarrelBlock() {
-        super(Properties.from(Blocks.OAK_PLANKS).notSolid(), SeasoningBarrelTileEntity::new);
+    public MoltenChamberBlock() {
+        super(Properties.from(Blocks.FURNACE).notSolid(), MoltenChamberTileEntity::new);
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.DOWN));
     }
 

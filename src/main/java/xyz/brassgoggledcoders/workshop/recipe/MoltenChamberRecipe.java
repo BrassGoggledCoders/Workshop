@@ -7,30 +7,29 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
+import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 
 import javax.annotation.Nonnull;
 
-import static xyz.brassgoggledcoders.workshop.content.WorkshopRecipes.SEASONING_BARREL_SERIALIZER;
+public class MoltenChamberRecipe extends AbstractBarrelRecipe {
 
-public class SeasoningBarrelRecipe extends AbstractBarrelRecipe {
-
-    public SeasoningBarrelRecipe(ResourceLocation resourceLocation) {
+    public MoltenChamberRecipe(ResourceLocation resourceLocation) {
         super(resourceLocation);
     }
 
-    public SeasoningBarrelRecipe(ResourceLocation resourceLocation, Ingredient itemIn, ItemStack itemOut, FluidStack fluidIn, FluidStack fluidOut, int seasoningTime) {
+    public MoltenChamberRecipe(ResourceLocation resourceLocation, Ingredient itemIn, ItemStack itemOut, FluidStack fluidIn, FluidStack fluidOut, int seasoningTime) {
         super(resourceLocation, itemIn, itemOut, fluidIn, fluidOut, seasoningTime);
     }
 
     @Override
     @Nonnull
     public GenericSerializer<? extends SerializableRecipe> getSerializer() {
-        return SEASONING_BARREL_SERIALIZER.get();
+        return WorkshopRecipes.MOLTEN_CHAMBER_SERIALIZER.get();
     }
 
     @Override
     @Nonnull
     public IRecipeType<?> getType() {
-        return SEASONING_BARREL_SERIALIZER.get().getRecipeType();
+        return WorkshopRecipes.MOLTEN_CHAMBER_SERIALIZER.get().getRecipeType();
     }
 }

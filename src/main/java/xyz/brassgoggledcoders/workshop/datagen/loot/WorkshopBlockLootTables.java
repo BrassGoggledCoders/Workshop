@@ -38,7 +38,7 @@ public class WorkshopBlockLootTables extends BlockLootTables {
     protected void addTables() {
         StreamSupport.stream(this.getKnownBlocks().spliterator(), false)
                 .filter(block -> block.getRegistryName().getPath()
-                        .contains("concrete")).forEach(block -> registerDropSelfLootTable(block));
+                        .contains("concrete")).forEach(this::registerDropSelfLootTable);
         this.registerDropSelfLootTable(WorkshopBlocks.BROKEN_ANVIL.getBlock());
         this.registerDropSelfLootTable(WorkshopBlocks.OBSIDIAN_PLATE.getBlock());
         this.registerDropSelfLootTable(WorkshopBlocks.BELLOWS.getBlock());
@@ -46,11 +46,16 @@ public class WorkshopBlockLootTables extends BlockLootTables {
         this.registerLootTable(WorkshopBlocks.TEA_PLANT.getBlock(), droppingAndBonusWhen(WorkshopBlocks.TEA_PLANT.getBlock(), WorkshopItems.TEA_LEAVES.get(), WorkshopBlocks.TEA_PLANT.getItem(),
                 BlockStateProperty.builder(WorkshopBlocks.TEA_PLANT.getBlock()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(CropsBlock.AGE, 1))));
 
+        //region Machines
         this.registerLootTable(WorkshopBlocks.ALEMBIC.getBlock(), BlockLootTables::droppingWithName);
         this.registerLootTable(WorkshopBlocks.PRESS.getBlock(), BlockLootTables::droppingWithName);
         this.registerLootTable(WorkshopBlocks.SEASONING_BARREL.getBlock(), BlockLootTables::droppingWithName);
+        this.registerLootTable(WorkshopBlocks.MOLTEN_CHAMBER.getBlock(), BlockLootTables::droppingWithName);
         this.registerLootTable(WorkshopBlocks.SINTERING_FURNACE.getBlock(), BlockLootTables::droppingWithName);
         this.registerLootTable(WorkshopBlocks.SPINNING_WHEEL.getBlock(), BlockLootTables::droppingWithName);
+        this.registerLootTable(WorkshopBlocks.COLLECTOR.getBlock(), BlockLootTables::droppingWithName);
+        this.registerLootTable(WorkshopBlocks.SCRAP_BIN.getBlock(), BlockLootTables::droppingWithName);
+        //endregion
 
         this.registerLootTable(WorkshopBlocks.SEALED_BARREL.getBlock(), new LootTable.Builder()
                 .addLootPool(LootPool.builder()
@@ -60,9 +65,5 @@ public class WorkshopBlockLootTables extends BlockLootTables {
                         .addEntry(ItemLootEntry.builder(WorkshopBlocks.SEALED_BARREL.getBlock()))
                 )
         );
-
-        this.registerDropSelfLootTable(WorkshopBlocks.COLLECTOR.getBlock());
-
-        this.registerDropSelfLootTable(WorkshopBlocks.SCRAP_BIN.getBlock());
     }
 }

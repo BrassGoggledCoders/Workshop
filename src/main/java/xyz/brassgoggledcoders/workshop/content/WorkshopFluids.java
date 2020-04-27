@@ -134,6 +134,17 @@ public class WorkshopFluids {
             .block(TEA::getBlock)
             .bucket(TEA::getBucket);
 
+    public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> HELLBLOOD = new FluidRegistryObjectGroup<>("hellblood",
+            () -> new ForgeFlowingFluid.Source(WorkshopFluids.HELLBLOOD_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.HELLBLOOD_PROPERTIES)).register(FLUIDS, BLOCKS, ITEMS);
+
+    public static final ForgeFlowingFluid.Properties HELLBLOOD_PROPERTIES = new ForgeFlowingFluid.Properties(HELLBLOOD, HELLBLOOD::getFlowing,
+            FluidAttributes.builder(new ResourceLocation("minecraft", "block/lava_still"),
+                    new ResourceLocation("minecraft", "block/lava_flow"))
+                    .overlay(new ResourceLocation("minecraft", "block/lava_overlay"))
+                    .color(16712708))
+            .block(HELLBLOOD::getBlock)
+            .bucket(HELLBLOOD::getBucket);
+
 
     public static void register(IEventBus modBus) {
         FLUIDS.register(modBus);

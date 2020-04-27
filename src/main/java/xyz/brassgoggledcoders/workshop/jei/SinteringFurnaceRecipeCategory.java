@@ -16,10 +16,6 @@ import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.SinteringFurnaceRecipe;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-
 public class SinteringFurnaceRecipeCategory implements IRecipeCategory<SinteringFurnaceRecipe> {
 
     public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.SINTERING_FURNACE.toString());

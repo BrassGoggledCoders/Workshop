@@ -9,6 +9,7 @@ import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.Workshop;
@@ -16,6 +17,7 @@ import xyz.brassgoggledcoders.workshop.block.*;
 import xyz.brassgoggledcoders.workshop.block.press.PressBlock;
 import xyz.brassgoggledcoders.workshop.tileentity.*;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -56,6 +58,11 @@ public class WorkshopBlocks {
                     SeasoningBarrelTileEntity::new)
                     .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
+    public static final BlockRegistryObjectGroup<MoltenChamberBlock, BlockItem, MoltenChamberTileEntity> MOLTEN_CHAMBER =
+            new BlockRegistryObjectGroup<>("molten_chamber", MoltenChamberBlock::new, blockItemCreator(),
+                    MoltenChamberTileEntity::new)
+                    .register(BLOCKS, ITEMS, TILE_ENTITIES);
+
     public static final BlockRegistryObjectGroup<SinteringFurnaceBlock, BlockItem, SinteringFurnaceTileEntity> SINTERING_FURNACE =
             new BlockRegistryObjectGroup<>("sintering_furnace", SinteringFurnaceBlock::new, blockItemCreator(),
                     SinteringFurnaceTileEntity::new)
@@ -92,5 +99,9 @@ public class WorkshopBlocks {
 
     private static <B extends Block> Function<B, BlockItem> blockItemCreator() {
         return block -> new BlockItem(block, new Item.Properties().group(Workshop.ITEM_GROUP));
+    }
+
+    public static Collection<RegistryObject<Block>> getAllBlocks() {
+        return BLOCKS.getEntries();
     }
 }
