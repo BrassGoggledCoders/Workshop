@@ -51,18 +51,18 @@ public class ScrapBinTileEntity extends TileEntity implements INamedContainerPro
     public ScrapBinTileEntity() {
         super(WorkshopBlocks.SCRAP_BIN.getTileEntityType());
         int pos = 0;
-        this.inventoryComponent = (SidedInventoryComponent<ScrapBinTileEntity>) new SidedInventoryComponent<ScrapBinTileEntity>("inventory", 0, 0, 27, pos++)
+        this.inventoryComponent = (SidedInventoryComponent<ScrapBinTileEntity>) new SidedInventoryComponent<ScrapBinTileEntity>("inventory", 8, 16, 24, pos++)
                 .setColor(DyeColor.WHITE)
-                .setRange(9, 3);
-        this.scrapOutput = new SidedInventoryComponent<ScrapBinTileEntity>("output", 50, 50, 1, pos++).setColor(DyeColor.BLACK);
-        this.scrapValue = new ProgressBarComponent<>(30, 30, WorkshopConfig.COMMON.itemsRequiredPerScrapBag.get());
+                .setRange(8, 3);
+        this.scrapOutput = new SidedInventoryComponent<ScrapBinTileEntity>("output", 150, 75, 1, pos++).setColor(DyeColor.BLACK);
+        this.scrapValue = new ProgressBarComponent<>(155, 8, WorkshopConfig.COMMON.itemsRequiredPerScrapBag.get());
         this.inventoryComponent.setOnSlotChanged((stack, slotNum) -> {
             Item item = stack.getItem();
             if (totalPerItemType.containsKey(item)) {
                 totalPerItemType.put(item, totalPerItemType.get(item) + stack.getCount());
                 if (totalPerItemType.get(item) > 64) {
+                    this.scrapValue.setProgress(this.scrapValue.getProgress() + stack.getCount());
                     stack.setCount(0);
-                    this.scrapValue.setProgress(this.scrapValue.getProgress() + 1);
                 }
             } else {
                 totalPerItemType.put(item, stack.getCount());
