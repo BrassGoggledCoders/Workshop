@@ -10,6 +10,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
+import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 
 import java.util.function.Consumer;
 
@@ -57,6 +58,14 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .patternLine("G G")
                 .patternLine(" G ")
                 .key('G', Blocks.GRANITE)
+                .build(consumer);
+        //endsection
+        //section Misc
+        TitaniumShapedRecipeBuilder.shapedRecipe(Items.TORCH)
+                .patternLine("T")
+                .patternLine("S")
+                .key('T', WorkshopItems.TALLOW.get())
+                .key('S', Tags.Items.RODS_WOODEN)
                 .build(consumer);
         //endsection
         //TODO the builder doesn't support ItemStack outputs, only Items...
