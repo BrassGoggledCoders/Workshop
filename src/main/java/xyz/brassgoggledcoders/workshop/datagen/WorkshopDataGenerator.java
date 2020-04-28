@@ -74,6 +74,7 @@ public class WorkshopDataGenerator {
             dataGenerator.addProvider(new CollectorRecipeProvider(dataGenerator));
             dataGenerator.addProvider(new SpinningWheelRecipeProvider(dataGenerator));
             dataGenerator.addProvider(new MoltenChamberRecipeProvider(dataGenerator));
+            dataGenerator.addProvider(new MortarRecipeProvider(dataGenerator));
 
             dataGenerator.addProvider(new WorkshopItemTagsProvider(dataGenerator));
         }

@@ -78,6 +78,11 @@ public class WorkshopBlocks {
                     SealedBarrelTileEntity::new)
                     .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
+    public static final BlockRegistryObjectGroup<MortarBlock, BlockItem, MortarTileEntity> MORTAR =
+            new BlockRegistryObjectGroup<>("mortar", MortarBlock::new, blockItemCreator(),
+                    MortarTileEntity::new)
+                    .register(BLOCKS, ITEMS, TILE_ENTITIES);
+
     public static final BlockRegistryObjectGroup<TeaPlantBlock, BlockNamedItem, ?> TEA_PLANT =
             new BlockRegistryObjectGroup<>("tea", TeaPlantBlock::new, (block) ->
                     new BlockNamedItem(WorkshopBlocks.TEA_PLANT.getBlock(), new Item.Properties().group(Workshop.ITEM_GROUP))).register(BLOCKS, ITEMS);

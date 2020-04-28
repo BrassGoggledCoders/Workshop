@@ -92,7 +92,7 @@ public class SinteringFurnaceRecipeProvider extends TitaniumSerializableProvider
     }
 
     protected static class Builder {
-        private ResourceLocation name;
+        private final ResourceLocation name;
         private Ingredient powderIn = Ingredient.EMPTY;
         private Ingredient itemIn = Ingredient.EMPTY;
         private ItemStack itemOut = ItemStack.EMPTY;

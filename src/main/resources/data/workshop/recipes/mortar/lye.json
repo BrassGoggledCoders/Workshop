@@ -1,0 +1,14 @@
+{
+  "input": [
+    {
+      "item": "workshop:ash"
+    }
+  ],
+  "fluidInput": "{FluidName:\"workshop:distilled_water\",Amount:333}",
+  "output": {
+    "item": "workshop:lye",
+    "count": 1
+  },
+  "processingTime": 1000,
+  "type": "workshop:mortar"
+}

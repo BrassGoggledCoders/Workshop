@@ -1,0 +1,17 @@
+{
+  "input": [
+    {
+      "item": "workshop:lye"
+    },
+    {
+      "item": "workshop:tallow"
+    }
+  ],
+  "fluidInput": "{FluidName:\"minecraft:empty\",Amount:0}",
+  "output": {
+    "item": "workshop:soap",
+    "count": 1
+  },
+  "processingTime": 1000,
+  "type": "workshop:mortar"
+}

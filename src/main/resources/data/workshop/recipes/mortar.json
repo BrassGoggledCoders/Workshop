@@ -1,0 +1,33 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "values": [
+            {
+              "item": "workshop:mortar",
+              "type": "forge:item_exists"
+            }
+          ],
+          "type": "forge:and"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "G G",
+          " G "
+        ],
+        "key": {
+          "G": {
+            "item": "minecraft:granite"
+          }
+        },
+        "result": {
+          "item": "workshop:mortar"
+        }
+      }
+    }
+  ]
+}

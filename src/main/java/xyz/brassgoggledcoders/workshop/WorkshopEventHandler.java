@@ -13,7 +13,9 @@ import net.minecraftforge.fml.common.Mod;
 import xyz.brassgoggledcoders.workshop.content.WorkshopEffects;
 
 @Mod.EventBusSubscriber(modid = Workshop.MOD_ID)
+@SuppressWarnings("unused")
 public class WorkshopEventHandler {
+
     @SubscribeEvent
     public static void playerInteract(PlayerInteractEvent.EntityInteract event) {
         if(event.getPlayer().getActivePotionEffect(WorkshopEffects.STINKY.get()) != null && event.getTarget() instanceof IMerchant) {
@@ -30,12 +32,8 @@ public class WorkshopEventHandler {
         String name = event.getName().toString();
         if(name.startsWith(prefix)) {
             String file = name.substring(name.indexOf(prefix) + prefix.length());
-            switch(file) {
-                case "blocks/grass":
-                    event.getTable().addPool(getInjectPool(file));
-                    break;
-                default:
-                    break;
+            if ("blocks/grass".equals(file)) {
+                event.getTable().addPool(getInjectPool(file));
             }
         }
     }
@@ -43,15 +41,15 @@ public class WorkshopEventHandler {
     //Ta Botania
     public static LootPool getInjectPool(String entryName) {
         return LootPool.builder()
-                .addEntry(getInjectEntry(entryName, 1))
+                .addEntry(getInjectEntry(entryName))
                 .bonusRolls(0, 1)
                 .name(Workshop.MOD_ID + "_inject")
                 .build();
     }
 
-    private static LootEntry.Builder getInjectEntry(String name, int weight) {
+    private static LootEntry.Builder<?> getInjectEntry(String name) {
         ResourceLocation table = new ResourceLocation(Workshop.MOD_ID, "inject/" + name);
         return TableLootEntry.builder(table)
-                .weight(weight);
+                .weight(1);
     }
 }

@@ -6,6 +6,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.Items;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
@@ -51,6 +52,11 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .patternLine("PPP")
                 .key('P', ItemTags.PLANKS)
                 .key('W', ItemTags.WOOL)
+                .build(consumer);
+        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.MORTAR.getBlock())
+                .patternLine("G G")
+                .patternLine(" G ")
+                .key('G', Blocks.GRANITE)
                 .build(consumer);
         //endsection
         //TODO the builder doesn't support ItemStack outputs, only Items...

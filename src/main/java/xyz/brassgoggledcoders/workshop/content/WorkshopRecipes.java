@@ -43,6 +43,10 @@ public class WorkshopRecipes {
     public static final RegistryObject<GenericSerializer<MoltenChamberRecipe>> MOLTEN_CHAMBER_SERIALIZER = RECIPE_SERIALIZER.register("molten_chamber",
             () -> new GenericSerializer<>(MOLTEN_CHAMBER, MoltenChamberRecipe.class));
 
+    public static final IRecipeType<MortarRecipe> MORTAR = IRecipeType.register(MOD_ID + "mortar");
+    public static final RegistryObject<GenericSerializer<MortarRecipe>> MORTAR_SERIALIZER = RECIPE_SERIALIZER.register("mortar",
+            () -> new GenericSerializer<>(MORTAR, MortarRecipe.class));
+
     public static void register(IEventBus bus) {
         RECIPE_SERIALIZER.register(bus);
     }

@@ -30,13 +30,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 import xyz.brassgoggledcoders.workshop.component.machine.IMachineHarness;
 import xyz.brassgoggledcoders.workshop.component.machine.MachineComponent;
+import xyz.brassgoggledcoders.workshop.recipe.IMachineRecipe;
+import xyz.brassgoggledcoders.workshop.recipe.MortarRecipe;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Objects;
 
-public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T, U>, U extends IRecipe<IInventory>>
+public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T, U>, U extends IRecipe<IInventory> & IMachineRecipe>
         extends TileEntity implements IMachineHarness<T, U>, ITickableTileEntity, INamedContainerProvider, IButtonHandler,
         IFacingComponentHarness, GUITile {
     private final MachineComponent<T, U> machineComponent;
@@ -115,5 +117,10 @@ public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T,
     @Override
     public IFacingComponent getHandlerFromName(String name) {
         return this.machineComponent.getHandlerFromName(name);
+    }
+
+    @Override
+    public int getProcessingTime(U currentRecipe) {
+        return currentRecipe.getProcessingTime();
     }
 }

@@ -63,7 +63,7 @@ public class SeasoningBarrelRecipeProvider extends TitaniumSerializableProvider 
     }
 
     protected static class Builder {
-        private ResourceLocation name;
+        private final ResourceLocation name;
         private Ingredient itemIn = Ingredient.EMPTY;
         private ItemStack itemOut = ItemStack.EMPTY;
         private FluidStack fluidIn = FluidStack.EMPTY;

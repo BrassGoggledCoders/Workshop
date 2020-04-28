@@ -1,0 +1,14 @@
+{
+  "input": [
+    {
+      "item": "minecraft:gravel"
+    }
+  ],
+  "fluidInput": "{FluidName:\"minecraft:empty\",Amount:0}",
+  "output": {
+    "item": "minecraft:sand",
+    "count": 1
+  },
+  "processingTime": 1000,
+  "type": "workshop:mortar"
+}

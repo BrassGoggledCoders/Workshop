@@ -1,0 +1,14 @@
+{
+  "input": [
+    {
+      "item": "minecraft:blaze_rod"
+    }
+  ],
+  "fluidInput": "{FluidName:\"minecraft:empty\",Amount:0}",
+  "output": {
+    "item": "minecraft:blaze_powder",
+    "count": 3
+  },
+  "processingTime": 1000,
+  "type": "workshop:mortar"
+}

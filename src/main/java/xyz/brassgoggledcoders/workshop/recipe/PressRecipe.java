@@ -14,7 +14,7 @@ import net.minecraftforge.items.IItemHandler;
 import static xyz.brassgoggledcoders.workshop.content.WorkshopRecipes.PRESS_SERIALIZER;
 
 
-public class PressRecipe extends SerializableRecipe {
+public class PressRecipe extends WorkshopRecipe {
 
     public Ingredient itemIn = Ingredient.EMPTY;
     public FluidStack fluidOut = FluidStack.EMPTY;
@@ -34,26 +34,6 @@ public class PressRecipe extends SerializableRecipe {
     }
 
     @Override
-    public boolean matches(IInventory inv, World worldIn) {
-        return false;
-    }
-
-    @Override
-    public ItemStack getCraftingResult(IInventory inv) {
-        return ItemStack.EMPTY;
-    }
-
-    @Override
-    public boolean canFit(int width, int height) {
-        return false;
-    }
-
-    @Override
-    public ItemStack getRecipeOutput() {
-        return ItemStack.EMPTY;
-    }
-
-    @Override
     public GenericSerializer<? extends SerializableRecipe> getSerializer() {
         return PRESS_SERIALIZER.get();
     }
@@ -63,4 +43,8 @@ public class PressRecipe extends SerializableRecipe {
         return PRESS_SERIALIZER.get().getRecipeType();
     }
 
+    @Override
+    public int getProcessingTime() {
+        return 100;
+    }
 }

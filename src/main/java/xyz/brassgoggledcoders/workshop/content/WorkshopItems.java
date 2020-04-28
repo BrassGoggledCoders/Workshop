@@ -33,6 +33,7 @@ public class WorkshopItems {
     public static final RegistryObject<Item> SILT = ITEMS.register("silt", () -> new Item(defaultProperties()));
     public static final RegistryObject<Item> CHALK = ITEMS.register("chalk", () -> new Item(defaultProperties()));
     public static final RegistryObject<Item> LEATHER_CORDAGE = ITEMS.register("leather_cordage", () -> new Item(defaultProperties()));
+    public static final RegistryObject<Item> LYE = ITEMS.register("lye", () -> new Item(defaultProperties()));
     //endregion
 
     public static final RegistryObject<Item> SOAP = ITEMS.register("soap", () -> new SoapItem(defaultProperties()));
