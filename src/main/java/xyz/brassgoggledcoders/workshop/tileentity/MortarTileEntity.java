@@ -5,10 +5,14 @@ import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootParameterSets;
@@ -16,6 +20,7 @@ import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
+import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
@@ -37,18 +42,20 @@ public class MortarTileEntity extends BasicMachineTileEntity<MortarTileEntity, M
     public MortarTileEntity() {
         super(WorkshopBlocks.MORTAR.getTileEntityType(), new ProgressBarComponent<MortarTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
         int pos = 0;
-        this.getMachineComponent().addInventory(this.input = new SidedInventoryComponent<MortarTileEntity>("input", 34, 25, inputSize, pos++)
+        this.getMachineComponent().addInventory(this.input = new SidedInventoryComponent<MortarTileEntity>("input", 10, 25, inputSize, pos++)
                 .setColor(DyeColor.RED)
                 .setRange(2, 3)
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
         this.getMachineComponent().addTank(this.fluidInput = new SidedFluidTankComponent<MortarTileEntity>(
-                "inputFluidTank", tankSize, 52, 20, pos++)
+                "inputFluidTank", tankSize, 50, 20, pos++)
                 .setColor(DyeColor.BROWN)
                 .setTankAction(SidedFluidTankComponent.Action.FILL)
                 .setOnContentChange(this.getMachineComponent()::forceRecipeRecheck));
         this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<MortarTileEntity>("output", 102, 44, 1, pos++)
                 .setColor(DyeColor.BLACK)
                 .setInputFilter((stack, integer) -> false));
+        this.getMachineComponent().getPrimaryBar().setCanIncrease(tileEntity -> false);
+        this.getMachineComponent().getPrimaryBar().setCanReset(tileEntity -> false);
     }
 
     @Override
@@ -103,5 +110,19 @@ public class MortarTileEntity extends BasicMachineTileEntity<MortarTileEntity, M
         if (itemOut != null) {
             output.insertItem(0, itemOut, false);
         }
+    }
+
+    @Override
+    public ActionResultType onActivated(PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        if (this.getWorld() != null && !this.getWorld().isRemote()) {
+            if (!player.isCrouching()) {
+                //Open GUI
+                return super.onActivated(player, hand, hit);
+            } else {
+                this.getMachineComponent().getPrimaryBar().setProgress(this.getMachineComponent().getPrimaryBar().getProgress() + 1);
+                return ActionResultType.SUCCESS;
+            }
+        }
+        return super.onActivated(player, hand, hit);
     }
 }

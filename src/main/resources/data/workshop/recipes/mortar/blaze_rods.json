@@ -9,6 +9,6 @@
     "item": "minecraft:blaze_powder",
     "count": 3
   },
-  "processingTime": 1000,
+  "processingTime": 10,
   "type": "workshop:mortar"
 }

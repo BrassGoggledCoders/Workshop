@@ -9,6 +9,6 @@
     "item": "minecraft:bone_meal",
     "count": 6
   },
-  "processingTime": 1000,
+  "processingTime": 10,
   "type": "workshop:mortar"
 }

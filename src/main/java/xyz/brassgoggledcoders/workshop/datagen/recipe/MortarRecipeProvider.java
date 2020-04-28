@@ -84,7 +84,7 @@ public class MortarRecipeProvider extends TitaniumSerializableProvider {
         private Ingredient[] itemIn;
         private ItemStack itemOut = ItemStack.EMPTY;
         private FluidStack fluidIn = FluidStack.EMPTY;
-        private int time = 1000;
+        private int time = 10;
 
         public Builder(String name) {
             this.name = new ResourceLocation(Workshop.MOD_ID, name);

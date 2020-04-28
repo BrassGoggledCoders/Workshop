@@ -25,7 +25,7 @@ public class MortarRecipe extends WorkshopRecipe {
     public Ingredient[] input = new Ingredient[0];
     public FluidStack fluidInput = FluidStack.EMPTY;
     public ItemStack output = ItemStack.EMPTY;
-    public int processingTime = 0;
+    public int processingTime = 10;
 
     public MortarRecipe(ResourceLocation resourceLocation) {
         super(resourceLocation);

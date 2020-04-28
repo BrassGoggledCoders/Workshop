@@ -19,6 +19,7 @@ import xyz.brassgoggledcoders.workshop.tileentity.GUITile;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
@@ -46,11 +47,9 @@ public class TileBlock<T extends TileEntity & GUITile> extends Block {
     @Nonnull
     @SuppressWarnings("deprecation")
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if(!player.isCrouching()) {
-            handleTileEntity(worldIn, pos, tile -> tile.onActivated(player, handIn, hit));
-            return ActionResultType.SUCCESS;
-        }
-        return ActionResultType.PASS;
+        AtomicReference<ActionResultType> result = new AtomicReference<>(ActionResultType.PASS);
+        handleTileEntity(worldIn, pos, tile -> result.set(tile.onActivated(player, handIn, hit)));
+        return result.get();
     }
 
     @SuppressWarnings("rawtypes")
