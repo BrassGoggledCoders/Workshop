@@ -52,6 +52,9 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addItem(WorkshopItems.TALLOW, "Tallow");
         this.addItem(WorkshopItems.SOAP, "Soap");
         this.addItem(WorkshopItems.SCRAP_BAG, "Scrap Bag");
+        this.addItem(WorkshopItems.SILT, "Silt");
+        this.addItem(WorkshopItems.LEATHER_CORDAGE, "Leather Cordage");
+        this.addItem(WorkshopItems.LYE, "Lye");
         //endregion
 
         //region Fluids
@@ -61,6 +64,11 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addFluid(WorkshopFluids.APPLE_JUICE, "Apple Juice");
         this.addFluid(WorkshopFluids.CIDER, "Cider");
         this.addFluid(WorkshopFluids.HELLBLOOD, "Hellblood");
+        this.addFluid(WorkshopFluids.RESIN, "Resin");
+        this.addFluid(WorkshopFluids.ADHESIVE_OILS, "Adhesive Oils");
+        this.addFluid(WorkshopFluids.CHERRY_JUICE, "Cherry Juice");
+        this.addFluid(WorkshopFluids.GLACIAL_WATER, "Glacial Water");
+        this.addFluid(WorkshopFluids.TEA, "Tea");
         //endregion
 
         //region Guide
@@ -91,7 +99,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         //endregion
     }
 
-    public void addFluid(FluidRegistryObjectGroup fluid, String name) {
+    public void addFluid(FluidRegistryObjectGroup<?, ?> fluid, String name) {
         this.addBlock(fluid::getBlock, name);
         this.addItem(fluid::getBucket, String.format("Bucket of %s", name));
         this.addItem(() -> BottleCapabilityProvider.getFilledBottle(new FluidStack(fluid.getFluid(), 1)).getItem(), String.format("Bottle of %s", name));
