@@ -58,6 +58,7 @@ public class MortarRecipe extends WorkshopRecipe {
     }
 
     @Override
+    @Nonnull
     public IRecipeType<?> getType() {
         return MORTAR_SERIALIZER.get().getRecipeType();
     }

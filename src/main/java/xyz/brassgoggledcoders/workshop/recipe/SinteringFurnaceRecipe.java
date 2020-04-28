@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
 
 import static xyz.brassgoggledcoders.workshop.content.WorkshopRecipes.SINTERING_FURNACE_SERIALIZER;
 
-public class SinteringFurnaceRecipe extends SerializableRecipe implements IMachineRecipe {
+public class SinteringFurnaceRecipe extends WorkshopRecipe {
 
     public Ingredient powderIn = Ingredient.EMPTY;
     public Ingredient itemIn = Ingredient.EMPTY;
@@ -38,18 +38,8 @@ public class SinteringFurnaceRecipe extends SerializableRecipe implements IMachi
     }
 
     @Override
-    public boolean matches(IInventory inv, World worldIn) {
-        return false;
-    }
-
-    @Override
     public ItemStack getCraftingResult(IInventory inv) {
         return itemOut;
-    }
-
-    @Override
-    public boolean canFit(int width, int height) {
-        return false;
     }
 
     @Override

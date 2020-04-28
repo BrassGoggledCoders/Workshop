@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
 
 import static xyz.brassgoggledcoders.workshop.content.WorkshopRecipes.ALEMBIC_SERIALIZER;
 
-public class AlembicRecipe extends SerializableRecipe implements IMachineRecipe {
+public class AlembicRecipe extends WorkshopRecipe {
 
     public Ingredient[] input = new Ingredient[0];
     public FluidStack output = FluidStack.EMPTY;
@@ -39,26 +39,6 @@ public class AlembicRecipe extends SerializableRecipe implements IMachineRecipe 
     public boolean matches(@Nonnull IItemHandler handler) {
         //For each ingredient in the input list check if any of the slots in the handler match the Ingredient predicate
         return InventoryUtil.inventoryHasIngredients(handler, input);
-    }
-
-    @Override
-    public boolean matches(IInventory inv, World worldIn) {
-        return false;
-    }
-
-    @Override
-    public ItemStack getCraftingResult(IInventory inv) {
-        return ItemStack.EMPTY;
-    }
-
-    @Override
-    public boolean canFit(int width, int height) {
-        return false;
-    }
-
-    @Override
-    public ItemStack getRecipeOutput() {
-        return ItemStack.EMPTY;
     }
 
     @Override

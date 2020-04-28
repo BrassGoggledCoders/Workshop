@@ -8,11 +8,12 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.tileentity.CollectorTileEntity;
 
-public class CollectorRecipe extends SerializableRecipe implements IMachineRecipe {
+import javax.annotation.Nonnull;
+
+public class CollectorRecipe extends WorkshopRecipe {
 
     public TileEntityType<CollectorTileEntity> targetTileType;
     public Ingredient input;
@@ -32,18 +33,8 @@ public class CollectorRecipe extends SerializableRecipe implements IMachineRecip
     }
 
     @Override
-    public boolean matches(IInventory inv, World worldIn) {
-        return false;
-    }
-
-    @Override
     public ItemStack getCraftingResult(IInventory inv) {
         return output;
-    }
-
-    @Override
-    public boolean canFit(int width, int height) {
-        return true;
     }
 
     @Override
@@ -57,6 +48,7 @@ public class CollectorRecipe extends SerializableRecipe implements IMachineRecip
     }
 
     @Override
+    @Nonnull
     public IRecipeType<?> getType() {
         return WorkshopRecipes.COLLECTOR;
     }
