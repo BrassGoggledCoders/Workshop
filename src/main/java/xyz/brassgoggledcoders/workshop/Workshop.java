@@ -1,6 +1,7 @@
 package xyz.brassgoggledcoders.workshop;
 
 import com.hrznstudio.titanium.tab.TitaniumTab;
+import net.minecraft.block.ComposterBlock;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.ItemGroup;
@@ -66,5 +67,6 @@ public class Workshop {
         WorkshopAPI.addDrinkableFluidBehaviour(WorkshopFluids.TEA.getFluid(), new PotionDrinkableFluidBehaviour(new EffectInstance(Effects.SPEED, 100)));
         WorkshopAPI.addDrinkableFluidBehaviour(WorkshopFluids.CIDER.getFluid(), new PotionDrinkableFluidBehaviour(new EffectInstance(Effects.STRENGTH, 200),
                 new EffectInstance(Effects.NAUSEA, 100)));
+        ComposterBlock.registerCompostable(0.2F, WorkshopItems.ASH.get());
     }
 }
