@@ -6,5 +6,5 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockRayTraceResult;
 
 public interface GUITile {
-    public ActionResultType onActivated(PlayerEntity player, Hand hand, BlockRayTraceResult hit);
+    ActionResultType onActivated(PlayerEntity player, Hand hand, BlockRayTraceResult hit);
 }

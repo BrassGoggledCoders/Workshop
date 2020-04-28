@@ -20,15 +20,8 @@ import static net.minecraftforge.client.model.generators.ModelProvider.BLOCK_FOL
 
 public class WorkshopBlockstateProvider extends BlockStateProvider {
 
-    private final ExistingFileHelper helper;
-
     public WorkshopBlockstateProvider(DataGenerator gen, ExistingFileHelper exFileHelper) {
         super(gen, Workshop.MOD_ID, exFileHelper);
-        this.helper = exFileHelper;
-    }
-
-    public static ResourceLocation getModel(Block block) {
-        return new ResourceLocation(block.getRegistryName().getNamespace(), "block/" + block.getRegistryName().getPath());
     }
 
     @Override

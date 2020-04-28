@@ -132,7 +132,7 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
                         cap.fill(currentRecipe.output, IFluidHandler.FluidAction.EXECUTE);
                         //Insert it to output
                         ItemHandlerHelper.insertItem(output, cap.getContainer(), false);
-                        //And remove it from input
+                        //Now remove it from input
                         stack.shrink(1);
                     }
                 });

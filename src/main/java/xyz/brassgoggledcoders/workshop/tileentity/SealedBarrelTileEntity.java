@@ -42,7 +42,7 @@ public class SealedBarrelTileEntity extends TileEntity implements INamedContaine
         IContainerAddonProvider {
 
     public static final int tankCapacity = 4000;//mB;
-    private SidedFluidTankComponent<SealedBarrelTileEntity> tank;
+    private final SidedFluidTankComponent<SealedBarrelTileEntity> tank;
 
     public SealedBarrelTileEntity() {
         super(WorkshopBlocks.SEALED_BARREL.getTileEntityType());
@@ -109,15 +109,11 @@ public class SealedBarrelTileEntity extends TileEntity implements INamedContaine
 
     @Override
     public List<IFactory<? extends IScreenAddon>> getScreenAddons() {
-        List<IFactory<? extends IScreenAddon>> addons = new ArrayList<>();
-        addons.addAll(this.tank.getScreenAddons());
-        return addons;
+        return new ArrayList<>(this.tank.getScreenAddons());
     }
 
     @Override
     public List<IFactory<? extends IContainerAddon>> getContainerAddons() {
-        List<IFactory<? extends IContainerAddon>> addons = new ArrayList<>();
-        addons.addAll(this.tank.getContainerAddons());
-        return addons;
+        return new ArrayList<>(this.tank.getContainerAddons());
     }
 }

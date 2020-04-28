@@ -23,7 +23,6 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import java.util.stream.IntStream;
 
 public class TileBlock<T extends TileEntity & GUITile> extends Block {
     private final Supplier<T> tileSupplier;
@@ -53,7 +52,6 @@ public class TileBlock<T extends TileEntity & GUITile> extends Block {
         return result.get();
     }
 
-    @SuppressWarnings("rawtypes")
     protected void handleTileEntity(IWorld world, BlockPos pos, Consumer<? super GUITile> tileEntityConsumer) {
         Optional.ofNullable(world.getTileEntity(pos))
                 .filter(tileEntity -> tileEntity instanceof GUITile)

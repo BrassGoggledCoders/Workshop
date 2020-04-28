@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 
 public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEntity, CollectorRecipe> {
 
-    private InventoryComponent<CollectorTileEntity> output;
+    private final InventoryComponent<CollectorTileEntity> output;
 
     public CollectorTileEntity() {
         super(WorkshopBlocks.COLLECTOR.getTileEntityType(),

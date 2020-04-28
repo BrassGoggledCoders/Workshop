@@ -5,10 +5,8 @@ import com.hrznstudio.titanium.material.ResourceRegistry;
 import com.hrznstudio.titanium.recipe.generator.IJSONGenerator;
 import com.hrznstudio.titanium.recipe.generator.IJsonFile;
 import com.hrznstudio.titanium.recipe.generator.TitaniumSerializableProvider;
-import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -16,16 +14,11 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import xyz.brassgoggledcoders.workshop.Workshop;
-import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
-import xyz.brassgoggledcoders.workshop.content.WorkshopResourceType;
 import xyz.brassgoggledcoders.workshop.recipe.MortarRecipe;
-import xyz.brassgoggledcoders.workshop.recipe.SeasoningBarrelRecipe;
-import xyz.brassgoggledcoders.workshop.recipe.SinteringFurnaceRecipe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +59,7 @@ public class MortarRecipeProvider extends TitaniumSerializableProvider {
                 .setItemsIn(Ingredient.fromItems(WorkshopItems.LYE.get()), Ingredient.fromItems(WorkshopItems.TALLOW.get()))
                 .setItemOut(new ItemStack(WorkshopItems.SOAP.get()))
                 .build());
+        //TODO Doesn't work
         for (ResourceMaterial material : ResourceRegistry.getMaterials()) {
             Map<String, ForgeRegistryEntry> generated = material.getGenerated();
             if (generated.containsKey("dust")) {

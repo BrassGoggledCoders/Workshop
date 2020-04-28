@@ -15,6 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.SinteringFurnaceRecipe;
+import xyz.brassgoggledcoders.workshop.tileentity.SinteringFurnaceTileEntity;
 
 public class SinteringFurnaceRecipeCategory implements IRecipeCategory<SinteringFurnaceRecipe> {
 
@@ -43,7 +44,7 @@ public class SinteringFurnaceRecipeCategory implements IRecipeCategory<Sintering
 
     @Override
     public String getTitle() {
-        return "Spinning Wheel";
+        return "Sintering Furnace";
     }
 
     @Override

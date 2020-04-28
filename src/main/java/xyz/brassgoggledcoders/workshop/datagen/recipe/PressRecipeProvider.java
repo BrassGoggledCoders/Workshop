@@ -41,7 +41,7 @@ public class PressRecipeProvider extends TitaniumSerializableProvider {
     }
 
     protected static class Builder {
-        private ResourceLocation name;
+        private final ResourceLocation name;
         private Ingredient input;
         private FluidStack output;
         private int processingTime = 6 * 20; // Six seconds in ticks

@@ -100,6 +100,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
     }
 
     public void addFluid(FluidRegistryObjectGroup<?, ?> fluid, String name) {
+        this.add("fluid.workshop." + fluid.getName(), name);
         this.addBlock(fluid::getBlock, name);
         this.addItem(fluid::getBucket, String.format("Bucket of %s", name));
         this.addItem(() -> BottleCapabilityProvider.getFilledBottle(new FluidStack(fluid.getFluid(), 1)).getItem(), String.format("Bottle of %s", name));

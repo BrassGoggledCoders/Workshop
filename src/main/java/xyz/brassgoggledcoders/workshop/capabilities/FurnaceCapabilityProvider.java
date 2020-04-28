@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 
 public class FurnaceCapabilityProvider implements ICapabilityProvider {
 
-    FurnaceTileEntity tile;
+    final FurnaceTileEntity tile;
 
     public FurnaceCapabilityProvider(FurnaceTileEntity tile) {
         this.tile = tile;

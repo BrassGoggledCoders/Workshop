@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HeatBarScreenAddon extends BasicScreenAddon {
-    private HeatBarComponent heatBar;
+    private final HeatBarComponent heatBar;
     private IAssetProvider provider;
 
     public HeatBarScreenAddon(int posX, int posY, HeatBarComponent posHeatBar) {
@@ -34,7 +34,7 @@ public class HeatBarScreenAddon extends BasicScreenAddon {
     @Override
     public void drawBackgroundLayer(Screen screen, IAssetProvider iAssetProvider, int guiX, int guiY, int mouseX,
                                     int mouseY, float partialTicks) {
-        this.provider = provider;
+        this.provider = iAssetProvider;
         this.heatBar.getBarDirection().render(screen, guiX, guiY, provider, this);
     }
 
@@ -46,7 +46,7 @@ public class HeatBarScreenAddon extends BasicScreenAddon {
     public List<String> getTooltipLines() {
         List<String> tooltip = new ArrayList<>();
         tooltip.add(TextFormatting.GOLD + "Temp: " + TextFormatting.WHITE
-                + (new DecimalFormat()).format((long) this.heatBar.getTemp()) + TextFormatting.GOLD + "/"
+                + (new DecimalFormat()).format(this.heatBar.getTemp()) + TextFormatting.GOLD + "/"
                 + TextFormatting.WHITE + (new DecimalFormat()).format(this.heatBar.getMaxTemp()));
         return tooltip;
     }

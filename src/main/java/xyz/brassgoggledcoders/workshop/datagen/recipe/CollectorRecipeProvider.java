@@ -42,7 +42,7 @@ public class CollectorRecipeProvider extends TitaniumSerializableProvider {
     }
 
     protected static class Builder {
-        private ResourceLocation name;
+        private final ResourceLocation name;
         private TileEntityType targetTileType;
         private Ingredient input;
         private ItemStack output;

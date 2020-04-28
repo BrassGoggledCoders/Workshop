@@ -6,7 +6,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 public class FurnaceCollectorTarget implements ICollectorTarget {
 
-    FurnaceTileEntity tile;
+    final FurnaceTileEntity tile;
 
     public FurnaceCollectorTarget(FurnaceTileEntity tile) {
         this.tile = tile;

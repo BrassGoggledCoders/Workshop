@@ -13,7 +13,7 @@ import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 public class WorkshopAssetProvider implements IAssetProvider {
 
     ResourceLocation WORKSHOP_LOCATION = new ResourceLocation(MOD_ID, "textures/gui/workshopassets.png");
-    static WorkshopAssetProvider WORKSHOP_PROVIDER = new WorkshopAssetProvider();
+    static final WorkshopAssetProvider WORKSHOP_PROVIDER = new WorkshopAssetProvider();
 
     private final IAsset THERMOMETER_VERTICAL_EMPTY = new IAsset() {
         @Override

@@ -17,7 +17,7 @@ import xyz.brassgoggledcoders.workshop.tileentity.PressTileEntity;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public class PressBlock extends TileBlock {
+public class PressBlock extends TileBlock<PressTileEntity> {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 

@@ -10,15 +10,16 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
+import xyz.brassgoggledcoders.workshop.tileentity.CollectorTileEntity;
 
 public class CollectorRecipe extends SerializableRecipe implements IMachineRecipe {
 
-    public TileEntityType targetTileType;
+    public TileEntityType<CollectorTileEntity> targetTileType;
     public Ingredient input;
     public ItemStack output;
     public int processingTime = 500;
 
-    public CollectorRecipe(ResourceLocation resourceLocation, TileEntityType targetType, Ingredient input, ItemStack output, int processingTime) {
+    public CollectorRecipe(ResourceLocation resourceLocation, TileEntityType<CollectorTileEntity> targetType, Ingredient input, ItemStack output, int processingTime) {
         this(resourceLocation);
         this.targetTileType = targetType;
         this.input = input;

@@ -59,6 +59,15 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .patternLine(" G ")
                 .key('G', Blocks.GRANITE)
                 .build(consumer);
+        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.PRESS.getBlock())
+                .patternLine("WPW")
+                .patternLine("WGW")
+                .patternLine("WCW")
+                .key('W', ItemTags.PLANKS)
+                .key('P', Items.PISTON)
+                .key('G', Tags.Items.GLASS_PANES)
+                .key('C', Items.COBBLESTONE)
+                .build(consumer);
         //endsection
         //section Misc
         TitaniumShapedRecipeBuilder.shapedRecipe(Items.TORCH)

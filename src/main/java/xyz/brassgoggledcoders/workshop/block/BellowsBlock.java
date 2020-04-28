@@ -56,10 +56,12 @@ public class BellowsBlock extends Block {
             BlockPos offsetPos = pos.offset(facing);
             if(worldIn.getTileEntity(offsetPos) instanceof AbstractFurnaceTileEntity) {
                 AbstractFurnaceTileEntity furnace = (AbstractFurnaceTileEntity) worldIn.getTileEntity(pos.offset(state.get(FACING)));
-                furnace.cookTime += 20;
-                //Prevent overflowing as the furnace doesn't do that itself.
-                if(furnace.cookTime >= furnace.cookTimeTotal) {
-                    furnace.cookTime = furnace.cookTimeTotal - 1; //Furnace does an == check not an >= check.
+                if(furnace != null) {
+                    furnace.cookTime += 20;
+                    //Prevent overflowing as the furnace doesn't do that itself.
+                    if (furnace.cookTime >= furnace.cookTimeTotal) {
+                        furnace.cookTime = furnace.cookTimeTotal - 1; //Furnace does an == check not an >= check.
+                    }
                 }
             }
             else if(worldIn.isAirBlock(offsetPos)) {

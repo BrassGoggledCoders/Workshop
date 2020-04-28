@@ -36,7 +36,6 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
-import xyz.brassgoggledcoders.workshop.Workshop;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -349,9 +348,7 @@ public class MachineComponent<T extends IMachineHarness<T, U>, U extends IRecipe
 
     @Override
     public CompoundNBT serializeNBT() {
-        CompoundNBT machineNBT = new CompoundNBT();
-
-        return machineNBT;
+        return new CompoundNBT();
     }
 
     @Override

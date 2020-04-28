@@ -10,6 +10,7 @@ import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 
 @JeiPlugin
+@SuppressWarnings("unused")
 public class WorkshopJEIPlugin implements IModPlugin {
 
     @Override

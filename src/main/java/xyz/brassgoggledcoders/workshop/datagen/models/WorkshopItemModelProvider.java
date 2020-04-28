@@ -34,7 +34,7 @@ public class WorkshopItemModelProvider extends ModelProvider<PropertiedItemModel
         for(BlockRegistryObjectGroup<Block, BlockItem, ?> concrete : WorkshopBlocks.CONCRETES) {
             this.withExistingParent(concrete.getItem().getRegistryName().getPath(), modLoc(BLOCK_FOLDER + "/" + concrete.getName()));
         }
-        //Manually for now TODO these need to be in titanium folder. Texture name needs to change from 'texture' to 'layer0'
+        //Manually for now TODO these need to be in titanium folder. Texture name needs to change from 'texture' to 'layer0'.
         this.singleTexture("iron_dust", mcLoc("item/generated"), new ResourceLocation(Titanium.MODID, "items/resource/dust"));
         this.singleTexture("gold_dust", mcLoc("item/generated"), new ResourceLocation(Titanium.MODID, "items/resource/dust"));
         this.singleTexture("iron_pipe", mcLoc("item/generated"), modLoc("items/resource/pipe"));

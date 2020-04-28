@@ -23,13 +23,13 @@ public class InventoryUtil {
 
     public static boolean inventoryHasIngredients(IItemHandler target, Ingredient[] required) {
         return Arrays.stream(required) //Stream the list
-                //Check that every Ingredient in the list matches against one of the slots
+                //Check every Ingredient in the list matches against one of the slots
                 .allMatch(ingredient ->
                         //Stream the stacks
                         getItemStackStream(target)
                                 //Filter out empties
                                 .filter(stack -> !stack.isEmpty())
                                 //Check if any of them match the Ingredient
-                                .anyMatch(ingredient::test));
+                                .anyMatch(ingredient));
     }
 }

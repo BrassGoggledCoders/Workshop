@@ -41,7 +41,7 @@ public class SpinningWheelRecipeProvider extends TitaniumSerializableProvider {
     }
 
     protected static class Builder {
-        private ResourceLocation name;
+        private final ResourceLocation name;
         private Ingredient[] input;
         private ItemStack output;
         private int processingTime;

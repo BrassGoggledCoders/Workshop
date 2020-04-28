@@ -3,7 +3,6 @@ package xyz.brassgoggledcoders.workshop.tileentity;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.crafting.IRecipe;
-import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.SeasoningBarrelRecipe;

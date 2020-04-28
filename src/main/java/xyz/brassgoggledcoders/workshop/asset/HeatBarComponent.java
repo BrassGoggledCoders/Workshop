@@ -23,10 +23,10 @@ public class HeatBarComponent<T extends IComponentHarness> implements INBTSerial
         IScreenAddonProvider {
 
     private T componentHarness;
-    private int posX;
-    private int posY;
+    private final int posX;
+    private final int posY;
     private int temp;
-    private int maxTemp;
+    private final int maxTemp;
     private HeatBarComponent.BarDirection barDirection;
 
     private DyeColor color;
@@ -195,7 +195,7 @@ public class HeatBarComponent<T extends IComponentHarness> implements INBTSerial
             }
         };
 
-        private BarDirection() {
+        BarDirection() {
         }
 
         @OnlyIn(Dist.CLIENT)
