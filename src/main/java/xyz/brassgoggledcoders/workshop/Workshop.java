@@ -34,7 +34,7 @@ public class Workshop {
     public static final Logger LOGGER = LogManager.getLogger();
 
     public static final ItemGroup ITEM_GROUP = new TitaniumTab(MOD_ID,
-            () -> new ItemStack(net.minecraft.block.Blocks.ANVIL));// TODO ICON
+            () -> new ItemStack(WorkshopBlocks.SEASONING_BARREL.getBlock()));
 
     public Workshop() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();

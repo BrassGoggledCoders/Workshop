@@ -55,6 +55,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addItem(WorkshopItems.SILT, "Silt");
         this.addItem(WorkshopItems.LEATHER_CORDAGE, "Leather Cordage");
         this.addItem(WorkshopItems.LYE, "Lye");
+        this.addItem(WorkshopItems.CHALK, "Chalk");
         //endregion
 
         //region Fluids

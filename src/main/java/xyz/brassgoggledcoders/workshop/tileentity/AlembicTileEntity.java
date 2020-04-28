@@ -8,9 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootParameterSets;
-import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -18,9 +15,9 @@ import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
 import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
+import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 
 public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity, AlembicRecipe> {
 
@@ -138,12 +135,8 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
                 });
             }
             if(currentRecipe.residue != null && world instanceof ServerWorld) {
-                List<ItemStack> list = currentRecipe.residue.generate(new LootContext.Builder((ServerWorld) world).withParameter(LootParameters
-                        .POSITION, this.getPos())
-                        //.withParameter(LootParameters.BLOCK_STATE, this.getBlockState())
-                        .build(LootParameterSets.CHEST));
-                for (ItemStack residueIn : list) {
-                    ItemHandlerHelper.insertItemStacked(residue, residueIn, false);
+                for(RangedItemStack rStack : currentRecipe.residue) {
+                    ItemHandlerHelper.insertItem(this.residue, RangedItemStack.getOutput(world.rand, rStack), false);
                 }
             }
         }

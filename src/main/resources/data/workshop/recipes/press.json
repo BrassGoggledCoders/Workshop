@@ -1,25 +1,43 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "WPW",
-    "WGW",
-    "WBW"
-  ],
-  "key": {
-    "W": {
-      "tag": "minecraft:planks"
-    },
-    "G": {
-      "tag": "forge:glass"
-    },
-    "P": {
-      "item": "minecraft:piston"
-    },
-    "B": {
-      "item": "minecraft:barrel"
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "values": [
+            {
+              "item": "workshop:press",
+              "type": "forge:item_exists"
+            }
+          ],
+          "type": "forge:and"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "WPW",
+          "WGW",
+          "WCW"
+        ],
+        "key": {
+          "W": {
+            "tag": "minecraft:planks"
+          },
+          "P": {
+            "item": "minecraft:piston"
+          },
+          "G": {
+            "tag": "forge:glass_panes"
+          },
+          "C": {
+            "item": "minecraft:cobblestone"
+          }
+        },
+        "result": {
+          "item": "workshop:press"
+        }
+      }
     }
-  },
-  "result": {
-    "item": "workshop:press"
-  }
+  ]
 }

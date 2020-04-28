@@ -5,16 +5,25 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
+import mezz.jei.api.gui.ingredient.IGuiFluidStackGroup;
+import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.storage.loot.*;
+import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class AlembicRecipeCategory implements IRecipeCategory<AlembicRecipe> {
 
@@ -70,18 +79,31 @@ public class AlembicRecipeCategory implements IRecipeCategory<AlembicRecipe> {
         for(int i = 0; i < 3; i++) {
             slot.draw(125, 25 + (i * 17));
         }
-        //arrow.draw(24, 18);
+        arrow.draw(24, 18);
     }
 
     @Override
-    public void setIngredients(AlembicRecipe recipe, IIngredients iIngredients) {
-        iIngredients.setInputIngredients(Arrays.asList(recipe.input));
-        iIngredients.setOutput(VanillaTypes.FLUID, recipe.output);
-        //iIngredients.setOutput(VanillaTypes.ITEM, recipe.residue);
+    public void setIngredients(AlembicRecipe recipe, IIngredients ingredients) {
+        ingredients.setInputIngredients(Arrays.asList(recipe.input));
+        ingredients.setOutput(VanillaTypes.FLUID, recipe.output);
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, AlembicRecipe spinningWheelRecipe, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayout recipeLayout, AlembicRecipe recipe, IIngredients ingredients) {
+        IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+        IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
+        for(int i = 0; i < recipe.input.length; i++) {
+            guiItemStacks.init(0, true, 29, 42 + (i * 17));
+        }
+        guiFluidStacks.init(1, false, 60, 10);
+
+        guiItemStacks.set(ingredients);
+        guiFluidStacks.set(ingredients);
+
+        for(int i = 0; i < 4; i++) {
+            guiItemStacks.init(i, false, 29 + (i * 17), 70);
+            //guiItemStacks.set(i, new ItemStack(residue.get(i)));
+        }
     }
 }

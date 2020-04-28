@@ -1,17 +1,21 @@
 package xyz.brassgoggledcoders.workshop.datagen;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import com.hrznstudio.titanium.Titanium;
 import com.hrznstudio.titanium.recipe.serializer.JSONSerializableDataHandler;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTableManager;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
@@ -23,6 +27,9 @@ import xyz.brassgoggledcoders.workshop.datagen.loot.WorkshopLootTableProvider;
 import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopBlockstateProvider;
 import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopItemModelProvider;
 import xyz.brassgoggledcoders.workshop.datagen.recipe.*;
+import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
+
+import java.util.Iterator;
 
 @Mod.EventBusSubscriber(modid = Workshop.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class WorkshopDataGenerator {
@@ -44,10 +51,31 @@ public class WorkshopDataGenerator {
             }
             return stacks;
         });
-        JSONSerializableDataHandler.map(LootTable.class,
-                LootTableManager::toJson, json ->
-                        //TODO!
-                        ForgeHooks.loadLootTable(LootTableManager.GSON_INSTANCE, new ResourceLocation(Workshop.MOD_ID, "dummy"), (JsonObject) json, true, null));
+        JSONSerializableDataHandler.map(RangedItemStack.class, (object) -> {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("min", object.min);
+            jsonObject.addProperty("max", object.max);
+            jsonObject.add("stack", JSONSerializableDataHandler.writeItemStack(object.stack));
+            return jsonObject;
+        }, (json) -> {
+            JsonObject jsonObject = json.getAsJsonObject();
+            return new RangedItemStack(JSONSerializableDataHandler.readItemStack(jsonObject.get("stack").getAsJsonObject()), jsonObject.get("min").getAsInt(), jsonObject.get("max").getAsInt());
+        });
+        JSONSerializableDataHandler.map(RangedItemStack[].class, (type) -> {
+            JsonArray array = new JsonArray();
+            for (RangedItemStack rStack : type) {
+                array.add(JSONSerializableDataHandler.write(RangedItemStack.class, rStack));
+            }
+            return array;
+        }, (element) -> {
+            RangedItemStack[] stacks = new RangedItemStack[element.getAsJsonArray().size()];
+            int i = 0;
+            for (Iterator<JsonElement> iterator = element.getAsJsonArray().iterator(); iterator.hasNext(); i++) {
+                JsonElement jsonElement = iterator.next();
+                stacks[i] = JSONSerializableDataHandler.read(RangedItemStack.class, jsonElement);
+            }
+            return stacks;
+        });
     }
 
     @SubscribeEvent

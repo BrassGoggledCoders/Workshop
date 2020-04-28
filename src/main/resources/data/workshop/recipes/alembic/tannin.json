@@ -8,48 +8,24 @@
     }
   ],
   "output": "{FluidName:\"minecraft:empty\",Amount:0}",
-  "residue": {
-    "pools": [
-      {
-        "rolls": 1.0,
-        "entries": [
-          {
-            "type": "minecraft:item",
-            "name": "workshop:ash"
-          }
-        ],
-        "functions": [
-          {
-            "function": "minecraft:set_count",
-            "count": {
-              "min": 0.0,
-              "max": 2.0,
-              "type": "minecraft:uniform"
-            }
-          }
-        ]
-      },
-      {
-        "rolls": 1.0,
-        "entries": [
-          {
-            "type": "minecraft:item",
-            "name": "workshop:silt"
-          }
-        ],
-        "functions": [
-          {
-            "function": "minecraft:set_count",
-            "count": {
-              "min": 0.0,
-              "max": 1.0,
-              "type": "minecraft:uniform"
-            }
-          }
-        ]
+  "residue": [
+    {
+      "min": 0,
+      "max": 2,
+      "stack": {
+        "item": "workshop:ash",
+        "count": 1
       }
-    ]
-  },
+    },
+    {
+      "min": 0,
+      "max": 1,
+      "stack": {
+        "item": "workshop:silt",
+        "count": 1
+      }
+    }
+  ],
   "processingTime": 160,
   "type": "workshop:alembic"
 }

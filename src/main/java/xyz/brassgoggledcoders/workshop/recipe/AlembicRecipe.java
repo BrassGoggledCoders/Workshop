@@ -12,6 +12,7 @@ import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandler;
 import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
+import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
 
 import javax.annotation.Nonnull;
 
@@ -21,14 +22,14 @@ public class AlembicRecipe extends WorkshopRecipe {
 
     public Ingredient[] input = new Ingredient[0];
     public FluidStack output = FluidStack.EMPTY;
-    public LootTable residue;
+    public RangedItemStack[] residue;
     public int processingTime = 0;
 
     public AlembicRecipe(ResourceLocation resourceLocation) {
         super(resourceLocation);
     }
 
-    public AlembicRecipe(ResourceLocation name, Ingredient[] input, FluidStack output, LootTable residue, int cooldownTime) {
+    public AlembicRecipe(ResourceLocation name, Ingredient[] input, FluidStack output, RangedItemStack[] residue, int cooldownTime) {
         this(name);
         this.input = input;
         this.output = output;
