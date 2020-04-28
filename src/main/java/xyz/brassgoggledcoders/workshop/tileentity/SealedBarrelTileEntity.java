@@ -46,9 +46,9 @@ public class SealedBarrelTileEntity extends TileEntity implements INamedContaine
 
     public SealedBarrelTileEntity() {
         super(WorkshopBlocks.SEALED_BARREL.getTileEntityType());
-        this.tank = (SidedFluidTankComponent<SealedBarrelTileEntity>) new SidedFluidTankComponent<SealedBarrelTileEntity>("tank", tankCapacity, 80, 20, 0).
-                setColor(DyeColor.MAGENTA).
-                setTankAction(SidedFluidTankComponent.Action.BOTH)
+        this.tank = (SidedFluidTankComponent<SealedBarrelTileEntity>) new SidedFluidTankComponent<>("tank", tankCapacity, 80, 20, 0)
+                .setColor(DyeColor.MAGENTA)
+                .setTankAction(SidedFluidTankComponent.Action.BOTH)
                 .setValidator(fluidStack -> fluidStack.getFluid().getFluid().getAttributes().getTemperature() < Fluids.LAVA.getAttributes().getTemperature());
         this.tank.setComponentHarness(this);
     }
