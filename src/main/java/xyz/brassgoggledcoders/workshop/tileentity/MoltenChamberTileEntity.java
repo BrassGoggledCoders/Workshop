@@ -18,7 +18,7 @@ public class MoltenChamberTileEntity extends AbstractBarrelTileEntity<MoltenCham
 
     @Override
     public boolean checkRecipe(IRecipe<?> recipe) {
-        return recipe.getType() == WorkshopRecipes.MOLTEN_CHAMBER && recipe instanceof MoltenChamberRecipe;
+        return recipe.getType() == WorkshopRecipes.MOLTEN_CHAMBER_SERIALIZER.get().getRecipeType() && recipe instanceof MoltenChamberRecipe;
     }
 
     @Override

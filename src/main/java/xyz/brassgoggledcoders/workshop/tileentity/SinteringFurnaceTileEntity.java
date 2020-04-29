@@ -108,7 +108,7 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
 
     @Override
     public boolean checkRecipe(IRecipe<?> recipe) {
-        return recipe.getType() == WorkshopRecipes.SINTERING_FURNACE && recipe instanceof SinteringFurnaceRecipe;
+        return recipe.getType() == WorkshopRecipes.SINTERING_FURNACE_SERIALIZER.get().getRecipeType() && recipe instanceof SinteringFurnaceRecipe;
     }
 
     @Override

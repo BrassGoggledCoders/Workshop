@@ -20,7 +20,7 @@ import java.util.Collections;
 
 public class SeasoningBarrelRecipeCategory implements IRecipeCategory<SeasoningBarrelRecipe> {
 
-    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.SEASONING_BARREL.toString());
+    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.SEASONING_BARREL_SERIALIZER.get().getRecipeType().toString());
 
     private final IGuiHelper guiHelper;
     private final IDrawable slot;

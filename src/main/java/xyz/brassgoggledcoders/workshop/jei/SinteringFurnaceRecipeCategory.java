@@ -19,7 +19,7 @@ import xyz.brassgoggledcoders.workshop.tileentity.SinteringFurnaceTileEntity;
 
 public class SinteringFurnaceRecipeCategory implements IRecipeCategory<SinteringFurnaceRecipe> {
 
-    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.SINTERING_FURNACE.toString());
+    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.SINTERING_FURNACE_SERIALIZER.get().getRecipeType().toString());
 
     private final IGuiHelper guiHelper;
     private final IDrawable slot;

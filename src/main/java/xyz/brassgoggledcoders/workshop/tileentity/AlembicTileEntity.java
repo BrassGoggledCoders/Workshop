@@ -93,7 +93,7 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
 
     @Override
     public boolean checkRecipe(IRecipe<?> recipe) {
-        return recipe.getType() == WorkshopRecipes.ALEMBIC && recipe instanceof AlembicRecipe;
+        return recipe.getType() == WorkshopRecipes.ALEMBIC_SERIALIZER.get().getRecipeType() && recipe instanceof AlembicRecipe;
     }
 
     @Override

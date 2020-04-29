@@ -19,7 +19,7 @@ import java.util.Arrays;
 
 public class SpinningWheelRecipeCategory implements IRecipeCategory<SpinningWheelRecipe> {
 
-    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.SPINNING_WHEEL.toString());
+    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.SPINNING_WHEEL_SERIALIZER.get().getRecipeType().toString());
 
     private final IGuiHelper guiHelper;
     private final IDrawable slot;

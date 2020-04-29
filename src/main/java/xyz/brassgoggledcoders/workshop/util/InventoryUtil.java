@@ -1,5 +1,6 @@
 package xyz.brassgoggledcoders.workshop.util;
 
+import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.items.IItemHandler;
@@ -9,6 +10,12 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class InventoryUtil {
+
+    public static final String ITEM_INPUT = "item_input";
+    public static final DyeColor ITEM_INPUT_COLOR = DyeColor.BLUE;
+    public static final String ITEM_OUTPUT = "item_output";
+    public static final DyeColor ITEM_OUTPUT_COLOR = DyeColor.RED;
+
     public static Stream<ItemStack> getItemStackStream(IItemHandler inventory) {
         //Get slot indexes
         return IntStream.range(0, inventory.getSlots())

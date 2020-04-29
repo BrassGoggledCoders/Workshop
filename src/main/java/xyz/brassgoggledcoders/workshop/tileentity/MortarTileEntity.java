@@ -78,7 +78,7 @@ public class MortarTileEntity extends BasicMachineTileEntity<MortarTileEntity, M
 
     @Override
     public boolean checkRecipe(IRecipe<?> recipe) {
-        return recipe.getType() == WorkshopRecipes.MORTAR && recipe instanceof MortarRecipe;
+        return recipe.getType() == WorkshopRecipes.MORTAR_SERIALIZER.get().getRecipeType() && recipe instanceof MortarRecipe;
     }
 
     @Override

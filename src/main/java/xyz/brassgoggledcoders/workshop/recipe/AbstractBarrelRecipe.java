@@ -13,7 +13,7 @@ import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 
-public abstract class AbstractBarrelRecipe extends SerializableRecipe implements IMachineRecipe {
+public abstract class AbstractBarrelRecipe extends WorkshopRecipe {
     public Ingredient itemIn = Ingredient.EMPTY;
     public ItemStack itemOut = ItemStack.EMPTY;
     public FluidStack fluidIn = FluidStack.EMPTY;
@@ -39,19 +39,9 @@ public abstract class AbstractBarrelRecipe extends SerializableRecipe implements
     }
 
     @Override
-    public boolean matches(@Nonnull IInventory inv, @Nonnull World world) {
-        return false;
-    }
-
-    @Override
     @Nonnull
     public ItemStack getCraftingResult(@Nonnull IInventory inv) {
-        return ItemStack.EMPTY;
-    }
-
-    @Override
-    public boolean canFit(int width, int height) {
-        return false;
+        return itemOut;
     }
 
     @Override

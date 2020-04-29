@@ -97,7 +97,7 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
 
     @Override
     public boolean checkRecipe(IRecipe<?> recipe) {
-        return recipe.getType() == WorkshopRecipes.PRESS && recipe instanceof PressRecipe;
+        return recipe.getType() == WorkshopRecipes.PRESS_SERIALIZER.get().getRecipeType() && recipe instanceof PressRecipe;
     }
 
     @Override

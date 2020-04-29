@@ -42,7 +42,7 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
 
     @Override
     public boolean checkRecipe(IRecipe<?> recipe) {
-        return recipe.getType() == WorkshopRecipes.COLLECTOR && recipe instanceof CollectorRecipe;
+        return recipe.getType() == WorkshopRecipes.COLLECTOR_SERIALIZER.get().getRecipeType() && recipe instanceof CollectorRecipe;
     }
 
     @Override

@@ -50,7 +50,7 @@ public class CollectorRecipe extends WorkshopRecipe {
     @Override
     @Nonnull
     public IRecipeType<?> getType() {
-        return WorkshopRecipes.COLLECTOR;
+        return WorkshopRecipes.COLLECTOR_SERIALIZER.get().getRecipeType();
     }
 
     @Override

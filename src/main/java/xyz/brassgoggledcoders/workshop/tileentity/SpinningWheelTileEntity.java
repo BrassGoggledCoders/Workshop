@@ -31,13 +31,13 @@ public class SpinningWheelTileEntity extends BasicMachineTileEntity<SpinningWhee
         super(WorkshopBlocks.SPINNING_WHEEL.getTileEntityType(), new ProgressBarComponent<>(75, 25, 100));
         int pos = 0;
         this.getMachineComponent().addInventory(this.input = new SidedInventoryComponent<SpinningWheelTileEntity>(
-                "input", 34, 25, 3, pos++)
-                .setColor(DyeColor.RED)
+                InventoryUtil.ITEM_INPUT, 34, 25, 3, pos++)
+                .setColor(InventoryUtil.ITEM_INPUT_COLOR)
                 .setRange(1, 3)
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
         this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<SpinningWheelTileEntity>(
-                "output", 102, 44, 1, pos++)
-                .setColor(DyeColor.BLACK)
+                InventoryUtil.ITEM_OUTPUT, 102, 44, 1, pos++)
+                .setColor(InventoryUtil.ITEM_OUTPUT_COLOR)
                 .setInputFilter((stack, integer) -> false));
         this.getMachineComponent().getPrimaryBar().setOnTickWork(() -> {
             if (workingTime >= 0) {
@@ -148,7 +148,7 @@ public class SpinningWheelTileEntity extends BasicMachineTileEntity<SpinningWhee
 
     @Override
     public boolean checkRecipe(IRecipe<?> recipe) {
-        return recipe.getType() == WorkshopRecipes.SPINNING_WHEEL && recipe instanceof SpinningWheelRecipe;
+        return recipe.getType() == WorkshopRecipes.SPINNING_WHEEL_SERIALIZER.get().getRecipeType() && recipe instanceof SpinningWheelRecipe;
     }
 
     @Override

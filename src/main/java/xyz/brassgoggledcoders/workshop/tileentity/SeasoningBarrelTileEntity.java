@@ -22,7 +22,7 @@ public class SeasoningBarrelTileEntity extends AbstractBarrelTileEntity<Seasonin
 
     @Override
     public boolean checkRecipe(IRecipe<?> recipe) {
-        return recipe.getType() == WorkshopRecipes.SEASONING_BARREL && recipe instanceof SeasoningBarrelRecipe;
+        return recipe.getType() == WorkshopRecipes.SEASONING_BARREL_SERIALIZER.get().getRecipeType() && recipe instanceof SeasoningBarrelRecipe;
     }
 
     @Override

@@ -21,7 +21,7 @@ import java.util.Collections;
 
 public class MoltenChamberRecipeCategory implements IRecipeCategory<MoltenChamberRecipe> {
 
-    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.MOLTEN_CHAMBER.toString());
+    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.MOLTEN_CHAMBER_SERIALIZER.get().getRecipeType().toString());
 
     private final IGuiHelper guiHelper;
     private final IDrawable slot;
@@ -56,7 +56,7 @@ public class MoltenChamberRecipeCategory implements IRecipeCategory<MoltenChambe
 
     @Override
     public IDrawable getIcon() {
-        return this.guiHelper.createDrawableIngredient(new ItemStack(WorkshopBlocks.SEASONING_BARREL.getBlock()));
+        return this.guiHelper.createDrawableIngredient(new ItemStack(WorkshopBlocks.MOLTEN_CHAMBER.getBlock()));
     }
 
     @Override

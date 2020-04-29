@@ -22,7 +22,7 @@ import java.util.List;
 
 public class AlembicRecipeCategory implements IRecipeCategory<AlembicRecipe> {
 
-    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.ALEMBIC.toString());
+    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.ALEMBIC_SERIALIZER.get().getRecipeType().toString());
 
     private final IGuiHelper guiHelper;
     private final IDrawable slot;
