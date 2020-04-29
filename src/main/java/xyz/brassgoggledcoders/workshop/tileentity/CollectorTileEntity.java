@@ -14,6 +14,7 @@ import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopCapabilities;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.CollectorRecipe;
+import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
 import java.util.stream.Stream;
 
@@ -23,10 +24,10 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
 
     public CollectorTileEntity() {
         super(WorkshopBlocks.COLLECTOR.getTileEntityType(),
-                new ProgressBarComponent<CollectorTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
+                new ProgressBarComponent<CollectorTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.VERTICAL_UP));
         int pos = 0;
-        this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<CollectorTileEntity>("output", 102, 44, 1, pos++)
-                .setColor(DyeColor.BLACK)
+        this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<CollectorTileEntity>(InventoryUtil.ITEM_OUTPUT, 102, 44, 1, pos++)
+                .setColor(InventoryUtil.ITEM_OUTPUT_COLOR)
                 .setInputFilter((stack, integer) -> false));
     }
 

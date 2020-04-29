@@ -2,7 +2,6 @@ package xyz.brassgoggledcoders.workshop.content;
 
 import com.hrznstudio.titanium.recipe.serializer.GenericSerializer;
 import com.hrznstudio.titanium.recipe.serializer.SerializableRecipe;
-import com.sun.org.apache.regexp.internal.RE;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraftforge.eventbus.api.IEventBus;

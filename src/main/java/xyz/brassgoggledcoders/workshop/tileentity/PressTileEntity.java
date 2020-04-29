@@ -13,6 +13,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.PressRecipe;
+import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -22,19 +23,19 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
     private final SidedInventoryComponent<PressTileEntity> inputInventory;
     private final SidedFluidTankComponent<PressTileEntity> outputFluid;
 
+    private double height = 0.8;
+
     public PressTileEntity() {
-        super(WorkshopBlocks.PRESS.getTileEntityType(), new ProgressBarComponent<PressTileEntity>(40, 25, 120).
+        super(WorkshopBlocks.PRESS.getTileEntityType(), new ProgressBarComponent<PressTileEntity>(70, 40, 120).
                 setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
         int pos = 0;
-        this.getMachineComponent().addInventory(this.inputInventory = (SidedInventoryComponent<PressTileEntity>) new SidedInventoryComponent<PressTileEntity>("inputInventory", 34, 25, 1, pos++)
-                .setColor(DyeColor.RED)
+        this.getMachineComponent().addInventory(this.inputInventory = (SidedInventoryComponent<PressTileEntity>) new SidedInventoryComponent<PressTileEntity>(InventoryUtil.ITEM_INPUT, 45, 50, 1, pos++)
+                .setColor(InventoryUtil.ITEM_INPUT_COLOR)
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
-        this.getMachineComponent().addTank(this.outputFluid = (SidedFluidTankComponent<PressTileEntity>) new SidedFluidTankComponent<PressTileEntity>("output_fluid", 4000, 100, 20, pos++).
-                setColor(DyeColor.MAGENTA).
+        this.getMachineComponent().addTank(this.outputFluid = (SidedFluidTankComponent<PressTileEntity>) new SidedFluidTankComponent<PressTileEntity>(InventoryUtil.FLUID_OUTPUT, 4000, 100, 20, pos++).
+                setColor(InventoryUtil.FLUID_OUTPUT_COLOR).
                 setTankAction(SidedFluidTankComponent.Action.DRAIN));
     }
-
-    private double height = 0.8;
 
     @Override
     public void tick() {

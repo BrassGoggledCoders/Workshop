@@ -15,6 +15,10 @@ public class InventoryUtil {
     public static final DyeColor ITEM_INPUT_COLOR = DyeColor.BLUE;
     public static final String ITEM_OUTPUT = "item_output";
     public static final DyeColor ITEM_OUTPUT_COLOR = DyeColor.RED;
+    public static final String FLUID_INPUT = "fluid_input";
+    public static final DyeColor FLUID_INPUT_COLOR = DyeColor.GREEN;
+    public static final String FLUID_OUTPUT = "fluid_output";
+    public static final DyeColor FLUID_OUTPUT_COLOR = DyeColor.PURPLE;
 
     public static Stream<ItemStack> getItemStackStream(IItemHandler inventory) {
         //Get slot indexes

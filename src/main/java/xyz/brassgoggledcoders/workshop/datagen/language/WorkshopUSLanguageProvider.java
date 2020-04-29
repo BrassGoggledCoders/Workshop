@@ -9,6 +9,7 @@ import org.codehaus.plexus.util.StringUtils;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.capabilities.BottleCapabilityProvider;
 import xyz.brassgoggledcoders.workshop.content.*;
+import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
 public class WorkshopUSLanguageProvider extends LanguageProvider {
     public WorkshopUSLanguageProvider(DataGenerator gen) {
@@ -78,12 +79,14 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         //endregion
 
         //region Tooltips
-        this.addTooltip("input", "Input");
-        this.addTooltip("output", "Output");
-        this.addTooltip("residue", "Residue");
-        this.addTooltip("colditem","Cooling Source");
-        this.addTooltip("container", "Container");
-        this.addTooltip("powderinventory", "Powder");
+        this.addFacingTooltip(InventoryUtil.ITEM_INPUT, "Item Input");
+        this.addFacingTooltip(InventoryUtil.ITEM_OUTPUT, "Item Output");
+        this.addFacingTooltip(InventoryUtil.FLUID_INPUT, "Fluid Input");
+        this.addFacingTooltip(InventoryUtil.FLUID_OUTPUT, "Fluid Output");
+        this.addFacingTooltip("residue", "Residue");
+        this.addFacingTooltip("colditem","Cooling Source");
+        this.addFacingTooltip("container", "Container");
+        this.addFacingTooltip("powderinventory", "Powder");
         //endregion
 
         //region Resources
@@ -107,7 +110,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addItem(() -> BottleCapabilityProvider.getFilledBottle(new FluidStack(fluid.getFluid(), 1)).getItem(), String.format("Bottle of %s", name));
     }
 
-    public void addTooltip(String key, String name) {
+    public void addFacingTooltip(String key, String name) {
         String prefix = "tooltip.titanium.facing_handler.";
         this.add(prefix + key, name);
     }

@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import xyz.brassgoggledcoders.workshop.recipe.AbstractBarrelRecipe;
+import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
 import javax.annotation.Nonnull;
 
@@ -27,21 +28,21 @@ public abstract class AbstractBarrelTileEntity<T extends BasicMachineTileEntity<
         super(tileEntityType, progressBar);
         int pos = 0;
         this.getMachineComponent().addInventory(this.inputInventory = new SidedInventoryComponent<T>(
-                "inputInventory", 29, 42, 1, pos++)
-                .setColor(DyeColor.LIGHT_BLUE)
+                InventoryUtil.ITEM_INPUT, 29, 42, 1, pos++)
+                .setColor(InventoryUtil.ITEM_INPUT_COLOR)
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
         this.getMachineComponent().addTank(this.inputFluidTank = new SidedFluidTankComponent<T>(
-                "inputFluidTank", tankSize, 52, 20, pos++)
-                .setColor(DyeColor.BROWN)
+                InventoryUtil.FLUID_INPUT, tankSize, 52, 20, pos++)
+                .setColor(InventoryUtil.FLUID_INPUT_COLOR)
                 .setTankAction(SidedFluidTankComponent.Action.FILL)
                 .setOnContentChange(this.getMachineComponent()::forceRecipeRecheck));
         this.getMachineComponent().addInventory(this.outputInventory = new SidedInventoryComponent<T>(
-                "outputInventory", 130, 42, 1, pos++)
-                .setColor(DyeColor.BLUE)
+                InventoryUtil.ITEM_OUTPUT, 130, 42, 1, pos++)
+                .setColor(InventoryUtil.ITEM_OUTPUT_COLOR)
                 .setInputFilter((stack, integer) -> false));
         this.getMachineComponent().addTank(this.outputFluidTank = new SidedFluidTankComponent<T>(
-                "outputFluidTank", tankSize, 105, 20, pos++)
-                .setColor(DyeColor.BLACK)
+                InventoryUtil.FLUID_OUTPUT, tankSize, 105, 20, pos++)
+                .setColor(InventoryUtil.FLUID_OUTPUT_COLOR)
                 .setTankAction(SidedFluidTankComponent.Action.DRAIN));
     }
 

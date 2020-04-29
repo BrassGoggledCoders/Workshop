@@ -33,17 +33,17 @@ public class MortarTileEntity extends BasicMachineTileEntity<MortarTileEntity, M
     public MortarTileEntity() {
         super(WorkshopBlocks.MORTAR.getTileEntityType(), new ProgressBarComponent<MortarTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
         int pos = 0;
-        this.getMachineComponent().addInventory(this.input = new SidedInventoryComponent<MortarTileEntity>("input", 10, 25, inputSize, pos++)
-                .setColor(DyeColor.RED)
+        this.getMachineComponent().addInventory(this.input = new SidedInventoryComponent<MortarTileEntity>(InventoryUtil.ITEM_INPUT, 10, 25, inputSize, pos++)
+                .setColor(InventoryUtil.ITEM_INPUT_COLOR)
                 .setRange(2, 3)
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
         this.getMachineComponent().addTank(this.fluidInput = new SidedFluidTankComponent<MortarTileEntity>(
-                "inputFluidTank", tankSize, 50, 20, pos++)
-                .setColor(DyeColor.BROWN)
+                InventoryUtil.FLUID_INPUT, tankSize, 50, 20, pos++)
+                .setColor(InventoryUtil.FLUID_INPUT_COLOR)
                 .setTankAction(SidedFluidTankComponent.Action.FILL)
                 .setOnContentChange(this.getMachineComponent()::forceRecipeRecheck));
-        this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<MortarTileEntity>("output", 102, 44, 1, pos++)
-                .setColor(DyeColor.BLACK)
+        this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<MortarTileEntity>(InventoryUtil.ITEM_OUTPUT, 102, 44, 1, pos++)
+                .setColor(InventoryUtil.ITEM_OUTPUT_COLOR)
                 .setInputFilter((stack, integer) -> false));
         this.getMachineComponent().getPrimaryBar().setCanIncrease(tileEntity -> false);
         this.getMachineComponent().getPrimaryBar().setCanReset(tileEntity -> false);

@@ -38,14 +38,14 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
     public AlembicTileEntity() {
         super(WorkshopBlocks.ALEMBIC.getTileEntityType(), new ProgressBarComponent<AlembicTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
         int pos = 0;
-        this.getMachineComponent().addInventory(this.input = new SidedInventoryComponent<AlembicTileEntity>("input", 34, 25, inputSize, pos++)
-                .setColor(DyeColor.RED)
+        this.getMachineComponent().addInventory(this.input = new SidedInventoryComponent<AlembicTileEntity>(InventoryUtil.ITEM_INPUT, 34, 25, inputSize, pos++)
+                .setColor(InventoryUtil.ITEM_INPUT_COLOR)
                 .setRange(1, 3));
         this.getMachineComponent().addInventory(this.container = new SidedInventoryComponent<AlembicTileEntity>("container", 56, 43, 1, pos++)
                 .setColor(DyeColor.WHITE)
                 .setInputFilter((stack, integer) -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent()));
-        this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<AlembicTileEntity>("output", 102, 44, 1, pos++)
-                .setColor(DyeColor.BLACK)
+        this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<AlembicTileEntity>(InventoryUtil.ITEM_OUTPUT, 102, 44, 1, pos++)
+                .setColor(InventoryUtil.ITEM_OUTPUT_COLOR)
                 .setInputFilter((stack, integer) -> false));
         this.getMachineComponent().addInventory(this.residue = new SidedInventoryComponent<AlembicTileEntity>(
                 "residue", 125, 25, residueSize, pos++)
