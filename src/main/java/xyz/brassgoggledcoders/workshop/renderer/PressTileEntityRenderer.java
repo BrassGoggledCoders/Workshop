@@ -2,6 +2,8 @@ package xyz.brassgoggledcoders.workshop.renderer;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
@@ -15,10 +17,13 @@ import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ILightReader;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
-import xyz.brassgoggledcoders.workshop.block.press.PressBlock;
+import xyz.brassgoggledcoders.workshop.block.PressBlock;
 import xyz.brassgoggledcoders.workshop.tileentity.PressTileEntity;
+
+import static xyz.brassgoggledcoders.workshop.content.WorkshopBlocks.PRESS_ARM;
 
 public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity> {
 
@@ -28,28 +33,55 @@ public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity>
 
     @Deprecated
     @Override
-    public void render(PressTileEntity pressTileEntity, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int i, int i1) {
-        if (!pressTileEntity.hasWorld()) {
+    public void render(PressTileEntity press, float v, MatrixStack stack, IRenderTypeBuffer buf, int combinedLight, int combinedOverlay) {
+        if (!press.hasWorld()) {
             return;
         }
+
+        //ArmRender
+        renderArm(press,stack,buf,combinedLight,combinedOverlay);
+
         //Fluid Visuals
-        if(!pressTileEntity.getOutputFluid().isEmpty()) {
-            //renderFluidBlock(pressTileEntity);
+        if(!press.getOutputFluid().isEmpty()) {
+            Tessellator tessellator = Tessellator.getInstance();
+            BufferBuilder renderer = tessellator.getBuffer();
+            stack.push();
+            stack.scale(1,0.3F,1);
+            assert press.getComponentWorld() != null;
+            Minecraft.getInstance().getBlockRendererDispatcher().renderFluid(press.getPos(), press.getComponentWorld(),renderer,press.getOutputFluid().getFluid().getFluid().getDefaultState());
+            stack.pop();
         }
 
-        //Item Visuals
+        //Render Item
+        renderInventory(press,stack,buf,combinedLight,combinedOverlay);
+
+    }
+
+
+    //Inventory Item Renderer
+    private void renderInventory(PressTileEntity press,MatrixStack stack,IRenderTypeBuffer buf, int combinedLight, int combinedOverlay){
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-        ItemStack item = pressTileEntity.getInputInventory().getStackInSlot(0);
-        float f = pressTileEntity.getWorld().getBlockState(pressTileEntity.getPos()).get(PressBlock.FACING).getHorizontalAngle();
-        if(!item.isEmpty()){
-            GlStateManager.pushMatrix();
-            //GlStateManager.translated(x + 0.5, y + 0.5, z + 0.5);
-            GlStateManager.rotatef(f, 0, 1, 0.0F);
-            GlStateManager.scalef(0.4f, 0.4f, 0.4f);
-            itemRenderer.renderItem(null, item, ItemCameraTransforms.TransformType.FIXED, false, matrixStack, iRenderTypeBuffer,
-                    pressTileEntity.getWorld(), i, i1);
-            GlStateManager.popMatrix();
+        ItemStack item = press.getInputInventory().getStackInSlot(0);
+        float f = press.getWorld().getBlockState(press.getPos()).get(PressBlock.FACING).getHorizontalAngle();
+        if(!item.isEmpty() && press.getHeight() > 0.5){
+            stack.push();
+            stack.translate(0.5,0.5,0.5);
+            stack.scale(0.4f, 0.4f, 0.4f);
+            itemRenderer.renderItem(null, item, ItemCameraTransforms.TransformType.FIXED, false, stack, buf,
+                    press.getWorld(), combinedLight, combinedOverlay);
+            stack.pop();
         }
+    }
+
+
+    //Arm Stuff
+    private void renderArm(PressTileEntity press,MatrixStack stack, IRenderTypeBuffer buf, int combinedLight, int combinedOverlay){
+        BlockRendererDispatcher blockRender = Minecraft.getInstance().getBlockRendererDispatcher();
+        stack.push();
+        stack.translate(0,press.getHeight(),0);
+        stack.scale(1,1,1);
+        blockRender.renderBlock(PRESS_ARM.getBlock().getDefaultState(),stack,buf,combinedLight,combinedOverlay);
+        stack.pop();
     }
 
     public void renderFluidBlock(PressTileEntity tile){
@@ -67,21 +99,21 @@ public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity>
             BufferBuilder renderer = tessellator.getBuffer();
             renderer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 
-            GlStateManager.pushMatrix();
+            RenderSystem.pushMatrix();
             RenderHelper.disableStandardItemLighting();
-            GlStateManager.enableBlend();
+            RenderSystem.enableBlend();
 
-            GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-            GlStateManager.translated(pos.getX(), pos.getY(), pos.getZ());
-            //renderSide(renderer, still, 0, 0, 0, 0, 0, 0, Direction.NORTH, color, false);
-            //renderSide(renderer, still, 0, 0, 0, 0, 0, 0, Direction.SOUTH, color, false);
-            //renderSide(renderer, still, 0, 0, 0, 0, 0, 0, Direction.EAST, color, false);
-            //renderSide(renderer, still, 0, 0, 0, 0, 0, 0, Direction.WEST, color, false);
-            //renderSide(renderer, still, 0, 0, 0, 0, 0, 0, Direction.UP, color, false);
-            //renderSide(renderer, still, 0, 0, 0, 0, 0, 0, Direction.DOWN, color, false);
-            GlStateManager.disableBlend();
+            RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            RenderSystem.translated(pos.getX(), pos.getY(), pos.getZ());
+            renderSide(renderer, still, 0, 0, 0, .5, .5, .5, Direction.NORTH, color, false);
+            renderSide(renderer, still, 0, 0, 0, .5, .5, .5, Direction.SOUTH, color, false);
+            renderSide(renderer, still, 0, 0, 0, .5, .5, .5, Direction.EAST, color, false);
+            renderSide(renderer, still, 0, 0, 0, .5, .5, .5, Direction.WEST, color, false);
+            renderSide(renderer, still, 0, 0, 0, .5, .5, .5, Direction.UP, color, false);
+            renderSide(renderer, still, 0, 0, 0, .5, .5, .5, Direction.DOWN, color, false);
+            RenderSystem.disableBlend();
             RenderHelper.enableStandardItemLighting();
-            GlStateManager.popMatrix();
+            RenderSystem.popMatrix();
         }
 
     }
@@ -203,4 +235,5 @@ public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity>
                 break;
         }
     }
+
 }

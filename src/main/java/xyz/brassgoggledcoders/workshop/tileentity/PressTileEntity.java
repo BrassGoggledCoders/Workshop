@@ -4,14 +4,18 @@ import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.item.DyeColor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.PressRecipe;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, PressRecipe> {
 
@@ -30,6 +34,64 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
                 setTankAction(SidedFluidTankComponent.Action.DRAIN));
     }
 
+    private double height = 0.8;
+
+    @Override
+    public void tick() {
+        int progress = getMachineComponent().getPrimaryBar().getProgress();
+        int max = getMachineComponent().getPrimaryBar().getMaxProgress();
+        double time = (double)max / 60;
+        updatePressProgress();
+        if(progress % time == 0 && progress != 0){
+            if(height > 0.2){
+                height = height - 0.01;
+            }
+        } else if(progress == 0 && height != 0.8){
+            height = 0.8;
+        }
+        super.tick();
+    }
+
+    public double getHeight(){
+        return height;
+    }
+
+    public void updatePressProgress(){
+        requestModelDataUpdate();
+        this.markDirty();
+        if (this.getWorld() != null) {
+            this.getWorld().notifyBlockUpdate(pos, this.getBlockState(), this.getBlockState(), 3);
+        }
+    }
+
+    @Nullable
+    @Override
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        return new SUpdateTileEntityPacket(this.getPos(), -1, this.getUpdateTag());
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+        handleUpdateTag(pkt.getNbtCompound());
+    }
+
+    @Override
+    @Nonnull
+    public CompoundNBT getUpdateTag() {
+        CompoundNBT updateTag = new CompoundNBT();
+        updateTag.putDouble("height", getHeight());
+        getInputInventory().getStackInSlot(0).write(updateTag);
+        return updateTag;
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundNBT tag) {
+        height = tag.getDouble("height");
+        if(getInputInventory().getStackInSlot(0).isEmpty()) {
+            getInputInventory().insertItem(0, ItemStack.read(tag), false);
+        }
+        updatePressProgress();
+    }
 
     @Override
     public void read(CompoundNBT compound) {

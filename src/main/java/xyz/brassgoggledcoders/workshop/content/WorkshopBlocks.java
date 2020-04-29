@@ -14,7 +14,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.block.*;
-import xyz.brassgoggledcoders.workshop.block.press.PressBlock;
+import xyz.brassgoggledcoders.workshop.block.PressBlock;
 import xyz.brassgoggledcoders.workshop.tileentity.*;
 
 import java.util.Collection;
@@ -87,6 +87,10 @@ public class WorkshopBlocks {
             new BlockRegistryObjectGroup<>("tea", TeaPlantBlock::new, (block) ->
                     new BlockNamedItem(WorkshopBlocks.TEA_PLANT.getBlock(), new Item.Properties().group(Workshop.ITEM_GROUP))).register(BLOCKS, ITEMS);
 
+    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> PRESS_ARM =
+            new BlockRegistryObjectGroup<>("press_arm", () -> new Block(Block.Properties.create(Material.WOOD)),blockItemCreatorNoGroup()).register(BLOCKS, ITEMS);
+
+
     public static final BlockRegistryObjectGroup<BellowsBlock, BlockItem, ?> BELLOWS = new BlockRegistryObjectGroup<>("bellows", BellowsBlock::new, blockItemCreator())
             .register(BLOCKS, ITEMS);
 
@@ -104,6 +108,10 @@ public class WorkshopBlocks {
 
     private static <B extends Block> Function<B, BlockItem> blockItemCreator() {
         return block -> new BlockItem(block, new Item.Properties().group(Workshop.ITEM_GROUP));
+    }
+
+    private static <B extends Block> Function<B, BlockItem> blockItemCreatorNoGroup() {
+        return block -> new BlockItem(block, new Item.Properties());
     }
 
     public static Collection<RegistryObject<Block>> getAllBlocks() {

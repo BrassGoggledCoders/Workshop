@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.block.press;
+package xyz.brassgoggledcoders.workshop.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
