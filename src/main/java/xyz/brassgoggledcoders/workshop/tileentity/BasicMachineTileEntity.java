@@ -122,4 +122,17 @@ public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T,
     public int getProcessingTime(U currentRecipe) {
         return currentRecipe.getProcessingTime();
     }
+
+    @Override
+    public void read(CompoundNBT compound) {
+        this.getMachineComponent().getPrimaryBar().deserializeNBT(compound.getCompound("progress"));
+        super.read(compound);
+    }
+
+    @Override
+    @Nonnull
+    public CompoundNBT write(CompoundNBT compound) {
+        compound.put("progress", this.getMachineComponent().getPrimaryBar().serializeNBT());
+        return super.write(compound);
+    }
 }
