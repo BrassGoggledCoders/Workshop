@@ -10,12 +10,8 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.minecraft.client.Minecraft;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.*;
-import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
@@ -23,7 +19,6 @@ import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class AlembicRecipeCategory implements IRecipeCategory<AlembicRecipe> {
 
@@ -57,7 +52,7 @@ public class AlembicRecipeCategory implements IRecipeCategory<AlembicRecipe> {
 
     @Override
     public IDrawable getBackground() {
-        return this.guiHelper.createBlankDrawable(160, 52);
+        return this.guiHelper.createBlankDrawable(160, 100);
     }
 
     @Override
@@ -94,16 +89,40 @@ public class AlembicRecipeCategory implements IRecipeCategory<AlembicRecipe> {
         IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
         for(int i = 0; i < recipe.input.length; i++) {
-            guiItemStacks.init(0, true, 29, 42 + (i * 17));
+            guiItemStacks.init(i, true, 29, 42 + (i * 17));
         }
-        guiFluidStacks.init(1, false, 60, 10);
+        guiFluidStacks.init(4, false, 60, 10);
+        for(int i = 5; i < recipe.residue.length; i++) {
+            guiItemStacks.init(i, false, 29 + (i * 17), 70);
+            //guiItemStacks.set(i, recipe.residue[i].stack);
+        }
 
         guiItemStacks.set(ingredients);
         guiFluidStacks.set(ingredients);
+    }
 
-        for(int i = 0; i < 4; i++) {
-            guiItemStacks.init(i, false, 29 + (i * 17), 70);
-            //guiItemStacks.set(i, new ItemStack(residue.get(i)));
+    @Override
+    public List<String> getTooltipStrings(AlembicRecipe recipe, double mouseX, double mouseY) {
+        ArrayList<String> list = new ArrayList<>();
+        if(mouseY < 70 && mouseX < 29) {
+            //TODO Probably there's some fancy maths way to make this a oneliner :p
+            //First slot
+            int slot = 0;
+            //Second Slot
+            if(mouseX > (29 * 2)) {
+               slot = 2;
+            }
+            //Third slot
+            else if(mouseX > (29 * 3)) {
+                slot = 3;
+            }
+            //Fourth Slot
+            else if(mouseX > (29 * 4)) {
+                slot = 4;
+            }
+            list.add("Min: " + recipe.residue[slot].min);
+            list.add("Max: " + recipe.residue[slot].max);
         }
+        return list;
     }
 }
