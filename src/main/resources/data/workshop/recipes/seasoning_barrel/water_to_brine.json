@@ -2,10 +2,6 @@
   "itemIn": {
     "item": "workshop:salt"
   },
-  "itemOut": {
-    "item": "minecraft:air",
-    "count": 0
-  },
   "fluidIn": "{FluidName:\"minecraft:water\",Amount:100}",
   "fluidOut": "{FluidName:\"workshop:brine\",Amount:100}",
   "seasoningTime": 1000,

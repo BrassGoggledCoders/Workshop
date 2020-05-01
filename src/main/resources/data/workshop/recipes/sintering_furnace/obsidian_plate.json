@@ -5,10 +5,6 @@
   "itemIn": {
     "item": "minecraft:flint"
   },
-  "itemOut": {
-    "item": "minecraft:air",
-    "count": 0
-  },
   "meltTime": 1200,
   "type": "workshop:sintering_furnace"
 }

@@ -2,10 +2,6 @@
   "itemIn": {
     "item": "workshop:tea_leaves"
   },
-  "itemOut": {
-    "item": "minecraft:air",
-    "count": 0
-  },
   "fluidIn": "{FluidName:\"minecraft:water\",Amount:333}",
   "fluidOut": "{FluidName:\"workshop:tea_liquid\",Amount:333}",
   "seasoningTime": 1200,
