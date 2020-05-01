@@ -143,10 +143,8 @@ public class BottleCapabilityProvider implements IFluidHandlerItem, ICapabilityP
     public static ItemStack getFilledBottle(@Nonnull FluidStack fluidStack) {
         Fluid fluid = fluidStack.getFluid();
 
-        if (!fluidStack.hasTag() || fluidStack.getTag().isEmpty()) {
-            if (fluid == Fluids.WATER) {
-                return PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER);
-            }
+        if (fluid == Fluids.WATER) {
+            return PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER);
         }
         else if(WorkshopItems.BOTTLES.get(fluid.getRegistryName()) != null) {
             return new ItemStack(WorkshopItems.BOTTLES.get(fluid.getRegistryName()).get());

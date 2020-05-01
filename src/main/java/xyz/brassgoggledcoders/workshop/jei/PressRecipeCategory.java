@@ -50,19 +50,19 @@ public class PressRecipeCategory implements IRecipeCategory<PressRecipe> {
 
     @Override
     public IDrawable getBackground() {
-        return this.guiHelper.createBlankDrawable(50, 42);
+        return this.guiHelper.createBlankDrawable(70, 30);
     }
 
     @Override
     public IDrawable getIcon() {
-        return this.guiHelper.createDrawableIngredient(new ItemStack(WorkshopBlocks.MORTAR.getBlock()));
+        return this.guiHelper.createDrawableIngredient(new ItemStack(WorkshopBlocks.PRESS.getBlock()));
     }
 
     @Override
     public void draw(PressRecipe recipe, double mouseX, double mouseY) {
         //Input
         slot.draw(0, 0);
-        arrow.draw(24, 18);
+        arrow.draw(20, 0);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class PressRecipeCategory implements IRecipeCategory<PressRecipe> {
         IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
         guiItemStacks.init(0, true, 0, 0);
-        guiFluidStacks.init(1, false, 50, 22);
+        guiFluidStacks.init(1, false, 50, 0);
 
         guiItemStacks.set(ingredients);
         guiFluidStacks.set(ingredients);

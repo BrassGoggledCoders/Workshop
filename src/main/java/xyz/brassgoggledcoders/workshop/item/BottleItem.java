@@ -71,22 +71,4 @@ public class BottleItem extends BucketItem {
         }
         return stack;
     }
-
-    //Copy of private method in BucketItem
-    public ItemStack fillBucket(ItemStack emptyBuckets, PlayerEntity player, Item fullBucket) {
-        if (player.abilities.isCreativeMode) {
-            return emptyBuckets;
-        } else {
-            emptyBuckets.shrink(1);
-            if (emptyBuckets.isEmpty()) {
-                return new ItemStack(fullBucket);
-            } else {
-                if (!player.inventory.addItemStackToInventory(new ItemStack(fullBucket))) {
-                    player.dropItem(new ItemStack(fullBucket), false);
-                }
-
-                return emptyBuckets;
-            }
-        }
-    }
 }

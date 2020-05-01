@@ -11,7 +11,7 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
-import xyz.brassgoggledcoders.workshop.datagen.WorkshopItemTagsProvider;
+import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopItemTagsProvider;
 import xyz.brassgoggledcoders.workshop.recipe.CollectorRecipe;
 
 import java.util.ArrayList;

@@ -7,6 +7,7 @@ import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraftforge.client.model.DynamicBucketModel;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;

@@ -4,18 +4,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import com.hrznstudio.titanium.Titanium;
 import com.hrznstudio.titanium.recipe.serializer.JSONSerializableDataHandler;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootTable;
-import net.minecraft.world.storage.loot.LootTableManager;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
@@ -27,6 +21,7 @@ import xyz.brassgoggledcoders.workshop.datagen.loot.WorkshopLootTableProvider;
 import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopBlockstateProvider;
 import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopItemModelProvider;
 import xyz.brassgoggledcoders.workshop.datagen.recipe.*;
+import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopItemTagsProvider;
 import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
 
 import java.util.Iterator;
@@ -86,7 +81,6 @@ public class WorkshopDataGenerator {
         if (event.includeClient()) {
             dataGenerator.addProvider(new WorkshopUSLanguageProvider(dataGenerator));
             dataGenerator.addProvider(new WorkshopGBLanguageProvider(dataGenerator));
-            //dataGenerator.addProvider(new WorkshopBlockModelProvider(dataGenerator, existingFileHelper));
             dataGenerator.addProvider(new WorkshopItemModelProvider(dataGenerator, existingFileHelper));
             dataGenerator.addProvider(new WorkshopBlockstateProvider(dataGenerator, existingFileHelper));
         }

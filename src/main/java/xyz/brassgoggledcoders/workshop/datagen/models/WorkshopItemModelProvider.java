@@ -41,6 +41,8 @@ public class WorkshopItemModelProvider extends ModelProvider<PropertiedItemModel
         this.singleTexture("gold_pipe", mcLoc("item/generated"), modLoc("items/resource/pipe"));
         this.singleTexture("iron_film", mcLoc("item/generated"), modLoc("items/resource/film"));
         this.singleTexture("gold_film", mcLoc("item/generated"), modLoc("items/resource/film"));
+
+        this.withExistingParent(WorkshopBlocks.BELLOWS.getName(), modLoc(BLOCK_FOLDER + "/bellows"));
     }
 
     private void bucket(ResourceLocation fluidName) {
