@@ -60,9 +60,9 @@ public class SeasoningBarrelRecipeCategory implements IRecipeCategory<SeasoningB
 
     @Override
     public void draw(SeasoningBarrelRecipe recipe, double mouseX, double mouseY) {
-        slot.draw(10, 0);
+        slot.draw(0, 0);
         slot.draw(100, 0);
-        arrow.draw(24, 10);
+        arrow.draw(50, 10);
     }
 
     @Override
@@ -78,10 +78,10 @@ public class SeasoningBarrelRecipeCategory implements IRecipeCategory<SeasoningB
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
         IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
-        guiItemStacks.init(0, true, 10, 0);
+        guiItemStacks.init(0, true, 0, 0);
         guiFluidStacks.init(1, true, 25, 0);
         guiItemStacks.init(2, false, 100, 0);
-        guiFluidStacks.init(4, false, 105, 0);
+        guiFluidStacks.init(4, false, 120, 0);
 
         guiItemStacks.set(ingredients);
         guiFluidStacks.set(ingredients);

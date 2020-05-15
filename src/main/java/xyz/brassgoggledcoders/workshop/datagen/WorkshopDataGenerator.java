@@ -32,20 +32,6 @@ public class WorkshopDataGenerator {
     static {
         JSONSerializableDataHandler.map(TileEntityType.class, (type) -> new JsonPrimitive(type.getRegistryName().toString()),
                 (element) -> ForgeRegistries.TILE_ENTITIES.getValue(new ResourceLocation(element.getAsString())));
-        JSONSerializableDataHandler.map(ItemStack[].class, (stacks) -> {
-            JsonArray array = new JsonArray();
-            for (ItemStack stack : stacks) {
-                array.add(JSONSerializableDataHandler.writeItemStack(stack));
-            }
-            return array;
-        }, (element) -> {
-            JsonArray array = element.getAsJsonArray();
-            ItemStack[] stacks = new ItemStack[array.size()];
-            for(int i = 0; i < array.size(); i++) {
-                stacks[i] = JSONSerializableDataHandler.readItemStack(array.get(i).getAsJsonObject());
-            }
-            return stacks;
-        });
         JSONSerializableDataHandler.map(RangedItemStack.class, (object) -> {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("min", object.min);

@@ -50,7 +50,7 @@ public class PressRecipeCategory implements IRecipeCategory<PressRecipe> {
 
     @Override
     public IDrawable getBackground() {
-        return this.guiHelper.createBlankDrawable(70, 30);
+        return this.guiHelper.createBlankDrawable(70, 20);
     }
 
     @Override

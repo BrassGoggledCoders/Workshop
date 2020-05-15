@@ -4,7 +4,6 @@
       "item": "minecraft:bone"
     }
   ],
-  "fluidInput": "{FluidName:\"minecraft:empty\",Amount:0}",
   "output": {
     "item": "minecraft:bone_meal",
     "count": 6

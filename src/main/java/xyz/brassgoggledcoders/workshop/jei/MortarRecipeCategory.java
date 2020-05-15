@@ -50,7 +50,7 @@ public class MortarRecipeCategory implements IRecipeCategory<MortarRecipe> {
 
     @Override
     public IDrawable getBackground() {
-        return this.guiHelper.createBlankDrawable(160, 52);
+        return this.guiHelper.createBlankDrawable(160, 110);
     }
 
     @Override
@@ -62,11 +62,11 @@ public class MortarRecipeCategory implements IRecipeCategory<MortarRecipe> {
     public void draw(MortarRecipe recipe, double mouseX, double mouseY) {
         //Input
         for(int i = 0; i < MortarTileEntity.inputSize; i++) {
-            slot.draw(0, 22 + (i * 17));
+            slot.draw(0, i * 17);
         }
         //Output
         slot.draw(120, 22);
-        //arrow.draw(24, 18);
+        arrow.draw(24, 18);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class MortarRecipeCategory implements IRecipeCategory<MortarRecipe> {
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
         for(int i = 0; i < MortarTileEntity.inputSize; i++) {
-            guiItemStacks.init(i, true, 0, 22 + (i * 17));
+            guiItemStacks.init(i, true, 0, i * 17);
         }
         guiItemStacks.init(7, false, 120, 22);
 

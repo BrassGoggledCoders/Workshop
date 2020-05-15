@@ -7,7 +7,6 @@
       "item": "workshop:tallow"
     }
   ],
-  "fluidInput": "{FluidName:\"minecraft:empty\",Amount:0}",
   "output": {
     "item": "workshop:soap",
     "count": 1

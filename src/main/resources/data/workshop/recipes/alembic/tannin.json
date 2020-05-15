@@ -7,7 +7,6 @@
       "item": "workshop:tea_leaves"
     }
   ],
-  "output": "{FluidName:\"minecraft:empty\",Amount:0}",
   "residue": [
     {
       "min": 0,

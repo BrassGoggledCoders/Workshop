@@ -42,6 +42,10 @@ public class WorkshopItemModelProvider extends ModelProvider<PropertiedItemModel
         this.singleTexture("iron_film", mcLoc("item/generated"), modLoc("items/resource/film"));
         this.singleTexture("gold_film", mcLoc("item/generated"), modLoc("items/resource/film"));
 
+        this.singleTexture("tallow", mcLoc("item/generated"), modLoc("items/tallow"));
+        this.singleTexture("lye", mcLoc("item/generated"), modLoc("items/lye"));
+        this.singleTexture("leather_cordage", mcLoc("item/generated"), modLoc("items/leather_cordage"));
+
         this.withExistingParent(WorkshopBlocks.BELLOWS.getName(), modLoc(BLOCK_FOLDER + "/bellows"));
     }
 
