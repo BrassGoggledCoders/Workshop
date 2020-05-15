@@ -4,6 +4,7 @@ import com.hrznstudio.titanium.recipe.serializer.GenericSerializer;
 import com.hrznstudio.titanium.recipe.serializer.SerializableRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -24,6 +25,8 @@ public class WorkshopRecipes {
     public static final RegistryObject<GenericSerializer<CollectorRecipe>> COLLECTOR_SERIALIZER = serializer("collector", CollectorRecipe.class);
     public static final RegistryObject<GenericSerializer<MoltenChamberRecipe>> MOLTEN_CHAMBER_SERIALIZER = serializer("molten_chamber", MoltenChamberRecipe.class);
     public static final RegistryObject<GenericSerializer<MortarRecipe>> MORTAR_SERIALIZER = serializer("mortar", MortarRecipe.class);
+
+    public static final RegistryObject<SpecialRecipeSerializer<TanninRecipe>> TANNIN_SERIALIZER = RECIPE_SERIALIZER.register("tannin", () -> new SpecialRecipeSerializer<>(TanninRecipe::new));
 
     public static void register(IEventBus bus) {
         RECIPE_SERIALIZER.register(bus);
