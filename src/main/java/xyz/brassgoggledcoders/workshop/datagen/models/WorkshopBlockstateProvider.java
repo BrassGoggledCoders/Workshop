@@ -3,6 +3,7 @@ package xyz.brassgoggledcoders.workshop.datagen.models;
 import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
@@ -43,6 +44,10 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
                         new ConfiguredModel(models().withExistingParent("obsidian_plate_down", mcLoc("block/pressure_plate_down")).texture("texture", mcLoc("block/obsidian"))))
                 .partialState().with(ObsidianPlateBlock.POWERED, false).addModels(
                 new ConfiguredModel(models().withExistingParent("obsidian_plate_up", mcLoc("block/pressure_plate_up")).texture("texture", mcLoc("block/obsidian"))));
-        //this.directionalBlock(WorkshopBlocks.MOLTEN_CHAMBER, );
+        this.directionalBlock(WorkshopBlocks.COLLECTOR.getBlock(),
+                this.models().orientable("collector", mcLoc("block/furnace_top"), mcLoc("block/dropper_front_vertical"), mcLoc("block/furnace_top")));
+        this.horizontalBlock(WorkshopBlocks.SCRAP_BIN.getBlock(),
+                this.models().orientable("scrap_bin", mcLoc("block/hopper_outside"), mcLoc("block/hopper_outside"), modLoc("blocks/scrap_bin_top")));
+        this.simpleBlock(WorkshopBlocks.MOLTEN_CHAMBER.getBlock(), this.models().cubeAll("molten_chamber", modLoc("blocks/molten_chamber")));
     }
 }
