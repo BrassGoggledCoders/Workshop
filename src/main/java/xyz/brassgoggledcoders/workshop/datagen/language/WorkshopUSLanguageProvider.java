@@ -56,7 +56,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addItem(WorkshopItems.SILT, "Silt");
         this.addItem(WorkshopItems.LEATHER_CORDAGE, "Leather Cordage");
         this.addItem(WorkshopItems.LYE, "Lye");
-        this.addItem(WorkshopItems.CHALK, "Chalk");
+        //this.(WorkshopItems.CHALK, "Chalk");
         //endregion
 
         //region Fluids
@@ -69,7 +69,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addFluid(WorkshopFluids.RESIN, "Resin");
         this.addFluid(WorkshopFluids.ADHESIVE_OILS, "Adhesive Oils");
         //this.addFluid(WorkshopFluids.CHERRY_JUICE, "Cherry Juice");
-        this.addFluid(WorkshopFluids.GLACIAL_WATER, "Glacial Water");
+        //this.addFluid(WorkshopFluids.GLACIAL_WATER, "Glacial Water");
         this.addFluid(WorkshopFluids.TEA, "Tea");
         //endregion
 

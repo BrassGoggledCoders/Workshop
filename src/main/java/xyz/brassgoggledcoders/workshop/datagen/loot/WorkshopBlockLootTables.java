@@ -60,6 +60,7 @@ public class WorkshopBlockLootTables extends BlockLootTables {
 
         //TODO
         this.registerLootTable(WorkshopBlocks.PRESS_ARM.getBlock(), new LootTable.Builder());
+        this.registerLootTable(WorkshopBlocks.CHALK_WRITING.getBlock(), new LootTable.Builder());
 
         this.registerLootTable(WorkshopBlocks.SEALED_BARREL.getBlock(), new LootTable.Builder()
                 .addLootPool(LootPool.builder()

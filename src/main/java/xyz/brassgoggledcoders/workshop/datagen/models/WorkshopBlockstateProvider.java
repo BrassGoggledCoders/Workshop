@@ -49,5 +49,6 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
         this.horizontalBlock(WorkshopBlocks.SCRAP_BIN.getBlock(),
                 this.models().orientable("scrap_bin", mcLoc("block/hopper_outside"), mcLoc("block/hopper_outside"), modLoc("blocks/scrap_bin_top")));
         this.simpleBlock(WorkshopBlocks.MOLTEN_CHAMBER.getBlock(), this.models().cubeAll("molten_chamber", modLoc("blocks/molten_chamber")));
+        this.simpleBlock(WorkshopBlocks.CHALK_WRITING.getBlock(), this.models().singleTexture("chalk", mcLoc(BLOCK_FOLDER + "/bedrock"), "particle", mcLoc(BLOCK_FOLDER + "/bedrock")));
     }
 }

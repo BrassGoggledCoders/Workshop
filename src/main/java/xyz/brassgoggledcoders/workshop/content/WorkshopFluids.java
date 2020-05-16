@@ -112,7 +112,7 @@ public class WorkshopFluids {
             .block(CHERRY_JUICE::getBlock)
             .bucket(CHERRY_JUICE::getBucket);*/
 
-    public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> GLACIAL_WATER = new FluidRegistryObjectGroup<>("glacial_water",
+    /*public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> GLACIAL_WATER = new FluidRegistryObjectGroup<>("glacial_water",
             () -> new ForgeFlowingFluid.Source(WorkshopFluids.GLACIAL_WATER_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.GLACIAL_WATER_PROPERTIES)).register(FLUIDS, BLOCKS, ITEMS);
 
     public static final ForgeFlowingFluid.Properties GLACIAL_WATER_PROPERTIES = new ForgeFlowingFluid.Properties(GLACIAL_WATER, GLACIAL_WATER::getFlowing,
@@ -121,7 +121,7 @@ public class WorkshopFluids {
                     .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
                     .color(2631935))
             .block(GLACIAL_WATER::getBlock)
-            .bucket(GLACIAL_WATER::getBucket);
+            .bucket(GLACIAL_WATER::getBucket);*/
     
     public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> TEA = new FluidRegistryObjectGroup<>("tea_liquid",
             () -> new ForgeFlowingFluid.Source(WorkshopFluids.TEA_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.TEA_PROPERTIES)).register(FLUIDS, BLOCKS, ITEMS);

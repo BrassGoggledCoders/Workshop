@@ -15,6 +15,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.block.*;
 import xyz.brassgoggledcoders.workshop.block.PressBlock;
+import xyz.brassgoggledcoders.workshop.item.ChalkItem;
 import xyz.brassgoggledcoders.workshop.tileentity.*;
 
 import java.util.Collection;
@@ -97,8 +98,13 @@ public class WorkshopBlocks {
     public static final BlockRegistryObjectGroup<CollectorBlock, BlockItem, CollectorTileEntity> COLLECTOR = new BlockRegistryObjectGroup<>("collector", CollectorBlock::new, blockItemCreator(), CollectorTileEntity::new)
             .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
-    public static final BlockRegistryObjectGroup<ScrapBinBlock, BlockItem, ScrapBinTileEntity> SCRAP_BIN = new BlockRegistryObjectGroup<ScrapBinBlock, BlockItem, ScrapBinTileEntity>("scrap_bin", ScrapBinBlock::new, blockItemCreator(), ScrapBinTileEntity::new)
+    public static final BlockRegistryObjectGroup<ScrapBinBlock, BlockItem, ScrapBinTileEntity> SCRAP_BIN = new BlockRegistryObjectGroup<>("scrap_bin", ScrapBinBlock::new, blockItemCreator(), ScrapBinTileEntity::new)
             .register(BLOCKS, ITEMS, TILE_ENTITIES);
+
+    public static final BlockRegistryObjectGroup<ChalkWritingBlock, ChalkItem, ChalkWritingTileEntity> CHALK_WRITING =
+            new BlockRegistryObjectGroup<>("chalk", ChalkWritingBlock::new,
+                    block -> new ChalkItem(new Item.Properties().group(Workshop.ITEM_GROUP)), ChalkWritingTileEntity::new)
+           .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);

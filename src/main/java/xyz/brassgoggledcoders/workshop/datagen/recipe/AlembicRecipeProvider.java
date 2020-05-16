@@ -12,6 +12,7 @@ import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import xyz.brassgoggledcoders.workshop.Workshop;
+import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
@@ -36,7 +37,7 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
                 .setInputs(Ingredient.fromItems(Items.WATER_BUCKET))
                 .setOutput(new FluidStack(WorkshopFluids.DISTILLED_WATER.getFluid(), FluidAttributes.BUCKET_VOLUME))
                 .setResidue(new RangedItemStack(Items.GLASS_BOTTLE, 1,1),
-                        new RangedItemStack(WorkshopItems.SALT.get(), 1, 2), new RangedItemStack(WorkshopItems.CHALK.get(), 0, 1))
+                        new RangedItemStack(WorkshopItems.SALT.get(), 1, 2), new RangedItemStack(WorkshopBlocks.CHALK_WRITING.getItem(), 0, 1))
                 .setTime(500)
                 .build());
         recipes.add(new Builder("adhesive_oil")

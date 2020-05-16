@@ -9,8 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.DynamicBucketModel;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -24,6 +25,7 @@ import org.apache.logging.log4j.Logger;
 import xyz.brassgoggledcoders.workshop.api.PotionDrinkableFluidBehaviour;
 import xyz.brassgoggledcoders.workshop.api.WorkshopAPI;
 import xyz.brassgoggledcoders.workshop.content.*;
+import xyz.brassgoggledcoders.workshop.renderer.ChalkWritingTileEntityRenderer;
 import xyz.brassgoggledcoders.workshop.renderer.PressTileEntityRenderer;
 import xyz.brassgoggledcoders.workshop.renderer.SinteringTileEntityRenderer;
 
@@ -52,9 +54,11 @@ public class Workshop {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, WorkshopConfig.COMMON_SPEC);
     }
 
+    @OnlyIn(Dist.CLIENT)
     private void clientSetup(final FMLClientSetupEvent event) {
         ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.PRESS.getTileEntityType(), PressTileEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.SINTERING_FURNACE.getTileEntityType(), SinteringTileEntityRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.CHALK_WRITING.getTileEntityType(), ChalkWritingTileEntityRenderer::new);
 
         RenderTypeLookup.setRenderLayer(WorkshopBlocks.SINTERING_FURNACE.getBlock(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(WorkshopBlocks.PRESS.getBlock(), RenderType.getCutout());
