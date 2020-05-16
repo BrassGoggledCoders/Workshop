@@ -1,6 +1,7 @@
 package xyz.brassgoggledcoders.workshop.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.state.DirectionProperty;
@@ -38,6 +39,11 @@ public class PressBlock extends TileBlock<PressTileEntity> {
     @SuppressWarnings("deprecation")
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 32.0D, 16.0D);
+    }
+
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
     }
 
     @Override

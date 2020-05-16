@@ -39,33 +39,27 @@ public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity>
         }
 
         //ArmRender
-        renderArm(press,stack,buf,combinedLight,combinedOverlay);
+        renderArm(press, stack, buf, combinedLight, combinedOverlay);
 
         //Fluid Visuals
-        if(!press.getOutputFluid().isEmpty()) {
-            Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder renderer = tessellator.getBuffer();
-            stack.push();
-            stack.scale(1,0.3F,1);
-            assert press.getComponentWorld() != null;
-            Minecraft.getInstance().getBlockRendererDispatcher().renderFluid(press.getPos(), press.getComponentWorld(),renderer,press.getOutputFluid().getFluid().getFluid().getDefaultState());
-            stack.pop();
+        if (!press.getOutputFluid().isEmpty()) {
+            renderFluidBlock(press, stack, buf, combinedLight);
         }
 
         //Render Item
-        renderInventory(press,stack,buf,combinedLight,combinedOverlay);
+        renderInventory(press, stack, buf, combinedLight, combinedOverlay);
 
     }
 
 
     //Inventory Item Renderer
-    private void renderInventory(PressTileEntity press,MatrixStack stack,IRenderTypeBuffer buf, int combinedLight, int combinedOverlay){
+    private void renderInventory(PressTileEntity press, MatrixStack stack, IRenderTypeBuffer buf, int combinedLight, int combinedOverlay) {
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
         ItemStack item = press.getInputInventory().getStackInSlot(0);
         float f = press.getWorld().getBlockState(press.getPos()).get(PressBlock.FACING).getHorizontalAngle();
-        if(!item.isEmpty() && press.getHeight() > 0.5){
+        if (!item.isEmpty() && press.getHeight() > 0.5) {
             stack.push();
-            stack.translate(0.5,0.5,0.5);
+            stack.translate(0.5, 0.5, 0.5);
             stack.scale(0.4f, 0.4f, 0.4f);
             itemRenderer.renderItem(null, item, ItemCameraTransforms.TransformType.FIXED, false, stack, buf,
                     press.getWorld(), combinedLight, combinedOverlay);
@@ -75,16 +69,16 @@ public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity>
 
 
     //Arm Stuff
-    private void renderArm(PressTileEntity press,MatrixStack stack, IRenderTypeBuffer buf, int combinedLight, int combinedOverlay){
+    private void renderArm(PressTileEntity press, MatrixStack stack, IRenderTypeBuffer buf, int combinedLight, int combinedOverlay) {
         BlockRendererDispatcher blockRender = Minecraft.getInstance().getBlockRendererDispatcher();
         stack.push();
-        stack.translate(0,press.getHeight(),0);
-        stack.scale(1,1,1);
-        blockRender.renderBlock(PRESS_ARM.getBlock().getDefaultState(),stack,buf,combinedLight,combinedOverlay);
+        stack.translate(0, press.getHeight(), 0);
+        stack.scale(1, 1, 1);
+        blockRender.renderBlock(PRESS_ARM.getBlock().getDefaultState(), stack, buf, combinedLight, combinedOverlay);
         stack.pop();
     }
 
-    public void renderFluidBlock(PressTileEntity tile){
+    public void renderFluidBlock(PressTileEntity tile, MatrixStack stack, IRenderTypeBuffer buf, int combinedLight) {
         BlockPos pos = tile.getPos();
         FluidStack fluid = tile.getOutputFluid().getFluid();
         int amount = fluid.getAmount();
@@ -95,31 +89,22 @@ public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity>
             TextureAtlasSprite still = ((AtlasTexture) texture).getSprite(fluid.getFluid().getAttributes().getStillTexture(fluid));
             float posY = 2 / 16f - 1 / 32f;
 
-            Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder renderer = tessellator.getBuffer();
-            renderer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
+            IVertexBuilder renderer = buf.getBuffer(RenderType.getSolid());
 
-            RenderSystem.pushMatrix();
-            RenderHelper.disableStandardItemLighting();
-            RenderSystem.enableBlend();
-
-            RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-            RenderSystem.translated(pos.getX(), pos.getY(), pos.getZ());
-            renderSide(renderer, still, 0, 0, 0, .5, .5, .5, Direction.NORTH, color, false);
-            renderSide(renderer, still, 0, 0, 0, .5, .5, .5, Direction.SOUTH, color, false);
-            renderSide(renderer, still, 0, 0, 0, .5, .5, .5, Direction.EAST, color, false);
-            renderSide(renderer, still, 0, 0, 0, .5, .5, .5, Direction.WEST, color, false);
-            renderSide(renderer, still, 0, 0, 0, .5, .5, .5, Direction.UP, color, false);
-            renderSide(renderer, still, 0, 0, 0, .5, .5, .5, Direction.DOWN, color, false);
-            RenderSystem.disableBlend();
-            RenderHelper.enableStandardItemLighting();
-            RenderSystem.popMatrix();
+            stack.push();
+            renderSide(renderer, stack, still, pos.getX(), pos.getY(), pos.getZ(), 10, 10, 10, Direction.NORTH, color, combinedLight, false);
+            renderSide(renderer, stack, still, pos.getX(), pos.getY(), pos.getZ(), 10, 10, 10, Direction.SOUTH, color, combinedLight, false);
+            renderSide(renderer, stack, still, pos.getX(), pos.getY(), pos.getZ(), 10, 10, 10, Direction.EAST, color, combinedLight, false);
+            renderSide(renderer, stack, still, pos.getX(), pos.getY(), pos.getZ(), 10, 10, 10, Direction.WEST, color, combinedLight, false);
+            renderSide(renderer, stack, still, pos.getX(), pos.getY(), pos.getZ(), 10, 10, 10, Direction.UP, color, combinedLight, false);
+            renderSide(renderer, stack, still, pos.getX(), pos.getY(), pos.getZ(), 10, 10, 10, Direction.DOWN, color, combinedLight, false);
+            stack.pop();
         }
 
     }
 
-    private void renderSide(BufferBuilder renderer, TextureAtlasSprite sprite, double x, double y, double z, double w,
-                            double h, double d, Direction face, int color, boolean flowing) {
+    private void renderSide(IVertexBuilder renderer, MatrixStack stack, TextureAtlasSprite sprite, float x, float y, float z, double w,
+                            double h, double d, Direction face, int color, int combinedLight, boolean flowing) {
         // safety
         if (sprite == null) {
             return;
@@ -135,17 +120,17 @@ public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity>
         float minV;
         float maxV;
 
-        double size = 16f;
+        float size = 16f;
         if (flowing) {
             size = 8f;
         }
 
-        double x1 = x;
-        double x2 = x + w;
-        double y1 = y;
-        double y2 = y + h;
-        double z1 = z;
-        double z2 = z + d;
+        float x1 = x;
+        float x2 = (float) (x + w);
+        float y1 = y;
+        float y2 = (float) (y + h);
+        float z1 = z;
+        float z2 = (float) (z + d);
 
         double xt1 = x1 % 1d;
         double xt2 = xt1 + w;
@@ -198,40 +183,40 @@ public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity>
 
         switch (face) {
             case DOWN:
-                renderer.pos(x1, y1, z1).color(r, g, b, a).tex(minU, minV).endVertex();
-                renderer.pos(x2, y1, z1).color(r, g, b, a).tex(maxU, minV).endVertex();
-                renderer.pos(x2, y1, z2).color(r, g, b, a).tex(maxU, maxV).endVertex();
-                renderer.pos(x1, y1, z2).color(r, g, b, a).tex(minU, maxV).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x1, y1, z1).color(r, g, b, a).tex(minU, minV).lightmap(0, 240).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x2, y1, z1).color(r, g, b, a).tex(maxU, minV).lightmap(0, 240).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x2, y1, z2).color(r, g, b, a).tex(maxU, maxV).lightmap(0, 240).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x1, y1, z2).color(r, g, b, a).tex(minU, maxV).lightmap(0, 240).normal(1, 0, 0).endVertex();
                 break;
             case UP:
-                renderer.pos(x1, y2, z1).color(r, g, b, a).tex(minU, minV).endVertex();
-                renderer.pos(x1, y2, z2).color(r, g, b, a).tex(minU, maxV).endVertex();
-                renderer.pos(x2, y2, z2).color(r, g, b, a).tex(maxU, maxV).endVertex();
-                renderer.pos(x2, y2, z1).color(r, g, b, a).tex(maxU, minV).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x1, y2, z1).color(r, g, b, a).tex(minU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x1, y2, z2).color(r, g, b, a).tex(minU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x2, y2, z2).color(r, g, b, a).tex(maxU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x2, y2, z1).color(r, g, b, a).tex(maxU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
                 break;
             case NORTH:
-                renderer.pos(x1, y1, z1).color(r, g, b, a).tex(minU, maxV).endVertex();
-                renderer.pos(x1, y2, z1).color(r, g, b, a).tex(minU, minV).endVertex();
-                renderer.pos(x2, y2, z1).color(r, g, b, a).tex(maxU, minV).endVertex();
-                renderer.pos(x2, y1, z1).color(r, g, b, a).tex(maxU, maxV).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x1, y1, z1).color(r, g, b, a).tex(minU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x1, y2, z1).color(r, g, b, a).tex(minU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x2, y2, z1).color(r, g, b, a).tex(maxU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x2, y1, z1).color(r, g, b, a).tex(maxU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
                 break;
             case SOUTH:
-                renderer.pos(x1, y1, z2).color(r, g, b, a).tex(maxU, maxV).endVertex();
-                renderer.pos(x2, y1, z2).color(r, g, b, a).tex(minU, maxV).endVertex();
-                renderer.pos(x2, y2, z2).color(r, g, b, a).tex(minU, minV).endVertex();
-                renderer.pos(x1, y2, z2).color(r, g, b, a).tex(maxU, minV).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x1, y1, z2).color(r, g, b, a).tex(maxU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x2, y1, z2).color(r, g, b, a).tex(minU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x2, y2, z2).color(r, g, b, a).tex(minU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x1, y2, z2).color(r, g, b, a).tex(maxU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
                 break;
             case WEST:
-                renderer.pos(x1, y1, z1).color(r, g, b, a).tex(maxU, maxV).endVertex();
-                renderer.pos(x1, y1, z2).color(r, g, b, a).tex(minU, maxV).endVertex();
-                renderer.pos(x1, y2, z2).color(r, g, b, a).tex(minU, minV).endVertex();
-                renderer.pos(x1, y2, z1).color(r, g, b, a).tex(maxU, minV).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x1, y1, z1).color(r, g, b, a).tex(maxU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x1, y1, z2).color(r, g, b, a).tex(minU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x1, y2, z2).color(r, g, b, a).tex(minU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x1, y2, z1).color(r, g, b, a).tex(maxU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
                 break;
             case EAST:
-                renderer.pos(x2, y1, z1).color(r, g, b, a).tex(minU, maxV).endVertex();
-                renderer.pos(x2, y2, z1).color(r, g, b, a).tex(minU, minV).endVertex();
-                renderer.pos(x2, y2, z2).color(r, g, b, a).tex(maxU, minV).endVertex();
-                renderer.pos(x2, y1, z2).color(r, g, b, a).tex(maxU, maxV).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x2, y1, z1).color(r, g, b, a).tex(minU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x2, y2, z1).color(r, g, b, a).tex(minU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x2, y2, z2).color(r, g, b, a).tex(maxU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(),x2, y1, z2).color(r, g, b, a).tex(maxU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
                 break;
         }
     }
