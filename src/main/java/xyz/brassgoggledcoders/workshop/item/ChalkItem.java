@@ -25,7 +25,7 @@ public class ChalkItem extends BlockItem {
 
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
-        //NO-OP for now 
+        //NO-OP for now
         return ActionResultType.PASS;
     }
 
