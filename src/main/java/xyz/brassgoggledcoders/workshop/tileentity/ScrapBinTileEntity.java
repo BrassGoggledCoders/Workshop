@@ -14,6 +14,7 @@ import com.hrznstudio.titanium.network.locator.instance.TileEntityLocatorInstanc
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.DyeColor;
@@ -34,6 +35,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopConfig;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
+import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -45,8 +47,6 @@ public class ScrapBinTileEntity extends TileEntity implements INamedContainerPro
     private final SidedInventoryComponent<ScrapBinTileEntity> inventoryComponent;
     private final SidedInventoryComponent<ScrapBinTileEntity> scrapOutput;
     private final ProgressBarComponent<ScrapBinTileEntity> scrapValue;
-    //TODO NBT Sensitivity
-    private final Map<Item, Integer> totalPerItemType = new HashMap<>();
 
     public ScrapBinTileEntity() {
         super(WorkshopBlocks.SCRAP_BIN.getTileEntityType());
@@ -57,20 +57,27 @@ public class ScrapBinTileEntity extends TileEntity implements INamedContainerPro
         this.scrapOutput = new SidedInventoryComponent<ScrapBinTileEntity>("output", 150, 75, 1, pos++).setColor(DyeColor.BLACK);
         this.scrapValue = new ProgressBarComponent<>(155, 8, WorkshopConfig.COMMON.itemsRequiredPerScrapBag.get());
         this.inventoryComponent.setOnSlotChanged((stack, slotNum) -> {
-            Item item = stack.getItem();
-            if (totalPerItemType.containsKey(item)) {
-                totalPerItemType.put(item, totalPerItemType.get(item) + stack.getCount());
-                if (totalPerItemType.get(item) > 64) {
-                    this.scrapValue.setProgress(this.scrapValue.getProgress() + stack.getCount());
-                    stack.setCount(0);
+            //TODO Caching
+            int count = stack.getCount();
+            for(int i = 0; i < this.inventoryComponent.getSlots(); i++) {
+                if(i != slotNum) {
+                    ItemStack otherStack = this.inventoryComponent.getStackInSlot(i);
+                    if(ItemStack.areItemsEqual(stack, otherStack)) {
+                        count += otherStack.getCount();
+                    }
                 }
-            } else {
-                totalPerItemType.put(item, stack.getCount());
+            }
+            //If we have more than a stack total
+            if(count > 64) {
+                //Shrink by the amount we are over a stack
+                int diff = count - 64;
+                stack.shrink(diff);
+                //Add that value to the scrap counter
+                this.scrapValue.setProgress(Math.min(this.scrapValue.getProgress() + diff, this.scrapValue.getMaxProgress()));
+                this.scrapValue.tickBar();
             }
         });
-        this.scrapValue.setOnFinishWork(() -> {
-            ItemHandlerHelper.insertItem(scrapOutput, new ItemStack(WorkshopItems.SCRAP_BAG.get()), false);
-        });
+        this.scrapValue.setOnFinishWork(() -> ItemHandlerHelper.insertItem(scrapOutput, new ItemStack(WorkshopItems.SCRAP_BAG.get()), false));
     }
 
     @Override
