@@ -2,16 +2,48 @@
   "type": "minecraft:gift",
   "pools": [
     {
-      "rolls": 1,
+      "rolls": {
+        "min": 1.0,
+        "max": 3.0,
+        "type": "minecraft:uniform"
+      },
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:diamond"
+          "weight": 5,
+          "name": "minecraft:redstone"
         },
         {
           "type": "minecraft:item",
           "weight": 26,
-          "name": "minecraft:arrow"
+          "name": "minecraft:spider_eye"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "name": "minecraft:string"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "name": "minecraft:paper"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "minecraft:glass_bottle"
+        },
+        {
+          "type": "minecraft:tag",
+          "weight": 4,
+          "name": "forge:nuggets",
+          "expand": true
+        },
+        {
+          "type": "minecraft:tag",
+          "weight": 10,
+          "name": "forge:seeds",
+          "expand": true
         }
       ]
     }
