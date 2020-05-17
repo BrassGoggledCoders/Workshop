@@ -37,6 +37,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addBlock(WorkshopBlocks.COLLECTOR, "Collector");
         this.addBlock(WorkshopBlocks.SCRAP_BIN, "Scrap Bin");
         this.addBlock(WorkshopBlocks.MORTAR, "Mortar and Pestle");
+        this.addBlock(WorkshopBlocks.CHALK_WRITING, "Chalk");
         //endregion
 
         //region Items

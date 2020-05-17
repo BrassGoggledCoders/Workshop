@@ -33,9 +33,9 @@ public class WorkshopBlocks {
             new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, MOD_ID);
     private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MOD_ID);
 
-    public static final BlockRegistryObjectGroup<ObsidianPlateBlock, BlockItem, ?> OBSIDIAN_PLATE =
-            new BlockRegistryObjectGroup<>("obsidian_plate", ObsidianPlateBlock::new, blockItemCreator())
-                    .register(BLOCKS, ITEMS);
+    public static final BlockRegistryObjectGroup<ObsidianPlateBlock, BlockItem, ObsidianPlateTileEntity> OBSIDIAN_PLATE =
+            new BlockRegistryObjectGroup<ObsidianPlateBlock, BlockItem, ObsidianPlateTileEntity>("obsidian_plate", ObsidianPlateBlock::new, blockItemCreator(), ObsidianPlateTileEntity::new)
+                    .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
     public static final BlockRegistryObjectGroup<BrokenAnvilBlock, BlockItem, ?> BROKEN_ANVIL =
             new BlockRegistryObjectGroup<>("broken_anvil", BrokenAnvilBlock::new, blockItemCreator())

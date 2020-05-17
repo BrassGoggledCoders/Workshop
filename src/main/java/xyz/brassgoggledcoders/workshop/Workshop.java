@@ -25,6 +25,7 @@ import org.apache.logging.log4j.Logger;
 import xyz.brassgoggledcoders.workshop.api.PotionDrinkableFluidBehaviour;
 import xyz.brassgoggledcoders.workshop.api.WorkshopAPI;
 import xyz.brassgoggledcoders.workshop.content.*;
+import xyz.brassgoggledcoders.workshop.network.WorkshopPacketHandler;
 import xyz.brassgoggledcoders.workshop.renderer.ChalkWritingTileEntityRenderer;
 import xyz.brassgoggledcoders.workshop.renderer.PressTileEntityRenderer;
 import xyz.brassgoggledcoders.workshop.renderer.SinteringTileEntityRenderer;
@@ -50,6 +51,8 @@ public class Workshop {
         WorkshopItems.register(modBus);
         WorkshopBlocks.register(modBus);
         WorkshopEffects.register(modBus);
+
+        WorkshopPacketHandler.register();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, WorkshopConfig.COMMON_SPEC);
     }

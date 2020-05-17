@@ -3,41 +3,33 @@ package xyz.brassgoggledcoders.workshop.gui;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.sun.java.accessibility.util.java.awt.TextComponentTranslator;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.StandingSignBlock;
-import net.minecraft.client.gui.IHasContainer;
 import net.minecraft.client.gui.RenderComponentsUtil;
 import net.minecraft.client.gui.fonts.TextInputUtil;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.DyeColor;
-import net.minecraft.network.play.client.CUpdateSignPacket;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import xyz.brassgoggledcoders.workshop.network.UpdateChalkPacket;
+import xyz.brassgoggledcoders.workshop.network.WorkshopPacketHandler;
 import xyz.brassgoggledcoders.workshop.tileentity.ChalkWritingTileEntity;
 
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class ChalkWritingScreen extends Screen {
-    /** Reference to the sign object. */
     private final ChalkWritingTileEntity tileSign;
-    /** Counts the number of screen updates. */
     private int updateCounter;
-    /** The index of the line that is being edited. */
     private int editLine;
     private TextInputUtil textInputUtil;
-
 
     public ChalkWritingScreen(ChalkWritingTileEntity teSign) {
         super(new TranslationTextComponent("sign.edit"));
@@ -49,19 +41,17 @@ public class ChalkWritingScreen extends Screen {
         this.addButton(new Button(this.width / 2 - 100, this.height / 4 + 120, 200, 20, I18n.format("gui.done"), (p_214266_1_) -> {
             this.close();
         }));
-        this.textInputUtil = new TextInputUtil(this.minecraft, () -> {
-            return this.tileSign.getText(this.editLine).getString();
-        }, (p_214265_1_) -> {
-            this.tileSign.setText(this.editLine, new StringTextComponent(p_214265_1_));
-        }, 90);
+        this.textInputUtil = new TextInputUtil(this.minecraft, () -> this.tileSign.getText(this.editLine).getString(),
+                (text) -> this.tileSign.setText(this.editLine, new StringTextComponent(text)), 90);
     }
 
     public void removed() {
         this.minecraft.keyboardListener.enableRepeatEvents(false);
-        ClientPlayNetHandler clientplaynethandler = this.minecraft.getConnection();
-        if (clientplaynethandler != null) {
-            clientplaynethandler.sendPacket(new CUpdateSignPacket(this.tileSign.getPos(), this.tileSign.getText(0), this.tileSign.getText(1), this.tileSign.getText(2), this.tileSign.getText(3)));
+        String[] text = new String[4];
+        for (int i = 0; i < 4; i++) {
+            text[i] = this.tileSign.signText[i].getUnformattedComponentText();
         }
+        WorkshopPacketHandler.INSTANCE.sendToServer(new UpdateChalkPacket(this.tileSign.getPos(), text));
     }
 
     public void tick() {
@@ -69,7 +59,6 @@ public class ChalkWritingScreen extends Screen {
         if (!this.tileSign.getType().isValidBlock(this.tileSign.getBlockState().getBlock())) {
             this.close();
         }
-
     }
 
     private void close() {
@@ -106,7 +95,7 @@ public class ChalkWritingScreen extends Screen {
         this.drawCenteredString(this.font, this.title.getFormattedText(), this.width / 2, 40, 16777215);
         MatrixStack matrixstack = new MatrixStack();
         matrixstack.push();
-        matrixstack.translate((double)(this.width / 2), 0.0D, 50.0D);
+        matrixstack.translate(this.width / 2, 0.0D, 50.0D);
         matrixstack.scale(93.75F, -93.75F, 93.75F);
         matrixstack.translate(0.0D, -1.3125D, 0.0D);
         BlockState blockstate = this.tileSign.getBlockState();
@@ -120,11 +109,11 @@ public class ChalkWritingScreen extends Screen {
         matrixstack.scale(0.6666667F, -0.6666667F, -0.6666667F);
         IRenderTypeBuffer.Impl irendertypebuffer$impl = this.minecraft.getRenderTypeBuffers().getBufferSource();
         matrixstack.pop();
-        matrixstack.translate(0.0D, (double)0.33333334F, (double)0.046666667F);
+        matrixstack.translate(0.0D, 0.33333334F, 0.046666667F);
         matrixstack.scale(0.010416667F, -0.010416667F, 0.010416667F);
         String[] astring = new String[4];
 
-        for(int j = 0; j < astring.length; ++j) {
+        for (int j = 0; j < astring.length; ++j) {
             astring[j] = this.tileSign.getRenderText(j, (p_228192_1_) -> {
                 List<ITextComponent> list = RenderComponentsUtil.splitText(p_228192_1_, 90, this.minecraft.fontRenderer, false, true);
                 return list.isEmpty() ? "" : list.get(0).getFormattedText();
@@ -137,16 +126,16 @@ public class ChalkWritingScreen extends Screen {
         int i1 = this.minecraft.fontRenderer.getBidiFlag() ? -1 : 1;
         int j1 = this.editLine * 10 - this.tileSign.signText.length * 5;
 
-        for(int k1 = 0; k1 < astring.length; ++k1) {
+        for (int k1 = 0; k1 < astring.length; ++k1) {
             String s = astring[k1];
             if (s != null) {
-                float f3 = (float)(-this.minecraft.fontRenderer.getStringWidth(s) / 2);
-                this.minecraft.fontRenderer.renderString(s, f3, (float)(k1 * 10 - this.tileSign.signText.length * 5), DyeColor.BLACK.getTextColor(), false, matrix4f, irendertypebuffer$impl, false, 0, 15728880);
+                float f3 = (float) (-this.minecraft.fontRenderer.getStringWidth(s) / 2);
+                this.minecraft.fontRenderer.renderString(s, f3, (float) (k1 * 10 - this.tileSign.signText.length * 5), DyeColor.WHITE.getTextColor(), false, matrix4f, irendertypebuffer$impl, false, 0, 15728880);
                 if (k1 == this.editLine && k >= 0 && flag1) {
                     int l1 = this.minecraft.fontRenderer.getStringWidth(s.substring(0, Math.max(Math.min(k, s.length()), 0)));
                     int i2 = (l1 - this.minecraft.fontRenderer.getStringWidth(s) / 2) * i1;
                     if (k >= s.length()) {
-                        this.minecraft.fontRenderer.renderString("_", (float)i2, (float)j1, DyeColor.BLACK.getTextColor(), false, matrix4f, irendertypebuffer$impl, false, 0, 15728880);
+                        this.minecraft.fontRenderer.renderString("_", (float) i2, (float) j1, DyeColor.WHITE.getTextColor(), false, matrix4f, irendertypebuffer$impl, false, 0, 15728880);
                     }
                 }
             }
@@ -154,7 +143,7 @@ public class ChalkWritingScreen extends Screen {
 
         irendertypebuffer$impl.finish();
 
-        for(int k3 = 0; k3 < astring.length; ++k3) {
+        for (int k3 = 0; k3 < astring.length; ++k3) {
             String s1 = astring[k3];
             if (s1 != null && k3 == this.editLine && k >= 0) {
                 int l3 = this.minecraft.fontRenderer.getStringWidth(s1.substring(0, Math.max(Math.min(k, s1.length()), 0)));
@@ -176,10 +165,10 @@ public class ChalkWritingScreen extends Screen {
                     RenderSystem.enableColorLogicOp();
                     RenderSystem.logicOp(GlStateManager.LogicOp.OR_REVERSE);
                     bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR);
-                    bufferbuilder.pos(matrix4f, (float)i3, (float)(j1 + 9), 0.0F).color(0, 0, 255, 255).endVertex();
-                    bufferbuilder.pos(matrix4f, (float)j3, (float)(j1 + 9), 0.0F).color(0, 0, 255, 255).endVertex();
-                    bufferbuilder.pos(matrix4f, (float)j3, (float)j1, 0.0F).color(0, 0, 255, 255).endVertex();
-                    bufferbuilder.pos(matrix4f, (float)i3, (float)j1, 0.0F).color(0, 0, 255, 255).endVertex();
+                    bufferbuilder.pos(matrix4f, (float) i3, (float) (j1 + 9), 0.0F).color(0, 0, 255, 255).endVertex();
+                    bufferbuilder.pos(matrix4f, (float) j3, (float) (j1 + 9), 0.0F).color(0, 0, 255, 255).endVertex();
+                    bufferbuilder.pos(matrix4f, (float) j3, (float) j1, 0.0F).color(0, 0, 255, 255).endVertex();
+                    bufferbuilder.pos(matrix4f, (float) i3, (float) j1, 0.0F).color(0, 0, 255, 255).endVertex();
                     bufferbuilder.finishDrawing();
                     WorldVertexBufferUploader.draw(bufferbuilder);
                     RenderSystem.disableColorLogicOp();

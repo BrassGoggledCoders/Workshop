@@ -12,6 +12,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.gui.ChalkWritingScreen;
 
@@ -29,7 +30,6 @@ public class ChalkWritingTileEntity extends TileEntity implements GUITile {
 
     @Override
     public ActionResultType onActivated(PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        //TODO Packets
         Minecraft.getInstance().displayGuiScreen(new ChalkWritingScreen(this));
         return ActionResultType.PASS;
     }
@@ -72,7 +72,6 @@ public class ChalkWritingTileEntity extends TileEntity implements GUITile {
         if (this.renderText[line] == null && this.signText[line] != null) {
             this.renderText[line] = p_212364_2_.apply(this.signText[line]);
         }
-
         return this.renderText[line];
     }
 
