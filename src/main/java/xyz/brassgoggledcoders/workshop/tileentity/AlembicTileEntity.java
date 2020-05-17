@@ -5,14 +5,20 @@ import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
+import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopItemTagsProvider;
 import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
 import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
@@ -25,12 +31,8 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
     private final InventoryComponent<AlembicTileEntity> container;
     private final InventoryComponent<AlembicTileEntity> residue;
     private final InventoryComponent<AlembicTileEntity> output;
-    //private InventoryComponent<AlembicTileEntity> coldItem;
-    //private HeatBarComponent<AlembicTileEntity> alembicTemp;
-
-    //private int coldTime;
-    //private int temp;
-    //private int maxTemp = 5000;
+    private InventoryComponent<AlembicTileEntity> coldItem;
+    private final ProgressBarComponent<AlembicTileEntity> meltTime;
 
     public static final int inputSize = 3;
     public static final int residueSize = 4;
@@ -52,10 +54,21 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
                 .setColor(DyeColor.YELLOW)
                 .setRange(1, 3)
                 .setInputFilter((stack, integer) -> false));
-        //this.getMachineComponent().addInventory(this.coldItem = new SidedInventoryComponent<AlembicTileEntity>("coldItem", 79, 20, 1, pos++)
-        //        .setColor(DyeColor.LIGHT_BLUE)
-        //        .setInputFilter((stack, integer) -> stack.getItem().isIn(COLD)));
-        //this.alembicTemp = new HeatBarComponent<AlembicTileEntity>(100, 20, temp, getMaxTemp()).setColor(DyeColor.LIGHT_BLUE);
+        this.getMachineComponent().addInventory(this.coldItem = new SidedInventoryComponent<AlembicTileEntity>("coldItem", 79, 20, 1, pos++)
+                .setColor(DyeColor.LIGHT_BLUE)
+                .setInputFilter((stack, integer) -> stack.getItem().isIn(WorkshopItemTagsProvider.COLD))
+                .setOnSlotChanged((stack, slot) -> {
+                    if(this.coldItem.getStackInSlot(0).isEmpty()) {
+                        this.getMachineComponent().getPrimaryBar().setProgressIncrease(1);
+                    }
+                    else {
+                        this.getMachineComponent().getPrimaryBar().setProgressIncrease(3);
+                    }
+                }));
+        this.getMachineComponent().addProgressBar(this.meltTime = new ProgressBarComponent<AlembicTileEntity>(140, 20, 20 * 60 * 2/*2min*/)
+                .setBarDirection(ProgressBarComponent.BarDirection.VERTICAL_UP)
+                .setCanIncrease((tileEntity) -> !tileEntity.coldItem.getStackInSlot(0).isEmpty())
+                .setOnFinishWork(() -> this.coldItem.getStackInSlot(0).shrink(1)));
     }
 
     @Override
@@ -64,8 +77,10 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
         container.deserializeNBT(compound.getCompound("container"));
         residue.deserializeNBT(compound.getCompound("residue"));
         output.deserializeNBT(compound.getCompound("output"));
-        //coldItem.deserializeNBT(compound.getCompound("coldItem"));
-        //alembicTemp.deserializeNBT(compound.getCompound("temp"));
+        coldItem.deserializeNBT(compound.getCompound("coldItem"));
+        //Ensure we check for cold items on load
+        coldItem.getOnSlotChanged().accept(coldItem.getStackInSlot(0), 0);
+        meltTime.deserializeNBT(compound.getCompound("meltTime"));
         super.read(compound);
     }
 
@@ -76,8 +91,8 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
         compound.put("container", container.serializeNBT());
         compound.put("residue", residue.serializeNBT());
         compound.put("output", output.serializeNBT());
-        //compound.put("coldItem", container.serializeNBT());
-        //compound.put("temp", container.serializeNBT());
+        compound.put("coldItem", coldItem.serializeNBT());
+        compound.put("meltTime", meltTime.serializeNBT());
         return super.write(compound);
     }
 
@@ -88,7 +103,14 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
 
     @Override
     public boolean hasInputs() {
-        return InventoryUtil.anySlotsHaveItems(input) && !this.container.getStackInSlot(0).isEmpty();
+        if(!this.container.getStackInSlot(0).isEmpty()) {
+            LazyOptional<IFluidHandlerItem> optional = this.container.getStackInSlot(0).getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY);
+            //Should never not be present because of the slot filter but better safe than sorry
+            if(optional.isPresent()) {
+                return InventoryUtil.anySlotsHaveItems(input) && optional.orElseThrow(NullPointerException::new).getFluidInTank(0).isEmpty();
+            }
+        }
+        return false;
     }
 
     @Override

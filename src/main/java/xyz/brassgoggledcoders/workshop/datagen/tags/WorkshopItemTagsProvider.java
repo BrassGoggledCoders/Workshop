@@ -10,6 +10,7 @@ import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.fluids.FluidStack;
+import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.capabilities.BottleCapabilityProvider;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
@@ -20,6 +21,7 @@ public class WorkshopItemTagsProvider extends ItemTagsProvider {
 
     public static final Tag<Item> TEA_SEEDS = new ItemTags.Wrapper(new ResourceLocation("forge", "seeds/tea"));
     public static final Tag<Item> RAW_MEAT = new ItemTags.Wrapper(new ResourceLocation("forge", "raw_meats"));
+    public static final Tag<Item> COLD = new ItemTags.Wrapper(new ResourceLocation(Workshop.MOD_ID, "cold"));
 
     public WorkshopItemTagsProvider(DataGenerator generator) {
         super(generator);
@@ -31,6 +33,7 @@ public class WorkshopItemTagsProvider extends ItemTagsProvider {
         this.getBuilder(Tags.Items.SLIMEBALLS).add(BottleCapabilityProvider.getFilledBottle(new FluidStack(WorkshopFluids.ADHESIVE_OILS.getFluid().getFluid(), WorkshopFluids.BOTTLE_VOLUME)).getItem());
         this.getBuilder(TEA_SEEDS).add(WorkshopBlocks.TEA_PLANT.getItem());
         this.getBuilder(Tags.Items.SEEDS).add(WorkshopBlocks.TEA_PLANT.getItem());
+        this.getBuilder(COLD).add(Items.SNOW, Items.SNOW_BLOCK, Items.SNOWBALL, Items.ICE, Items.BLUE_ICE, Items.PACKED_ICE);
     }
 
     @Override
