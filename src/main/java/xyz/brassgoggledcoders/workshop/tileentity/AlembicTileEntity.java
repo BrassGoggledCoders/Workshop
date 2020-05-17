@@ -65,7 +65,7 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
                         this.getMachineComponent().getPrimaryBar().setProgressIncrease(3);
                     }
                 }));
-        this.getMachineComponent().addProgressBar(this.meltTime = new ProgressBarComponent<AlembicTileEntity>(140, 20, 20 * 60 * 2/*2min*/)
+        this.getMachineComponent().addProgressBar(this.meltTime = new ProgressBarComponent<AlembicTileEntity>(145, 20, 20 * 60 * 2/*2min*/)
                 .setBarDirection(ProgressBarComponent.BarDirection.VERTICAL_UP)
                 .setCanIncrease((tileEntity) -> !tileEntity.coldItem.getStackInSlot(0).isEmpty())
                 .setOnFinishWork(() -> this.coldItem.getStackInSlot(0).shrink(1)));

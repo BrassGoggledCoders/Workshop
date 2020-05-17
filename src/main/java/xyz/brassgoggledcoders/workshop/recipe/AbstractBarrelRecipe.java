@@ -15,8 +15,8 @@ import javax.annotation.Nonnull;
 
 public abstract class AbstractBarrelRecipe extends WorkshopRecipe {
     public Ingredient itemIn = Ingredient.EMPTY;
-    public ItemStack itemOut = ItemStack.EMPTY;
     public FluidStack fluidIn = FluidStack.EMPTY;
+    public ItemStack itemOut = ItemStack.EMPTY;
     public FluidStack fluidOut = FluidStack.EMPTY;
     public int seasoningTime = 1000;
 

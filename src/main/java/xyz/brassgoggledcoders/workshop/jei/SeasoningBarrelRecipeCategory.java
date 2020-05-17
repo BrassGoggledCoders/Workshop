@@ -1,36 +1,19 @@
 package xyz.brassgoggledcoders.workshop.jei;
 
-import com.hrznstudio.titanium.Titanium;
-import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.drawable.IDrawableAnimated;
-import mezz.jei.api.gui.ingredient.IGuiFluidStackGroup;
-import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.SeasoningBarrelRecipe;
 
-import java.util.Collections;
-
-public class SeasoningBarrelRecipeCategory implements IRecipeCategory<SeasoningBarrelRecipe> {
+public class SeasoningBarrelRecipeCategory extends AbstractBarrelRecipeCategory<SeasoningBarrelRecipe> {
 
     public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.SEASONING_BARREL_SERIALIZER.get().getRecipeType().toString());
 
-    private final IGuiHelper guiHelper;
-    private final IDrawable slot;
-    private final IDrawableAnimated arrow;
-
     public SeasoningBarrelRecipeCategory(IGuiHelper guiHelper) {
-        this.guiHelper = guiHelper;
-        this.slot = guiHelper.getSlotDrawable();
-        this.arrow = guiHelper.drawableBuilder(new ResourceLocation(Titanium.MODID, "textures/gui/background.png"), 176, 60, 24, 17)
-                .buildAnimated(500, IDrawableAnimated.StartDirection.LEFT, false);
+       super(guiHelper);
     }
 
     @Override
@@ -49,41 +32,7 @@ public class SeasoningBarrelRecipeCategory implements IRecipeCategory<SeasoningB
     }
 
     @Override
-    public IDrawable getBackground() {
-        return this.guiHelper.createBlankDrawable(160, 52);
-    }
-
-    @Override
     public IDrawable getIcon() {
         return this.guiHelper.createDrawableIngredient(new ItemStack(WorkshopBlocks.SEASONING_BARREL.getBlock()));
-    }
-
-    @Override
-    public void draw(SeasoningBarrelRecipe recipe, double mouseX, double mouseY) {
-        slot.draw(0, 0);
-        slot.draw(100, 0);
-        arrow.draw(50, 10);
-    }
-
-    @Override
-    public void setIngredients(SeasoningBarrelRecipe seasoningBarrelRecipe, IIngredients ingredients) {
-        ingredients.setInputIngredients(Collections.singletonList(seasoningBarrelRecipe.itemIn));
-        ingredients.setInput(VanillaTypes.FLUID, seasoningBarrelRecipe.fluidIn);
-        ingredients.setOutput(VanillaTypes.ITEM, seasoningBarrelRecipe.itemOut);
-        ingredients.setOutput(VanillaTypes.FLUID, seasoningBarrelRecipe.fluidOut);
-    }
-
-    @Override
-    public void setRecipe(IRecipeLayout recipeLayout, SeasoningBarrelRecipe seasoningBarrelRecipe, IIngredients ingredients) {
-        IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-        IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
-
-        guiItemStacks.init(0, true, 0, 0);
-        guiFluidStacks.init(1, true, 25, 0);
-        guiItemStacks.init(2, false, 100, 0);
-        guiFluidStacks.init(4, false, 120, 0);
-
-        guiItemStacks.set(ingredients);
-        guiFluidStacks.set(ingredients);
     }
 }

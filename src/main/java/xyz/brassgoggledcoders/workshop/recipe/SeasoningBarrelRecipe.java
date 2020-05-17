@@ -14,10 +14,6 @@ import static xyz.brassgoggledcoders.workshop.content.WorkshopRecipes.SEASONING_
 
 public class SeasoningBarrelRecipe extends AbstractBarrelRecipe {
 
-    public SeasoningBarrelRecipe(ResourceLocation resourceLocation) {
-        super(resourceLocation);
-    }
-
     public SeasoningBarrelRecipe(ResourceLocation resourceLocation, Ingredient itemIn, ItemStack itemOut, FluidStack fluidIn, FluidStack fluidOut, int seasoningTime) {
         super(resourceLocation, itemIn, itemOut, fluidIn, fluidOut, seasoningTime);
     }

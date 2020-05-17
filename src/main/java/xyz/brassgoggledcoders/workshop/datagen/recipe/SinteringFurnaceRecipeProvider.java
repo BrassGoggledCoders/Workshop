@@ -55,6 +55,7 @@ public class SinteringFurnaceRecipeProvider extends TitaniumSerializableProvider
         recipes.add(new Builder("obsidian_plate")
                 .setInput(Ingredient.fromStacks(new ItemStack(Items.FLINT, 4)))
                 .setPowder(Ingredient.fromItems(Items.BLAZE_POWDER))
+                .setOutput(new ItemStack(WorkshopBlocks.OBSIDIAN_PLATE.getBlock()))
                 .setTime(60 * 20)
                 .build()
         );

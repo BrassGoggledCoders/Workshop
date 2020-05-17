@@ -5,6 +5,10 @@
   "itemIn": {
     "item": "minecraft:flint"
   },
+  "itemOut": {
+    "item": "workshop:obsidian_plate",
+    "count": 1
+  },
   "meltTime": 1200,
   "type": "workshop:sintering_furnace"
 }

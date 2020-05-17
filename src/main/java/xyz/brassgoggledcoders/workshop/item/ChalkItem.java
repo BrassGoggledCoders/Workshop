@@ -1,14 +1,13 @@
 package xyz.brassgoggledcoders.workshop.item;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.WallOrFloorItem;
-import net.minecraft.tileentity.SignTileEntity;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
@@ -22,6 +21,12 @@ public class ChalkItem extends BlockItem {
 
     public ChalkItem(Properties propertiesIn) {
         super(WorkshopBlocks.CHALK_WRITING.getBlock(), propertiesIn);
+    }
+
+    @Override
+    public ActionResultType onItemUse(ItemUseContext context) {
+        //NO-OP for now 
+        return ActionResultType.PASS;
     }
 
     @Override
