@@ -30,7 +30,7 @@ public class WorkshopFluids {
             BRINE::getFlowing, FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
             new ResourceLocation("minecraft", "block/water_flow"))
             .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
-            .color(2980986))
+            .color(fromHex("17a2b8")))
             .block(BRINE::getBlock)
             .bucket(BRINE::getBucket);
 
@@ -42,7 +42,7 @@ public class WorkshopFluids {
             FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
             new ResourceLocation("minecraft", "block/water_flow"))
             .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
-            .color(16777215))
+            .color(fromHex("d7eef2")))
             .block(DISTILLED_WATER::getBlock)
             .bucket(DISTILLED_WATER::getBucket);
 
@@ -53,7 +53,7 @@ public class WorkshopFluids {
             FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
             new ResourceLocation("minecraft", "block/water_flow"))
             .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
-            .color(5184271))
+            .color(fromHex("562e33")))
             .block(SEED_OIL::getBlock)
             .bucket(SEED_OIL::getBucket);
 
@@ -64,7 +64,7 @@ public class WorkshopFluids {
             FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
                     new ResourceLocation("minecraft", "block/water_flow"))
                     .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
-                    .color(16762920))
+                    .color(fromHex("c1a63c")))
             .block(RESIN::getBlock)
             .bucket(RESIN::getBucket);
 
@@ -75,7 +75,7 @@ public class WorkshopFluids {
             FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
                     new ResourceLocation("minecraft", "block/water_flow"))
                     .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
-                    .color(655360))
+                    .color(fromHex("3b0d0d")))
             .block(ADHESIVE_OILS::getBlock)
             .bucket(ADHESIVE_OILS::getBucket);
 
@@ -86,7 +86,7 @@ public class WorkshopFluids {
             FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
                     new ResourceLocation("minecraft", "block/water_flow"))
                     .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
-                    .color(16724530))
+                    .color(fromHex("fcf8e3")))
             .block(APPLE_JUICE::getBlock)
             .bucket(APPLE_JUICE::getBucket);
 
@@ -97,7 +97,7 @@ public class WorkshopFluids {
             FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
                     new ResourceLocation("minecraft", "block/water_flow"))
                     .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
-                    .color(16762880))
+                    .color(fromHex("ffc107")))
             .block(CIDER::getBlock)
             .bucket(CIDER::getBucket);
 
@@ -130,7 +130,7 @@ public class WorkshopFluids {
             FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
                     new ResourceLocation("minecraft", "block/water_flow"))
                     .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
-                    .color(13125120))
+                    .color(fromHex("8B512F")))
             .block(TEA::getBlock)
             .bucket(TEA::getBucket);
 
@@ -140,8 +140,8 @@ public class WorkshopFluids {
     public static final ForgeFlowingFluid.Properties HELLBLOOD_PROPERTIES = new ForgeFlowingFluid.Properties(HELLBLOOD, HELLBLOOD::getFlowing,
             FluidAttributes.builder(new ResourceLocation("minecraft", "block/lava_still"),
                     new ResourceLocation("minecraft", "block/lava_flow"))
-                    .overlay(new ResourceLocation("minecraft", "block/lava_overlay"))
-                    .color(16712708))
+                    .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
+                    .color(fromHex("8c2727")))
             .block(HELLBLOOD::getBlock)
             .bucket(HELLBLOOD::getBucket);
 
@@ -158,5 +158,12 @@ public class WorkshopFluids {
 
     public static Collection<RegistryObject<Block>> getAllBlocks() {
         return BLOCKS.getEntries();
+    }
+
+    public static int fromHex(String text) {
+        if (text.length() == 6) {
+            text = "FF" + text;
+        }
+        return (int)Long.parseLong(text, 16);
     }
  }
