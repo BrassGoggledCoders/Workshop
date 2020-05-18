@@ -23,6 +23,14 @@
         "item": "workshop:silt",
         "count": 1
       }
+    },
+    {
+      "min": 6,
+      "max": 6,
+      "stack": {
+        "item": "workshop:tannin",
+        "count": 1
+      }
     }
   ],
   "processingTime": 160,

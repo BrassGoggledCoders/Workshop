@@ -31,14 +31,14 @@ public abstract class AbstractBarrelRecipeCategory<T extends AbstractBarrelRecip
 
     @Override
     public IDrawable getBackground() {
-        return this.guiHelper.createBlankDrawable(160, 52);
+        return this.guiHelper.createBlankDrawable(160, 30);
     }
 
     @Override
     public void draw(T recipe, double mouseX, double mouseY) {
-        slot.draw(29, 42);
-        slot.draw(130, 42);
-        //arrow.draw(24, 18);
+        slot.draw(0, 0);
+        slot.draw(90, 0);
+        arrow.draw(40, 0);
     }
 
     @Override
@@ -62,10 +62,10 @@ public abstract class AbstractBarrelRecipeCategory<T extends AbstractBarrelRecip
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
         IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
-        guiItemStacks.init(0, true, 29, 42);
-        guiFluidStacks.init(1, true, 52, 20);
-        guiItemStacks.init(2, false, 130, 42);
-        guiFluidStacks.init(4, false, 105, 20);
+        guiItemStacks.init(0, true, 0, 0);
+        guiFluidStacks.init(1, true, 20, 1);
+        guiFluidStacks.init(2, false, 70, 1);
+        guiItemStacks.init(3, false, 90, 0);
 
         guiItemStacks.set(ingredients);
         guiFluidStacks.set(ingredients);

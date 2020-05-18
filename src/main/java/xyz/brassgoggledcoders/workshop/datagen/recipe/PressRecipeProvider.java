@@ -31,11 +31,14 @@ public class PressRecipeProvider extends TitaniumSerializableProvider {
         recipes.add(new Builder("seeds_to_seed_oil")
                 .setInput(Ingredient.fromTag(Tags.Items.SEEDS))
                 .setOutput(new FluidStack(WorkshopFluids.SEED_OIL.getFluid(), FluidAttributes.BUCKET_VOLUME))
-                .build()
-        );
+                .build());
         recipes.add(new Builder("apple_juicing")
                 .setInput(Ingredient.fromItems(Items.APPLE))
                 .setOutput(new FluidStack(WorkshopFluids.APPLE_JUICE.getFluid(), WorkshopFluids.BOTTLE_VOLUME))
+                .build());
+        recipes.add(new Builder("magma_to_hellblood")
+                .setInput(Ingredient.fromItems(Items.MAGMA_BLOCK))
+                .setOutput(new FluidStack(WorkshopFluids.HELLBLOOD.getFluid(), FluidAttributes.BUCKET_VOLUME / 4))
                 .build());
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }

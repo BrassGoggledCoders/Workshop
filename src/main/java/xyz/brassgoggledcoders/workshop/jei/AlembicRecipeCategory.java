@@ -81,7 +81,9 @@ public class AlembicRecipeCategory implements IRecipeCategory<AlembicRecipe> {
     @Override
     public void setIngredients(AlembicRecipe recipe, IIngredients ingredients) {
         ingredients.setInputIngredients(Arrays.asList(recipe.input));
-        ingredients.setOutput(VanillaTypes.FLUID, recipe.output);
+        if(!recipe.output.isEmpty()) {
+            ingredients.setOutput(VanillaTypes.FLUID, recipe.output);
+        }
         for(int i = 0; i < recipe.residue.length; i++) {
             ingredients.setOutput(VanillaTypes.ITEM, recipe.residue[i].stack);
         }

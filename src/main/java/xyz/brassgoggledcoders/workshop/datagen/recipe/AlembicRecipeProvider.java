@@ -15,6 +15,7 @@ import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
+import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopItemTagsProvider;
 import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
 import xyz.brassgoggledcoders.workshop.tileentity.AlembicTileEntity;
 import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
@@ -60,9 +61,9 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
                 .build());
         recipes.add(new Builder("tannin")
                 .setInputs(Ingredient.fromItems(WorkshopItems.MEDICINAL_ROOT.get()), Ingredient.fromItems(WorkshopItems.TEA_LEAVES.get()))
-                .setOutput(FluidStack.EMPTY) //TODO
                 .setResidue(new RangedItemStack(WorkshopItems.ASH.get(), 0,2),
-                        new RangedItemStack(WorkshopItems.SILT.get(), 0,1))
+                        new RangedItemStack(WorkshopItems.SILT.get(), 0,1),
+                        new RangedItemStack(WorkshopItems.TANNIN.get(), 6, 6))
                 .setTime(8 * 20)
                 .build());
         recipes.add(new Builder("rosin")
@@ -77,8 +78,8 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
 
     protected static class Builder {
         private final ResourceLocation name;
-        private Ingredient[] input;
-        private FluidStack output;
+        private Ingredient[] input = new Ingredient[0];
+        private FluidStack output = FluidStack.EMPTY;
         private RangedItemStack[] residue;
         private int processingTime;
 
@@ -87,7 +88,6 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
         }
 
         public Builder setInputs(Ingredient... in) {
-            Workshop.LOGGER.warn(in[0].isVanilla());
             this.input = in;
             return this;
         }
