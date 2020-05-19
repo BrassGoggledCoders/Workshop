@@ -175,7 +175,7 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
 
     @Override
     public boolean matchesInputs(PressRecipe currentRecipe) {
-        return currentRecipe.matches(inputInventory);
+        return this.outputFluid.fill(currentRecipe.fluidOut, IFluidHandler.FluidAction.SIMULATE) == 0 && currentRecipe.matches(inputInventory);
     }
 
     @Override

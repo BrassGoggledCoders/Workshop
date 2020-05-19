@@ -57,24 +57,26 @@ public class ScrapBinTileEntity extends TileEntity implements INamedContainerPro
         this.scrapOutput = new SidedInventoryComponent<ScrapBinTileEntity>("output", 150, 75, 1, pos++).setColor(DyeColor.BLACK);
         this.scrapValue = new ProgressBarComponent<>(155, 8, WorkshopConfig.COMMON.itemsRequiredPerScrapBag.get());
         this.inventoryComponent.setOnSlotChanged((stack, slotNum) -> {
-            //TODO Caching
-            int count = stack.getCount();
-            for(int i = 0; i < this.inventoryComponent.getSlots(); i++) {
-                if(i != slotNum) {
-                    ItemStack otherStack = this.inventoryComponent.getStackInSlot(i);
-                    if(ItemStack.areItemsEqual(stack, otherStack)) {
-                        count += otherStack.getCount();
+            if(ItemHandlerHelper.insertItem(scrapOutput, new ItemStack(WorkshopItems.SCRAP_BAG.get()), true).isEmpty()) {
+                //TODO Caching
+                int count = stack.getCount();
+                for (int i = 0; i < this.inventoryComponent.getSlots(); i++) {
+                    if (i != slotNum) {
+                        ItemStack otherStack = this.inventoryComponent.getStackInSlot(i);
+                        if (ItemStack.areItemsEqual(stack, otherStack)) {
+                            count += otherStack.getCount();
+                        }
                     }
                 }
-            }
-            //If we have more than a stack total
-            if(count > 64) {
-                //Shrink by the amount we are over a stack
-                int diff = count - 64;
-                stack.shrink(diff);
-                //Add that value to the scrap counter
-                this.scrapValue.setProgress(Math.min(this.scrapValue.getProgress() + diff, this.scrapValue.getMaxProgress()));
-                this.scrapValue.tickBar();
+                //If we have more than a stack total
+                if (count > 64) {
+                    //Shrink by the amount we are over a stack
+                    int diff = count - 64;
+                    stack.shrink(diff);
+                    //Add that value to the scrap counter
+                    this.scrapValue.setProgress(Math.min(this.scrapValue.getProgress() + diff, this.scrapValue.getMaxProgress()));
+                    this.scrapValue.tickBar();
+                }
             }
         });
         this.scrapValue.setOnFinishWork(() -> ItemHandlerHelper.insertItem(scrapOutput, new ItemStack(WorkshopItems.SCRAP_BAG.get()), false));

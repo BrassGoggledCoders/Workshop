@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.SpinningWheelRecipe;
@@ -163,7 +164,7 @@ public class SpinningWheelTileEntity extends BasicMachineTileEntity<SpinningWhee
 
     @Override
     public boolean matchesInputs(SpinningWheelRecipe currentRecipe) {
-        return currentRecipe.matches(input);
+        return ItemHandlerHelper.insertItemStacked(this.output, currentRecipe.output, true).isEmpty() && currentRecipe.matches(input);
     }
 
     @Override

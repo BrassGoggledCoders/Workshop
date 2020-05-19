@@ -14,6 +14,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.MortarRecipe;
@@ -88,7 +89,7 @@ public class MortarTileEntity extends BasicMachineTileEntity<MortarTileEntity, M
 
     @Override
     public boolean matchesInputs(MortarRecipe currentRecipe) {
-        return currentRecipe.matches(input, fluidInput);
+        return ItemHandlerHelper.insertItemStacked(this.output, currentRecipe.output, true).isEmpty() && currentRecipe.matches(input, fluidInput);
     }
 
     @Override

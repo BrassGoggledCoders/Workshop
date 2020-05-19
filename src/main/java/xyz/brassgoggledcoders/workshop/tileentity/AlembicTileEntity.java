@@ -107,6 +107,7 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
             LazyOptional<IFluidHandlerItem> optional = this.container.getStackInSlot(0).getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY);
             //Should never not be present because of the slot filter but better safe than sorry
             if(optional.isPresent()) {
+                //Check we have input items, and that the fluid container doesn't have any fluid
                 return InventoryUtil.anySlotsHaveItems(input) && optional.orElseThrow(NullPointerException::new).getFluidInTank(0).isEmpty();
             }
         }
@@ -130,7 +131,8 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
 
     @Override
     public boolean matchesInputs(AlembicRecipe currentRecipe) {
-        return currentRecipe.matches(input);
+        //TODO Handle stackable fluid containers
+        return this.output.getStackInSlot(0).isEmpty() && currentRecipe.matches(input);
     }
 
     @Override
@@ -140,13 +142,13 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
         }
         if (currentRecipe.output != null && !currentRecipe.output.isEmpty()) {
             ItemStack stack = this.container.getStackInSlot(0);
-            if(!stack.isEmpty()) {
+            if (!stack.isEmpty()) {
                 //Work on a copy
                 ItemStack outputStack = stack.copy();
                 //Should always have the cap because no items that don't have it should be in the slot...but check anyway
-                outputStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent( cap -> {
+                outputStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent(cap -> {
                     //If there's space in the container
-                    if(cap.fill(currentRecipe.output, IFluidHandler.FluidAction.SIMULATE) == currentRecipe.output.getAmount()) {
+                    if (cap.fill(currentRecipe.output, IFluidHandler.FluidAction.SIMULATE) == currentRecipe.output.getAmount()) {
                         //Fill it
                         cap.fill(currentRecipe.output, IFluidHandler.FluidAction.EXECUTE);
                         //Insert it to output
@@ -156,8 +158,8 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
                     }
                 });
             }
-            if(currentRecipe.residue != null && world instanceof ServerWorld) {
-                for(RangedItemStack rStack : currentRecipe.residue) {
+            if (currentRecipe.residue != null && world instanceof ServerWorld) {
+                for (RangedItemStack rStack : currentRecipe.residue) {
                     ItemHandlerHelper.insertItem(this.residue, RangedItemStack.getOutput(world.rand, rStack), false);
                 }
             }

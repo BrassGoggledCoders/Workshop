@@ -125,7 +125,7 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
 
     @Override
     public boolean matchesInputs(SinteringFurnaceRecipe currentRecipe) {
-        return currentRecipe.matches(inputInventory, powderInventory);
+        return ItemHandlerHelper.insertItemStacked(this.outputInventory, currentRecipe.itemOut, true).isEmpty() && currentRecipe.matches(inputInventory, powderInventory);
     }
 
     @Override

@@ -5,11 +5,11 @@ import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
-import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.recipe.AbstractBarrelRecipe;
 import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
@@ -94,7 +94,9 @@ public abstract class AbstractBarrelTileEntity<T extends BasicMachineTileEntity<
 
     @Override
     public boolean matchesInputs(R currentRecipe) {
-        return currentRecipe.matches(inputInventory, inputFluidTank);
+        return ItemHandlerHelper.insertItemStacked(this.outputInventory, currentRecipe.itemOut, true).isEmpty() &&
+                this.outputFluidTank.fill(currentRecipe.fluidOut, IFluidHandler.FluidAction.SIMULATE) == 0 &&
+                currentRecipe.matches(inputInventory, inputFluidTank);
     }
 
     @Override
