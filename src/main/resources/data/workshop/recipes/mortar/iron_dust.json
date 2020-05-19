@@ -1,0 +1,13 @@
+{
+  "input": [
+    {
+      "tag": "forge:ingots/iron"
+    }
+  ],
+  "output": {
+    "item": "titanium:iron_dust",
+    "count": 1
+  },
+  "processingTime": 10,
+  "type": "workshop:mortar"
+}
