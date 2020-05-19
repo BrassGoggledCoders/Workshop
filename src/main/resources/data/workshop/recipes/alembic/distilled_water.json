@@ -10,7 +10,7 @@
       "min": 1,
       "max": 1,
       "stack": {
-        "item": "minecraft:glass_bottle",
+        "item": "minecraft:bucket",
         "count": 1
       }
     },
