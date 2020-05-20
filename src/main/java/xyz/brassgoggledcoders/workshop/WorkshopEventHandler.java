@@ -2,15 +2,19 @@ package xyz.brassgoggledcoders.workshop;
 
 import net.minecraft.entity.merchant.IMerchant;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
+import net.minecraft.item.DyeableArmorItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootEntry;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.TableLootEntry;
+import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import xyz.brassgoggledcoders.workshop.content.WorkshopEffects;
+import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 
 @Mod.EventBusSubscriber(modid = Workshop.MOD_ID)
 @SuppressWarnings("unused")
@@ -34,6 +38,18 @@ public class WorkshopEventHandler {
             String file = name.substring(name.indexOf(prefix) + prefix.length());
             if ("blocks/grass".equals(file)) {
                 event.getTable().addPool(getInjectPool(file));
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void anvilChange(AnvilUpdateEvent event) {
+        if(WorkshopItems.LEATHER_CORDAGE.get().equals(event.getRight().getItem())) {
+            if(event.getLeft().getItem() instanceof DyeableArmorItem && event.getLeft().isDamaged()) {
+                event.setMaterialCost(1);
+                ItemStack stack = event.getLeft().copy();
+                stack.setDamage(stack.getDamage() - 20);
+                event.setOutput(stack);
             }
         }
     }
