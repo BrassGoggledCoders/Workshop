@@ -86,7 +86,7 @@ public class WorkshopFluids {
             FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
                     new ResourceLocation("minecraft", "block/water_flow"))
                     .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
-                    .color(fromHex("fcf8e3")))
+                    .color(fromHex("fff15e")))
             .block(APPLE_JUICE::getBlock)
             .bucket(APPLE_JUICE::getBucket);
 

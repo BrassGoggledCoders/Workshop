@@ -10,6 +10,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
@@ -45,14 +46,15 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
                 .setRange(1, 3));
         this.getMachineComponent().addInventory(this.container = new SidedInventoryComponent<AlembicTileEntity>("container", 56, 43, 1, pos++)
                 .setColor(DyeColor.WHITE)
-                .setInputFilter((stack, integer) -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent()));
+                //TODO Move emptiness checking to here?
+                .setInputFilter((stack, integer) -> FluidUtil.getFluidHandler(stack).isPresent()));
         this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<AlembicTileEntity>(InventoryUtil.ITEM_OUTPUT, 102, 44, 1, pos++)
                 .setColor(InventoryUtil.ITEM_OUTPUT_COLOR)
                 .setInputFilter((stack, integer) -> false));
         this.getMachineComponent().addInventory(this.residue = new SidedInventoryComponent<AlembicTileEntity>(
                 "residue", 125, 25, residueSize, pos++)
                 .setColor(DyeColor.YELLOW)
-                .setRange(1, 3)
+                .setRange(1, residueSize)
                 .setInputFilter((stack, integer) -> false));
         this.getMachineComponent().addInventory(this.coldItem = new SidedInventoryComponent<AlembicTileEntity>("coldItem", 79, 20, 1, pos++)
                 .setColor(DyeColor.LIGHT_BLUE)

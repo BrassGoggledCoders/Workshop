@@ -17,6 +17,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
+import xyz.brassgoggledcoders.workshop.item.BottleItem;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -49,9 +50,10 @@ public class BottleCapabilityProvider implements IFluidHandlerItem, ICapabilityP
         Item item = container.getItem();
         if (item instanceof PotionItem && Potions.WATER.equals(PotionUtils.getPotionFromItem(container))) {
             return new FluidStack(Fluids.WATER, WorkshopFluids.BOTTLE_VOLUME);
-        } else {
-            return FluidStack.EMPTY;
+        } else if(item instanceof BottleItem) {
+            return new FluidStack(((BottleItem) item).getFluid(), WorkshopFluids.BOTTLE_VOLUME);
         }
+        return FluidStack.EMPTY;
     }
 
     protected void setFluid(@Nonnull FluidStack fluidStack) {
