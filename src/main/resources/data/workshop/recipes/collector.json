@@ -1,0 +1,37 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "values": [
+            {
+              "item": "workshop:collector",
+              "type": "forge:item_exists"
+            }
+          ],
+          "type": "forge:and"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "CCC",
+          "HHH",
+          "CCC"
+        ],
+        "key": {
+          "C": {
+            "tag": "forge:cobblestone"
+          },
+          "H": {
+            "item": "minecraft:hopper"
+          }
+        },
+        "result": {
+          "item": "workshop:collector"
+        }
+      }
+    }
+  ]
+}

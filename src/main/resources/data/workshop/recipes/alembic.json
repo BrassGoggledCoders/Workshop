@@ -1,0 +1,43 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "values": [
+            {
+              "item": "workshop:alembic",
+              "type": "forge:item_exists"
+            }
+          ],
+          "type": "forge:and"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "GP ",
+          " PB",
+          "III"
+        ],
+        "key": {
+          "G": {
+            "tag": "forge:glass"
+          },
+          "P": {
+            "tag": "forge:pipes/glass"
+          },
+          "I": {
+            "tag": "forge:ingots/iron"
+          },
+          "B": {
+            "item": "minecraft:glass_bottle"
+          }
+        },
+        "result": {
+          "item": "workshop:alembic"
+        }
+      }
+    }
+  ]
+}

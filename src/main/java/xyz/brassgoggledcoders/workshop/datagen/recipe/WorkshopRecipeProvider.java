@@ -1,13 +1,16 @@
 package xyz.brassgoggledcoders.workshop.datagen.recipe;
 
+import com.hrznstudio.titanium.Titanium;
 import com.hrznstudio.titanium.recipe.generator.TitaniumRecipeProvider;
 import com.hrznstudio.titanium.recipe.generator.TitaniumShapedRecipeBuilder;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
+import net.minecraft.data.ItemTagsProvider;
 import net.minecraft.item.Items;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
@@ -67,6 +70,37 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('P', Items.PISTON)
                 .key('G', Tags.Items.GLASS_PANES)
                 .key('C', Items.COBBLESTONE)
+                .build(consumer);
+        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.ALEMBIC.getBlock())
+                .patternLine("GP ")
+                .patternLine(" PB")
+                .patternLine("III")
+                .key('G', Tags.Items.GLASS)
+                .key('P', ItemTags.getCollection().getOrCreate(new ResourceLocation("forge", "pipes/glass")))
+                .key('I', Tags.Items.INGOTS_IRON)
+                .key('B', Items.GLASS_BOTTLE)
+                .build(consumer);
+        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.COLLECTOR.getBlock())
+                .patternLine("CCC")
+                .patternLine("HHH")
+                .patternLine("CCC")
+                .key('C', Tags.Items.COBBLESTONE)
+                .key('H', Items.HOPPER)
+                .build(consumer);
+        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SCRAP_BIN.getBlock())
+                .patternLine("I I")
+                .patternLine("ICI")
+                .patternLine("III")
+                .key('I', Tags.Items.INGOTS_IRON)
+                .key('C', Tags.Items.CHESTS_WOODEN)
+                .build(consumer);
+        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.MOLTEN_CHAMBER.getBlock())
+                .patternLine("BIB")
+                .patternLine("IOI")
+                .patternLine("BIB")
+                .key('B', Items.BLAZE_ROD)
+                .key('I', Tags.Items.INGOTS_IRON)
+                .key('O', Items.OBSIDIAN)
                 .build(consumer);
         //endsection
         //section Misc

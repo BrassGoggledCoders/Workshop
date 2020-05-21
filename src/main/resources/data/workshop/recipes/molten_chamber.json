@@ -1,0 +1,40 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "values": [
+            {
+              "item": "workshop:molten_chamber",
+              "type": "forge:item_exists"
+            }
+          ],
+          "type": "forge:and"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "BIB",
+          "IOI",
+          "BIB"
+        ],
+        "key": {
+          "B": {
+            "item": "minecraft:blaze_rod"
+          },
+          "I": {
+            "tag": "forge:ingots/iron"
+          },
+          "O": {
+            "item": "minecraft:obsidian"
+          }
+        },
+        "result": {
+          "item": "workshop:molten_chamber"
+        }
+      }
+    }
+  ]
+}
