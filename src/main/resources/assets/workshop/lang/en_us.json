@@ -88,6 +88,7 @@
   "itemGroup.workshop": "Workshop",
   "resource.titanium.material.gold": "Gold",
   "resource.titanium.material.iron": "Iron",
+  "resource.titanium.material.glass": "Glass",
   "resource.titanium.type.dust": "%s Powder",
   "resource.titanium.type.film": "%s Film",
   "resource.titanium.type.pipe": "%s Pipe",

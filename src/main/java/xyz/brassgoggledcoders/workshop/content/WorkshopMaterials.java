@@ -13,7 +13,7 @@ public class WorkshopMaterials {
     public static void init() {
         ResourceRegistry.getOrCreate("iron").addAll(ResourceType.DUST, WorkshopResourceType.FILM, WorkshopResourceType.PIPE);
         ResourceRegistry.getOrCreate("gold").addAll(ResourceType.DUST, WorkshopResourceType.FILM, WorkshopResourceType.PIPE);
-        ResourceRegistry.getOrCreate("glass").add(WorkshopResourceType.PIPE);
+        ResourceRegistry.getOrCreate("glass").setColor(WorkshopFluids.fromHex("80FFFFFF")).add(WorkshopResourceType.PIPE);
     }
 
 }
