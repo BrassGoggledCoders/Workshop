@@ -16,19 +16,22 @@
       "recipe": {
         "type": "minecraft:crafting_shaped",
         "pattern": [
-          "GP ",
-          " PB",
-          "III"
+          "PPP",
+          "PPB",
+          "FSC"
         ],
         "key": {
-          "G": {
-            "tag": "forge:glass"
+          "F": {
+            "item": "minecraft:furnace"
           },
           "P": {
             "tag": "forge:pipes/glass"
           },
-          "I": {
-            "tag": "forge:ingots/iron"
+          "S": {
+            "tag": "forge:stone"
+          },
+          "C": {
+            "item": "minecraft:cauldron"
           },
           "B": {
             "item": "minecraft:glass_bottle"

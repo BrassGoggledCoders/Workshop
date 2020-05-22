@@ -16,16 +16,12 @@
       "recipe": {
         "type": "minecraft:crafting_shaped",
         "pattern": [
-          "CCC",
-          "HHH",
+          "C C",
           "CCC"
         ],
         "key": {
           "C": {
             "tag": "forge:cobblestone"
-          },
-          "H": {
-            "item": "minecraft:hopper"
           }
         },
         "result": {

@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "workshop:white_rebarred_concrete",
+    "workshop:orange_rebarred_concrete",
+    "workshop:magenta_rebarred_concrete",
+    "workshop:light_blue_rebarred_concrete",
+    "workshop:yellow_rebarred_concrete",
+    "workshop:lime_rebarred_concrete",
+    "workshop:pink_rebarred_concrete",
+    "workshop:gray_rebarred_concrete",
+    "workshop:light_gray_rebarred_concrete",
+    "workshop:cyan_rebarred_concrete",
+    "workshop:purple_rebarred_concrete",
+    "workshop:blue_rebarred_concrete",
+    "workshop:brown_rebarred_concrete",
+    "workshop:green_rebarred_concrete",
+    "workshop:red_rebarred_concrete",
+    "workshop:black_rebarred_concrete"
+  ]
+}

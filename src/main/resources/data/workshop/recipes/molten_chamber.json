@@ -16,19 +16,16 @@
       "recipe": {
         "type": "minecraft:crafting_shaped",
         "pattern": [
-          "BIB",
-          "IOI",
-          "BIB"
+          "COC",
+          "C C",
+          "COC"
         ],
         "key": {
-          "B": {
-            "item": "minecraft:blaze_rod"
-          },
-          "I": {
-            "tag": "forge:ingots/iron"
+          "C": {
+            "tag": "workshop:rebarred_concrete"
           },
           "O": {
-            "item": "minecraft:obsidian"
+            "item": "workshop:obsidian_plate"
           }
         },
         "result": {

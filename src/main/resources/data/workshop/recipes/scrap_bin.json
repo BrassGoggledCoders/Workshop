@@ -16,16 +16,16 @@
       "recipe": {
         "type": "minecraft:crafting_shaped",
         "pattern": [
-          "I I",
+          "III",
           "ICI",
           "III"
         ],
         "key": {
           "I": {
-            "tag": "forge:ingots/iron"
+            "tag": "forge:films/iron"
           },
           "C": {
-            "tag": "forge:chests/wooden"
+            "item": "minecraft:composter"
           }
         },
         "result": {

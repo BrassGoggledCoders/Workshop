@@ -22,6 +22,7 @@ public class WorkshopItemTagsProvider extends ItemTagsProvider {
     public static final Tag<Item> TEA_SEEDS = new ItemTags.Wrapper(new ResourceLocation("forge", "seeds/tea"));
     public static final Tag<Item> RAW_MEAT = new ItemTags.Wrapper(new ResourceLocation("forge", "raw_meats"));
     public static final Tag<Item> COLD = new ItemTags.Wrapper(new ResourceLocation(Workshop.MOD_ID, "cold"));
+    public static final Tag<Item> REBARRED_CONCRETE = new ItemTags.Wrapper(new ResourceLocation(Workshop.MOD_ID, "rebarred_concrete"));
 
     public WorkshopItemTagsProvider(DataGenerator generator) {
         super(generator);
@@ -34,6 +35,7 @@ public class WorkshopItemTagsProvider extends ItemTagsProvider {
         this.getBuilder(TEA_SEEDS).add(WorkshopBlocks.TEA_PLANT.getItem());
         this.getBuilder(Tags.Items.SEEDS).add(WorkshopBlocks.TEA_PLANT.getItem());
         this.getBuilder(COLD).add(Items.SNOW, Items.SNOW_BLOCK, Items.SNOWBALL, Items.ICE, Items.BLUE_ICE, Items.PACKED_ICE);
+        WorkshopBlocks.CONCRETES.forEach(c -> this.getBuilder(REBARRED_CONCRETE).add(c.getItem()));
     }
 
     @Override
