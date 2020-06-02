@@ -10,6 +10,7 @@ import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraft.world.storage.loot.conditions.BlockStateProperty;
 import net.minecraft.world.storage.loot.functions.CopyNbt;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
@@ -24,13 +25,9 @@ public class WorkshopBlockLootTables extends BlockLootTables {
     @Override
     @Nonnull
     protected Iterable<Block> getKnownBlocks() {
-        return ForgeRegistries.BLOCKS
-                .getValues()
+        return WorkshopBlocks.getAllBlocks()
                 .stream()
-                .filter(block -> Optional.ofNullable(block.getRegistryName())
-                        .filter(registryName -> registryName.getNamespace().equals(Workshop.MOD_ID))
-                        .isPresent()
-                )
+                .map(RegistryObject::get)
                 .collect(Collectors.toList());
     }
 

@@ -24,6 +24,7 @@ import xyz.brassgoggledcoders.workshop.datagen.recipe.*;
 import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopItemTagsProvider;
 import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
 
+import java.util.Collections;
 import java.util.Iterator;
 
 @Mod.EventBusSubscriber(modid = Workshop.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -51,7 +52,8 @@ public class WorkshopDataGenerator {
         }, (element) -> {
             RangedItemStack[] stacks = new RangedItemStack[element.getAsJsonArray().size()];
             int i = 0;
-            for (Iterator<JsonElement> iterator = element.getAsJsonArray().iterator(); iterator.hasNext(); i++) {
+            Iterator<JsonElement> iterator;
+            for (iterator = element.getAsJsonArray().iterator(); iterator.hasNext(); i++) {
                 JsonElement jsonElement = iterator.next();
                 stacks[i] = JSONSerializableDataHandler.read(RangedItemStack.class, jsonElement);
             }
@@ -62,13 +64,13 @@ public class WorkshopDataGenerator {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
         final DataGenerator dataGenerator = event.getGenerator();
-        final ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+        final ExistingFileHelper existingFileHelper = new ExistingFileHelper(Collections.emptyList(), false);
 
         if (event.includeClient()) {
             dataGenerator.addProvider(new WorkshopUSLanguageProvider(dataGenerator));
             dataGenerator.addProvider(new WorkshopGBLanguageProvider(dataGenerator));
-            dataGenerator.addProvider(new WorkshopItemModelProvider(dataGenerator, existingFileHelper));
             dataGenerator.addProvider(new WorkshopBlockstateProvider(dataGenerator, existingFileHelper));
+            dataGenerator.addProvider(new WorkshopItemModelProvider(dataGenerator, existingFileHelper));
         }
 
         if (event.includeServer()) {

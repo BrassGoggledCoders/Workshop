@@ -3,6 +3,7 @@ package xyz.brassgoggledcoders.workshop.datagen.recipe;
 import com.hrznstudio.titanium.recipe.generator.IJSONGenerator;
 import com.hrznstudio.titanium.recipe.generator.IJsonFile;
 import com.hrznstudio.titanium.recipe.generator.TitaniumSerializableProvider;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
@@ -19,6 +20,7 @@ import xyz.brassgoggledcoders.workshop.recipe.SeasoningBarrelRecipe;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class SeasoningBarrelRecipeProvider extends TitaniumSerializableProvider {
 
@@ -59,6 +61,15 @@ public class SeasoningBarrelRecipeProvider extends TitaniumSerializableProvider 
                 .setItemIn(Ingredient.fromItems(WorkshopItems.TEA_LEAVES.get()))
                 .setTime(60 * 20)
                 .build());
+        Stream.of(Pair.of(Items.TUBE_CORAL_FAN, Items.TUBE_CORAL_BLOCK), Pair.of(Items.BRAIN_CORAL_FAN, Items.BRAIN_CORAL_BLOCK)
+        , Pair.of(Items.BUBBLE_CORAL_FAN, Items.BUBBLE_CORAL_BLOCK), Pair.of(Items.FIRE_CORAL_FAN, Items.FIRE_CORAL_BLOCK),
+                Pair.of(Items.HORN_CORAL_FAN, Items.HORN_CORAL_BLOCK)).forEach(pair ->
+                recipes.add(new Builder(pair.getSecond().getRegistryName().getPath())
+                        .setItemIn(Ingredient.fromItems(pair.getFirst()))
+                        .setFluidIn(new FluidStack(WorkshopFluids.BRINE.get(), WorkshopFluids.BOTTLE_VOLUME))
+                        .setItemOut(new ItemStack(pair.getSecond()))
+                        .setTime(20 * 60 * 5)
+                        .build()));
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }
 

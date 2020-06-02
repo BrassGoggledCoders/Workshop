@@ -1,0 +1,13 @@
+{
+  "itemIn": {
+    "item": "minecraft:horn_coral_fan"
+  },
+  "fluidIn": "{FluidName:\"workshop:brine\",Amount:333}",
+  "itemOut": {
+    "item": "minecraft:horn_coral_block",
+    "count": 1
+  },
+  "fluidOut": "{FluidName:\"minecraft:empty\",Amount:0}",
+  "seasoningTime": 6000,
+  "type": "workshop:seasoning_barrel"
+}
