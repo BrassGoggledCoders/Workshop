@@ -34,7 +34,7 @@ public class WorkshopBlocks {
     private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MOD_ID);
 
     public static final BlockRegistryObjectGroup<ObsidianPlateBlock, BlockItem, ObsidianPlateTileEntity> OBSIDIAN_PLATE =
-            new BlockRegistryObjectGroup<ObsidianPlateBlock, BlockItem, ObsidianPlateTileEntity>("obsidian_plate", ObsidianPlateBlock::new, blockItemCreator(), ObsidianPlateTileEntity::new)
+            new BlockRegistryObjectGroup<>("obsidian_plate", ObsidianPlateBlock::new, blockItemCreator(), ObsidianPlateTileEntity::new)
                     .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
     public static final BlockRegistryObjectGroup<BrokenAnvilBlock, BlockItem, ?> BROKEN_ANVIL =
@@ -53,6 +53,9 @@ public class WorkshopBlocks {
     public static final BlockRegistryObjectGroup<PressBlock, BlockItem, PressTileEntity> PRESS =
             new BlockRegistryObjectGroup<>("press", PressBlock::new, blockItemCreator(), PressTileEntity::new)
                     .register(BLOCKS, ITEMS, TILE_ENTITIES);
+
+    public static final BlockRegistryObjectGroup<PressArmBlock, BlockItem, ?> PRESS_ARM =
+            new BlockRegistryObjectGroup<>("press_arm", PressArmBlock::new,blockItemCreatorNoGroup()).register(BLOCKS, ITEMS);
 
     public static final BlockRegistryObjectGroup<SeasoningBarrelBlock, BlockItem, SeasoningBarrelTileEntity> SEASONING_BARREL =
             new BlockRegistryObjectGroup<>("seasoning_barrel", SeasoningBarrelBlock::new, blockItemCreator(),
@@ -87,10 +90,6 @@ public class WorkshopBlocks {
     public static final BlockRegistryObjectGroup<TeaPlantBlock, BlockNamedItem, ?> TEA_PLANT =
             new BlockRegistryObjectGroup<>("tea", TeaPlantBlock::new, (block) ->
                     new BlockNamedItem(WorkshopBlocks.TEA_PLANT.getBlock(), new Item.Properties().group(Workshop.ITEM_GROUP))).register(BLOCKS, ITEMS);
-
-    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> PRESS_ARM =
-            new BlockRegistryObjectGroup<>("press_arm", () -> new Block(Block.Properties.create(Material.WOOD)),blockItemCreatorNoGroup()).register(BLOCKS, ITEMS);
-
 
     public static final BlockRegistryObjectGroup<BellowsBlock, BlockItem, ?> BELLOWS = new BlockRegistryObjectGroup<>("bellows", BellowsBlock::new, blockItemCreator())
             .register(BLOCKS, ITEMS);

@@ -6,6 +6,7 @@
 		"3": "block/cauldron_top",
 		"particle": "block/glass"
 	},
+	"ambientocclusion": false,
 	"elements": [
 		{
 			"name": "tank",
