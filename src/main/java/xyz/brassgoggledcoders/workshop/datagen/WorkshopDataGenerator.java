@@ -86,6 +86,8 @@ public class WorkshopDataGenerator {
             dataGenerator.addProvider(new MortarRecipeProvider(dataGenerator));
 
             dataGenerator.addProvider(new WorkshopItemTagsProvider(dataGenerator));
+
+            dataGenerator.addProvider(new WorkshopBookProvider(dataGenerator));
         }
     }
 }

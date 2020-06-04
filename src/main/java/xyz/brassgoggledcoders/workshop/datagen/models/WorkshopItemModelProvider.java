@@ -1,6 +1,5 @@
 package xyz.brassgoggledcoders.workshop.datagen.models;
 
-import com.hrznstudio.titanium.Titanium;
 import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
@@ -35,19 +34,20 @@ public class WorkshopItemModelProvider extends ModelProvider<PropertiedItemModel
             this.withExistingParent(concrete.getItem().getRegistryName().getPath(), modLoc(BLOCK_FOLDER + "/" + concrete.getName()));
         }
         //Manually for now TODO these need to be in titanium folder. Texture name needs to change from 'texture' to 'layer0'.
-        this.singleTexture("iron_dust", mcLoc("item/generated"), new ResourceLocation(Titanium.MODID, "items/resource/dust"));
+        /*this.singleTexture("iron_dust", mcLoc("item/generated"), new ResourceLocation(Titanium.MODID, "items/resource/dust"));
         this.singleTexture("gold_dust", mcLoc("item/generated"), new ResourceLocation(Titanium.MODID, "items/resource/dust"));
         this.singleTexture("iron_pipe", mcLoc("item/generated"), modLoc("items/resource/pipe"));
         this.singleTexture("gold_pipe", mcLoc("item/generated"), modLoc("items/resource/pipe"));
         this.singleTexture("iron_film", mcLoc("item/generated"), modLoc("items/resource/film"));
-        this.singleTexture("gold_film", mcLoc("item/generated"), modLoc("items/resource/film"));
+        this.singleTexture("gold_film", mcLoc("item/generated"), modLoc("items/resource/film"));*/
 
         //this.singleTexture("tallow", mcLoc("item/generated"), modLoc("items/tallow"));
         // this.singleTexture("lye", mcLoc("item/generated"), modLoc("items/lye"));
         //this.singleTexture("leather_cordage", mcLoc("item/generated"), modLoc("items/leather_cordage"));
 
         this.withExistingParent(WorkshopBlocks.BELLOWS.getName(), modLoc(BLOCK_FOLDER + "/bellows"));
-        //this.withExistingParent(WorkshopBlocks.SCRAP_BIN.getName(), modLoc(BLOCK_FOLDER + "/scrap_bin"));
+        this.withExistingParent(WorkshopBlocks.ALEMBIC.getName(), modLoc(BLOCK_FOLDER + "/bellows"));
+        this.withExistingParent(WorkshopBlocks.SCRAP_BIN.getName(), modLoc(BLOCK_FOLDER + "/scrap_bin"));
     }
 
     private void bucket(ResourceLocation fluidName) {

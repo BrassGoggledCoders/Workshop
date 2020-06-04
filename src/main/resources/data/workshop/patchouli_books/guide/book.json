@@ -1,8 +1,8 @@
 {
-	"name": "guide.workshop.name",
-	"landing_text": "guide.workshop.landing_text",
-	"version": 1,
-    "creative_tab": "workshop",
-    "model": "workshop:guide",
-    "show_progress": false
+  "name": "guide.workshop.name",
+  "landing_text": "guide.workshop.landing_text",
+  "model": "workshop:guide",
+  "show_progress": false,
+  "version": 1,
+  "creative_tab": "workshop"
 }

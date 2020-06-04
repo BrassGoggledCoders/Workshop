@@ -79,7 +79,7 @@ dependencies {
     }
     compile fg.deobf("mezz.jei:jei-1.15.2:6.0.0.2")
     compile fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
-    compile fg.deobf("xyz.brassgoggledcoders:PatchouliProvider:1.15.2-1.0.0-Snapshot.3")
+    compile fg.deobf("xyz.brassgoggledcoders:PatchouliProvider:1.15.2-1.0.0-Snapshot.5")
 }
 
 jar {

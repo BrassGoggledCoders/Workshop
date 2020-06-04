@@ -1,0 +1,15 @@
+{
+  "name": "Alembic",
+  "category": "crafting_machine_category",
+  "icon": "workshop:alembic",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The $(item)Alembic$() evaporates and then re-condenses the fumes from a mixture of things into bottles or other fluid containers. Cold items can be added to the alembic's condenser to speed it up."
+    },
+    {
+      "type": "crafting",
+      "recipe": "workshop:alembic"
+    }
+  ]
+}

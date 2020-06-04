@@ -1,0 +1,15 @@
+{
+  "name": "Sealed Barrel",
+  "category": "other_machine_category",
+  "icon": "workshop:sealed_barrel",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The $(item)Sealed Barrel$() can hold up to four buckets of any liquid cooler than lava, and keeps its inventory when broken"
+    },
+    {
+      "type": "crafting",
+      "recipe": "workshop:sealed_barrel"
+    }
+  ]
+}

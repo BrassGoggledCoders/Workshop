@@ -28,7 +28,8 @@ public class CollectorBlock extends TileBlock<CollectorTileEntity> {
 
     @Override
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-        //TODO Potentially unsafe
-        this.handleTileEntity(worldIn, pos, tile -> ((CollectorTileEntity) tile).getMachineComponent().forceRecipeRecheck());
+        if(worldIn.getTileEntity(pos) instanceof CollectorTileEntity) {
+            this.handleTileEntity(worldIn, pos, tile -> ((CollectorTileEntity) tile).getMachineComponent().forceRecipeRecheck());
+        }
     }
 }

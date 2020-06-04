@@ -1,0 +1,15 @@
+{
+  "name": "Mortar",
+  "category": "crafting_machine_category",
+  "icon": "workshop:mortar",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The $(item)Mortar and Pestle$() can be used for grinding things, such as metal into powder and gravel into sand"
+    },
+    {
+      "type": "crafting",
+      "recipe": "workshop:mortar"
+    }
+  ]
+}
