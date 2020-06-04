@@ -1,9 +1,10 @@
-package xyz.brassgoggledcoders.workshop.api;
+package xyz.brassgoggledcoders.workshop.api.impl;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.World;
+import xyz.brassgoggledcoders.workshop.api.IDrinkableFluidBehaviour;
 
 public class PotionDrinkableFluidBehaviour implements IDrinkableFluidBehaviour {
 
