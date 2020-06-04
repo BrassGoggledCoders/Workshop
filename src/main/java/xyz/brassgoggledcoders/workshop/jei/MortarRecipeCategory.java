@@ -12,11 +12,11 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.MortarRecipe;
-import xyz.brassgoggledcoders.workshop.recipe.SinteringFurnaceRecipe;
 import xyz.brassgoggledcoders.workshop.tileentity.MortarTileEntity;
 
 public class MortarRecipeCategory implements IRecipeCategory<MortarRecipe> {
@@ -88,8 +88,14 @@ public class MortarRecipeCategory implements IRecipeCategory<MortarRecipe> {
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
         IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
-        for(int i = 0; i < MortarTileEntity.inputSize / 2; i++) {
-            guiItemStacks.init(i, true, 0, i * 17);
+        for(int i = 0; i < recipe.input.length; i++) {
+            if(recipe.input[i] != null && !Ingredient.EMPTY.equals(recipe.input[i])) {
+                int xPos = 0;
+                if(i >= MortarTileEntity.inputSize / 2) {
+                    xPos = 17;
+                }
+                guiItemStacks.init(i, true, xPos, i * 17);
+            }
         }
         if(!recipe.fluidInput.isEmpty()) {
             guiFluidStacks.init(0, true, 44, 38, 12, 16, 100, false, null);
