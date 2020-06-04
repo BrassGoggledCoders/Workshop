@@ -3,6 +3,7 @@ package xyz.brassgoggledcoders.workshop.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -18,6 +19,11 @@ public class AlembicBlock extends TileBlock<AlembicTileEntity> {
     public AlembicBlock() {
         super(Properties.from(Blocks.IRON_BLOCK).notSolid(), AlembicTileEntity::new);
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH));
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockItemUseContext context) {
+        return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
     }
 
     @Override

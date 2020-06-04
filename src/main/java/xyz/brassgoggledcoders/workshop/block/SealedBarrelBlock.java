@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
@@ -36,10 +37,17 @@ public class SealedBarrelBlock extends TileBlock<SealedBarrelTileEntity> {
     }
 
     @Override
+    public BlockState getStateForPlacement(BlockItemUseContext context) {
+        return this.getDefaultState().with(FACING, context.getFace());
+    }
+
+    @Override
     @OnlyIn(Dist.CLIENT)
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(stack.getOrCreateTag().getCompound("BlockEntityTag").getCompound("capability"));
-        tooltip.add(new StringTextComponent("Fluid: ").appendSibling(fluidStack.getDisplayName()));
+        if(!fluidStack.isEmpty()) {
+            tooltip.add(new StringTextComponent("Fluid: ").appendSibling(fluidStack.getDisplayName()));
+        }
         tooltip.add(new StringTextComponent(String.format("%d/%dmB", fluidStack.getAmount(), SealedBarrelTileEntity.tankCapacity)));
     }
 }

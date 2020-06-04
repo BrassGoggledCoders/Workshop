@@ -3,6 +3,7 @@ package xyz.brassgoggledcoders.workshop.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -11,13 +12,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import xyz.brassgoggledcoders.workshop.tileentity.SinteringFurnaceTileEntity;
 
-public class SinteringFurnaceBlock extends TileBlock {
+public class SinteringFurnaceBlock extends TileBlock<SinteringFurnaceTileEntity> {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public SinteringFurnaceBlock() {
         super(Properties.create(Material.GLASS).hardnessAndResistance(3.5F).lightValue(13).notSolid(), SinteringFurnaceTileEntity::new);
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH));
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockItemUseContext context) {
+        return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
     }
 
     @Override

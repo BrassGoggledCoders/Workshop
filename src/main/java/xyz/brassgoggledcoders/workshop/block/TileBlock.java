@@ -70,7 +70,6 @@ public class TileBlock<T extends TileEntity & GUITile> extends Block {
                 }
                 worldIn.updateComparatorOutputLevel(pos, this);
             }
-
             super.onReplaced(state, worldIn, pos, newState, isMoving);
         }
     }

@@ -1,9 +1,8 @@
 {
   "parent": "block/slab",
   "textures": {
-    "particle": "block/barrel_bottom",
-    "top": "block/barrel_bottom",
-    "bottom": "block/barrel_bottom",
-    "side": "block/composter_side"
+    "side": "block/composter_side",
+    "front": "workshop:blocks/bellows",
+    "top": "block/barrel_bottom"
   }
 }

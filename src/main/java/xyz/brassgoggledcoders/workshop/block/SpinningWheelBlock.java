@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -22,6 +23,11 @@ public class SpinningWheelBlock extends TileBlock<SpinningWheelTileEntity> {
     public SpinningWheelBlock() {
         super(Properties.from(Blocks.OAK_PLANKS).notSolid(), SpinningWheelTileEntity::new);
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH));
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockItemUseContext context) {
+        return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
     }
 
     @Override
