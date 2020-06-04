@@ -6,12 +6,15 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.AbstractFurnaceTileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -20,6 +23,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 import java.util.Random;
@@ -53,6 +58,11 @@ public class BellowsBlock extends Block {
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
         if (!worldIn.isRemote && !state.get(PRESSED)) {
             this.updateState(worldIn, pos, state, true);
+            worldIn.playSound(null, pos, SoundEvents.ENTITY_CAT_HISS, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            double x = (double)pos.getX() + worldIn.rand.nextDouble() * (double)0.1F;
+            double y = (double)pos.getY() + worldIn.rand.nextDouble();
+            double z = (double)pos.getZ() + worldIn.rand.nextDouble();
+            worldIn.addParticle(ParticleTypes.SMOKE, x, y, z, state.get(FACING).getDirectionVec().getX(), 0, state.get(FACING).getDirectionVec().getZ());
             Direction facing = state.get(FACING);
             BlockPos offsetPos = pos.offset(facing);
             if(worldIn.getTileEntity(offsetPos) instanceof AbstractFurnaceTileEntity) {
@@ -99,5 +109,15 @@ public class BellowsBlock extends Block {
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+        if (stateIn.get(PRESSED)) {
+            double x = (double) pos.getX() + worldIn.rand.nextDouble() * (double) 0.1F;
+            double y = (double) pos.getY() + worldIn.rand.nextDouble();
+            double z = (double) pos.getZ() + worldIn.rand.nextDouble();
+            worldIn.addParticle(ParticleTypes.SMOKE, x, y, z, stateIn.get(FACING).getDirectionVec().getX(), 0, stateIn.get(FACING).getDirectionVec().getZ());
+        }
     }
 }
