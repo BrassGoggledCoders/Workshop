@@ -62,7 +62,7 @@ public class SeasoningBarrelRecipeProvider extends TitaniumSerializableProvider 
                 .setTime(60 * 20)
                 .build());
         Stream.of(Pair.of(Items.TUBE_CORAL_FAN, Items.TUBE_CORAL_BLOCK), Pair.of(Items.BRAIN_CORAL_FAN, Items.BRAIN_CORAL_BLOCK)
-        , Pair.of(Items.BUBBLE_CORAL_FAN, Items.BUBBLE_CORAL_BLOCK), Pair.of(Items.FIRE_CORAL_FAN, Items.FIRE_CORAL_BLOCK),
+                , Pair.of(Items.BUBBLE_CORAL_FAN, Items.BUBBLE_CORAL_BLOCK), Pair.of(Items.FIRE_CORAL_FAN, Items.FIRE_CORAL_BLOCK),
                 Pair.of(Items.HORN_CORAL_FAN, Items.HORN_CORAL_BLOCK)).forEach(pair ->
                 recipes.add(new Builder(pair.getSecond().getRegistryName().getPath())
                         .setItemIn(Ingredient.fromItems(pair.getFirst()))
@@ -111,7 +111,7 @@ public class SeasoningBarrelRecipeProvider extends TitaniumSerializableProvider 
         }
 
         public void validate() {
-            if(Ingredient.EMPTY.equals(this.itemIn) && FluidStack.EMPTY.equals(this.fluidIn)) {
+            if (Ingredient.EMPTY.equals(this.itemIn) && FluidStack.EMPTY.equals(this.fluidIn)) {
                 throw new IllegalArgumentException("Seasoning barrel recipe must have an input");
             }
         }

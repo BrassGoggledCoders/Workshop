@@ -43,16 +43,16 @@ public abstract class AbstractBarrelRecipeCategory<T extends AbstractBarrelRecip
 
     @Override
     public void setIngredients(T recipe, IIngredients ingredients) {
-        if(!Ingredient.EMPTY.equals(recipe.itemIn)) {
+        if (!Ingredient.EMPTY.equals(recipe.itemIn)) {
             ingredients.setInputIngredients(Collections.singletonList(recipe.itemIn));
         }
-        if(!recipe.fluidIn.isEmpty()) {
+        if (!recipe.fluidIn.isEmpty()) {
             ingredients.setInput(VanillaTypes.FLUID, recipe.fluidIn);
         }
-        if(!recipe.itemOut.isEmpty()) {
+        if (!recipe.itemOut.isEmpty()) {
             ingredients.setOutput(VanillaTypes.ITEM, recipe.itemOut);
         }
-        if(!recipe.fluidOut.isEmpty()) {
+        if (!recipe.fluidOut.isEmpty()) {
             ingredients.setOutput(VanillaTypes.FLUID, recipe.fluidOut);
         }
     }

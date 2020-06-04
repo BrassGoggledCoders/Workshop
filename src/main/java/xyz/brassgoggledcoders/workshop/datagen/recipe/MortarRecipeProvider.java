@@ -66,7 +66,7 @@ public class MortarRecipeProvider extends TitaniumSerializableProvider {
                 recipes.add(new Builder(material.getMaterialType() + "_dust")
                         .setItemsIn(Ingredient.fromTag(ItemTags.getCollection().getOrCreate(new ResourceLocation("forge", "ingots/" + material.getMaterialType()))))
                         //TODO Eugh
-                        .setItemOut(new ItemStack(((ForgeRegistryEntry<Item>)generated.get("dusts")).delegate.get()))
+                        .setItemOut(new ItemStack(((ForgeRegistryEntry<Item>) generated.get("dusts")).delegate.get()))
                         .build());
             }
         }

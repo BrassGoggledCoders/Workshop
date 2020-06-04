@@ -45,7 +45,7 @@ public class SealedBarrelBlock extends TileBlock<SealedBarrelTileEntity> {
     @OnlyIn(Dist.CLIENT)
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(stack.getOrCreateTag().getCompound("BlockEntityTag").getCompound("capability"));
-        if(!fluidStack.isEmpty()) {
+        if (!fluidStack.isEmpty()) {
             tooltip.add(new StringTextComponent("Fluid: ").appendSibling(fluidStack.getDisplayName()));
         }
         tooltip.add(new StringTextComponent(String.format("%d/%dmB", fluidStack.getAmount(), SealedBarrelTileEntity.tankCapacity)));

@@ -20,6 +20,7 @@ public class WorkshopConfig {
 
     public static final Common COMMON;
     public static final ForgeConfigSpec COMMON_SPEC;
+
     static {
         final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
         COMMON_SPEC = specPair.getRight();

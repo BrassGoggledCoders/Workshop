@@ -55,23 +55,23 @@ public class SinteringTileEntityRenderer extends TileEntityRenderer<SinteringFur
         } else {
             //SinteringFurnaceRecipe recipe = furnace.getCurrentRecipe();
             //if(recipe != null) {
-                if (!powder1.isEmpty()) {
-                    GlStateManager.pushMatrix();
-                    //GlStateManager.translated(x + 0.5, y + 1.1, z + 0.5);
-                    GlStateManager.rotatef(f, 0, 1, 0.0F);
-                    GlStateManager.scalef(0.3f, 0.3f, 0.3f);
-                    //itemRenderer.renderItem(powder1, ItemCameraTransforms.TransformType.FIXED);
-                    GlStateManager.popMatrix();
-                } else if (!powder2.isEmpty()) {
-                    GlStateManager.pushMatrix();
-                    //GlStateManager.translated(x + 0.5, y + 1.1, z + 0.5);
-                    GlStateManager.rotatef(f, 0, 1, 0.0F);
-                    GlStateManager.scalef(0.3f, 0.3f, 0.3f);
-                    //itemRenderer.renderItem(powder2, ItemCameraTransforms.TransformType.FIXED);
-                    GlStateManager.popMatrix();
-                }
+            if (!powder1.isEmpty()) {
+                GlStateManager.pushMatrix();
+                //GlStateManager.translated(x + 0.5, y + 1.1, z + 0.5);
+                GlStateManager.rotatef(f, 0, 1, 0.0F);
+                GlStateManager.scalef(0.3f, 0.3f, 0.3f);
+                //itemRenderer.renderItem(powder1, ItemCameraTransforms.TransformType.FIXED);
+                GlStateManager.popMatrix();
+            } else if (!powder2.isEmpty()) {
+                GlStateManager.pushMatrix();
+                //GlStateManager.translated(x + 0.5, y + 1.1, z + 0.5);
+                GlStateManager.rotatef(f, 0, 1, 0.0F);
+                GlStateManager.scalef(0.3f, 0.3f, 0.3f);
+                //itemRenderer.renderItem(powder2, ItemCameraTransforms.TransformType.FIXED);
+                GlStateManager.popMatrix();
+            }
 
-           // }
+            // }
 
         }
     }

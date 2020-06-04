@@ -50,7 +50,7 @@ public class BottleCapabilityProvider implements IFluidHandlerItem, ICapabilityP
         Item item = container.getItem();
         if (item instanceof PotionItem && Potions.WATER.equals(PotionUtils.getPotionFromItem(container))) {
             return new FluidStack(Fluids.WATER, WorkshopFluids.BOTTLE_VOLUME);
-        } else if(item instanceof BottleItem) {
+        } else if (item instanceof BottleItem) {
             return new FluidStack(((BottleItem) item).getFluid(), WorkshopFluids.BOTTLE_VOLUME);
         }
         return FluidStack.EMPTY;
@@ -59,8 +59,7 @@ public class BottleCapabilityProvider implements IFluidHandlerItem, ICapabilityP
     protected void setFluid(@Nonnull FluidStack fluidStack) {
         if (fluidStack.isEmpty()) {
             container = new ItemStack(Items.GLASS_BOTTLE);
-        }
-        else {
+        } else {
             container = getFilledBottle(fluidStack);
         }
     }
@@ -147,8 +146,7 @@ public class BottleCapabilityProvider implements IFluidHandlerItem, ICapabilityP
 
         if (fluid == Fluids.WATER) {
             return PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER);
-        }
-        else if(WorkshopItems.BOTTLES.get(fluid.getRegistryName()) != null) {
+        } else if (WorkshopItems.BOTTLES.get(fluid.getRegistryName()) != null) {
             return new ItemStack(WorkshopItems.BOTTLES.get(fluid.getRegistryName()).get());
         }
 

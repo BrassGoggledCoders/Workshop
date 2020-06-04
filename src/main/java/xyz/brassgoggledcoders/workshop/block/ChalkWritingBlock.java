@@ -49,8 +49,8 @@ public class ChalkWritingBlock extends TileBlock<ChalkWritingTileEntity> {
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         BlockState blockstate = this.getDefaultState();
         Direction[] adirection = context.getNearestLookingDirections();
-        for(Direction direction : adirection) {
-                return blockstate.with(FACING, direction.getOpposite());
+        for (Direction direction : adirection) {
+            return blockstate.with(FACING, direction.getOpposite());
         }
         return blockstate;
     }

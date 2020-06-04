@@ -5,7 +5,6 @@ import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.server.ServerWorld;
@@ -14,8 +13,6 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
@@ -60,10 +57,9 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
                 .setColor(DyeColor.LIGHT_BLUE)
                 .setInputFilter((stack, integer) -> stack.getItem().isIn(WorkshopItemTagsProvider.COLD))
                 .setOnSlotChanged((stack, slot) -> {
-                    if(this.coldItem.getStackInSlot(0).isEmpty()) {
+                    if (this.coldItem.getStackInSlot(0).isEmpty()) {
                         this.getMachineComponent().getPrimaryBar().setProgressIncrease(1);
-                    }
-                    else {
+                    } else {
                         this.getMachineComponent().getPrimaryBar().setProgressIncrease(3);
                     }
                 }));
@@ -105,10 +101,10 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
 
     @Override
     public boolean hasInputs() {
-        if(!this.container.getStackInSlot(0).isEmpty()) {
+        if (!this.container.getStackInSlot(0).isEmpty()) {
             LazyOptional<IFluidHandlerItem> optional = this.container.getStackInSlot(0).getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY);
             //Should never not be present because of the slot filter but better safe than sorry
-            if(optional.isPresent()) {
+            if (optional.isPresent()) {
                 //Check we have input items, and that the fluid container doesn't have any fluid
                 return InventoryUtil.anySlotsHaveItems(input) && optional.orElseThrow(NullPointerException::new).getFluidInTank(0).isEmpty();
             }

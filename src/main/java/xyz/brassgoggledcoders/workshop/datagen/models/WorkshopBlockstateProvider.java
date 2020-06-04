@@ -30,21 +30,21 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        for(RegistryObject<Block> block : WorkshopFluids.getAllBlocks()) {
+        for (RegistryObject<Block> block : WorkshopFluids.getAllBlocks()) {
             FlowingFluidBlock fluidBlock = (FlowingFluidBlock) block.get();
             Fluid fluid = fluidBlock.getFluid();
-            if(fluid.isSource(fluid.getDefaultState())) {
+            if (fluid.isSource(fluid.getDefaultState())) {
                 this.simpleBlock(block.get(), this.models()
                         .singleTexture(fluid.getRegistryName().getPath(), mcLoc("water"), "particle", mcLoc("block/water_still")));
             }
         }
-        for(BlockRegistryObjectGroup<Block, BlockItem, ?> concrete : WorkshopBlocks.CONCRETES) {
+        for (BlockRegistryObjectGroup<Block, BlockItem, ?> concrete : WorkshopBlocks.CONCRETES) {
             this.simpleBlock(concrete.getBlock(), this.models()
                     .cubeAll(concrete.getName(), new ResourceLocation("minecraft", BLOCK_FOLDER + "/" + concrete.getName().replace("_rebarred_", "_"))));
         }
         this.getVariantBuilder(WorkshopBlocks.OBSIDIAN_PLATE.get())
                 .partialState().with(ObsidianPlateBlock.POWERED, true).addModels(
-                        new ConfiguredModel(models().withExistingParent("obsidian_plate_down", mcLoc("block/pressure_plate_down")).texture("texture", mcLoc("block/obsidian"))))
+                new ConfiguredModel(models().withExistingParent("obsidian_plate_down", mcLoc("block/pressure_plate_down")).texture("texture", mcLoc("block/obsidian"))))
                 .partialState().with(ObsidianPlateBlock.POWERED, false).addModels(
                 new ConfiguredModel(models().withExistingParent("obsidian_plate_up", mcLoc("block/pressure_plate_up")).texture("texture", mcLoc("block/obsidian"))));
         this.directionalBlock(WorkshopBlocks.COLLECTOR.getBlock(),

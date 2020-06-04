@@ -97,7 +97,7 @@ public class SealedBarrelTileEntity extends TileEntity implements INamedContaine
     @Override
     public ActionResultType onActivated(PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         if (player instanceof ServerPlayerEntity) {
-            if(!player.isCrouching() && FluidUtil.interactWithFluidHandler(player, hand, this.tank)) {
+            if (!player.isCrouching() && FluidUtil.interactWithFluidHandler(player, hand, this.tank)) {
                 return ActionResultType.SUCCESS;
             }
             NetworkHooks.openGui((ServerPlayerEntity) player, this, packetBuffer ->

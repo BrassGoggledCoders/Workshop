@@ -15,14 +15,15 @@ public class FoodFluidBehaviour implements IDrinkableFluidBehaviour {
     public FoodFluidBehaviour(Food food) {
         this.food = food;
     }
+
     @Override
     public void onFluidDrunk(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-        if(entityLiving instanceof PlayerEntity) {
+        if (entityLiving instanceof PlayerEntity) {
             ((PlayerEntity) entityLiving).getFoodStats().addStats(food.getHealing(), food.getSaturation());
         } else {
             entityLiving.heal(food.getHealing());
         }
-        for(Pair<EffectInstance, Float> pair : food.getEffects()) {
+        for (Pair<EffectInstance, Float> pair : food.getEffects()) {
             if (!worldIn.isRemote && pair.getLeft() != null && worldIn.rand.nextFloat() < pair.getRight()) {
                 entityLiving.addPotionEffect(new EffectInstance(pair.getLeft()));
             }

@@ -37,7 +37,7 @@ public class SinteringFurnaceRecipeProvider extends TitaniumSerializableProvider
 
     @Override
     public void add(Map<IJsonFile, IJSONGenerator> serializables) {
-        for(BlockRegistryObjectGroup concrete : WorkshopBlocks.CONCRETES) {
+        for (BlockRegistryObjectGroup concrete : WorkshopBlocks.CONCRETES) {
             ResourceLocation location = new ResourceLocation("minecraft", concrete.getName().replace("_rebarred_", "_") + "_powder");
             recipes.add(new Builder(concrete.getName())
                     .setInput(Ingredient.fromItems(Blocks.IRON_BARS))
@@ -47,11 +47,11 @@ public class SinteringFurnaceRecipeProvider extends TitaniumSerializableProvider
                     .build());
         }
         recipes.add(new Builder("caramel_apple")
-                    .setInput(Ingredient.fromItems(Items.APPLE))
-                    .setPowder(Ingredient.fromStacks(new ItemStack(Items.SUGAR, 2)))
-                    .setOutput(new ItemStack(WorkshopItems.CARAMEL_APPLE.get()))
-                    .setTime(40)
-                    .build()
+                .setInput(Ingredient.fromItems(Items.APPLE))
+                .setPowder(Ingredient.fromStacks(new ItemStack(Items.SUGAR, 2)))
+                .setOutput(new ItemStack(WorkshopItems.CARAMEL_APPLE.get()))
+                .setTime(40)
+                .build()
         );
         recipes.add(new Builder("obsidian_plate")
                 .setInput(Ingredient.fromStacks(new ItemStack(Items.FLINT, 4)))
@@ -68,16 +68,16 @@ public class SinteringFurnaceRecipeProvider extends TitaniumSerializableProvider
                             .setPowder(Ingredient.fromTag(ItemTags.getCollection().getOrCreate(new ResourceLocation("forge", "dusts/" + material.getMaterialType()))))
                             .setInput(Ingredient.fromItems(Items.PAPER))
                             //TODO Eugh
-                            .setOutput(new ItemStack(((ForgeRegistryEntry<Item>)generated.get("film")).delegate.get()))
+                            .setOutput(new ItemStack(((ForgeRegistryEntry<Item>) generated.get("film")).delegate.get()))
                             .setTime(20)
                             .build());
                 }
-                if(generated.containsKey("pipe")) {
+                if (generated.containsKey("pipe")) {
                     recipes.add(new Builder(material.getMaterialType() + "_" + WorkshopResourceType.PIPE.toString().toLowerCase())
                             .setPowder(Ingredient.fromTag(ItemTags.getCollection().getOrCreate(new ResourceLocation("forge", "dusts/" + material.getMaterialType()))))
                             .setInput(Ingredient.fromItems(Items.BAMBOO))
                             //TODO Eugh
-                            .setOutput(new ItemStack(((ForgeRegistryEntry<Item>)generated.get("pipe")).delegate.get()))
+                            .setOutput(new ItemStack(((ForgeRegistryEntry<Item>) generated.get("pipe")).delegate.get()))
                             .setTime(20)
                             .build());
                 }
@@ -131,7 +131,7 @@ public class SinteringFurnaceRecipeProvider extends TitaniumSerializableProvider
         }
 
         public void validate() {
-            if(this.processingTime <= 0) {
+            if (this.processingTime <= 0) {
                 throw new IllegalArgumentException("Processing time must be more than zero");
             }
         }

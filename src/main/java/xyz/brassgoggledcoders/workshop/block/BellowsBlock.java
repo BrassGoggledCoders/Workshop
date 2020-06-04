@@ -59,35 +59,34 @@ public class BellowsBlock extends Block {
         if (!worldIn.isRemote && !state.get(PRESSED)) {
             this.updateState(worldIn, pos, state, true);
             worldIn.playSound(null, pos, SoundEvents.ENTITY_CAT_HISS, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            double x = (double)pos.getX() + worldIn.rand.nextDouble() * (double)0.1F;
-            double y = (double)pos.getY() + worldIn.rand.nextDouble();
-            double z = (double)pos.getZ() + worldIn.rand.nextDouble();
+            double x = (double) pos.getX() + worldIn.rand.nextDouble() * (double) 0.1F;
+            double y = (double) pos.getY() + worldIn.rand.nextDouble();
+            double z = (double) pos.getZ() + worldIn.rand.nextDouble();
             worldIn.addParticle(ParticleTypes.SMOKE, x, y, z, state.get(FACING).getDirectionVec().getX(), 0, state.get(FACING).getDirectionVec().getZ());
             Direction facing = state.get(FACING);
             BlockPos offsetPos = pos.offset(facing);
-            if(worldIn.getTileEntity(offsetPos) instanceof AbstractFurnaceTileEntity) {
+            if (worldIn.getTileEntity(offsetPos) instanceof AbstractFurnaceTileEntity) {
                 AbstractFurnaceTileEntity furnace = (AbstractFurnaceTileEntity) worldIn.getTileEntity(pos.offset(state.get(FACING)));
-                if(furnace != null) {
+                if (furnace != null) {
                     furnace.cookTime += 20;
                     //Prevent overflowing as the furnace doesn't do that itself.
                     if (furnace.cookTime >= furnace.cookTimeTotal) {
                         furnace.cookTime = furnace.cookTimeTotal - 1; //Furnace does an == check not an >= check.
                     }
                 }
-            }
-            else if(worldIn.isAirBlock(offsetPos)) {
+            } else if (worldIn.isAirBlock(offsetPos)) {
                 List<Entity> entityList = worldIn.getEntitiesWithinAABB(Entity.class,
                         new AxisAlignedBB(offsetPos), entity -> entity instanceof ItemEntity || entity.canBePushed());
                 final double divisor = 0.25D;
-                entityList.forEach(entity -> entity.setMotion(facing.getXOffset() + (worldIn.getRandom().nextGaussian()*divisor) - (worldIn.getRandom().nextGaussian()*divisor),
-                        worldIn.getRandom().nextGaussian()*divisor, facing.getZOffset() + (worldIn.getRandom().nextGaussian()*divisor) - (worldIn.getRandom().nextGaussian()*divisor)));
+                entityList.forEach(entity -> entity.setMotion(facing.getXOffset() + (worldIn.getRandom().nextGaussian() * divisor) - (worldIn.getRandom().nextGaussian() * divisor),
+                        worldIn.getRandom().nextGaussian() * divisor, facing.getZOffset() + (worldIn.getRandom().nextGaussian() * divisor) - (worldIn.getRandom().nextGaussian() * divisor)));
             }
         }
     }
 
     @Override
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
-        if(state.get(PRESSED)) {
+        if (state.get(PRESSED)) {
             this.updateState(worldIn, pos, state, false);
         }
     }
@@ -112,6 +111,7 @@ public class BellowsBlock extends Block {
     }
 
     @OnlyIn(Dist.CLIENT)
+    @Override
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
         if (stateIn.get(PRESSED)) {
             double x = (double) pos.getX() + worldIn.rand.nextDouble() * (double) 0.1F;

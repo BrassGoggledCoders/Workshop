@@ -30,7 +30,7 @@ public class WorkshopCapabilities {
 
     @SubscribeEvent
     public static void attachItemCapabilities(AttachCapabilitiesEvent<ItemStack> event) {
-        if(event.getObject().getItem() == Items.GLASS_BOTTLE ||
+        if (event.getObject().getItem() == Items.GLASS_BOTTLE ||
                 (event.getObject().getItem() == Items.POTION && Potions.WATER.equals(PotionUtils.getPotionFromItem(event.getObject())))) {
             event.addCapability(new ResourceLocation(Workshop.MOD_ID, "fluid_handler_item"),
                     new BottleCapabilityProvider(event.getObject()));
@@ -39,7 +39,7 @@ public class WorkshopCapabilities {
 
     @SubscribeEvent
     public static void attachTileCapabilities(AttachCapabilitiesEvent<TileEntity> event) {
-        if(event.getObject() instanceof FurnaceTileEntity) {
+        if (event.getObject() instanceof FurnaceTileEntity) {
             event.addCapability(new ResourceLocation(Workshop.MOD_ID, "collector_target"),
                     new FurnaceCapabilityProvider((FurnaceTileEntity) event.getObject()));
         }

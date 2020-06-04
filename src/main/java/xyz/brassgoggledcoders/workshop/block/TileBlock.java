@@ -65,7 +65,7 @@ public class TileBlock<T extends TileEntity & GUITile> extends Block {
         if (state.getBlock() != newState.getBlock()) {
             TileEntity tileentity = worldIn.getTileEntity(pos);
             if (tileentity instanceof BasicMachineTileEntity) {
-                for (InventoryComponent<?> inventoryComponent : ((BasicMachineTileEntity<?,?>) tileentity).getMachineComponent().getMultiInventoryComponent().getInventoryHandlers())  {
+                for (InventoryComponent<?> inventoryComponent : ((BasicMachineTileEntity<?, ?>) tileentity).getMachineComponent().getMultiInventoryComponent().getInventoryHandlers()) {
                     InventoryUtil.getItemStackStream(inventoryComponent).forEach(stack -> InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack));
                 }
                 worldIn.updateComparatorOutputLevel(pos, this);

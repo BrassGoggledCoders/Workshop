@@ -2,14 +2,12 @@ package xyz.brassgoggledcoders.workshop.network;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.SignTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkEvent;
-import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.tileentity.ChalkWritingTileEntity;
 
 import java.util.function.Supplier;
@@ -26,7 +24,7 @@ public class UpdateChalkPacket {
 
     public static void encode(UpdateChalkPacket packet, PacketBuffer buffer) {
         buffer.writeBlockPos(packet.pos);
-        for(String string : packet.lines) {
+        for (String string : packet.lines) {
             buffer.writeString(string);
         }
     }

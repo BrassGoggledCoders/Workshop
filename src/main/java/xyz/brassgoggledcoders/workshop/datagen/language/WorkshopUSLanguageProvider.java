@@ -28,7 +28,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addBlock(WorkshopBlocks.SINTERING_FURNACE, "Sintering Furnace");
         this.addBlock(WorkshopBlocks.SPINNING_WHEEL, "Spinning Wheel");
         int i = 0;
-        for(BlockRegistryObjectGroup<?, ?, ?> concrete : WorkshopBlocks.CONCRETES) {
+        for (BlockRegistryObjectGroup<?, ?, ?> concrete : WorkshopBlocks.CONCRETES) {
             this.addBlock(concrete, String.format("%s Rebarred Concrete", StringUtils.capitaliseAllWords(DyeColor.values()[i++].getName().replace("_", " "))));
         }
         this.addBlock(WorkshopBlocks.TEA_PLANT, "Tea");
@@ -85,7 +85,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addFacingTooltip(InventoryUtil.FLUID_INPUT, "Fluid Input");
         this.addFacingTooltip(InventoryUtil.FLUID_OUTPUT, "Fluid Output");
         this.addFacingTooltip("residue", "Residue");
-        this.addFacingTooltip("colditem","Cooling Source");
+        this.addFacingTooltip("colditem", "Cooling Source");
         this.addFacingTooltip("container", "Container");
         this.addFacingTooltip("powderinventory", "Powder");
         //endregion

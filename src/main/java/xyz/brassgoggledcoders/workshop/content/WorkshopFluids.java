@@ -40,9 +40,9 @@ public class WorkshopFluids {
 
     public static final ForgeFlowingFluid.Properties DISTILLED_WATER_PROPERTIES = new ForgeFlowingFluid.Properties(DISTILLED_WATER, DISTILLED_WATER::getFlowing,
             FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
-            new ResourceLocation("minecraft", "block/water_flow"))
-            .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
-            .color(fromHex("d7eef2")))
+                    new ResourceLocation("minecraft", "block/water_flow"))
+                    .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
+                    .color(fromHex("d7eef2")))
             .block(DISTILLED_WATER::getBlock)
             .bucket(DISTILLED_WATER::getBucket);
 
@@ -51,9 +51,9 @@ public class WorkshopFluids {
 
     public static final ForgeFlowingFluid.Properties SEED_OIL_PROPERTIES = new ForgeFlowingFluid.Properties(SEED_OIL, SEED_OIL::getFlowing,
             FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
-            new ResourceLocation("minecraft", "block/water_flow"))
-            .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
-            .color(fromHex("562e33")))
+                    new ResourceLocation("minecraft", "block/water_flow"))
+                    .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
+                    .color(fromHex("562e33")))
             .block(SEED_OIL::getBlock)
             .bucket(SEED_OIL::getBucket);
 
@@ -122,7 +122,7 @@ public class WorkshopFluids {
                     .color(2631935))
             .block(GLACIAL_WATER::getBlock)
             .bucket(GLACIAL_WATER::getBucket);*/
-    
+
     public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> TEA = new FluidRegistryObjectGroup<>("tea_liquid",
             () -> new ForgeFlowingFluid.Source(WorkshopFluids.TEA_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.TEA_PROPERTIES)).register(FLUIDS, BLOCKS, ITEMS);
 
@@ -164,6 +164,6 @@ public class WorkshopFluids {
         if (text.length() == 6) {
             text = "FF" + text;
         }
-        return (int)Long.parseLong(text, 16);
+        return (int) Long.parseLong(text, 16);
     }
- }
+}

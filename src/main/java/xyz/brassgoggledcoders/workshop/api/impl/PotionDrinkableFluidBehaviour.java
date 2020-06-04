@@ -16,7 +16,7 @@ public class PotionDrinkableFluidBehaviour implements IDrinkableFluidBehaviour {
 
     @Override
     public void onFluidDrunk(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-        for(EffectInstance effectinstance : effectinstances) {
+        for (EffectInstance effectinstance : effectinstances) {
             if (effectinstance.getPotion().isInstant()) {
                 effectinstance.getPotion().affectEntity(entityLiving, entityLiving, entityLiving, effectinstance.getAmplifier(), 1.0D);
             } else {

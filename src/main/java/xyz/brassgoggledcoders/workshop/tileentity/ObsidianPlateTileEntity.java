@@ -2,8 +2,6 @@ package xyz.brassgoggledcoders.workshop.tileentity;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 
 import java.util.ArrayList;
@@ -29,13 +27,13 @@ public class ObsidianPlateTileEntity extends TileEntity {
     @Override
     public void read(CompoundNBT compound) {
         super.read(compound);
-        for(int i = 0; i < compound.getInt("size"); i++) {
+        for (int i = 0; i < compound.getInt("size"); i++) {
             playerNames.set(i, compound.getUniqueId("name" + i));
         }
     }
 
     public void addPlayerName(UUID name) {
-        if(!playerNames.contains(name)) {
+        if (!playerNames.contains(name)) {
             playerNames.add(name);
         }
     }

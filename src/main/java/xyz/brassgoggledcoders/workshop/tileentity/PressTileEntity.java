@@ -3,7 +3,6 @@ package xyz.brassgoggledcoders.workshop.tileentity;
 import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
-import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
@@ -41,23 +40,23 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
     public void tick() {
         int progress = getMachineComponent().getPrimaryBar().getProgress();
         int max = getMachineComponent().getPrimaryBar().getMaxProgress();
-        double time = (double)max / 60;
+        double time = (double) max / 60;
         updatePressProgress();
-        if(progress % time == 0 && progress != 0){
-            if(height > 0.2){
+        if (progress % time == 0 && progress != 0) {
+            if (height > 0.2) {
                 height = height - 0.01;
             }
-        } else if(progress == 0 && height != 0.8){
+        } else if (progress == 0 && height != 0.8) {
             height = 0.8;
         }
         super.tick();
     }
 
-    public double getHeight(){
+    public double getHeight() {
         return height;
     }
 
-    public void updatePressProgress(){
+    public void updatePressProgress() {
         requestModelDataUpdate();
         this.markDirty();
         if (this.getWorld() != null) {
@@ -88,7 +87,7 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
     @Override
     public void handleUpdateTag(CompoundNBT tag) {
         height = tag.getDouble("height");
-        if(getInputInventory().getStackInSlot(0).isEmpty()) {
+        if (getInputInventory().getStackInSlot(0).isEmpty()) {
             getInputInventory().insertItem(0, ItemStack.read(tag), false);
         }
         updatePressProgress();

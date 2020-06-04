@@ -30,8 +30,8 @@ public class ScrapBagItem extends Item {
                             .getLootTableManager()
                             .getLootTableFromLocation(WorkshopGiftLootTables.SCRAP_BAG)
                             .generate(new LootContext.Builder((ServerWorld) worldIn)
-                    .withParameter(LootParameters.POSITION, playerIn.getPosition()).withParameter(LootParameters.THIS_ENTITY, playerIn)
-                    .build(LootParameterSets.GIFT));
+                                    .withParameter(LootParameters.POSITION, playerIn.getPosition()).withParameter(LootParameters.THIS_ENTITY, playerIn)
+                                    .build(LootParameterSets.GIFT));
             list.forEach(stack -> ItemHandlerHelper.insertItem(new PlayerInvWrapper(playerIn.inventory), stack, false));
             playerIn.getHeldItem(handIn).shrink(1);
             playerIn.addPotionEffect(new EffectInstance(WorkshopEffects.STINKY.get(), 20 * 60 * 5));

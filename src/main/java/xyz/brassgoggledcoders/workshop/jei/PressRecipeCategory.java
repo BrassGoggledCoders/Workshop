@@ -1,7 +1,6 @@
 package xyz.brassgoggledcoders.workshop.jei;
 
 import com.google.common.collect.Lists;
-import com.hrznstudio.titanium.Titanium;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -15,9 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
-import xyz.brassgoggledcoders.workshop.recipe.MortarRecipe;
 import xyz.brassgoggledcoders.workshop.recipe.PressRecipe;
-import xyz.brassgoggledcoders.workshop.tileentity.MortarTileEntity;
 
 public class PressRecipeCategory implements IRecipeCategory<PressRecipe> {
 

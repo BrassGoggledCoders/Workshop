@@ -12,7 +12,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.gui.ChalkWritingScreen;
 
@@ -37,7 +36,7 @@ public class ChalkWritingTileEntity extends TileEntity implements GUITile {
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         super.write(compound);
-        for(int i = 0; i < 4; ++i) {
+        for (int i = 0; i < 4; ++i) {
             String s = ITextComponent.Serializer.toJson(this.signText[i]);
             compound.putString("Text" + (i + 1), s);
         }
@@ -47,7 +46,7 @@ public class ChalkWritingTileEntity extends TileEntity implements GUITile {
     @Override
     public void read(CompoundNBT compound) {
         super.read(compound);
-        for(int i = 0; i < 4; ++i) {
+        for (int i = 0; i < 4; ++i) {
             String s = compound.getString("Text" + (i + 1));
             ITextComponent itextcomponent = ITextComponent.Serializer.fromJson(s.isEmpty() ? "\"\"" : s);
             this.signText[i] = itextcomponent;

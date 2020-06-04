@@ -74,7 +74,7 @@ public class MoltenChamberRecipeProvider extends TitaniumSerializableProvider {
         }
 
         public void validate() {
-            if(Ingredient.EMPTY.equals(this.itemIn) && FluidStack.EMPTY.equals(this.fluidIn)) {
+            if (Ingredient.EMPTY.equals(this.itemIn) && FluidStack.EMPTY.equals(this.fluidIn)) {
                 throw new IllegalArgumentException("Recipe must have an input");
             }
         }

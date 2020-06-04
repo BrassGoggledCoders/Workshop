@@ -69,7 +69,7 @@ public class PressRecipeProvider extends TitaniumSerializableProvider {
         }
 
         public void validate() {
-            if(this.processingTime <= 0) {
+            if (this.processingTime <= 0) {
                 throw new IllegalArgumentException("Processing time must be more than zero");
             }
         }

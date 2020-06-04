@@ -5,7 +5,6 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.registration.IModIngredientRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
@@ -13,7 +12,6 @@ import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
-import xyz.brassgoggledcoders.workshop.recipe.MoltenChamberRecipe;
 
 @JeiPlugin
 @SuppressWarnings("unused")
@@ -34,7 +32,7 @@ public class WorkshopJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        if(Minecraft.getInstance().world != null) {
+        if (Minecraft.getInstance().world != null) {
             final RecipeManager recipeManager = Minecraft.getInstance().world.getRecipeManager();
             registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.ALEMBIC_SERIALIZER.get().getRecipeType()).values(), AlembicRecipeCategory.ID);
             registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.SPINNING_WHEEL_SERIALIZER.get().getRecipeType()).values(), SpinningWheelRecipeCategory.ID);

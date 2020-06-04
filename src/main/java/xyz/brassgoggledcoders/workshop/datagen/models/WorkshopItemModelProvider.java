@@ -25,13 +25,13 @@ public class WorkshopItemModelProvider extends ModelProvider<PropertiedItemModel
 
     @Override
     protected void registerModels() {
-        for(RegistryObject<Fluid> fluid : WorkshopFluids.getAllFluids()) {
-            if(fluid.get().isSource(fluid.get().getDefaultState())) {
+        for (RegistryObject<Fluid> fluid : WorkshopFluids.getAllFluids()) {
+            if (fluid.get().isSource(fluid.get().getDefaultState())) {
                 bucket(fluid.getId());
                 bottle(fluid.getId());
             }
         }
-        for(BlockRegistryObjectGroup<Block, BlockItem, ?> concrete : WorkshopBlocks.CONCRETES) {
+        for (BlockRegistryObjectGroup<Block, BlockItem, ?> concrete : WorkshopBlocks.CONCRETES) {
             this.withExistingParent(concrete.getItem().getRegistryName().getPath(), modLoc(BLOCK_FOLDER + "/" + concrete.getName()));
         }
         //Manually for now TODO these need to be in titanium folder. Texture name needs to change from 'texture' to 'layer0'.
@@ -43,7 +43,7 @@ public class WorkshopItemModelProvider extends ModelProvider<PropertiedItemModel
         this.singleTexture("gold_film", mcLoc("item/generated"), modLoc("items/resource/film"));
 
         //this.singleTexture("tallow", mcLoc("item/generated"), modLoc("items/tallow"));
-       // this.singleTexture("lye", mcLoc("item/generated"), modLoc("items/lye"));
+        // this.singleTexture("lye", mcLoc("item/generated"), modLoc("items/lye"));
         //this.singleTexture("leather_cordage", mcLoc("item/generated"), modLoc("items/leather_cordage"));
 
         this.withExistingParent(WorkshopBlocks.BELLOWS.getName(), modLoc(BLOCK_FOLDER + "/bellows"));

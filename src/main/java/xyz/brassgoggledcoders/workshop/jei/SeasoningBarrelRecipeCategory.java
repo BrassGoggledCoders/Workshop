@@ -13,7 +13,7 @@ public class SeasoningBarrelRecipeCategory extends AbstractBarrelRecipeCategory<
     public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.SEASONING_BARREL_SERIALIZER.get().getRecipeType().toString());
 
     public SeasoningBarrelRecipeCategory(IGuiHelper guiHelper) {
-       super(guiHelper);
+        super(guiHelper);
     }
 
     @Override

@@ -16,7 +16,7 @@ import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
 import javax.annotation.Nonnull;
 
-import static xyz.brassgoggledcoders.workshop.content.WorkshopRecipes.*;
+import static xyz.brassgoggledcoders.workshop.content.WorkshopRecipes.MORTAR_SERIALIZER;
 
 public class MortarRecipe extends WorkshopRecipe {
 

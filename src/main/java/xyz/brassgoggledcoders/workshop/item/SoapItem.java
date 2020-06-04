@@ -20,7 +20,7 @@ public class SoapItem extends Item {
 
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-        if(worldIn.getBlockState(entityLiving.getPosition()).getMaterial() == Material.WATER) {
+        if (worldIn.getBlockState(entityLiving.getPosition()).getMaterial() == Material.WATER) {
             if (!worldIn.isRemote) {
                 entityLiving.curePotionEffects(stack);
             }

@@ -22,8 +22,8 @@ public class WorkshopEventHandler {
 
     @SubscribeEvent
     public static void playerInteract(PlayerInteractEvent.EntityInteract event) {
-        if(event.getPlayer().getActivePotionEffect(WorkshopEffects.STINKY.get()) != null && event.getTarget() instanceof IMerchant) {
-            if(event.getTarget() instanceof AbstractVillagerEntity) {
+        if (event.getPlayer().getActivePotionEffect(WorkshopEffects.STINKY.get()) != null && event.getTarget() instanceof IMerchant) {
+            if (event.getTarget() instanceof AbstractVillagerEntity) {
                 ((AbstractVillagerEntity) event.getTarget()).setShakeHeadTicks(20);
             }
             event.setCanceled(true);
@@ -34,7 +34,7 @@ public class WorkshopEventHandler {
     public static void lootLoad(LootTableLoadEvent event) {
         String prefix = "minecraft:";
         String name = event.getName().toString();
-        if(name.startsWith(prefix)) {
+        if (name.startsWith(prefix)) {
             String file = name.substring(name.indexOf(prefix) + prefix.length());
             if ("blocks/grass".equals(file)) {
                 event.getTable().addPool(getInjectPool(file));
@@ -44,8 +44,8 @@ public class WorkshopEventHandler {
 
     @SubscribeEvent
     public static void anvilChange(AnvilUpdateEvent event) {
-        if(WorkshopItems.LEATHER_CORDAGE.get().equals(event.getRight().getItem())) {
-            if(event.getLeft().getItem() instanceof DyeableArmorItem && event.getLeft().isDamaged()) {
+        if (WorkshopItems.LEATHER_CORDAGE.get().equals(event.getRight().getItem())) {
+            if (event.getLeft().getItem() instanceof DyeableArmorItem && event.getLeft().isDamaged()) {
                 event.setMaterialCost(1);
                 ItemStack stack = event.getLeft().copy();
                 stack.setDamage(stack.getDamage() - 20);

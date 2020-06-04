@@ -1,25 +1,23 @@
 package xyz.brassgoggledcoders.workshop.renderer;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.BlockRendererDispatcher;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.Texture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ILightReader;
 import net.minecraftforge.fluids.FluidStack;
-import org.lwjgl.opengl.GL11;
 import xyz.brassgoggledcoders.workshop.block.PressBlock;
 import xyz.brassgoggledcoders.workshop.tileentity.PressTileEntity;
 
@@ -183,40 +181,40 @@ public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity>
 
         switch (face) {
             case DOWN:
-                renderer.pos(stack.getLast().getMatrix(),x1, y1, z1).color(r, g, b, a).tex(minU, minV).lightmap(0, 240).normal(1, 0, 0).endVertex();
-                renderer.pos(stack.getLast().getMatrix(),x2, y1, z1).color(r, g, b, a).tex(maxU, minV).lightmap(0, 240).normal(1, 0, 0).endVertex();
-                renderer.pos(stack.getLast().getMatrix(),x2, y1, z2).color(r, g, b, a).tex(maxU, maxV).lightmap(0, 240).normal(1, 0, 0).endVertex();
-                renderer.pos(stack.getLast().getMatrix(),x1, y1, z2).color(r, g, b, a).tex(minU, maxV).lightmap(0, 240).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x1, y1, z1).color(r, g, b, a).tex(minU, minV).lightmap(0, 240).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x2, y1, z1).color(r, g, b, a).tex(maxU, minV).lightmap(0, 240).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x2, y1, z2).color(r, g, b, a).tex(maxU, maxV).lightmap(0, 240).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x1, y1, z2).color(r, g, b, a).tex(minU, maxV).lightmap(0, 240).normal(1, 0, 0).endVertex();
                 break;
             case UP:
                 renderer.pos(stack.getLast().getMatrix(), x1, y2, z1).color(r, g, b, a).tex(minU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
-                renderer.pos(stack.getLast().getMatrix(),x1, y2, z2).color(r, g, b, a).tex(minU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
-                renderer.pos(stack.getLast().getMatrix(),x2, y2, z2).color(r, g, b, a).tex(maxU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
-                renderer.pos(stack.getLast().getMatrix(),x2, y2, z1).color(r, g, b, a).tex(maxU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x1, y2, z2).color(r, g, b, a).tex(minU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x2, y2, z2).color(r, g, b, a).tex(maxU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x2, y2, z1).color(r, g, b, a).tex(maxU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
                 break;
             case NORTH:
-                renderer.pos(stack.getLast().getMatrix(),x1, y1, z1).color(r, g, b, a).tex(minU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
-                renderer.pos(stack.getLast().getMatrix(),x1, y2, z1).color(r, g, b, a).tex(minU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
-                renderer.pos(stack.getLast().getMatrix(),x2, y2, z1).color(r, g, b, a).tex(maxU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
-                renderer.pos(stack.getLast().getMatrix(),x2, y1, z1).color(r, g, b, a).tex(maxU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x1, y1, z1).color(r, g, b, a).tex(minU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x1, y2, z1).color(r, g, b, a).tex(minU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x2, y2, z1).color(r, g, b, a).tex(maxU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x2, y1, z1).color(r, g, b, a).tex(maxU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
                 break;
             case SOUTH:
-                renderer.pos(stack.getLast().getMatrix(),x1, y1, z2).color(r, g, b, a).tex(maxU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
-                renderer.pos(stack.getLast().getMatrix(),x2, y1, z2).color(r, g, b, a).tex(minU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
-                renderer.pos(stack.getLast().getMatrix(),x2, y2, z2).color(r, g, b, a).tex(minU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
-                renderer.pos(stack.getLast().getMatrix(),x1, y2, z2).color(r, g, b, a).tex(maxU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x1, y1, z2).color(r, g, b, a).tex(maxU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x2, y1, z2).color(r, g, b, a).tex(minU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x2, y2, z2).color(r, g, b, a).tex(minU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x1, y2, z2).color(r, g, b, a).tex(maxU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
                 break;
             case WEST:
-                renderer.pos(stack.getLast().getMatrix(),x1, y1, z1).color(r, g, b, a).tex(maxU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
-                renderer.pos(stack.getLast().getMatrix(),x1, y1, z2).color(r, g, b, a).tex(minU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
-                renderer.pos(stack.getLast().getMatrix(),x1, y2, z2).color(r, g, b, a).tex(minU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
-                renderer.pos(stack.getLast().getMatrix(),x1, y2, z1).color(r, g, b, a).tex(maxU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x1, y1, z1).color(r, g, b, a).tex(maxU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x1, y1, z2).color(r, g, b, a).tex(minU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x1, y2, z2).color(r, g, b, a).tex(minU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x1, y2, z1).color(r, g, b, a).tex(maxU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
                 break;
             case EAST:
-                renderer.pos(stack.getLast().getMatrix(),x2, y1, z1).color(r, g, b, a).tex(minU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
-                renderer.pos(stack.getLast().getMatrix(),x2, y2, z1).color(r, g, b, a).tex(minU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
-                renderer.pos(stack.getLast().getMatrix(),x2, y2, z2).color(r, g, b, a).tex(maxU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
-                renderer.pos(stack.getLast().getMatrix(),x2, y1, z2).color(r, g, b, a).tex(maxU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x2, y1, z1).color(r, g, b, a).tex(minU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x2, y2, z1).color(r, g, b, a).tex(minU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x2, y2, z2).color(r, g, b, a).tex(maxU, minV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
+                renderer.pos(stack.getLast().getMatrix(), x2, y1, z2).color(r, g, b, a).tex(maxU, maxV).lightmap(combinedLight).normal(1, 0, 0).endVertex();
                 break;
         }
     }

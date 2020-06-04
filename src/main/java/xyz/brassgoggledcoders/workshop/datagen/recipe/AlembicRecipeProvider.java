@@ -15,7 +15,6 @@ import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
-import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopItemTagsProvider;
 import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
 import xyz.brassgoggledcoders.workshop.tileentity.AlembicTileEntity;
 import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
@@ -37,7 +36,7 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
         recipes.add(new Builder("distilled_water")
                 .setInputs(Ingredient.fromItems(Items.WATER_BUCKET))
                 .setOutput(new FluidStack(WorkshopFluids.DISTILLED_WATER.getFluid(), FluidAttributes.BUCKET_VOLUME))
-                .setResidue(new RangedItemStack(Items.BUCKET, 1,1),
+                .setResidue(new RangedItemStack(Items.BUCKET, 1, 1),
                         new RangedItemStack(WorkshopItems.SALT.get(), 1, 2),
                         new RangedItemStack(WorkshopItems.SILT.get(), 0, 1),
                         new RangedItemStack(WorkshopBlocks.CHALK_WRITING.getItem(), 0, 1))
@@ -48,8 +47,8 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
                         Ingredient.fromItems(Items.KELP),
                         Ingredient.fromItems(WorkshopItems.SALT.get()))
                 .setOutput(new FluidStack(WorkshopFluids.ADHESIVE_OILS.getFluid(), FluidAttributes.BUCKET_VOLUME))
-                .setResidue(new RangedItemStack(Items.BUCKET, 1,1),
-                        new RangedItemStack(WorkshopItems.ASH.get(), 1,3))
+                .setResidue(new RangedItemStack(Items.BUCKET, 1, 1),
+                        new RangedItemStack(WorkshopItems.ASH.get(), 1, 3))
                 .setTime(8 * 20)
                 .build());
         recipes.add(new Builder("adhesive_oil_alt")
@@ -57,22 +56,22 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
                         Ingredient.fromItems(Items.SEAGRASS),
                         Ingredient.fromItems(WorkshopItems.SALT.get()))
                 .setOutput(new FluidStack(WorkshopFluids.ADHESIVE_OILS.getFluid(), FluidAttributes.BUCKET_VOLUME))
-                .setResidue(new RangedItemStack(Items.BUCKET, 1,1),
-                        new RangedItemStack(WorkshopItems.ASH.get(), 1,3))
+                .setResidue(new RangedItemStack(Items.BUCKET, 1, 1),
+                        new RangedItemStack(WorkshopItems.ASH.get(), 1, 3))
                 .setTime(8 * 20)
                 .build());
         recipes.add(new Builder("tannin")
                 .setInputs(Ingredient.fromItems(WorkshopItems.MEDICINAL_ROOT.get()), Ingredient.fromItems(WorkshopItems.TEA_LEAVES.get()))
-                .setResidue(new RangedItemStack(WorkshopItems.ASH.get(), 0,2),
-                        new RangedItemStack(WorkshopItems.SILT.get(), 0,1),
+                .setResidue(new RangedItemStack(WorkshopItems.ASH.get(), 0, 2),
+                        new RangedItemStack(WorkshopItems.SILT.get(), 0, 1),
                         new RangedItemStack(WorkshopItems.TANNIN.get(), 6, 6))
                 .setTime(8 * 20)
                 .build());
         recipes.add(new Builder("rosin")
                 .setInputs(Ingredient.fromItems(Items.SPRUCE_LOG), Ingredient.fromTag(Tags.Items.SLIMEBALLS))
                 .setOutput(new FluidStack(WorkshopFluids.ADHESIVE_OILS.getFluid(), WorkshopFluids.BOTTLE_VOLUME))
-                .setResidue(new RangedItemStack(WorkshopItems.ROSIN.get(), 4,4),
-                        new RangedItemStack(Items.SLIME_BALL, 0,2))
+                .setResidue(new RangedItemStack(WorkshopItems.ROSIN.get(), 4, 4),
+                        new RangedItemStack(Items.SLIME_BALL, 0, 2))
                 .setTime(10 * 20)
                 .build());
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
@@ -110,13 +109,13 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
         }
 
         public void validate() {
-            if(this.input.length > AlembicTileEntity.inputSize) {
+            if (this.input.length > AlembicTileEntity.inputSize) {
                 throw new IllegalArgumentException(String.format("Input list size %d is too large for alembic, must be smaller than %d", this.input.length, AlembicTileEntity.inputSize));
             }
             /*if(this.residue != null && this.residue.length > AlembicTileEntity.residueSize) {
                 throw new IllegalArgumentException(String.format("Residue list size %d is too large for alembic, must be smaller than %d", this.residue.length, AlembicTileEntity.residueSize));
             }*/
-            if(this.processingTime <= 0) {
+            if (this.processingTime <= 0) {
                 throw new IllegalArgumentException("Processing time must be more than zero");
             }
         }

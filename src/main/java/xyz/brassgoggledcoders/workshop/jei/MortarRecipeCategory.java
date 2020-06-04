@@ -64,11 +64,11 @@ public class MortarRecipeCategory implements IRecipeCategory<MortarRecipe> {
     @Override
     public void draw(MortarRecipe recipe, double mouseX, double mouseY) {
         //Input
-        for(int i = 0; i < MortarTileEntity.inputSize / 2; i++) {
+        for (int i = 0; i < MortarTileEntity.inputSize / 2; i++) {
             slot.draw(0, i * 18);
             slot.draw(18, i * 18);
         }
-        if(!recipe.fluidInput.isEmpty()) {
+        if (!recipe.fluidInput.isEmpty()) {
             this.tank.draw(40, 0);
         }
         //Output
@@ -88,16 +88,16 @@ public class MortarRecipeCategory implements IRecipeCategory<MortarRecipe> {
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
         IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
-        for(int i = 0; i < recipe.input.length; i++) {
-            if(recipe.input[i] != null && !Ingredient.EMPTY.equals(recipe.input[i])) {
+        for (int i = 0; i < recipe.input.length; i++) {
+            if (recipe.input[i] != null && !Ingredient.EMPTY.equals(recipe.input[i])) {
                 int xPos = 0;
-                if(i >= MortarTileEntity.inputSize / 2) {
+                if (i >= MortarTileEntity.inputSize / 2) {
                     xPos = 17;
                 }
                 guiItemStacks.init(i, true, xPos, i * 17);
             }
         }
-        if(!recipe.fluidInput.isEmpty()) {
+        if (!recipe.fluidInput.isEmpty()) {
             guiFluidStacks.init(0, true, 44, 38, 12, 16, 100, false, null);
         }
         guiItemStacks.init(7, false, 100, 20);

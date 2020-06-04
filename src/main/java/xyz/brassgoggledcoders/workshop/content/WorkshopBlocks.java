@@ -14,7 +14,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.block.*;
-import xyz.brassgoggledcoders.workshop.block.PressBlock;
 import xyz.brassgoggledcoders.workshop.item.ChalkItem;
 import xyz.brassgoggledcoders.workshop.tileentity.*;
 
@@ -43,7 +42,7 @@ public class WorkshopBlocks {
 
     public static final List<BlockRegistryObjectGroup<Block, BlockItem, ?>> CONCRETES = Stream.of(DyeColor.values())
             .map(dyeColor -> new BlockRegistryObjectGroup<>(dyeColor.getName() + "_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, dyeColor).hardnessAndResistance(5F)), blockItemCreator())
-                .register(BLOCKS, ITEMS))
+                    .register(BLOCKS, ITEMS))
             .collect(Collectors.toList());
 
     public static final BlockRegistryObjectGroup<AlembicBlock, BlockItem, AlembicTileEntity> ALEMBIC =
@@ -55,7 +54,7 @@ public class WorkshopBlocks {
                     .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
     public static final BlockRegistryObjectGroup<PressArmBlock, BlockItem, ?> PRESS_ARM =
-            new BlockRegistryObjectGroup<>("press_arm", PressArmBlock::new,blockItemCreatorNoGroup()).register(BLOCKS, ITEMS);
+            new BlockRegistryObjectGroup<>("press_arm", PressArmBlock::new, blockItemCreatorNoGroup()).register(BLOCKS, ITEMS);
 
     public static final BlockRegistryObjectGroup<SeasoningBarrelBlock, BlockItem, SeasoningBarrelTileEntity> SEASONING_BARREL =
             new BlockRegistryObjectGroup<>("seasoning_barrel", SeasoningBarrelBlock::new, blockItemCreator(),
@@ -103,7 +102,7 @@ public class WorkshopBlocks {
     public static final BlockRegistryObjectGroup<ChalkWritingBlock, ChalkItem, ChalkWritingTileEntity> CHALK_WRITING =
             new BlockRegistryObjectGroup<>("chalk", ChalkWritingBlock::new,
                     block -> new ChalkItem(new Item.Properties().group(Workshop.ITEM_GROUP)), ChalkWritingTileEntity::new)
-           .register(BLOCKS, ITEMS, TILE_ENTITIES);
+                    .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);

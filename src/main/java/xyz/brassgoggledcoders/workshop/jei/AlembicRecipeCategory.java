@@ -72,7 +72,7 @@ public class AlembicRecipeCategory implements IRecipeCategory<AlembicRecipe> {
         }
         //Outputs
         this.tank.draw(50, 0);
-        for(int i = 0; i < AlembicTileEntity.residueSize; i++) {
+        for (int i = 0; i < AlembicTileEntity.residueSize; i++) {
             slot.draw(75, 5 + (i * 18));
         }
         arrow.draw(24, 24);
@@ -81,11 +81,11 @@ public class AlembicRecipeCategory implements IRecipeCategory<AlembicRecipe> {
     @Override
     public void setIngredients(AlembicRecipe recipe, IIngredients ingredients) {
         ingredients.setInputIngredients(Arrays.asList(recipe.input));
-        if(!recipe.output.isEmpty()) {
+        if (!recipe.output.isEmpty()) {
             ingredients.setOutput(VanillaTypes.FLUID, recipe.output);
         }
         List<ItemStack> stacks = new ArrayList<>();
-        for(int i = 0; i < recipe.residue.length; i++) {
+        for (int i = 0; i < recipe.residue.length; i++) {
             stacks.add(recipe.residue[i].stack);
         }
         ingredients.setOutputs(VanillaTypes.ITEM, stacks);
@@ -97,11 +97,11 @@ public class AlembicRecipeCategory implements IRecipeCategory<AlembicRecipe> {
         IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
         int index = 0;
-        for(int i = 0; i < recipe.input.length; i++) {
+        for (int i = 0; i < recipe.input.length; i++) {
             guiItemStacks.init(index++, true, 5, 5 + (i * 18));
         }
         guiFluidStacks.init(0, false, 54, 38, 12, 16, 100, false, null);
-        for(int i = 0; i < recipe.residue.length; i++) {
+        for (int i = 0; i < recipe.residue.length; i++) {
             guiItemStacks.init(index + i, false, 75, 5 + (i * 18));
         }
 
@@ -114,10 +114,9 @@ public class AlembicRecipeCategory implements IRecipeCategory<AlembicRecipe> {
             if (slotIndex >= finalInputIndex && recipe.residue.length >= residueIndex) {
                 RangedItemStack rangedItemStack = recipe.residue[residueIndex];
                 if (rangedItemStack != null) {
-                    if(rangedItemStack.min == rangedItemStack.max){
+                    if (rangedItemStack.min == rangedItemStack.max) {
                         tooltip.add(String.format("Count: %s", rangedItemStack.min));
-                    }
-                    else {
+                    } else {
                         tooltip.add(String.format("Min: %s, Max: %s", rangedItemStack.min, rangedItemStack.max));
                     }
                 }

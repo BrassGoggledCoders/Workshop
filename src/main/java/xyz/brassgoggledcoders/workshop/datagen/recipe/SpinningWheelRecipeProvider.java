@@ -27,16 +27,16 @@ public class SpinningWheelRecipeProvider extends TitaniumSerializableProvider {
 
     @Override
     public void add(Map<IJsonFile, IJSONGenerator> serializables) {
-       recipes.add(new Builder("wool_to_string")
-               .setInputs(Ingredient.fromTag(ItemTags.WOOL))
-               .setOutput(new ItemStack(Items.STRING, 2))
-               .setTime(500)
-               .build());
-       recipes.add(new Builder("leather_cordage")
-               .setInputs(Ingredient.fromItems(Items.LEATHER), Ingredient.fromItems(Items.TALL_GRASS), Ingredient.fromItems(WorkshopItems.TANNIN.get()))
-               .setOutput(new ItemStack(WorkshopItems.LEATHER_CORDAGE.get(), 2))
-               .setTime(300)
-               .build());
+        recipes.add(new Builder("wool_to_string")
+                .setInputs(Ingredient.fromTag(ItemTags.WOOL))
+                .setOutput(new ItemStack(Items.STRING, 2))
+                .setTime(500)
+                .build());
+        recipes.add(new Builder("leather_cordage")
+                .setInputs(Ingredient.fromItems(Items.LEATHER), Ingredient.fromItems(Items.TALL_GRASS), Ingredient.fromItems(WorkshopItems.TANNIN.get()))
+                .setOutput(new ItemStack(WorkshopItems.LEATHER_CORDAGE.get(), 2))
+                .setTime(300)
+                .build());
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }
 
