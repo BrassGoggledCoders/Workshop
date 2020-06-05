@@ -10,6 +10,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.block.SinteringFurnaceBlock;
+import xyz.brassgoggledcoders.workshop.component.machine.BurnTimerComponent;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.SinteringFurnaceRecipe;
@@ -23,10 +24,7 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
     private final SidedInventoryComponent<SinteringFurnaceTileEntity> inputInventory;
     private final SidedInventoryComponent<SinteringFurnaceTileEntity> outputInventory;
     private final SidedInventoryComponent<SinteringFurnaceTileEntity> fuelInventory;
-
-    private int burnTime = 0;
-    //Used to slow down rate of blockstate checks
-    private int updateTime = 0;
+    private final BurnTimerComponent<SinteringFurnaceTileEntity> burnTimer;
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public SinteringFurnaceTileEntity() {
@@ -42,10 +40,20 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
         this.getMachineComponent().addInventory(this.outputInventory = (SidedInventoryComponent) new SidedInventoryComponent<>(InventoryUtil.ITEM_OUTPUT, 120, 42, 1, pos++)
                 .setColor(InventoryUtil.ITEM_OUTPUT_COLOR));
+        this.getMachineComponent().addProgressBar(this.burnTimer = new BurnTimerComponent<>(60,60, 600));
+        this.getMachineComponent().getPrimaryBar().setCanIncrease((tile) -> tile.burnTimer.getProgress() > 0);
         this.getMachineComponent().addInventory(this.fuelInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("fuelInventory", 78, 70, 1, pos++)
-                .setColor(DyeColor.BLACK));
-        this.getMachineComponent().getPrimaryBar().setOnStart(() -> this.getWorld().setBlockState(this.pos, this.world.getBlockState(this.pos).with(SinteringFurnaceBlock.LIT, true), 3));
-        this.getMachineComponent().getPrimaryBar().setOnFinishWork(() -> this.getWorld().setBlockState(this.pos, this.world.getBlockState(this.pos).with(SinteringFurnaceBlock.LIT, false), 3));
+                .setColor(DyeColor.BLACK)
+                .setOnSlotChanged((stack, slot) -> {
+                    int time = handleBurnTime();
+                    this.burnTimer.setMaxProgress(time);
+                    this.burnTimer.setProgress(time);
+                }));
+        this.burnTimer.setOnStart(() -> this.getWorld().setBlockState(this.pos, this.world.getBlockState(this.pos).with(SinteringFurnaceBlock.LIT, true), 3));
+        this.burnTimer.setOnFinishWork(() -> {
+            this.getWorld().setBlockState(this.pos, this.world.getBlockState(this.pos).with(SinteringFurnaceBlock.LIT, false), 3);
+            this.fuelInventory.getStackInSlot(0).shrink(1);
+        });
     }
 
     @Override
@@ -54,6 +62,7 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
         inputInventory.deserializeNBT(compound.getCompound("targetInputInventory"));
         outputInventory.deserializeNBT(compound.getCompound("outputInventory"));
         fuelInventory.deserializeNBT(compound.getCompound("fuelInventory"));
+        burnTimer.deserializeNBT(compound.getCompound("burnTimer"));
         super.read(compound);
     }
 
@@ -64,24 +73,8 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
         compound.put("targetInputInventory", inputInventory.serializeNBT());
         compound.put("outputInventory", outputInventory.serializeNBT());
         compound.put("fuelInventory", fuelInventory.serializeNBT());
+        compound.put("burnTimer", burnTimer.serializeNBT());
         return super.write(compound);
-    }
-
-    //TODO Refactor this into machine component
-    @Override
-    public void tick() {
-        if(world != null && !world.isRemote) {
-            if (isInactive()) {
-                handleBurnTime();
-            } else {
-                --burnTime;
-            }
-            if (updateTime == 60) {
-                this.getWorld().setBlockState(this.pos, this.world.getBlockState(this.pos).with(SinteringFurnaceBlock.LIT, !this.isInactive()), 3);
-            }
-            updateTime++;
-        }
-        super.tick();
     }
 
     @Override
@@ -89,16 +82,13 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
         return this;
     }
 
-    public boolean isInactive() {
-        return burnTime <= 0;
-    }
-
-    public void handleBurnTime() {
-        ItemStack stack = fuelInventory.getStackInSlot(0);
+    public int handleBurnTime() {
+        ItemStack stack = fuelInventory.getStackInSlot(0).copy();
         if (!stack.isEmpty()) {
-            this.burnTime = ForgeHooks.getBurnTime(stack);
             fuelInventory.getStackInSlot(0).shrink(1);
+            return ForgeHooks.getBurnTime(stack);
         }
+        return 0;
     }
 
     public SidedInventoryComponent<SinteringFurnaceTileEntity> getOutputInventory() {
