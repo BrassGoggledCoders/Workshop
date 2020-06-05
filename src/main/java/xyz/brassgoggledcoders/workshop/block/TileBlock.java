@@ -3,8 +3,10 @@ package xyz.brassgoggledcoders.workshop.block;
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -71,6 +73,16 @@ public class TileBlock<T extends TileEntity & GUITile> extends Block {
                 worldIn.updateComparatorOutputLevel(pos, this);
             }
             super.onReplaced(state, worldIn, pos, newState, isMoving);
+        }
+    }
+
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+        if (stack.hasDisplayName()) {
+            TileEntity tileentity = worldIn.getTileEntity(pos);
+            if (tileentity instanceof BasicMachineTileEntity) {
+                ((BasicMachineTileEntity<?, ?>)tileentity).setCustomName(stack.getDisplayName());
+            }
         }
     }
 }

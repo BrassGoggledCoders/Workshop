@@ -9,6 +9,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.ItemHandlerHelper;
+import xyz.brassgoggledcoders.workshop.block.SinteringFurnaceBlock;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.SinteringFurnaceRecipe;
@@ -24,6 +25,8 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
     private final SidedInventoryComponent<SinteringFurnaceTileEntity> fuelInventory;
 
     private int burnTime = 0;
+    //Used to slow down rate of blockstate checks
+    private int updateTime = 0;
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public SinteringFurnaceTileEntity() {
@@ -40,7 +43,9 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
         this.getMachineComponent().addInventory(this.outputInventory = (SidedInventoryComponent) new SidedInventoryComponent<>(InventoryUtil.ITEM_OUTPUT, 120, 42, 1, pos++)
                 .setColor(InventoryUtil.ITEM_OUTPUT_COLOR));
         this.getMachineComponent().addInventory(this.fuelInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("fuelInventory", 78, 70, 1, pos++)
-                .setColor(DyeColor.RED));
+                .setColor(DyeColor.BLACK));
+        this.getMachineComponent().getPrimaryBar().setOnStart(() -> this.getWorld().setBlockState(this.pos, this.world.getBlockState(this.pos).with(SinteringFurnaceBlock.LIT, true), 3));
+        this.getMachineComponent().getPrimaryBar().setOnFinishWork(() -> this.getWorld().setBlockState(this.pos, this.world.getBlockState(this.pos).with(SinteringFurnaceBlock.LIT, false), 3));
     }
 
     @Override
@@ -65,10 +70,16 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
     //TODO Refactor this into machine component
     @Override
     public void tick() {
-        if (isInactive()) {
-            handleBurnTime();
-        } else {
-            --burnTime;
+        if(world != null && !world.isRemote) {
+            if (isInactive()) {
+                handleBurnTime();
+            } else {
+                --burnTime;
+            }
+            if (updateTime == 60) {
+                this.getWorld().setBlockState(this.pos, this.world.getBlockState(this.pos).with(SinteringFurnaceBlock.LIT, !this.isInactive()), 3);
+            }
+            updateTime++;
         }
         super.tick();
     }

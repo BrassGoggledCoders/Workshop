@@ -21,6 +21,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.INameable;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
@@ -39,8 +40,9 @@ import java.util.Objects;
 
 public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T, U>, U extends IRecipe<IInventory> & IMachineRecipe>
         extends TileEntity implements IMachineHarness<T, U>, ITickableTileEntity, INamedContainerProvider, IButtonHandler,
-        IFacingComponentHarness, GUITile {
+        IFacingComponentHarness, GUITile, INameable {
     private final MachineComponent<T, U> machineComponent;
+    private ITextComponent customName;
 
     public BasicMachineTileEntity(TileEntityType<T> tileEntityType, ProgressBarComponent<T> progressBar) {
         super(tileEntityType);
@@ -84,7 +86,7 @@ public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T,
     @Override
     @Nonnull
     public ITextComponent getDisplayName() {
-        return new TranslationTextComponent(this.getBlockState().getBlock().getTranslationKey())
+        return getCustomName() != null ? getCustomName() : new TranslationTextComponent(this.getBlockState().getBlock().getTranslationKey())
                 .applyTextStyle(TextFormatting.BLACK);
     }
 
@@ -126,6 +128,9 @@ public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T,
     @Override
     public void read(CompoundNBT compound) {
         this.getMachineComponent().getPrimaryBar().deserializeNBT(compound.getCompound("progress"));
+        if (compound.contains("CustomName", 8)) {
+            this.customName = ITextComponent.Serializer.fromJson(compound.getString("CustomName"));
+        }
         super.read(compound);
     }
 
@@ -133,6 +138,18 @@ public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T,
     @Nonnull
     public CompoundNBT write(CompoundNBT compound) {
         compound.put("progress", this.getMachineComponent().getPrimaryBar().serializeNBT());
+        if (this.customName != null) {
+            compound.putString("CustomName", ITextComponent.Serializer.toJson(this.customName));
+        }
         return super.write(compound);
+    }
+
+    @Override
+    public ITextComponent getName() {
+        return customName;
+    }
+
+    public void setCustomName(ITextComponent name) {
+        this.customName = name;
     }
 }

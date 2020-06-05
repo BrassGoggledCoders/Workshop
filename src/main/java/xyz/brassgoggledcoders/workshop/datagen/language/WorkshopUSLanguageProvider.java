@@ -88,6 +88,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addFacingTooltip("colditem", "Cooling Source");
         this.addFacingTooltip("container", "Container");
         this.addFacingTooltip("powderinventory", "Powder");
+        this.addFacingTooltip("fuelinventory", "Fuel");
         //endregion
 
         //region Resources
