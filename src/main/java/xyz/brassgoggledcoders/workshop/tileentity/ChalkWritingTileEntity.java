@@ -1,6 +1,5 @@
 package xyz.brassgoggledcoders.workshop.tileentity;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -13,7 +12,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.gui.ChalkWritingScreen;
 
 import javax.annotation.Nullable;
 import java.util.function.Function;
@@ -29,7 +27,7 @@ public class ChalkWritingTileEntity extends TileEntity implements GUITile {
 
     @Override
     public ActionResultType onActivated(PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        Minecraft.getInstance().displayGuiScreen(new ChalkWritingScreen(this));
+        //Minecraft.getInstance().displayGuiScreen(new ChalkWritingScreen(this));
         return ActionResultType.PASS;
     }
 
