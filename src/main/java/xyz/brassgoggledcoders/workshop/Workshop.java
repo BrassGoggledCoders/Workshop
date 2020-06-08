@@ -2,22 +2,17 @@ package xyz.brassgoggledcoders.workshop;
 
 import com.hrznstudio.titanium.tab.TitaniumTab;
 import net.minecraft.block.ComposterBlock;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.Foods;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
@@ -27,9 +22,6 @@ import xyz.brassgoggledcoders.workshop.api.impl.FoodFluidBehaviour;
 import xyz.brassgoggledcoders.workshop.api.impl.PotionDrinkableFluidBehaviour;
 import xyz.brassgoggledcoders.workshop.content.*;
 import xyz.brassgoggledcoders.workshop.network.WorkshopPacketHandler;
-import xyz.brassgoggledcoders.workshop.renderer.ChalkWritingTileEntityRenderer;
-import xyz.brassgoggledcoders.workshop.renderer.PressTileEntityRenderer;
-import xyz.brassgoggledcoders.workshop.renderer.SinteringTileEntityRenderer;
 
 @Mod(Workshop.MOD_ID)
 public class Workshop {
