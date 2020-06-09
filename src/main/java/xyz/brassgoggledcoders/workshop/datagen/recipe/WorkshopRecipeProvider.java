@@ -9,6 +9,7 @@ import net.minecraft.item.Items;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
+import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopItemTagsProvider;
@@ -30,6 +31,14 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .patternLine("LSL")
                 .key('L', Blocks.STRIPPED_OAK_LOG)
                 .key('S', Blocks.OAK_SLAB)
+                .build(consumer);
+        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SEASONING_BARREL.getBlock())
+                .setName(new ResourceLocation(Workshop.MOD_ID, "seasoning_barrel_alt"))
+                .patternLine("LSL")
+                .patternLine("L L")
+                .patternLine("LSL")
+                .key('L', Blocks.STRIPPED_DARK_OAK_LOG)
+                .key('S', Blocks.DARK_OAK_SLAB)
                 .build(consumer);
         TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SPINNING_WHEEL.getBlock())
                 .patternLine("W I")
