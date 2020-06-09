@@ -96,6 +96,7 @@
   "tooltip.titanium.facing_handler.container": "Container",
   "tooltip.titanium.facing_handler.fluid_input": "Fluid Input",
   "tooltip.titanium.facing_handler.fluid_output": "Fluid Output",
+  "tooltip.titanium.facing_handler.fuelinventory": "Fuel",
   "tooltip.titanium.facing_handler.item_input": "Item Input",
   "tooltip.titanium.facing_handler.item_output": "Item Output",
   "tooltip.titanium.facing_handler.powderinventory": "Powder",

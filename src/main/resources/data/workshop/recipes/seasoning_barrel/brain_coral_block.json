@@ -7,7 +7,6 @@
     "item": "minecraft:brain_coral_block",
     "count": 1
   },
-  "fluidOut": "{FluidName:\"minecraft:empty\",Amount:0}",
   "seasoningTime": 6000,
   "type": "workshop:seasoning_barrel"
 }

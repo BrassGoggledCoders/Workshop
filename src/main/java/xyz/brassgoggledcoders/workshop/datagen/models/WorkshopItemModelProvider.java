@@ -46,7 +46,7 @@ public class WorkshopItemModelProvider extends ModelProvider<PropertiedItemModel
         //this.singleTexture("leather_cordage", mcLoc("item/generated"), modLoc("items/leather_cordage"));
 
         this.withExistingParent(WorkshopBlocks.BELLOWS.getName(), modLoc(BLOCK_FOLDER + "/bellows"));
-        this.withExistingParent(WorkshopBlocks.ALEMBIC.getName(), modLoc(BLOCK_FOLDER + "/bellows"));
+        this.withExistingParent(WorkshopBlocks.ALEMBIC.getName(), modLoc(BLOCK_FOLDER + "/alembic"));
         this.withExistingParent(WorkshopBlocks.SCRAP_BIN.getName(), modLoc(BLOCK_FOLDER + "/scrap_bin"));
     }
 
