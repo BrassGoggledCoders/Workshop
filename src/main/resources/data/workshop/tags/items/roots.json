@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:poisonous_potato"
+  ],
+  "optional": [
+    "quark:root_item"
+  ]
+}

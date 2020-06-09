@@ -21,7 +21,7 @@
         ],
         "key": {
           "T": {
-            "item": "workshop:tallow"
+            "tag": "forge:tallow"
           },
           "S": {
             "tag": "forge:rods/wooden"

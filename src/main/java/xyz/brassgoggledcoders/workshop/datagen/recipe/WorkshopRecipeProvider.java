@@ -112,7 +112,7 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
         TitaniumShapedRecipeBuilder.shapedRecipe(Items.TORCH)
                 .patternLine("T")
                 .patternLine("S")
-                .key('T', WorkshopItems.TALLOW.get())
+                .key('T', WorkshopItemTagsProvider.TALLOW)
                 .key('S', Tags.Items.RODS_WOODEN)
                 .build(consumer);
         //endsection

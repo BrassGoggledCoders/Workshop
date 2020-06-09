@@ -28,7 +28,7 @@ public class WorkshopItems {
     public static final RegistryObject<Item> ROSIN = ITEMS.register("rosin", () -> new Item(defaultProperties()));
     public static final RegistryObject<Item> ASH = ITEMS.register("ash", () -> new Item(defaultProperties()));
     public static final RegistryObject<Item> TALLOW = ITEMS.register("tallow", () -> new Item(defaultProperties()));
-    public static final RegistryObject<Item> MEDICINAL_ROOT = ITEMS.register("medicinal_root", () -> new Item(defaultProperties().food(Foods.CARROT)));
+    //public static final RegistryObject<Item> MEDICINAL_ROOT = ITEMS.register("medicinal_root", () -> new Item(defaultProperties().food(Foods.CARROT)));
     public static final RegistryObject<Item> TANNIN = ITEMS.register("tannin", () -> new Item(defaultProperties()));
     public static final RegistryObject<Item> SILT = ITEMS.register("silt", () -> new Item(defaultProperties()));
     public static final RegistryObject<Item> LEATHER_CORDAGE = ITEMS.register("leather_cordage", () -> new Item(defaultProperties()));

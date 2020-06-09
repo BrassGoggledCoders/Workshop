@@ -49,7 +49,6 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addItem(WorkshopItems.PICKLE, "Pickle");
         this.addItem(WorkshopBlocks.TEA_PLANT::getItem, "Tea Seeds");
         this.addItem(WorkshopItems.TEA_LEAVES, "Tea Leaves");
-        this.addItem(WorkshopItems.MEDICINAL_ROOT, "Medicinal Root");
         this.addItem(WorkshopItems.TANNIN, "Tannin");
         this.addItem(WorkshopItems.TALLOW, "Tallow");
         this.addItem(WorkshopItems.SOAP, "Soap");
@@ -57,7 +56,6 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addItem(WorkshopItems.SILT, "Silt");
         this.addItem(WorkshopItems.LEATHER_CORDAGE, "Leather Cordage");
         this.addItem(WorkshopItems.LYE, "Lye");
-        //this.(WorkshopItems.CHALK, "Chalk");
         //endregion
 
         //region Fluids

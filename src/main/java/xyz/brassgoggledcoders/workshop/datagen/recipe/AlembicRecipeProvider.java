@@ -15,6 +15,7 @@ import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
+import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopItemTagsProvider;
 import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
 import xyz.brassgoggledcoders.workshop.tileentity.AlembicTileEntity;
 import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
@@ -60,8 +61,15 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
                         new RangedItemStack(WorkshopItems.ASH.get(), 1, 3))
                 .setTime(8 * 20)
                 .build());
-        recipes.add(new Builder("tannin")
-                .setInputs(Ingredient.fromItems(WorkshopItems.MEDICINAL_ROOT.get()), Ingredient.fromItems(WorkshopItems.TEA_LEAVES.get()))
+        recipes.add(new Builder("tannin_seeds")
+                .setInputs(Ingredient.fromTag(Tags.Items.SEEDS), Ingredient.fromItems(WorkshopItems.TEA_LEAVES.get()))
+                .setResidue(new RangedItemStack(WorkshopItems.ASH.get(), 0, 2),
+                        new RangedItemStack(WorkshopItems.SILT.get(), 0, 1),
+                        new RangedItemStack(WorkshopItems.TANNIN.get(), 6, 6))
+                .setTime(8 * 20)
+                .build());
+        recipes.add(new Builder("tannin_roots")
+                .setInputs(Ingredient.fromTag(WorkshopItemTagsProvider.ROOTS), Ingredient.fromItems(WorkshopItems.TEA_LEAVES.get()))
                 .setResidue(new RangedItemStack(WorkshopItems.ASH.get(), 0, 2),
                         new RangedItemStack(WorkshopItems.SILT.get(), 0, 1),
                         new RangedItemStack(WorkshopItems.TANNIN.get(), 6, 6))
