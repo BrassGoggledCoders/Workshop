@@ -37,8 +37,6 @@ public class Workshop {
 
         DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> modBus.addListener(ClientEventHandler::clientSetup));
         modBus.addListener(this::commonSetup);
-
-        WorkshopMaterials.init();
         WorkshopRecipes.register(modBus);
         WorkshopFluids.register(modBus);
         WorkshopItems.register(modBus);

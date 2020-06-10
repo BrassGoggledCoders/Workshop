@@ -19,7 +19,7 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
-import xyz.brassgoggledcoders.workshop.content.WorkshopMaterials;
+import xyz.brassgoggledcoders.workshop.content.WorkshopResourcePlugin;
 import xyz.brassgoggledcoders.workshop.content.WorkshopResourceType;
 import xyz.brassgoggledcoders.workshop.recipe.SinteringFurnaceRecipe;
 
@@ -86,7 +86,7 @@ public class SinteringFurnaceRecipeProvider extends TitaniumSerializableProvider
         recipes.add(new Builder("glass_pipes")
                 .setPowder(Ingredient.fromTag(ItemTags.SAND))
                 .setInput(Ingredient.fromItems(Items.BAMBOO))
-                .setOutput(new ItemStack(WorkshopMaterials.GLASS_PIPE.getItem()))
+                .setOutput(new ItemStack(WorkshopResourcePlugin.GLASS_PIPE.getItem()))
                 .setTime(20)
                 .build());
         recipes.add(new Builder("sealed_barrel")
