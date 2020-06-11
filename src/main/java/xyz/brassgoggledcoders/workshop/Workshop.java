@@ -9,6 +9,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -59,6 +60,10 @@ public class Workshop {
         WorkshopAPI.addDrinkableFluidBehaviour(WorkshopFluids.HELLBLOOD.getFluid(), (stack, worldIn, entityLiving) -> {
             entityLiving.setFire(10);
         });
-        ComposterBlock.registerCompostable(0.2F, WorkshopItems.ASH.get());
+        DeferredWorkQueue.runLater(() -> {
+            ComposterBlock.registerCompostable(0.2F, WorkshopItems.ASH.get());
+            ComposterBlock.registerCompostable(0.05F, WorkshopBlocks.TEA_PLANT.getItem());
+            ComposterBlock.registerCompostable(0.1F, WorkshopItems.TEA_LEAVES.get());
+        });
     }
 }
