@@ -40,7 +40,7 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
         this.getMachineComponent().addInventory(this.outputInventory = (SidedInventoryComponent) new SidedInventoryComponent<>(InventoryUtil.ITEM_OUTPUT, 120, 42, 1, pos++)
                 .setColor(InventoryUtil.ITEM_OUTPUT_COLOR));
-        this.getMachineComponent().addProgressBar(this.burnTimer = new BurnTimerComponent<>(60,60, 600));
+        this.getMachineComponent().addProgressBar(this.burnTimer = new BurnTimerComponent<>(60,60, 0));
         this.getMachineComponent().getPrimaryBar().setCanIncrease((tile) -> tile.burnTimer.getProgress() > 0);
         this.getMachineComponent().addInventory(this.fuelInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("fuelInventory", 78, 70, 1, pos++)
                 .setColor(DyeColor.BLACK)
@@ -51,8 +51,13 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
                 }));
         this.burnTimer.setOnStart(() -> this.getWorld().setBlockState(this.pos, this.world.getBlockState(this.pos).with(SinteringFurnaceBlock.LIT, true), 3));
         this.burnTimer.setOnFinishWork(() -> {
-            this.getWorld().setBlockState(this.pos, this.world.getBlockState(this.pos).with(SinteringFurnaceBlock.LIT, false), 3);
             this.fuelInventory.getStackInSlot(0).shrink(1);
+            int time = handleBurnTime();
+            if(time == 0) {
+                this.burnTimer.setProgress(time);
+                this.burnTimer.setMaxProgress(time);
+                this.getWorld().setBlockState(this.pos, this.world.getBlockState(this.pos).with(SinteringFurnaceBlock.LIT, false), 3);
+            }
         });
     }
 
