@@ -40,23 +40,27 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
         this.getMachineComponent().addInventory(this.outputInventory = (SidedInventoryComponent) new SidedInventoryComponent<>(InventoryUtil.ITEM_OUTPUT, 120, 42, 1, pos++)
                 .setColor(InventoryUtil.ITEM_OUTPUT_COLOR));
-        this.getMachineComponent().addProgressBar(this.burnTimer = new BurnTimerComponent<>(60,60, 0));
-        this.getMachineComponent().getPrimaryBar().setCanIncrease((tile) -> tile.burnTimer.getProgress() > 0);
+        this.getMachineComponent().addProgressBar(this.burnTimer = new BurnTimerComponent<>(60, 60, 0));
+        this.getMachineComponent().getPrimaryBar().setCanIncrease(this::canIncrease);
         this.getMachineComponent().addInventory(this.fuelInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("fuelInventory", 78, 70, 1, pos++)
                 .setColor(DyeColor.BLACK)
                 .setOnSlotChanged((stack, slot) -> {
-                    int time = handleBurnTime();
-                    this.burnTimer.setMaxProgress(time);
-                    this.burnTimer.setProgress(time);
+                    if (burnTimer.getProgress() <= 0) {
+                        int time = handleBurnTime();
+                        this.burnTimer.setMaxProgress(time);
+                        this.burnTimer.setProgress(time);
+                    }
                 }));
         this.burnTimer.setOnStart(() -> this.getWorld().setBlockState(this.pos, this.world.getBlockState(this.pos).with(SinteringFurnaceBlock.LIT, true), 3));
         this.burnTimer.setOnFinishWork(() -> {
-            this.fuelInventory.getStackInSlot(0).shrink(1);
             int time = handleBurnTime();
-            if(time == 0) {
+            if (time == 0) {
                 this.burnTimer.setProgress(time);
                 this.burnTimer.setMaxProgress(time);
                 this.getWorld().setBlockState(this.pos, this.world.getBlockState(this.pos).with(SinteringFurnaceBlock.LIT, false), 3);
+            } else if(burnTimer.getMaxProgress() != time){
+                this.burnTimer.setProgress(time);
+                this.burnTimer.setMaxProgress(time);
             }
         });
     }
@@ -142,5 +146,9 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
         if (currentRecipe.itemOut != null && !currentRecipe.itemOut.isEmpty()) {
             ItemHandlerHelper.insertItem(outputInventory, currentRecipe.itemOut.copy(), false);
         }
+    }
+
+    private boolean canIncrease(SinteringFurnaceTileEntity tile) {
+        return tile.burnTimer.getProgress() > 0 && !tile.getInputInventory().getStackInSlot(0).isEmpty() && !tile.getPowderInventory().getStackInSlot(0).isEmpty() || tile.burnTimer.getProgress() > 0 && !tile.getInputInventory().getStackInSlot(0).isEmpty() && !tile.getPowderInventory().getStackInSlot(1).isEmpty();
     }
 }
