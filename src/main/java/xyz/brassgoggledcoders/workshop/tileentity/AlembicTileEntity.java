@@ -1,5 +1,7 @@
 package xyz.brassgoggledcoders.workshop.tileentity;
 
+import com.hrznstudio.titanium.component.fluid.FluidTankComponent;
+import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
@@ -7,6 +9,8 @@ import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidUtil;
@@ -14,6 +18,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.items.ItemHandlerHelper;
+import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopItemTagsProvider;
@@ -22,13 +27,13 @@ import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity, AlembicRecipe> {
 
     private final InventoryComponent<AlembicTileEntity> input;
-    private final InventoryComponent<AlembicTileEntity> container;
+    private final FluidTankComponent<AlembicTileEntity> output;
     private final InventoryComponent<AlembicTileEntity> residue;
-    private final InventoryComponent<AlembicTileEntity> output;
     private InventoryComponent<AlembicTileEntity> coldItem;
     private final ProgressBarComponent<AlembicTileEntity> meltTime;
 
@@ -40,14 +45,11 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
         int pos = 0;
         this.getMachineComponent().addInventory(this.input = new SidedInventoryComponent<AlembicTileEntity>(InventoryUtil.ITEM_INPUT, 34, 25, inputSize, pos++)
                 .setColor(InventoryUtil.ITEM_INPUT_COLOR)
-                .setRange(1, 3));
-        this.getMachineComponent().addInventory(this.container = new SidedInventoryComponent<AlembicTileEntity>("container", 56, 43, 1, pos++)
-                .setColor(DyeColor.WHITE)
-                //TODO Move emptiness checking to here?
-                .setInputFilter((stack, integer) -> FluidUtil.getFluidHandler(stack).isPresent()));
-        this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<AlembicTileEntity>(InventoryUtil.ITEM_OUTPUT, 102, 44, 1, pos++)
-                .setColor(InventoryUtil.ITEM_OUTPUT_COLOR)
-                .setInputFilter((stack, integer) -> false));
+                .setRange(1, 3)
+                .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
+        this.getMachineComponent().addTank(this.output = new SidedFluidTankComponent<AlembicTileEntity>(InventoryUtil.FLUID_OUTPUT, 4000, 100, 20, pos++).
+                setColor(InventoryUtil.FLUID_OUTPUT_COLOR).
+                setTankAction(SidedFluidTankComponent.Action.DRAIN));
         this.getMachineComponent().addInventory(this.residue = new SidedInventoryComponent<AlembicTileEntity>(
                 "residue", 125, 25, residueSize, pos++)
                 .setColor(DyeColor.YELLOW)
@@ -72,9 +74,8 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
     @Override
     public void read(CompoundNBT compound) {
         input.deserializeNBT(compound.getCompound("input"));
-        container.deserializeNBT(compound.getCompound("container"));
         residue.deserializeNBT(compound.getCompound("residue"));
-        output.deserializeNBT(compound.getCompound("output"));
+        output.readFromNBT(compound.getCompound("output"));
         coldItem.deserializeNBT(compound.getCompound("coldItem"));
         //Ensure we check for cold items on load
         coldItem.getOnSlotChanged().accept(coldItem.getStackInSlot(0), 0);
@@ -86,12 +87,24 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
     @Nonnull
     public CompoundNBT write(CompoundNBT compound) {
         compound.put("input", input.serializeNBT());
-        compound.put("container", container.serializeNBT());
         compound.put("residue", residue.serializeNBT());
-        compound.put("output", output.serializeNBT());
+        compound.put("output", output.writeToNBT(new CompoundNBT()));
         compound.put("coldItem", coldItem.serializeNBT());
         compound.put("meltTime", meltTime.serializeNBT());
         return super.write(compound);
+    }
+
+    @Override
+    @Nonnull
+    public CompoundNBT getUpdateTag() {
+        CompoundNBT updateTag = new CompoundNBT();
+        updateTag.put("output", output.writeToNBT(new CompoundNBT()));
+        return updateTag;
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundNBT tag) {
+        output.readFromNBT(tag.getCompound("output"));
     }
 
     @Override
@@ -101,15 +114,7 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
 
     @Override
     public boolean hasInputs() {
-        if (!this.container.getStackInSlot(0).isEmpty()) {
-            LazyOptional<IFluidHandlerItem> optional = this.container.getStackInSlot(0).getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY);
-            //Should never not be present because of the slot filter but better safe than sorry
-            if (optional.isPresent()) {
-                //Check we have input items, and that the fluid container doesn't have any fluid
-                return InventoryUtil.anySlotsHaveItems(input) && optional.orElseThrow(NullPointerException::new).getFluidInTank(0).isEmpty();
-            }
-        }
-        return false;
+        return InventoryUtil.anySlotsHaveItems(input);
     }
 
     @Override
@@ -129,38 +134,25 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
 
     @Override
     public boolean matchesInputs(AlembicRecipe currentRecipe) {
-        //TODO Handle stackable fluid containers
-        return this.output.getStackInSlot(0).isEmpty() && currentRecipe.matches(input);
+        return this.output.fill(currentRecipe.output, IFluidHandler.FluidAction.SIMULATE) == 0 && currentRecipe.matches(input);
     }
 
     @Override
     public void handleComplete(AlembicRecipe currentRecipe) {
+        //TODO
         for (int i = 0; i < input.getSlots(); i++) {
             input.getStackInSlot(i).shrink(1);
         }
         if (currentRecipe.output != null && !currentRecipe.output.isEmpty()) {
-            ItemStack stack = this.container.getStackInSlot(0);
-            if (!stack.isEmpty()) {
-                //Work on a copy
-                ItemStack outputStack = stack.copy();
-                //Should always have the cap because no items that don't have it should be in the slot...but check anyway
-                outputStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent(cap -> {
-                    //If there's space in the container
-                    if (cap.fill(currentRecipe.output, IFluidHandler.FluidAction.SIMULATE) == currentRecipe.output.getAmount()) {
-                        //Fill it
-                        cap.fill(currentRecipe.output, IFluidHandler.FluidAction.EXECUTE);
-                        //Insert it to output
-                        ItemHandlerHelper.insertItem(output, cap.getContainer(), false);
-                        //Now remove it from input
-                        stack.shrink(1);
-                    }
-                });
-            }
+            output.fillForced(currentRecipe.output.copy(), IFluidHandler.FluidAction.EXECUTE);
             if (currentRecipe.residue != null && world instanceof ServerWorld) {
                 for (RangedItemStack rStack : currentRecipe.residue) {
                     ItemHandlerHelper.insertItem(this.residue, RangedItemStack.getOutput(world.rand, rStack), false);
                 }
             }
         }
+        //TODO
+        this.getWorld().notifyBlockUpdate(pos, this.getBlockState(), this.getBlockState(), 3);
+        this.markComponentDirty();
     }
 }

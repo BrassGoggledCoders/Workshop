@@ -1,13 +1,13 @@
 package xyz.brassgoggledcoders.workshop.tileentity;
 
+import com.hrznstudio.titanium.component.fluid.FluidTankComponent;
 import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
+import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
@@ -15,12 +15,11 @@ import xyz.brassgoggledcoders.workshop.recipe.PressRecipe;
 import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, PressRecipe> {
 
-    private final SidedInventoryComponent<PressTileEntity> inputInventory;
-    private final SidedFluidTankComponent<PressTileEntity> outputFluid;
+    private final InventoryComponent<PressTileEntity> inputInventory;
+    private final FluidTankComponent<PressTileEntity> outputFluid;
 
     private double height = 0.8;
 
@@ -28,10 +27,10 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
         super(WorkshopBlocks.PRESS.getTileEntityType(), new ProgressBarComponent<PressTileEntity>(70, 40, 120).
                 setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
         int pos = 0;
-        this.getMachineComponent().addInventory(this.inputInventory = (SidedInventoryComponent<PressTileEntity>) new SidedInventoryComponent<PressTileEntity>(InventoryUtil.ITEM_INPUT, 45, 50, 1, pos++)
+        this.getMachineComponent().addInventory(this.inputInventory = new SidedInventoryComponent<PressTileEntity>(InventoryUtil.ITEM_INPUT, 45, 50, 1, pos++)
                 .setColor(InventoryUtil.ITEM_INPUT_COLOR)
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
-        this.getMachineComponent().addTank(this.outputFluid = (SidedFluidTankComponent<PressTileEntity>) new SidedFluidTankComponent<PressTileEntity>(InventoryUtil.FLUID_OUTPUT, 4000, 100, 20, pos++).
+        this.getMachineComponent().addTank(this.outputFluid = new SidedFluidTankComponent<PressTileEntity>(InventoryUtil.FLUID_OUTPUT, 4000, 100, 20, pos++).
                 setColor(InventoryUtil.FLUID_OUTPUT_COLOR).
                 setTankAction(SidedFluidTankComponent.Action.DRAIN));
     }
@@ -62,17 +61,6 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
         if (this.getWorld() != null) {
             this.getWorld().notifyBlockUpdate(pos, this.getBlockState(), this.getBlockState(), 3);
         }
-    }
-
-    @Nullable
-    @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.getPos(), -1, this.getUpdateTag());
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        handleUpdateTag(pkt.getNbtCompound());
     }
 
     @Override
@@ -144,11 +132,11 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
         return ActionResultType.PASS;
     }*/
 
-    public SidedInventoryComponent<PressTileEntity> getInputInventory() {
+    public InventoryComponent<PressTileEntity> getInputInventory() {
         return inputInventory;
     }
 
-    public SidedFluidTankComponent<PressTileEntity> getOutputFluid() {
+    public FluidTankComponent<PressTileEntity> getOutputFluid() {
         return outputFluid;
     }
 
@@ -180,6 +168,8 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
     @Override
     public void handleComplete(PressRecipe currentRecipe) {
         inputInventory.getStackInSlot(0).shrink(1);
-        outputFluid.fillForced(currentRecipe.fluidOut.copy(), IFluidHandler.FluidAction.EXECUTE);
+        if (currentRecipe.fluidOut != null && !currentRecipe.fluidOut.isEmpty()) {
+            outputFluid.fillForced(currentRecipe.fluidOut.copy(), IFluidHandler.FluidAction.EXECUTE);
+        }
     }
 }
