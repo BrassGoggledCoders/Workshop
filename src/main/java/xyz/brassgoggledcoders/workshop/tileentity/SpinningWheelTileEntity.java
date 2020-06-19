@@ -169,9 +169,8 @@ public class SpinningWheelTileEntity extends BasicMachineTileEntity<SpinningWhee
     @Override
     public void handleComplete(SpinningWheelRecipe currentRecipe) {
         input.getStackInSlot(0).shrink(1);
-        ItemStack itemOut = currentRecipe.output;
-        if (itemOut != null) {
-            output.insertItem(0, itemOut, false);
+        if(!currentRecipe.output.isEmpty()) {
+            ItemHandlerHelper.insertItem(output, currentRecipe.output.copy(), false);
         }
     }
 }

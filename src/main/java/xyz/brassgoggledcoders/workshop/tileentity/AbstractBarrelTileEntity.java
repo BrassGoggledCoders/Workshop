@@ -84,12 +84,9 @@ public abstract class AbstractBarrelTileEntity<T extends BasicMachineTileEntity<
                         IFluidHandler.FluidAction.EXECUTE);
             }
         }
-        //for (int i = 0; i < outputInventory.getSlots(); i++) {
-        ItemStack itemOut = currentRecipe.itemOut;
-        if (itemOut != null) {
-            outputInventory.insertItem(0, itemOut, false);
+        if(!currentRecipe.itemOut.isEmpty()) {
+            ItemHandlerHelper.insertItem(outputInventory, currentRecipe.itemOut.copy(), false);
         }
-        //}
     }
 
     @Override

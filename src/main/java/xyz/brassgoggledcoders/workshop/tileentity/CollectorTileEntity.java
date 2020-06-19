@@ -72,7 +72,7 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
 
     @Override
     public void handleComplete(CollectorRecipe currentRecipe) {
-        ItemHandlerHelper.insertItemStacked(this.output, currentRecipe.output, false);
+        ItemHandlerHelper.insertItemStacked(this.output, currentRecipe.output.copy(), false);
         this.getMachineComponent().forceRecipeRecheck();
     }
 }
