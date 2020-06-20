@@ -151,8 +151,5 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
                 }
             }
         }
-        //TODO
-        this.getWorld().notifyBlockUpdate(pos, this.getBlockState(), this.getBlockState(), 3);
-        this.markComponentDirty();
     }
 }
