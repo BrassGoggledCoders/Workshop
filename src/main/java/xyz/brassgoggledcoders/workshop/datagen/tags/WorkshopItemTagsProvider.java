@@ -45,6 +45,7 @@ public class WorkshopItemTagsProvider extends ItemTagsProvider {
         this.getBuilder(TALLOW).add(WorkshopItems.TALLOW.get());
         this.getBuilder(ROOTS).add(Items.POISONOUS_POTATO).addOptional(ItemTags.getCollection(), new ResourceLocation("quark", "root_item"));
         this.getBuilder(SALT).add(WorkshopItems.SALT.get()).add(new ItemTags.Wrapper(new ResourceLocation("forge", "salt")));
+        this.getBuilder(new ItemTags.Wrapper(new ResourceLocation("forge", "salt"))).add(WorkshopItems.SALT.get());
     }
 
     @Override
