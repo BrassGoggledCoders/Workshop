@@ -4,7 +4,10 @@ import com.hrznstudio.titanium.api.IFactory;
 import com.hrznstudio.titanium.api.client.IScreenAddon;
 import com.hrznstudio.titanium.api.client.IScreenAddonProvider;
 import com.hrznstudio.titanium.component.IComponentHarness;
+import com.hrznstudio.titanium.component.fluid.FluidTankComponent;
 import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
+import com.hrznstudio.titanium.component.inventory.InventoryComponent;
+import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.container.BasicAddonContainer;
 import com.hrznstudio.titanium.container.addon.IContainerAddon;
 import com.hrznstudio.titanium.container.addon.IContainerAddonProvider;
@@ -17,7 +20,9 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.DyeColor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -27,9 +32,12 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidActionResult;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.network.NetworkHooks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
+import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,23 +47,35 @@ import java.util.List;
 import java.util.Objects;
 
 public class SealedBarrelTileEntity extends TileEntity implements INamedContainerProvider, IComponentHarness, GUITile, IScreenAddonProvider,
-        IContainerAddonProvider {
+        IContainerAddonProvider, ITickableTileEntity {
 
     public static final int tankCapacity = 4000;//mB;
-    private final SidedFluidTankComponent<SealedBarrelTileEntity> tank;
+    private final FluidTankComponent<SealedBarrelTileEntity> tank;
+    private final InventoryComponent<SealedBarrelTileEntity> drainingInventory;
+    private final InventoryComponent<SealedBarrelTileEntity> fillingInventory;
 
+    @SuppressWarnings("unchecked")
     public SealedBarrelTileEntity() {
         super(WorkshopBlocks.SEALED_BARREL.getTileEntityType());
-        this.tank = (SidedFluidTankComponent<SealedBarrelTileEntity>) new SidedFluidTankComponent<>("tank", tankCapacity, 80, 20, 0)
+        int pos = 0;
+        this.tank = (FluidTankComponent<SealedBarrelTileEntity>) new SidedFluidTankComponent<>("tank", tankCapacity, 80, 20, pos++)
                 .setColor(DyeColor.MAGENTA)
                 .setTankAction(SidedFluidTankComponent.Action.BOTH)
                 .setValidator(fluidStack -> fluidStack.getFluid().getFluid().getAttributes().getTemperature() < Fluids.LAVA.getAttributes().getTemperature());
         this.tank.setComponentHarness(this);
+        this.drainingInventory = new SidedInventoryComponent<SealedBarrelTileEntity>("draining", 50, 50, 1, pos++)
+                .setColor(InventoryUtil.FLUID_INPUT_COLOR)
+                .setInputFilter((stack, integer) -> FluidUtil.getFluidHandler(stack).isPresent());
+        this.fillingInventory = new SidedInventoryComponent<SealedBarrelTileEntity>("filling", 120, 50, 1, pos++)
+                .setColor(InventoryUtil.FLUID_OUTPUT_COLOR)
+                .setInputFilter((stack, slot) -> FluidUtil.getFluidHandler(stack).isPresent());
     }
 
     @Override
     public void read(CompoundNBT compound) {
         tank.readFromNBT(compound.getCompound("capability"));
+        drainingInventory.deserializeNBT(compound.getCompound("draining"));
+        fillingInventory.deserializeNBT(compound.getCompound("filling"));
         super.read(compound);
     }
 
@@ -63,6 +83,8 @@ public class SealedBarrelTileEntity extends TileEntity implements INamedContaine
     @Nonnull
     public CompoundNBT write(CompoundNBT compound) {
         compound.put("capability", tank.writeToNBT(new CompoundNBT()));
+        compound.put("draining", drainingInventory.serializeNBT());
+        compound.put("filling", fillingInventory.serializeNBT());
         return super.write(compound);
     }
 
@@ -109,11 +131,38 @@ public class SealedBarrelTileEntity extends TileEntity implements INamedContaine
 
     @Override
     public List<IFactory<? extends IScreenAddon>> getScreenAddons() {
-        return new ArrayList<>(this.tank.getScreenAddons());
+        List<IFactory<? extends IScreenAddon>> addons = new ArrayList<>();
+        addons.addAll(this.tank.getScreenAddons());
+        addons.addAll(this.fillingInventory.getScreenAddons());
+        addons.addAll(this.drainingInventory.getScreenAddons());
+        return addons;
     }
 
     @Override
     public List<IFactory<? extends IContainerAddon>> getContainerAddons() {
-        return new ArrayList<>(this.tank.getContainerAddons());
+        List<IFactory<? extends IContainerAddon>> addons = new ArrayList<>();
+        addons.addAll(this.tank.getContainerAddons());
+        addons.addAll(this.fillingInventory.getContainerAddons());
+        addons.addAll(this.drainingInventory.getContainerAddons());
+        return addons;
+    }
+
+    //Can't do it onSlotChanged like I wanted because I can't then set the stack without an infinite loop
+    @Override
+    public void tick() {
+        if(!this.getWorld().isRemote) {
+            ItemStack drainingInventoryStackInSlot = this.drainingInventory.getStackInSlot(0);
+            if (!drainingInventoryStackInSlot.isEmpty()) {
+                if (FluidUtil.tryEmptyContainer(drainingInventoryStackInSlot, this.tank, tankCapacity, null, false).isSuccess()) {
+                    this.drainingInventory.setStackInSlot(0, FluidUtil.tryEmptyContainer(drainingInventoryStackInSlot, this.tank, tankCapacity, null, true).getResult());
+                }
+            }
+            ItemStack fillingInventoryStackInSlot = this.fillingInventory.getStackInSlot(0);
+            if (!this.tank.isEmpty() && !fillingInventoryStackInSlot.isEmpty()) {
+                if (FluidUtil.tryFillContainer(fillingInventoryStackInSlot, this.tank, FluidAttributes.BUCKET_VOLUME, null, false).isSuccess()) {
+                    this.fillingInventory.setStackInSlot(0, FluidUtil.tryFillContainer(fillingInventoryStackInSlot, this.tank, FluidAttributes.BUCKET_VOLUME, null, true).getResult());
+                }
+            }
+        }
     }
 }
