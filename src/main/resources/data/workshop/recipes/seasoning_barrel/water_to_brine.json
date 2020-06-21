@@ -1,6 +1,6 @@
 {
   "itemIn": {
-    "item": "workshop:salt"
+    "tag": "forge:dusts/salt"
   },
   "fluidIn": "{FluidName:\"minecraft:water\",Amount:100}",
   "fluidOut": "{FluidName:\"workshop:brine\",Amount:100}",

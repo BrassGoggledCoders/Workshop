@@ -27,7 +27,8 @@ public class WorkshopItemTagsProvider extends ItemTagsProvider {
     public static final Tag<Item> COLD = new ItemTags.Wrapper(new ResourceLocation(Workshop.MOD_ID, "cold"));
     public static final Tag<Item> REBARRED_CONCRETE = new ItemTags.Wrapper(new ResourceLocation(Workshop.MOD_ID, "rebarred_concrete"));
     public static final Tag<Item> ROOTS = new ItemTags.Wrapper(new ResourceLocation(Workshop.MOD_ID, "roots"));
-    public static  final Tag<Item> TALLOW = new ItemTags.Wrapper(new ResourceLocation("forge", "tallow"));
+    public static final Tag<Item> TALLOW = new ItemTags.Wrapper(new ResourceLocation("forge", "tallow"));
+    public static final Tag<Item> SALT = new ItemTags.Wrapper(new ResourceLocation("forge", "dusts/salt"));
 
     public WorkshopItemTagsProvider(DataGenerator generator) {
         super(generator);
@@ -43,6 +44,7 @@ public class WorkshopItemTagsProvider extends ItemTagsProvider {
         WorkshopBlocks.CONCRETES.forEach(c -> this.getBuilder(REBARRED_CONCRETE).add(c.getItem()));
         this.getBuilder(TALLOW).add(WorkshopItems.TALLOW.get());
         this.getBuilder(ROOTS).add(Items.POISONOUS_POTATO).addOptional(ItemTags.getCollection(), new ResourceLocation("quark", "root_item"));
+        this.getBuilder(SALT).add(WorkshopItems.SALT.get()).add(new ItemTags.Wrapper(new ResourceLocation("forge", "salt")));
     }
 
     @Override

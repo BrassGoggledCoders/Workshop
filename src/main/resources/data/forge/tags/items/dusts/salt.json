@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "workshop:salt",
+    "#forge:salt"
+  ]
+}
