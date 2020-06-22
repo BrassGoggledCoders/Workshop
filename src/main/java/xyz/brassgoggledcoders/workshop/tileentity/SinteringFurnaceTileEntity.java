@@ -77,7 +77,7 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
 
     @Override
     @Nonnull
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundNBT write(@Nonnull CompoundNBT compound) {
         compound.put("powderInventory", powderInventory.serializeNBT());
         compound.put("targetInputInventory", inputInventory.serializeNBT());
         compound.put("outputInventory", outputInventory.serializeNBT());

@@ -90,7 +90,7 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
 
     @Override
     @Nonnull
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundNBT write(@Nonnull CompoundNBT compound) {
         compound.put("input", inputInventory.serializeNBT());
         compound.put("output", outputFluid.writeToNBT(new CompoundNBT()));
         return super.write(compound);

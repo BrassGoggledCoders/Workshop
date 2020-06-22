@@ -14,7 +14,6 @@ import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import xyz.brassgoggledcoders.workshop.Workshop;
@@ -22,7 +21,6 @@ import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 import xyz.brassgoggledcoders.workshop.content.WorkshopResourcePlugin;
 import xyz.brassgoggledcoders.workshop.content.WorkshopResourceType;
-import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopItemTagsProvider;
 import xyz.brassgoggledcoders.workshop.recipe.SinteringFurnaceRecipe;
 
 import java.util.ArrayList;

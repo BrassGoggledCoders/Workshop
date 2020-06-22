@@ -5,7 +5,6 @@ import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -57,7 +56,7 @@ public abstract class AbstractBarrelTileEntity<T extends BasicMachineTileEntity<
 
     @Override
     @Nonnull
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundNBT write(@Nonnull CompoundNBT compound) {
         compound.put("inputInventory", inputInventory.serializeNBT());
         compound.put("inputFluidTank", inputFluidTank.writeToNBT(new CompoundNBT()));
         compound.put("outputInventory", outputInventory.serializeNBT());

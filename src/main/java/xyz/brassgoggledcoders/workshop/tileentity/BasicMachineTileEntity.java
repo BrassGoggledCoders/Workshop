@@ -1,127 +1,34 @@
 package xyz.brassgoggledcoders.workshop.tileentity;
 
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
-import com.hrznstudio.titanium.component.sideness.IFacingComponent;
-import com.hrznstudio.titanium.component.sideness.IFacingComponentHarness;
-import com.hrznstudio.titanium.container.BasicAddonContainer;
-import com.hrznstudio.titanium.network.IButtonHandler;
-import com.hrznstudio.titanium.network.locator.LocatorFactory;
-import com.hrznstudio.titanium.network.locator.LocatorInstance;
-import com.hrznstudio.titanium.network.locator.instance.TileEntityLocatorInstance;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.INameable;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
-import xyz.brassgoggledcoders.workshop.component.machine.IMachineHarness;
-import xyz.brassgoggledcoders.workshop.component.machine.MachineComponent;
+import xyz.brassgoggledcoders.workshop.component.machine.IRecipeMachineHarness;
+import xyz.brassgoggledcoders.workshop.component.machine.RecipeMachineComponent;
 import xyz.brassgoggledcoders.workshop.recipe.IMachineRecipe;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Objects;
 
 public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T, U>, U extends IRecipe<IInventory> & IMachineRecipe>
-        extends TileEntity implements IMachineHarness<T, U>, ITickableTileEntity, INamedContainerProvider, IButtonHandler,
-        IFacingComponentHarness, GUITile, INameable {
-    private final MachineComponent<T, U> machineComponent;
-    private ITextComponent customName;
+        extends BasicInventoryTileEntity<T> implements IRecipeMachineHarness<T, U>, ITickableTileEntity {
+    private final RecipeMachineComponent<T, U> machineComponent;
 
     public BasicMachineTileEntity(TileEntityType<T> tileEntityType, ProgressBarComponent<T> progressBar) {
         super(tileEntityType);
-        this.machineComponent = new MachineComponent<>(this.getSelf(), this::getPos, progressBar);
+        this.machineComponent = new RecipeMachineComponent<>(this.getSelf(), this::getPos, progressBar);
     }
 
-    public MachineComponent<T, U> getMachineComponent() {
+    @Override
+    public RecipeMachineComponent<T, U> getMachineComponent() {
         return this.machineComponent;
-    }
-
-    @Override
-    public ActionResultType onActivated(PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        ActionResultType result = this.getMachineComponent().onActivated(player, hand, hit);
-        if (result == ActionResultType.PASS) {
-            if (player instanceof ServerPlayerEntity) {
-                NetworkHooks.openGui((ServerPlayerEntity) player, this, packetBuffer ->
-                        LocatorFactory.writePacketBuffer(packetBuffer, new TileEntityLocatorInstance(this.pos)));
-            }
-            result = ActionResultType.SUCCESS;
-        }
-        return result;
-    }
-
-    @Override
-    public World getComponentWorld() {
-        return this.world;
-    }
-
-    @Override
-    public void markComponentForUpdate(boolean reference) {
-    }
-
-    @Override
-    public void markComponentDirty() {
-        this.markDirty();
     }
 
     @Override
     public void tick() {
         this.getMachineComponent().tick();
-    }
-
-    @Override
-    @Nonnull
-    public ITextComponent getDisplayName() {
-        return getCustomName() != null ? getCustomName() : new TranslationTextComponent(this.getBlockState().getBlock().getTranslationKey())
-                .applyTextStyle(TextFormatting.BLACK);
-    }
-
-    @Nullable
-    @Override
-    @ParametersAreNonnullByDefault
-    public Container createMenu(int menu, PlayerInventory inventoryPlayer, PlayerEntity entityPlayer) {
-        return new BasicAddonContainer(this, new TileEntityLocatorInstance(this.pos), IWorldPosCallable.of(Objects.requireNonNull(this.getWorld()),
-                this.getPos()), inventoryPlayer, menu);
-    }
-
-    @Override
-    public boolean canInteractWith(PlayerEntity player) {
-        return true;
-    }
-
-    @Override
-    public LocatorInstance getLocatorInstance() {
-        return new TileEntityLocatorInstance(this.pos);
-    }
-
-    public abstract T getSelf();
-
-    @Override
-    public void handleButtonMessage(int i, PlayerEntity playerEntity, CompoundNBT compoundNBT) {
-        this.machineComponent.handleButtonMessage(i, playerEntity, compoundNBT);
-    }
-
-    @Override
-    public IFacingComponent getHandlerFromName(String name) {
-        return this.machineComponent.getHandlerFromName(name);
     }
 
     @Override
@@ -132,39 +39,13 @@ public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T,
     @Override
     public void read(CompoundNBT compound) {
         this.getMachineComponent().getPrimaryBar().deserializeNBT(compound.getCompound("progress"));
-        if (compound.contains("CustomName", 8)) {
-            this.customName = ITextComponent.Serializer.fromJson(compound.getString("CustomName"));
-        }
         super.read(compound);
     }
 
     @Override
     @Nonnull
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundNBT write(@Nonnull CompoundNBT compound) {
         compound.put("progress", this.getMachineComponent().getPrimaryBar().serializeNBT());
-        if (this.customName != null) {
-            compound.putString("CustomName", ITextComponent.Serializer.toJson(this.customName));
-        }
         return super.write(compound);
-    }
-
-    @Override
-    public ITextComponent getName() {
-        return customName;
-    }
-
-    public void setCustomName(ITextComponent name) {
-        this.customName = name;
-    }
-
-    @Nullable
-    @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.getPos(), -1, this.getUpdateTag());
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        handleUpdateTag(pkt.getNbtCompound());
     }
 }

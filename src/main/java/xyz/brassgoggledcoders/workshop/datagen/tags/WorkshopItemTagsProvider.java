@@ -1,7 +1,6 @@
 package xyz.brassgoggledcoders.workshop.datagen.tags;
 
 
-import com.hrznstudio.titanium.material.ResourceRegistry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.ItemTagsProvider;
 import net.minecraft.item.Item;
@@ -18,7 +17,6 @@ import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Resource;
 
 public class WorkshopItemTagsProvider extends ItemTagsProvider {
 

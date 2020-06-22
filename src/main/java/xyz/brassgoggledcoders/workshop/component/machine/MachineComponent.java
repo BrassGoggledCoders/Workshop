@@ -19,16 +19,13 @@ import com.hrznstudio.titanium.container.addon.IContainerAddonProvider;
 import com.hrznstudio.titanium.util.FacingUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -46,36 +43,20 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class MachineComponent<T extends IMachineHarness<T, U>, U extends IRecipe<IInventory>> implements IScreenAddonProvider, IContainerAddonProvider,
+public class MachineComponent<T extends IMachineHarness<T>> implements IScreenAddonProvider, IContainerAddonProvider,
         INBTSerializable<CompoundNBT> {
-    private MultiInventoryComponent<T> multiInventoryComponent;
-    private MultiProgressBarHandler<T> multiProgressBarHandler;
-    private MultiTankComponent<T> multiTankComponent;
-    private MultiButtonComponent multiButtonComponent;
-    private MultiFilterComponent multiFilterComponent;
+    protected final T componentHarness;
+    protected final Supplier<BlockPos> posSupplier;
+    protected MultiInventoryComponent<T> multiInventoryComponent;
+    protected MultiTankComponent<T> multiTankComponent;
+    protected MultiButtonComponent multiButtonComponent;
+    protected MultiFilterComponent multiFilterComponent;
+    protected MultiProgressBarHandler<T> multiProgressBarHandler;
+    protected Function<BlockState, Direction> facingFunction = state -> Direction.NORTH;
 
-    private final T componentHarness;
-    private final Supplier<BlockPos> posSupplier;
-    private final ProgressBarComponent<T> primaryBar;
-
-    private Function<BlockState, Direction> facingFunction = state -> Direction.NORTH;
-
-    private int timeSinceLastRecipeCheck = 50;
-    private boolean recheck = false;
-    private U currentRecipe;
-
-    public MachineComponent(T componentHarness, Supplier<BlockPos> posSupplier, ProgressBarComponent<T> primaryBar) {
+    public MachineComponent(T componentHarness, Supplier<BlockPos> posSupplier) {
         this.componentHarness = componentHarness;
         this.posSupplier = posSupplier;
-        this.primaryBar = primaryBar;
-        if (primaryBar != null) {
-            this.primaryBar.setCanIncrease(value -> currentRecipe != null);
-            this.addProgressBar(primaryBar);
-        }
-    }
-
-    public ProgressBarComponent<T> getPrimaryBar() {
-        return primaryBar;
     }
 
     @Nonnull
@@ -95,27 +76,24 @@ public class MachineComponent<T extends IMachineHarness<T, U>, U extends IRecipe
         this.facingFunction = facingFunction;
     }
 
-    public void addInventory(InventoryComponent<T> handler) {
-        if (this.multiInventoryComponent == null) {
-            this.multiInventoryComponent = new MultiInventoryComponent<T>();
-        }
-
-        this.multiInventoryComponent.add(handler.setComponentHarness(componentHarness));
-    }
-
     public void addProgressBar(ProgressBarComponent<T> progressBarComponent) {
         if (this.multiProgressBarHandler == null) {
             this.multiProgressBarHandler = new MultiProgressBarHandler<T>();
         }
-
         this.multiProgressBarHandler.addBar(progressBarComponent.setComponentHarness(componentHarness));
+    }
+
+    public void addInventory(InventoryComponent<T> handler) {
+        if (this.multiInventoryComponent == null) {
+            this.multiInventoryComponent = new MultiInventoryComponent<>();
+        }
+        this.multiInventoryComponent.add(handler.setComponentHarness(componentHarness));
     }
 
     public void addTank(FluidTankComponent<T> tank) {
         if (this.multiTankComponent == null) {
-            this.multiTankComponent = new MultiTankComponent<T>();
+            this.multiTankComponent = new MultiTankComponent<>();
         }
-
         this.multiTankComponent.add(tank.setComponentHarness(this.componentHarness));
     }
 
@@ -123,7 +101,6 @@ public class MachineComponent<T extends IMachineHarness<T, U>, U extends IRecipe
         if (this.multiButtonComponent == null) {
             this.multiButtonComponent = new MultiButtonComponent();
         }
-
         this.multiButtonComponent.addButton(button);
     }
 
@@ -131,7 +108,6 @@ public class MachineComponent<T extends IMachineHarness<T, U>, U extends IRecipe
         if (this.multiFilterComponent == null) {
             this.multiFilterComponent = new MultiFilterComponent();
         }
-
         this.multiFilterComponent.add(filter);
     }
 
@@ -149,133 +125,42 @@ public class MachineComponent<T extends IMachineHarness<T, U>, U extends IRecipe
         return this.multiInventoryComponent;
     }
 
+    @Nonnull
     @Override
     public List<IFactory<? extends IScreenAddon>> getScreenAddons() {
         List<IFactory<? extends IScreenAddon>> addons = new ArrayList<>();
         if (this.multiInventoryComponent != null) {
             addons.addAll(this.multiInventoryComponent.getScreenAddons());
         }
-
-        if (this.multiProgressBarHandler != null) {
-            addons.addAll(this.multiProgressBarHandler.getScreenAddons());
-        }
-
         if (this.multiTankComponent != null) {
             addons.addAll(this.multiTankComponent.getScreenAddons());
         }
-
         if (this.multiButtonComponent != null) {
             addons.addAll(this.multiButtonComponent.getScreenAddons());
         }
-
         if (this.multiFilterComponent != null) {
             addons.addAll(this.multiFilterComponent.getScreenAddons());
         }
-
+        if (this.multiProgressBarHandler != null) {
+            addons.addAll(this.multiProgressBarHandler.getScreenAddons());
+        }
         return addons;
     }
 
+    @Nonnull
     @Override
     public List<IFactory<? extends IContainerAddon>> getContainerAddons() {
         List<IFactory<? extends IContainerAddon>> addons = new ArrayList<>();
         if (this.multiInventoryComponent != null) {
             addons.addAll(this.multiInventoryComponent.getContainerAddons());
         }
-
-        if (this.multiProgressBarHandler != null) {
-            addons.addAll(this.multiProgressBarHandler.getContainerAddons());
-        }
-
         if (this.multiTankComponent != null) {
             addons.addAll(this.multiTankComponent.getContainerAddons());
         }
-
+        if (this.multiProgressBarHandler != null) {
+            addons.addAll(this.multiProgressBarHandler.getContainerAddons());
+        }
         return addons;
-    }
-
-    public void tick() {
-        World world = this.componentHarness.getComponentWorld();
-        BlockPos pos = this.posSupplier.get();
-        if (!world.isRemote()) {
-            if (this.multiProgressBarHandler != null) {
-                this.multiProgressBarHandler.update();
-            }
-
-            if (world.getGameTime() % (long) this.getFacingHandlerWorkTime() == 0L) {
-                if (this.multiInventoryComponent != null) {
-                    for (InventoryComponent<T> inventoryHandler : this.multiInventoryComponent.getInventoryHandlers()) {
-                        if (inventoryHandler instanceof IFacingComponent && ((IFacingComponent) inventoryHandler)
-                                .work(world, pos, this.getFacingDirection(), this.getFacingHandlerWorkAmount())) {
-                            recheck = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (this.multiTankComponent != null) {
-                    for (FluidTankComponent<T> tankComponent : this.multiTankComponent.getTanks()) {
-                        if (tankComponent instanceof IFacingComponent && ((IFacingComponent) tankComponent)
-                                .work(world, pos, this.getFacingDirection(), this.getFacingHandlerWorkAmount())) {
-                            recheck = true;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (currentRecipe == null) {
-                handleNoRecipe(recheck);
-            } else {
-                handleRecipe();
-            }
-            recheck = false;
-        }
-    }
-
-    public void forceRecipeRecheck() {
-        recheck = true;
-    }
-
-    protected void handleNoRecipe(boolean didWork) {
-        if (timeSinceLastRecipeCheck-- <= 0 || didWork) {
-            timeSinceLastRecipeCheck = 50;
-            if (componentHarness.hasInputs()) {
-                currentRecipe = componentHarness.getComponentWorld().getRecipeManager()
-                        .getRecipes()
-                        .stream()
-                        .filter(componentHarness::checkRecipe)
-                        .map(componentHarness::castRecipe)
-                        .filter(componentHarness::matchesInputs)
-                        .findFirst()
-                        .orElse(null);
-                primaryBar.setProgress(0);
-                if (currentRecipe != null) {
-                    primaryBar.setMaxProgress(componentHarness.getProcessingTime(currentRecipe));
-                }
-            }
-        }
-    }
-
-    protected void handleRecipe() {
-        if (componentHarness.matchesInputs(currentRecipe)) {
-            if (primaryBar.getProgress() >= primaryBar.getMaxProgress() - 1) {
-                componentHarness.handleComplete(currentRecipe);
-                primaryBar.setProgress(0);
-            }
-        } else {
-            currentRecipe = null;
-            primaryBar.setProgress(0);
-        }
-        componentHarness.markComponentDirty();
-    }
-
-
-    public int getFacingHandlerWorkTime() {
-        return 10;
-    }
-
-    public int getFacingHandlerWorkAmount() {
-        return 4;
     }
 
     public MultiButtonComponent getMultiButtonComponent() {
@@ -287,12 +172,12 @@ public class MachineComponent<T extends IMachineHarness<T, U>, U extends IRecipe
     }
 
     public IFacingComponent getHandlerFromName(String string) {
-        Iterator var2;
+        Iterator<InventoryComponent<T>> var2;
         if (this.multiInventoryComponent != null) {
             var2 = this.multiInventoryComponent.getInventoryHandlers().iterator();
 
             while (var2.hasNext()) {
-                InventoryComponent<T> handler = (InventoryComponent) var2.next();
+                InventoryComponent<T> handler = var2.next();
                 if (handler instanceof IFacingComponent && handler.getName().equalsIgnoreCase(string)) {
                     return (IFacingComponent) handler;
                 }
@@ -300,10 +185,7 @@ public class MachineComponent<T extends IMachineHarness<T, U>, U extends IRecipe
         }
 
         if (this.multiTankComponent != null) {
-            var2 = this.multiTankComponent.getTanks().iterator();
-
-            while (var2.hasNext()) {
-                FluidTankComponent<T> fluidTankComponent = (FluidTankComponent) var2.next();
+            for (FluidTankComponent<T> fluidTankComponent : this.multiTankComponent.getTanks()) {
                 if (fluidTankComponent instanceof IFacingComponent && fluidTankComponent.getName().equalsIgnoreCase(string)) {
                     return (IFacingComponent) fluidTankComponent;
                 }
@@ -353,6 +235,5 @@ public class MachineComponent<T extends IMachineHarness<T, U>, U extends IRecipe
 
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
-
     }
 }

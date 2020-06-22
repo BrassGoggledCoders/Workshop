@@ -11,7 +11,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopItemTagsProvider;
 
 import java.util.function.Consumer;

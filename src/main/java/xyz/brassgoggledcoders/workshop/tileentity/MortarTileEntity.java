@@ -6,7 +6,6 @@ import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
@@ -59,7 +58,7 @@ public class MortarTileEntity extends BasicMachineTileEntity<MortarTileEntity, M
 
     @Override
     @Nonnull
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundNBT write(@Nonnull CompoundNBT compound) {
         compound.put("input", input.serializeNBT());
         compound.put("inputFluidTank", fluidInput.writeToNBT(new CompoundNBT()));
         compound.put("output", output.serializeNBT());

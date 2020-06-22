@@ -76,7 +76,7 @@ public class SpinningWheelTileEntity extends BasicMachineTileEntity<SpinningWhee
 
     @Override
     @Nonnull
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundNBT write(@Nonnull CompoundNBT compound) {
         compound.put("inputInventory", input.serializeNBT());
         compound.put("outputInventory", output.serializeNBT());
         compound.putInt("workingTime", workingTime);

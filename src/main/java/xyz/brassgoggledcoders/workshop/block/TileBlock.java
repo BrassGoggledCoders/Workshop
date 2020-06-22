@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import xyz.brassgoggledcoders.workshop.tileentity.BasicInventoryTileEntity;
 import xyz.brassgoggledcoders.workshop.tileentity.BasicMachineTileEntity;
 import xyz.brassgoggledcoders.workshop.tileentity.GUITile;
 import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
@@ -66,8 +67,8 @@ public class TileBlock<T extends TileEntity & GUITile> extends Block {
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
             TileEntity tileentity = worldIn.getTileEntity(pos);
-            if (tileentity instanceof BasicMachineTileEntity) {
-                for (InventoryComponent<?> inventoryComponent : ((BasicMachineTileEntity<?, ?>) tileentity).getMachineComponent().getMultiInventoryComponent().getInventoryHandlers()) {
+            if (tileentity instanceof BasicInventoryTileEntity) {
+                for (InventoryComponent<?> inventoryComponent : ((BasicInventoryTileEntity<?>) tileentity).getMachineComponent().getMultiInventoryComponent().getInventoryHandlers()) {
                     InventoryUtil.getItemStackStream(inventoryComponent).forEach(stack -> InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack));
                 }
                 worldIn.updateComparatorOutputLevel(pos, this);
