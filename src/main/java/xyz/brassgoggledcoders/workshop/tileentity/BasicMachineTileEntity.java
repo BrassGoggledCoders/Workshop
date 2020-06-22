@@ -58,9 +58,11 @@ public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T,
     @Override
     public ActionResultType onActivated(PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         ActionResultType result = this.getMachineComponent().onActivated(player, hand, hit);
-        if (result == ActionResultType.PASS && player instanceof ServerPlayerEntity) {
-            NetworkHooks.openGui((ServerPlayerEntity) player, this, packetBuffer ->
-                    LocatorFactory.writePacketBuffer(packetBuffer, new TileEntityLocatorInstance(this.pos)));
+        if (result == ActionResultType.PASS) {
+            if (player instanceof ServerPlayerEntity) {
+                NetworkHooks.openGui((ServerPlayerEntity) player, this, packetBuffer ->
+                        LocatorFactory.writePacketBuffer(packetBuffer, new TileEntityLocatorInstance(this.pos)));
+            }
             result = ActionResultType.SUCCESS;
         }
         return result;
