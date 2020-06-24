@@ -49,7 +49,7 @@ public class SealedBarrelTileEntity extends BasicInventoryTileEntity<SealedBarre
 
     @Override
     @Nonnull
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundNBT write(@Nonnull CompoundNBT compound) {
         compound.put("capability", tank.writeToNBT(new CompoundNBT()));
         compound.put("draining", drainingInventory.serializeNBT());
         compound.put("filling", fillingInventory.serializeNBT());

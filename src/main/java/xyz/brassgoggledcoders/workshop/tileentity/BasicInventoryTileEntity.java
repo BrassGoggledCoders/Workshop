@@ -7,6 +7,7 @@ import com.hrznstudio.titanium.network.IButtonHandler;
 import com.hrznstudio.titanium.network.locator.LocatorFactory;
 import com.hrznstudio.titanium.network.locator.LocatorInstance;
 import com.hrznstudio.titanium.network.locator.instance.TileEntityLocatorInstance;
+import com.hrznstudio.titanium.util.FacingUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -15,18 +16,20 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.INameable;
-import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.items.CapabilityItemHandler;
 import xyz.brassgoggledcoders.workshop.component.machine.IMachineHarness;
 import xyz.brassgoggledcoders.workshop.component.machine.MachineComponent;
 
@@ -37,7 +40,7 @@ import java.util.Objects;
 
 public abstract class BasicInventoryTileEntity<T extends BasicInventoryTileEntity<T>>
         extends TileEntity implements IMachineHarness<T>, INamedContainerProvider, IButtonHandler,
-        IFacingComponentHarness, GUITile, INameable {
+        IFacingComponentHarness, GUITile, INameable, ITickableTileEntity {
     private final MachineComponent<T> machineComponent;
     private ITextComponent customName;
 
@@ -61,6 +64,11 @@ public abstract class BasicInventoryTileEntity<T extends BasicInventoryTileEntit
             result = ActionResultType.SUCCESS;
         }
         return result;
+    }
+
+    @Override
+    public void tick() {
+        this.getMachineComponent().tick();
     }
 
     @Override
@@ -150,5 +158,11 @@ public abstract class BasicInventoryTileEntity<T extends BasicInventoryTileEntit
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
         handleUpdateTag(pkt.getNbtCompound());
+    }
+
+    @Nonnull
+    @Override
+    public <U> LazyOptional<U> getCapability(@Nonnull Capability<U> cap, @Nullable Direction side) {
+        return this.getMachineComponent().getCapability(cap, side);
     }
 }

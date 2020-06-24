@@ -236,4 +236,7 @@ public class MachineComponent<T extends IMachineHarness<T>> implements IScreenAd
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
     }
+
+    public void tick() {
+    }
 }

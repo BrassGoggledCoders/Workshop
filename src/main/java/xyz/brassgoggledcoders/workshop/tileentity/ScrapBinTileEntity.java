@@ -67,7 +67,7 @@ public class ScrapBinTileEntity extends BasicInventoryTileEntity<ScrapBinTileEnt
 
     @Override
     @Nonnull
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundNBT write(@Nonnull CompoundNBT compound) {
         compound.put("inventory", inventoryComponent.serializeNBT());
         compound.put("scrap", scrapOutput.serializeNBT());
         compound.put("scrapValue", scrapValue.serializeNBT());

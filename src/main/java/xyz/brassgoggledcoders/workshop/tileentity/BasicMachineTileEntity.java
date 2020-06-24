@@ -13,7 +13,7 @@ import xyz.brassgoggledcoders.workshop.recipe.IMachineRecipe;
 import javax.annotation.Nonnull;
 
 public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T, U>, U extends IRecipe<IInventory> & IMachineRecipe>
-        extends BasicInventoryTileEntity<T> implements IRecipeMachineHarness<T, U>, ITickableTileEntity {
+        extends BasicInventoryTileEntity<T> implements IRecipeMachineHarness<T, U> {
     private final RecipeMachineComponent<T, U> machineComponent;
 
     public BasicMachineTileEntity(TileEntityType<T> tileEntityType, ProgressBarComponent<T> progressBar) {
@@ -24,11 +24,6 @@ public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T,
     @Override
     public RecipeMachineComponent<T, U> getMachineComponent() {
         return this.machineComponent;
-    }
-
-    @Override
-    public void tick() {
-        this.getMachineComponent().tick();
     }
 
     @Override

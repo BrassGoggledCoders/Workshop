@@ -31,6 +31,7 @@ public class RecipeMachineComponent<T extends IRecipeMachineHarness<T, U>, U ext
         return primaryBar;
     }
 
+    @Override
     public void tick() {
         World world = this.componentHarness.getComponentWorld();
         BlockPos pos = this.posSupplier.get();
