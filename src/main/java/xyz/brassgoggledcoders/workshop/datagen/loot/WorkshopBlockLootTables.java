@@ -63,5 +63,7 @@ public class WorkshopBlockLootTables extends BlockLootTables {
                         .addEntry(ItemLootEntry.builder(WorkshopBlocks.SEALED_BARREL.getBlock()))
                 )
         );
+        this.registerDropSelfLootTable(WorkshopBlocks.PIPE.getBlock());
+        this.registerDropSelfLootTable(WorkshopBlocks.PUMP.getBlock());
     }
 }

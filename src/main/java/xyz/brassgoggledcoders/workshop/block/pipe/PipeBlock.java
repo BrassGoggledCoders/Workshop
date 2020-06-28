@@ -29,9 +29,10 @@ public class PipeBlock extends Block {
     public PipeBlock(Properties properties) {
         super(properties);
         BlockState defaultState = this.getStateContainer().getBaseState();
-        SixWayBlock.FACING_TO_PROPERTY_MAP
-                .values()
-                .forEach(property -> defaultState.with(property, false));
+        for (BooleanProperty property : SixWayBlock.FACING_TO_PROPERTY_MAP.values()){
+            defaultState = defaultState.with(property, false);
+        }
+        this.setDefaultState(defaultState);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class PipeBlock extends Block {
     public BlockState getStateForPlacement(@Nonnull BlockItemUseContext context) {
         BlockState blockState = this.getDefaultState();
         for (Map.Entry<Direction, BooleanProperty> combo : SixWayBlock.FACING_TO_PROPERTY_MAP.entrySet()) {
-            blockState.with(combo.getValue(), checkSide(context.getWorld(), context.getPos(), combo.getKey()));
+            blockState = blockState.with(combo.getValue(), checkSide(context.getWorld(), context.getPos(), combo.getKey()));
         }
         return blockState;
     }

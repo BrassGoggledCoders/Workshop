@@ -34,6 +34,6 @@ public class PumpTileEntity extends TileEntity implements ITickableTileEntity {
     private void handlePiping(PipeNetworkCapability pipeNetworkCapability) {
         Map<BlockPos, Direction> outputs = pipeNetworkCapability.getPotentialOutputs(this.pos, this.getBlockState()
                 .get(PumpBlock.OUTPUT));
-        Workshop.LOGGER.info(outputs.size());
+
     }
 }

@@ -41,7 +41,7 @@ minecraft {
             properties 'fml.earlyprogresswindow': 'false'
 
             args '--all', '--output', file('src/datagen/resources/'),
-                    '--mod', '${mod_name}', '--reports',
+                    '--mod', 'workshop', '--reports',
                     '--existing', sourceSets.main.resources.srcDirs[0]
         }
     }
@@ -94,6 +94,17 @@ jar {
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
             "FMLAT": "workshop_at.cfg"
         ])
+    }
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs = [
+                    "$rootDir/src/main/resources",
+                    "$rootDir/src/generated/resources"
+            ]
+        }
     }
 }
 

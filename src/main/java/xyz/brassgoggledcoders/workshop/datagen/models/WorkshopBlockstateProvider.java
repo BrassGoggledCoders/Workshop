@@ -3,9 +3,11 @@ package xyz.brassgoggledcoders.workshop.datagen.models;
 import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.block.SixWayBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -56,5 +58,39 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
         this.simpleBlock(WorkshopBlocks.MOLTEN_CHAMBER.getBlock(), this.models().cubeAll("molten_chamber", modLoc("blocks/molten_chamber")));
         //this.simpleBlock(WorkshopBlocks.CHALK_WRITING.getBlock(), this.models().singleTexture("chalk", mcLoc(BLOCK_FOLDER + "/bedrock"), "particle", mcLoc(BLOCK_FOLDER + "/bedrock")));
         this.horizontalBlock(WorkshopBlocks.ALEMBIC.getBlock(), new ModelFile.ExistingModelFile(modLoc("block/alembic"), exFileHelper));
+
+        ModelFile pipeArm = this.models().getBuilder("block/pipe/arm")
+                .element()
+                .face(Direction.NORTH)
+                .texture("workshop:blocks/glass_pipe")
+                .uvs(0, 10, 4, 16)
+                .end()
+                .end();
+
+        ModelFile pipeCenter = this.models().getBuilder("block/pipe/center")
+                .element()
+                .face(Direction.UP)
+                .texture("workshop:blocks/glass_pipe")
+                .uvs(0, 0, 4, 4)
+                .end()
+                .end();
+
+        this.getMultipartBuilder(WorkshopBlocks.PIPE.getBlock())
+                .part().modelFile(pipeCenter).addModel().condition(SixWayBlock.UP, false).end()
+                .part().modelFile(pipeArm).addModel().condition(SixWayBlock.UP, true).end()
+                .part().modelFile(pipeCenter).rotationX(180).addModel().condition(SixWayBlock.DOWN, false).end()
+                .part().modelFile(pipeArm).rotationX(180).addModel().condition(SixWayBlock.DOWN, true).end()
+                .part().modelFile(pipeCenter).rotationX(90).addModel().condition(SixWayBlock.NORTH, false).end()
+                .part().modelFile(pipeArm).rotationX(90).addModel().condition(SixWayBlock.NORTH, true).end()
+                .part().modelFile(pipeCenter).rotationX(90).rotationY(90).addModel().condition(SixWayBlock.EAST, false).end()
+                .part().modelFile(pipeArm).rotationX(90).rotationY(90).addModel().condition(SixWayBlock.EAST, true).end()
+                .part().modelFile(pipeCenter).rotationX(90).rotationY(180).addModel().condition(SixWayBlock.SOUTH, false).end()
+                .part().modelFile(pipeArm).rotationX(90).rotationY(180).addModel().condition(SixWayBlock.SOUTH, true).end()
+                .part().modelFile(pipeCenter).rotationX(90).rotationY(270).addModel().condition(SixWayBlock.WEST, false).end()
+                .part().modelFile(pipeArm).rotationX(90).rotationY(270).addModel().condition(SixWayBlock.WEST, true).end();
+
+        this.directionalBlock(WorkshopBlocks.PUMP.getBlock(), this.models().orientable("pump",
+                mcLoc("block/furnace_top"), mcLoc("block/dropper_front_vertical"),
+                mcLoc("block/furnace_top")));
     }
 }
