@@ -4,15 +4,21 @@ import net.minecraft.entity.merchant.IMerchant;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.item.DyeableArmorItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootEntry;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.TableLootEntry;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import xyz.brassgoggledcoders.workshop.capabilities.BasicCapabilityProvider;
+import xyz.brassgoggledcoders.workshop.capabilities.pipe.PipeNetworkCapability;
 import xyz.brassgoggledcoders.workshop.content.WorkshopEffects;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 
@@ -27,6 +33,18 @@ public class WorkshopEventHandler {
                 ((AbstractVillagerEntity) event.getTarget()).setShakeHeadTicks(20);
             }
             event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void worldCapability(AttachCapabilitiesEvent<World> worldAttachCapabilitiesEvent) {
+        World world = worldAttachCapabilitiesEvent.getObject();
+        if (!world.isRemote()) {
+            worldAttachCapabilitiesEvent.addCapability(new ResourceLocation(Workshop.MOD_ID, "pipes"),
+                    new BasicCapabilityProvider<>(PipeNetworkCapability.CAP, LazyOptional.of(() ->
+                            new PipeNetworkCapability(worldAttachCapabilitiesEvent.getObject())
+                    ), CompoundNBT::new)
+            );
         }
     }
 

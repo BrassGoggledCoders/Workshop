@@ -14,8 +14,11 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.block.*;
+import xyz.brassgoggledcoders.workshop.block.pipe.PipeBlock;
+import xyz.brassgoggledcoders.workshop.block.pipe.PumpBlock;
 import xyz.brassgoggledcoders.workshop.item.ChalkItem;
 import xyz.brassgoggledcoders.workshop.tileentity.*;
+import xyz.brassgoggledcoders.workshop.tileentity.pipe.PumpTileEntity;
 
 import java.util.Collection;
 import java.util.List;
@@ -103,6 +106,14 @@ public class WorkshopBlocks {
             new BlockRegistryObjectGroup<>("chalk", ChalkWritingBlock::new,
                     block -> new ChalkItem(new Item.Properties().group(Workshop.ITEM_GROUP)), ChalkWritingTileEntity::new)
                     .register(BLOCKS, ITEMS, TILE_ENTITIES);
+
+    public static final BlockRegistryObjectGroup<PumpBlock, BlockItem, ?> PUMP =
+            new BlockRegistryObjectGroup<>("pump", PumpBlock::new, blockItemCreator(), PumpTileEntity::new)
+                    .register(BLOCKS, ITEMS, TILE_ENTITIES);
+
+    public static final BlockRegistryObjectGroup<PipeBlock, BlockItem, ?> PIPE =
+            new BlockRegistryObjectGroup<>("pipe", PipeBlock::new, blockItemCreator())
+                    .register(BLOCKS, ITEMS);
 
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);

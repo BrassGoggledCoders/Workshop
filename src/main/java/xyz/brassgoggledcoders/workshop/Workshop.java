@@ -5,9 +5,12 @@ import net.minecraft.block.ComposterBlock;
 import net.minecraft.item.Foods;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.INBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.Direction;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -20,8 +23,11 @@ import org.apache.logging.log4j.Logger;
 import xyz.brassgoggledcoders.workshop.api.WorkshopAPI;
 import xyz.brassgoggledcoders.workshop.api.impl.FoodFluidBehaviour;
 import xyz.brassgoggledcoders.workshop.api.impl.PotionDrinkableFluidBehaviour;
+import xyz.brassgoggledcoders.workshop.capabilities.pipe.PipeNetworkCapability;
 import xyz.brassgoggledcoders.workshop.content.*;
 import xyz.brassgoggledcoders.workshop.network.WorkshopPacketHandler;
+
+import javax.annotation.Nullable;
 
 @Mod(Workshop.MOD_ID)
 public class Workshop {
@@ -63,5 +69,17 @@ public class Workshop {
             ComposterBlock.registerCompostable(0.05F, WorkshopBlocks.TEA_PLANT.getItem());
             ComposterBlock.registerCompostable(0.1F, WorkshopItems.TEA_LEAVES.get());
         });
+        CapabilityManager.INSTANCE.register(PipeNetworkCapability.class, new Capability.IStorage<PipeNetworkCapability>() {
+            @Nullable
+            @Override
+            public INBT writeNBT(Capability<PipeNetworkCapability> capability, PipeNetworkCapability instance, Direction side) {
+                return null;
+            }
+
+            @Override
+            public void readNBT(Capability<PipeNetworkCapability> capability, PipeNetworkCapability instance, Direction side, INBT nbt) {
+
+            }
+        }, () -> null);
     }
 }
