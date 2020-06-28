@@ -12,6 +12,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import xyz.brassgoggledcoders.workshop.tileentity.AlembicTileEntity;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 public class AlembicBlock extends TileBlock<AlembicTileEntity> {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -33,6 +35,8 @@ public class AlembicBlock extends TileBlock<AlembicTileEntity> {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
+    @ParametersAreNonnullByDefault
     public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
         return false;
     }

@@ -26,6 +26,8 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Random;
 
@@ -50,11 +52,16 @@ public class BellowsBlock extends Block {
     }
 
     @Override
+    @Nonnull
+    @ParametersAreNonnullByDefault
+    @SuppressWarnings("deprecation")
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return state.get(PRESSED) ? PRESSED_AABB : UNPRESSED_AABB;
     }
 
     @Override
+    @ParametersAreNonnullByDefault
+    @SuppressWarnings("deprecation")
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
         if (!worldIn.isRemote && !state.get(PRESSED)) {
             this.updateState(worldIn, pos, state, true);
@@ -85,6 +92,8 @@ public class BellowsBlock extends Block {
     }
 
     @Override
+    @ParametersAreNonnullByDefault
+    @SuppressWarnings("deprecation")
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
         if (state.get(PRESSED)) {
             this.updateState(worldIn, pos, state, false);
