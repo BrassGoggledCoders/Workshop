@@ -51,7 +51,7 @@ public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity>
         World world = press.getWorld();
         if(world != null) {
             float f = world.getBlockState(press.getPos()).get(FACING).getHorizontalAngle();
-            if (!item.isEmpty() && press.getHeightChange() - 0.2 > 0.3) {
+            if (!item.isEmpty() && press.getHeightChange() - 0.2 > 0.3 && press.getMachineComponent().getPrimaryBar().getProgress() < press.getMachineComponent().getPrimaryBar().getMaxProgress()/2) {
                 stack.push();
                 stack.translate(0.5, press.getHeightChange() - 0.2, 0.5);
                 if (press.getMachineComponent().getPrimaryBar().getCanIncrease().test(press)) {
