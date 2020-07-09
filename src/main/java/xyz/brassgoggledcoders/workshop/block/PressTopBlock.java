@@ -1,7 +1,9 @@
 package xyz.brassgoggledcoders.workshop.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -11,18 +13,20 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.tileentity.GUITile;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
-public class PressArmBlock extends Block {
-    public PressArmBlock() {
+public class PressTopBlock extends Block {
+    public PressTopBlock() {
         super(Block.Properties.from(WorkshopBlocks.PRESS.getBlock()));
     }
 
@@ -38,10 +42,25 @@ public class PressArmBlock extends Block {
     }
 
     @Override
+    public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor) {
+        BlockPos blockpos = pos.down();
+        BlockState blockstate = world.getBlockState(blockpos);
+        if (blockstate.getBlock() != WorkshopBlocks.PRESS.getBlock()) {
+            World newWorld = Objects.requireNonNull(world.getChunk(pos).getWorldForge()).getWorld();
+            newWorld.setBlockState(pos, Blocks.AIR.getDefaultState());
+        }
+    }
+
+    @Override
     @Nonnull
     @SuppressWarnings("deprecation")
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return Block.makeCuboidShape(0.0D, -16.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+    }
+
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.INVISIBLE;
     }
 
     @Override

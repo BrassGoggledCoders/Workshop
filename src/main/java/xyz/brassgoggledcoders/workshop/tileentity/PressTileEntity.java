@@ -5,7 +5,6 @@ import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -33,25 +32,49 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
         this.getMachineComponent().addTank(this.outputFluid = new SidedFluidTankComponent<PressTileEntity>(InventoryUtil.FLUID_OUTPUT, 4000, 100, 20, pos++).
                 setColor(InventoryUtil.FLUID_OUTPUT_COLOR).
                 setTankAction(SidedFluidTankComponent.Action.DRAIN));
+        this.getMachineComponent().getPrimaryBar().setCanIncrease(this::canIncrease);
     }
 
     @Override
     public void tick() {
-        int progress = getMachineComponent().getPrimaryBar().getProgress();
-        int max = getMachineComponent().getPrimaryBar().getMaxProgress();
-        double time = (double) max / 60;
-        updatePressProgress();
-        if (progress % time == 0 && progress != 0) {
-            if (height > 0.2) {
-                height = height - 0.01;
+        if(world != null) {
+            if (world.getGameTime() % 5 == 0) {
+                updatePressProgress();
             }
-        } else if (progress == 0 && height != 0.8) {
-            height = 0.8;
+            setHeightChange();
         }
+
         super.tick();
     }
 
-    public double getHeight() {
+    public void setHeightChange(){
+        int progress = getMachineComponent().getPrimaryBar().getProgress();
+        double maxHeigh = 0.8;
+        if(progress == 0){
+            height = maxHeigh;
+        } else{
+            int max = getMachineComponent().getPrimaryBar().getMaxProgress();
+            int bottom = max/2;
+            double minHeigh = 0.3;
+            if(progress >= bottom){
+                height = minHeigh;
+                if(progress != bottom) {
+                    progress = progress - bottom;
+                    float sections = (float)((maxHeigh - minHeigh) /bottom);
+                    float offset = (float)progress*sections;
+                    height = Math.min(maxHeigh,height + offset);
+                }
+            } else {
+                height = maxHeigh;
+                float sections = (float)((maxHeigh - minHeigh) /bottom);
+                float offset = (float)progress*sections;
+                height = Math.max(height - offset, minHeigh);
+            }
+
+        }
+    }
+
+    public double getHeightChange() {
         return height;
     }
 
@@ -66,18 +89,12 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
     @Override
     @Nonnull
     public CompoundNBT getUpdateTag() {
-        CompoundNBT updateTag = new CompoundNBT();
-        updateTag.putDouble("height", getHeight());
-        getInputInventory().getStackInSlot(0).write(updateTag);
-        return updateTag;
+        return serializeNBT();
     }
 
     @Override
     public void handleUpdateTag(CompoundNBT tag) {
-        height = tag.getDouble("height");
-        if (getInputInventory().getStackInSlot(0).isEmpty()) {
-            getInputInventory().insertItem(0, ItemStack.read(tag), false);
-        }
+        deserializeNBT(tag);
         updatePressProgress();
     }
 
@@ -172,4 +189,19 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
             outputFluid.fillForced(currentRecipe.fluidOut.copy(), IFluidHandler.FluidAction.EXECUTE);
         }
     }
+
+    private boolean canIncrease(PressTileEntity tile) {
+        if (world == null) {
+            return false;
+        }
+        if (!world.isBlockPowered(pos) && !world.isBlockPowered(pos.up())) {
+            return false;
+        }
+        if (getMachineComponent().getCurrentRecipe() == null) {
+            return false;
+        }
+        return tile.getOutputFluid().getCapacity() != tile.getOutputFluid().getFluidAmount() && tile.getOutputFluid().getFluidAmount() + tile.getMachineComponent().getCurrentRecipe().fluidOut.getAmount() < tile.getOutputFluid().getCapacity();
+    }
+
+
 }

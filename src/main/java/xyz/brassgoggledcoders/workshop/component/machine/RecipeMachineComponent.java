@@ -117,4 +117,7 @@ public class RecipeMachineComponent<T extends IRecipeMachineHarness<T, U>, U ext
         return 4;
     }
 
+    public U getCurrentRecipe() {
+        return currentRecipe;
+    }
 }

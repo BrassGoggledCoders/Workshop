@@ -13,10 +13,10 @@ import xyz.brassgoggledcoders.workshop.renderer.ChalkWritingTileEntityRenderer;
 import xyz.brassgoggledcoders.workshop.renderer.PressTileEntityRenderer;
 import xyz.brassgoggledcoders.workshop.renderer.SinteringTileEntityRenderer;
 
-@EventBusSubscriber(modid = Workshop.MOD_ID, value = Dist.CLIENT)
 public class ClientEventHandler {
-    @SubscribeEvent
-    public static void clientSetup(final FMLClientSetupEvent event) {
+
+
+    public static void clientStartUpEvent() {
         ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.PRESS.getTileEntityType(), PressTileEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.SINTERING_FURNACE.getTileEntityType(), SinteringTileEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.CHALK_WRITING.getTileEntityType(), ChalkWritingTileEntityRenderer::new);

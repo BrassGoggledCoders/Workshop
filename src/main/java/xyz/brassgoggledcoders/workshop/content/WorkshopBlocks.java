@@ -53,8 +53,11 @@ public class WorkshopBlocks {
             new BlockRegistryObjectGroup<>("press", PressBlock::new, blockItemCreator(), PressTileEntity::new)
                     .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
-    public static final BlockRegistryObjectGroup<PressArmBlock, BlockItem, ?> PRESS_ARM =
-            new BlockRegistryObjectGroup<>("press_arm", PressArmBlock::new, blockItemCreatorNoGroup()).register(BLOCKS, ITEMS);
+    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> PRESS_ARM =
+            new BlockRegistryObjectGroup<>("press_arm",() -> new Block(Block.Properties.create(Material.BAMBOO)), blockItemCreatorNoGroup()).register(BLOCKS, ITEMS);
+
+    public static final BlockRegistryObjectGroup<PressTopBlock, BlockItem, ?> PRESS_TOP =
+            new BlockRegistryObjectGroup<>("press_top", PressTopBlock::new, blockItemCreatorNoGroup()).register(BLOCKS, ITEMS);
 
     public static final BlockRegistryObjectGroup<SeasoningBarrelBlock, BlockItem, SeasoningBarrelTileEntity> SEASONING_BARREL =
             new BlockRegistryObjectGroup<>("seasoning_barrel", SeasoningBarrelBlock::new, blockItemCreator(),
