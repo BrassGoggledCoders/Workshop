@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "side": "workshop:block/seasoned_log",
+    "end": "workshop:block/seasoned_log_top"
+  }
+}

@@ -4,7 +4,6 @@ import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import xyz.brassgoggledcoders.workshop.component.machine.IRecipeMachineHarness;
 import xyz.brassgoggledcoders.workshop.component.machine.RecipeMachineComponent;

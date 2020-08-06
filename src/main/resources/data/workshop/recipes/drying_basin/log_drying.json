@@ -1,0 +1,11 @@
+{
+  "itemIn": {
+    "tag": "minecraft:logs"
+  },
+  "itemOut": {
+    "item": "workshop:seasoned_log",
+    "count": 1
+  },
+  "dryingTime": 1000,
+  "type": "workshop:drying_basin"
+}

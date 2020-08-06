@@ -25,6 +25,7 @@ public class WorkshopRecipes {
     public static final RegistryObject<GenericSerializer<CollectorRecipe>> COLLECTOR_SERIALIZER = serializer("collector", CollectorRecipe.class);
     public static final RegistryObject<GenericSerializer<MoltenChamberRecipe>> MOLTEN_CHAMBER_SERIALIZER = serializer("molten_chamber", MoltenChamberRecipe.class);
     public static final RegistryObject<GenericSerializer<MortarRecipe>> MORTAR_SERIALIZER = serializer("mortar", MortarRecipe.class);
+    public static final RegistryObject<GenericSerializer<DryingBasinRecipe>> DRYING_BASIN_SERIALIZER = serializer("drying_basin", DryingBasinRecipe.class);
 
     public static final RegistryObject<SpecialRecipeSerializer<TanninRecipe>> TANNIN_SERIALIZER = RECIPE_SERIALIZER.register("tannin", () -> new SpecialRecipeSerializer<>(TanninRecipe::new));
 

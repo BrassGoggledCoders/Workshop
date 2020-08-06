@@ -36,6 +36,7 @@ public class WorkshopBlockLootTables extends BlockLootTables {
         this.registerDropSelfLootTable(WorkshopBlocks.BROKEN_ANVIL.getBlock());
         this.registerDropSelfLootTable(WorkshopBlocks.OBSIDIAN_PLATE.getBlock());
         this.registerDropSelfLootTable(WorkshopBlocks.BELLOWS.getBlock());
+        this.registerDropSelfLootTable(WorkshopBlocks.SEASONED_LOG.getBlock());
 
         this.registerLootTable(WorkshopBlocks.TEA_PLANT.getBlock(), droppingAndBonusWhen(WorkshopBlocks.TEA_PLANT.getBlock(), WorkshopItems.TEA_LEAVES.get(), WorkshopBlocks.TEA_PLANT.getItem(),
                 BlockStateProperty.builder(WorkshopBlocks.TEA_PLANT.getBlock()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(CropsBlock.AGE, 1))));
@@ -50,9 +51,11 @@ public class WorkshopBlockLootTables extends BlockLootTables {
         this.registerLootTable(WorkshopBlocks.COLLECTOR.getBlock(), BlockLootTables::droppingWithName);
         this.registerLootTable(WorkshopBlocks.SCRAP_BIN.getBlock(), BlockLootTables::droppingWithName);
         this.registerLootTable(WorkshopBlocks.MORTAR.getBlock(), BlockLootTables::droppingWithName);
+        this.registerLootTable(WorkshopBlocks.DRYING_BASIN.getBlock(), BlockLootTables::droppingWithName);
         //endregion
 
         this.registerLootTable(WorkshopBlocks.PRESS_ARM.getBlock(), new LootTable.Builder());
+        this.registerLootTable(WorkshopBlocks.PRESS_TOP.getBlock(), new LootTable.Builder());
         this.registerLootTable(WorkshopBlocks.CHALK_WRITING.getBlock(), new LootTable.Builder());
 
         this.registerLootTable(WorkshopBlocks.SEALED_BARREL.getBlock(), new LootTable.Builder()

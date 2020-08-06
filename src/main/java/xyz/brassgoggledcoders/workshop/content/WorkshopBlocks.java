@@ -2,7 +2,10 @@ package xyz.brassgoggledcoders.workshop.content;
 
 import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.LogBlock;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockNamedItem;
 import net.minecraft.item.DyeColor;
@@ -27,10 +30,10 @@ import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
 @SuppressWarnings("unused")
 public class WorkshopBlocks {
-    private static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, MOD_ID);
+    private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MOD_ID);
     private static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES =
-            new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, MOD_ID);
-    private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MOD_ID);
+            DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, MOD_ID);
+    private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
 
     public static final BlockRegistryObjectGroup<ObsidianPlateBlock, BlockItem, ObsidianPlateTileEntity> OBSIDIAN_PLATE =
             new BlockRegistryObjectGroup<>("obsidian_plate", ObsidianPlateBlock::new, blockItemCreator(), ObsidianPlateTileEntity::new)
@@ -52,6 +55,8 @@ public class WorkshopBlocks {
     public static final BlockRegistryObjectGroup<PressBlock, BlockItem, PressTileEntity> PRESS =
             new BlockRegistryObjectGroup<>("press", PressBlock::new, blockItemCreator(), PressTileEntity::new)
                     .register(BLOCKS, ITEMS, TILE_ENTITIES);
+
+    //TODO Neither of these need items, and the arm is purely a dummy block for rendering, which is dumb...
 
     public static final BlockRegistryObjectGroup<Block, BlockItem, ?> PRESS_ARM =
             new BlockRegistryObjectGroup<>("press_arm",() -> new Block(Block.Properties.create(Material.BAMBOO)), blockItemCreatorNoGroup()).register(BLOCKS, ITEMS);
@@ -89,6 +94,11 @@ public class WorkshopBlocks {
                     MortarTileEntity::new)
                     .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
+    public static final BlockRegistryObjectGroup<DryingBasinBlock, BlockItem, DryingBasinTileEntity> DRYING_BASIN =
+            new BlockRegistryObjectGroup<>("drying_basin", DryingBasinBlock::new, blockItemCreator(),
+                    DryingBasinTileEntity::new)
+                    .register(BLOCKS, ITEMS, TILE_ENTITIES);
+
     public static final BlockRegistryObjectGroup<TeaPlantBlock, BlockNamedItem, ?> TEA_PLANT =
             new BlockRegistryObjectGroup<>("tea", TeaPlantBlock::new, (block) ->
                     new BlockNamedItem(WorkshopBlocks.TEA_PLANT.getBlock(), new Item.Properties().group(Workshop.ITEM_GROUP))).register(BLOCKS, ITEMS);
@@ -106,6 +116,10 @@ public class WorkshopBlocks {
             new BlockRegistryObjectGroup<>("chalk", ChalkWritingBlock::new,
                     block -> new ChalkItem(new Item.Properties().group(Workshop.ITEM_GROUP)), ChalkWritingTileEntity::new)
                     .register(BLOCKS, ITEMS, TILE_ENTITIES);
+
+    public static final BlockRegistryObjectGroup<LogBlock, BlockItem, ?> SEASONED_LOG =
+            new BlockRegistryObjectGroup<>("seasoned_log", () -> new LogBlock(MaterialColor.ADOBE, Block.Properties.from(Blocks.OAK_LOG)), blockItemCreator())
+            .register(BLOCKS, ITEMS);
 
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);
