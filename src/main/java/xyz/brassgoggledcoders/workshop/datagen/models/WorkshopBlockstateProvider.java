@@ -56,11 +56,16 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
         this.simpleBlock(WorkshopBlocks.MOLTEN_CHAMBER.getBlock(), this.models().cubeAll("molten_chamber", modLoc("blocks/molten_chamber")));
         //this.simpleBlock(WorkshopBlocks.CHALK_WRITING.getBlock(), this.models().singleTexture("chalk", mcLoc(BLOCK_FOLDER + "/bedrock"), "particle", mcLoc(BLOCK_FOLDER + "/bedrock")));
         this.horizontalBlock(WorkshopBlocks.ALEMBIC.getBlock(), new ModelFile.ExistingModelFile(modLoc("block/alembic"), exFileHelper));
-        this.logBlock(WorkshopBlocks.SEASONED_LOG.get());
+        //TODO De pluralise texture folders
+        //this.logBlock(WorkshopBlocks.SEASONED_LOG.get());
         this.simpleBlock(WorkshopBlocks.DRYING_BASIN.getBlock(), this.models().withExistingParent(WorkshopBlocks.DRYING_BASIN.getName(), mcLoc(BLOCK_FOLDER + "/cauldron"))
                 .texture("side", modLoc(BLOCK_FOLDER + "s/drying_basin_side"))
                 .texture("top", modLoc(BLOCK_FOLDER + "s/drying_basin_top"))
                 .texture("bottom", modLoc(BLOCK_FOLDER + "s/drying_basin_bottom"))
                 .texture("inside", mcLoc(BLOCK_FOLDER + "/polished_andesite")));
+        this.simpleBlock(WorkshopBlocks.FLUID_FUNNEL.get(), this.models().withExistingParent(WorkshopBlocks.FLUID_FUNNEL.getName(), mcLoc(BLOCK_FOLDER + "/hopper"))
+                .texture("side", modLoc(BLOCK_FOLDER + "s/seasoned_log"))
+                .texture("inside", modLoc(BLOCK_FOLDER + "s/seasoned_log"))
+                .texture("top", modLoc(BLOCK_FOLDER + "s/fluid_funnel_top")));
     }
 }

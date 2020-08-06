@@ -9,6 +9,8 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import xyz.brassgoggledcoders.workshop.tileentity.ScrapBinTileEntity;
 
+import javax.annotation.Nonnull;
+
 public class ScrapBinBlock extends TileBlock<ScrapBinTileEntity> {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -19,7 +21,7 @@ public class ScrapBinBlock extends TileBlock<ScrapBinTileEntity> {
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void fillStateContainer(@Nonnull StateContainer.Builder<Block, BlockState> builder) {
         super.fillStateContainer(builder);
         builder.add(FACING);
     }

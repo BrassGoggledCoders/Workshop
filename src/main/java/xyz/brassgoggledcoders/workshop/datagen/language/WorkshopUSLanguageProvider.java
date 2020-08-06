@@ -40,6 +40,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addBlock(WorkshopBlocks.CHALK_WRITING, "Chalk");
         this.addBlock(WorkshopBlocks.SEASONED_LOG, "Seasoned Log");
         this.addBlock(WorkshopBlocks.DRYING_BASIN, "Drying Basin");
+        this.addBlock(WorkshopBlocks.FLUID_FUNNEL, "Fluid Funnel");
         //endregion
 
         //region Items
