@@ -48,6 +48,8 @@ public class WorkshopItemModelProvider extends ModelProvider<PropertiedItemModel
         this.withExistingParent(WorkshopBlocks.BELLOWS.getName(), modLoc(BLOCK_FOLDER + "/bellows"));
         this.withExistingParent(WorkshopBlocks.ALEMBIC.getName(), modLoc(BLOCK_FOLDER + "/alembic"));
         this.withExistingParent(WorkshopBlocks.SCRAP_BIN.getName(), modLoc(BLOCK_FOLDER + "/scrap_bin"));
+        this.withExistingParent(WorkshopBlocks.DRYING_BASIN.getName(), modLoc(BLOCK_FOLDER + "/drying_basin"));
+        this.withExistingParent(WorkshopBlocks.SEASONED_LOG.getName(), modLoc(BLOCK_FOLDER + "/seasoned_log"));
     }
 
     private void bucket(ResourceLocation fluidName) {

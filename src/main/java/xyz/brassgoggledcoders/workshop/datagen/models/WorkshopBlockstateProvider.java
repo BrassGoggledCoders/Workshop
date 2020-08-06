@@ -57,5 +57,10 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
         //this.simpleBlock(WorkshopBlocks.CHALK_WRITING.getBlock(), this.models().singleTexture("chalk", mcLoc(BLOCK_FOLDER + "/bedrock"), "particle", mcLoc(BLOCK_FOLDER + "/bedrock")));
         this.horizontalBlock(WorkshopBlocks.ALEMBIC.getBlock(), new ModelFile.ExistingModelFile(modLoc("block/alembic"), exFileHelper));
         this.logBlock(WorkshopBlocks.SEASONED_LOG.get());
+        this.simpleBlock(WorkshopBlocks.DRYING_BASIN.getBlock(), this.models().withExistingParent(WorkshopBlocks.DRYING_BASIN.getName(), mcLoc(BLOCK_FOLDER + "/cauldron"))
+                .texture("side", modLoc(BLOCK_FOLDER + "s/drying_basin_side"))
+                .texture("top", modLoc(BLOCK_FOLDER + "s/drying_basin_top"))
+                .texture("bottom", modLoc(BLOCK_FOLDER + "s/drying_basin_bottom"))
+                .texture("inside", mcLoc(BLOCK_FOLDER + "/polished_andesite")));
     }
 }
