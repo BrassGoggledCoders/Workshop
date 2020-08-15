@@ -20,6 +20,7 @@ import xyz.brassgoggledcoders.workshop.datagen.loot.WorkshopLootTableProvider;
 import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopBlockstateProvider;
 import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopItemModelProvider;
 import xyz.brassgoggledcoders.workshop.datagen.recipe.*;
+import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopFluidTagsProvider;
 import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopItemTagsProvider;
 import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
 
@@ -87,6 +88,8 @@ public class WorkshopDataGenerator {
             dataGenerator.addProvider(new DryingBasinRecipeProvider(dataGenerator));
 
             dataGenerator.addProvider(new WorkshopItemTagsProvider(dataGenerator));
+            dataGenerator.addProvider(new WorkshopFluidTagsProvider(dataGenerator));
+            //dataGenerator.addProvider(new WorkshopBlockTagsProvider(dataGenerator));
 
             dataGenerator.addProvider(new WorkshopBookProvider(dataGenerator));
         }

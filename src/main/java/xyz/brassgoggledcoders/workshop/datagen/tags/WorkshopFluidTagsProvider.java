@@ -22,6 +22,7 @@ public class WorkshopFluidTagsProvider extends FluidTagsProvider {
     @Override
     protected void registerTags() {
         this.getBuilder(BRINE).add(WorkshopFluids.BRINE.getFluid());
+        this.getBuilder(FluidTags.WATER).add(WorkshopFluids.DISTILLED_WATER.getFluid(), WorkshopFluids.BRINE.getFluid());
     }
 
     @Override
