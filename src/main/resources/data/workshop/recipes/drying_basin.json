@@ -1,0 +1,34 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "values": [
+            {
+              "item": "workshop:drying_basin",
+              "type": "forge:item_exists"
+            }
+          ],
+          "type": "forge:and"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "A A",
+          "A A",
+          "AAA"
+        ],
+        "key": {
+          "A": {
+            "item": "minecraft:polished_andesite"
+          }
+        },
+        "result": {
+          "item": "workshop:drying_basin"
+        }
+      }
+    }
+  ]
+}

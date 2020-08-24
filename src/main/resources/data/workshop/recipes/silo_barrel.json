@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:barrel"
+    },
+    {
+      "tag": "forge:films/iron"
+    }
+  ],
+  "result": {
+    "item": "workshop:silo_barrel"
+  }
+}

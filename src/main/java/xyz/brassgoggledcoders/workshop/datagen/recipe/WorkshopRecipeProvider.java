@@ -2,6 +2,7 @@ package xyz.brassgoggledcoders.workshop.datagen.recipe;
 
 import com.hrznstudio.titanium.recipe.generator.TitaniumRecipeProvider;
 import com.hrznstudio.titanium.recipe.generator.TitaniumShapedRecipeBuilder;
+import com.hrznstudio.titanium.recipe.generator.TitaniumShapelessRecipeBuilder;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
@@ -105,6 +106,23 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .patternLine("COC")
                 .key('C', WorkshopItemTagsProvider.REBARRED_CONCRETE)
                 .key('O', WorkshopBlocks.OBSIDIAN_PLATE.getItem())
+                .build(consumer);
+        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.DRYING_BASIN.getBlock())
+                .patternLine("A A")
+                .patternLine("A A")
+                .patternLine("AAA")
+                .key('A', Blocks.POLISHED_ANDESITE)
+                .build(consumer);
+        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.FLUID_FUNNEL.getBlock())
+                .patternLine("L L")
+                .patternLine("LCL")
+                .patternLine(" L ")
+                .key('L', WorkshopBlocks.SEASONED_LOG.getItem())
+                .key('C', Tags.Items.CHESTS_WOODEN)
+                .build(consumer);
+        TitaniumShapelessRecipeBuilder.shapelessRecipe(WorkshopBlocks.SILO_BARREL.getBlock())
+                .addIngredient(Blocks.BARREL)
+                .addIngredient(WorkshopItemTagsProvider.IRON_FILM)
                 .build(consumer);
         //endsection
         //section Misc

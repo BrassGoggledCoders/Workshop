@@ -67,5 +67,7 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
                 .texture("side", modLoc(BLOCK_FOLDER + "s/seasoned_log"))
                 .texture("inside", modLoc(BLOCK_FOLDER + "s/seasoned_log"))
                 .texture("top", modLoc(BLOCK_FOLDER + "s/fluid_funnel_top")));
+        this.simpleBlock(WorkshopBlocks.SILO_BARREL.get(), this.models().cubeBottomTop(WorkshopBlocks.SILO_BARREL.getName(), mcLoc(BLOCK_FOLDER + "/barrel_side"),
+                mcLoc(BLOCK_FOLDER + "/hopper_inside"), mcLoc(BLOCK_FOLDER + "/barrel_top")));
     }
 }

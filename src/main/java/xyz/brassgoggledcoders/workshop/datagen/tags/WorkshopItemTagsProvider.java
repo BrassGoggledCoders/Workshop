@@ -27,6 +27,8 @@ public class WorkshopItemTagsProvider extends ItemTagsProvider {
     public static final Tag<Item> ROOTS = new ItemTags.Wrapper(new ResourceLocation(Workshop.MOD_ID, "roots"));
     public static final Tag<Item> TALLOW = new ItemTags.Wrapper(new ResourceLocation("forge", "tallow"));
     public static final Tag<Item> SALT = new ItemTags.Wrapper(new ResourceLocation("forge", "dusts/salt"));
+    //Filled automatically by Titanium
+    public static final Tag<Item> IRON_FILM = new ItemTags.Wrapper(new ResourceLocation("forge", "films/iron"));
 
     public WorkshopItemTagsProvider(DataGenerator generator) {
         super(generator);

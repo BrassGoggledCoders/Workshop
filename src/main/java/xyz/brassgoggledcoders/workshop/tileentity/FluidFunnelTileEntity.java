@@ -18,7 +18,7 @@ public class FluidFunnelTileEntity extends BasicInventoryTileEntity<FluidFunnelT
     protected final FluidTankComponent<FluidFunnelTileEntity> tank;
     protected int timer = 0;
     protected int interval = 20;
-    private int fluidMovedPer = FluidAttributes.BUCKET_VOLUME / 4;
+    private final int fluidMovedPer = FluidAttributes.BUCKET_VOLUME / 4;
 
     public FluidFunnelTileEntity() {
         super(WorkshopBlocks.FLUID_FUNNEL.getTileEntityType());
@@ -36,6 +36,7 @@ public class FluidFunnelTileEntity extends BasicInventoryTileEntity<FluidFunnelT
 
     @Override
     public void read(CompoundNBT compound) {
+        tank.readFromNBT(compound.getCompound("capability"));
         super.read(compound);
     }
 

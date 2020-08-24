@@ -116,6 +116,9 @@ public class WorkshopBlocks {
     public static final BlockRegistryObjectGroup<FluidFunnelBlock, BlockItem, FluidFunnelTileEntity> FLUID_FUNNEL = new BlockRegistryObjectGroup<>("fluid_funnel", FluidFunnelBlock::new, blockItemCreator(), FluidFunnelTileEntity::new)
             .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
+    public static final BlockRegistryObjectGroup<SiloBarrelBlock, BlockItem, SiloBarrelTileEntity> SILO_BARREL = new BlockRegistryObjectGroup<>("silo_barrel", SiloBarrelBlock::new, blockItemCreator(), SiloBarrelTileEntity::new)
+            .register(BLOCKS, ITEMS, TILE_ENTITIES);
+
     public static final BlockRegistryObjectGroup<ChalkWritingBlock, ChalkItem, ChalkWritingTileEntity> CHALK_WRITING =
             new BlockRegistryObjectGroup<>("chalk", ChalkWritingBlock::new,
                     block -> new ChalkItem(new Item.Properties().group(Workshop.ITEM_GROUP)), ChalkWritingTileEntity::new)

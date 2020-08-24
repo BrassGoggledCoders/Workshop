@@ -53,6 +53,7 @@ public class WorkshopBlockLootTables extends BlockLootTables {
         this.registerLootTable(WorkshopBlocks.MORTAR.getBlock(), BlockLootTables::droppingWithName);
         this.registerLootTable(WorkshopBlocks.DRYING_BASIN.getBlock(), BlockLootTables::droppingWithName);
         this.registerLootTable(WorkshopBlocks.FLUID_FUNNEL.getBlock(), BlockLootTables::droppingWithName);
+        this.registerLootTable(WorkshopBlocks.SILO_BARREL.getBlock(), BlockLootTables::droppingWithName);
         //endregion
 
         this.registerLootTable(WorkshopBlocks.PRESS_ARM.getBlock(), new LootTable.Builder());
