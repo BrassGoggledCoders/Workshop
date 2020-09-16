@@ -40,6 +40,14 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('L', Blocks.STRIPPED_DARK_OAK_LOG)
                 .key('S', Blocks.DARK_OAK_SLAB)
                 .build(consumer);
+        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SEASONING_BARREL.getBlock())
+                .setName(new ResourceLocation(Workshop.MOD_ID, "seasoning_barrel_seasoned"))
+                .patternLine("LSL")
+                .patternLine("L L")
+                .patternLine("LSL")
+                .key('L', WorkshopBlocks.SEASONED_LOG.get())
+                .key('S', Blocks.OAK_SLAB)
+                .build(consumer);
         TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SPINNING_WHEEL.getBlock())
                 .patternLine("W I")
                 .patternLine("WWW")
