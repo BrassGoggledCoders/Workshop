@@ -5,10 +5,12 @@ import com.hrznstudio.titanium.recipe.generator.IJsonFile;
 import com.hrznstudio.titanium.recipe.generator.TitaniumSerializableProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import org.apache.commons.lang3.tuple.Pair;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopItemTagsProvider;
@@ -31,12 +33,16 @@ public class CollectorRecipeProvider extends TitaniumSerializableProvider {
         recipes.add(new Builder("meat_to_tallow")
                 .setTarget(TileEntityType.FURNACE)
                 .setInput(Ingredient.fromTag(WorkshopItemTagsProvider.RAW_MEAT))
-                .setOutput(new ItemStack(WorkshopItems.TALLOW.get()))
+                .addOutput(new ItemStack(WorkshopItems.TALLOW.get()), 1)
                 .build());
         recipes.add(new Builder("saplings_to_ash")
                 .setTarget(TileEntityType.FURNACE)
                 .setInput(Ingredient.fromTag(ItemTags.SAPLINGS))
-                .setOutput(new ItemStack(WorkshopItems.ASH.get()))
+                .addOutput(new ItemStack(WorkshopItems.ASH.get()), 1)
+                .build());
+        recipes.add(new Builder("gold_to_silver_and_copper")
+                .setTarget(TileEntityType.FURNACE)
+                .setInput(Ingredient.fromItems(Items.GOLD_ORE))
                 .build());
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }
@@ -45,11 +51,12 @@ public class CollectorRecipeProvider extends TitaniumSerializableProvider {
         private final ResourceLocation name;
         private TileEntityType targetTileType;
         private Ingredient input;
-        private ItemStack output;
+        private List<Pair<ItemStack, Integer>> outputs;
         private int processingTime = 10;
 
         public Builder(String name) {
             this.name = new ResourceLocation(Workshop.MOD_ID, name);
+            this.outputs = new ArrayList<>();
         }
 
         public Builder setTarget(TileEntityType type) {
@@ -62,8 +69,8 @@ public class CollectorRecipeProvider extends TitaniumSerializableProvider {
             return this;
         }
 
-        public Builder setOutput(ItemStack out) {
-            this.output = out;
+        public Builder addOutput(ItemStack out, int weight) {
+            this.outputs.add(Pair.of(out, weight));
             return this;
         }
 
@@ -78,7 +85,7 @@ public class CollectorRecipeProvider extends TitaniumSerializableProvider {
 
         public CollectorRecipe build() {
             validate();
-            return new CollectorRecipe(name, targetTileType, input, output, processingTime);
+            return new CollectorRecipe(name, targetTileType, input, outputs, processingTime);
         }
     }
 }

@@ -8,23 +8,25 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import org.apache.commons.lang3.tuple.Pair;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.tileentity.CollectorTileEntity;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 public class CollectorRecipe extends WorkshopRecipe {
 
     public TileEntityType<CollectorTileEntity> targetTileType;
     public Ingredient input;
-    public ItemStack output;
+    public List<Pair<ItemStack, Integer>> outputs;
     public int processingTime = 500;
 
-    public CollectorRecipe(ResourceLocation resourceLocation, TileEntityType<CollectorTileEntity> targetType, Ingredient input, ItemStack output, int processingTime) {
+    public CollectorRecipe(ResourceLocation resourceLocation, TileEntityType<CollectorTileEntity> targetType, Ingredient input, List<Pair<ItemStack, Integer>> outputs, int processingTime) {
         this(resourceLocation);
         this.targetTileType = targetType;
         this.input = input;
-        this.output = output;
+        this.outputs = outputs;
         this.processingTime = processingTime;
     }
 
