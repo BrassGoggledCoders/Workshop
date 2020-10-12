@@ -7,6 +7,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemHandlerHelper;
+import org.apache.commons.lang3.tuple.Pair;
 import xyz.brassgoggledcoders.workshop.block.CollectorBlock;
 import xyz.brassgoggledcoders.workshop.capabilities.ICollectorTarget;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
@@ -58,10 +59,11 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
     @Override
     public boolean matchesInputs(CollectorRecipe currentRecipe) {
         TileEntity tile = this.getWorld().getTileEntity(this.getPos().offset(this.getBlockState().get(CollectorBlock.FACING)));
-        if (tile.getType().equals(currentRecipe.targetTileType)) {
+        if (currentRecipe.targetTileType.stream().anyMatch(type -> tile.getType().equals(type))) {
             LazyOptional<ICollectorTarget> cap = tile.getCapability(WorkshopCapabilities.COLLECTOR_TARGET);
             return cap.map(target -> {
-                if (target.isActive() && ItemHandlerHelper.insertItemStacked(this.output, currentRecipe.output, true).isEmpty()) {
+                // Recipe is only valid if machine can accept all possible outputs from recipe
+                if (target.isActive() && currentRecipe.getOutputs().stream().map(Pair::getLeft).allMatch(itemStack -> ItemHandlerHelper.insertItemStacked(this.output, itemStack, true).isEmpty())) {
                     return Stream.of(target.getCollectables()).anyMatch(stack -> currentRecipe.input.test(stack));
                 }
                 return false;
@@ -72,7 +74,7 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
 
     @Override
     public void handleComplete(CollectorRecipe currentRecipe) {
-        ItemHandlerHelper.insertItemStacked(this.output, currentRecipe.output.copy(), false);
+        ItemHandlerHelper.insertItemStacked(this.output, currentRecipe.getRecipeOutput(world.getRandom()), false);
         this.getMachineComponent().forceRecipeRecheck();
     }
 }

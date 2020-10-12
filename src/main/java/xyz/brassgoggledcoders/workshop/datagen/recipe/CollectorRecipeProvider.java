@@ -5,7 +5,6 @@ import com.hrznstudio.titanium.recipe.generator.IJsonFile;
 import com.hrznstudio.titanium.recipe.generator.TitaniumSerializableProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tileentity.TileEntityType;
@@ -31,25 +30,26 @@ public class CollectorRecipeProvider extends TitaniumSerializableProvider {
     @Override
     public void add(Map<IJsonFile, IJSONGenerator> serializables) {
         recipes.add(new Builder("meat_to_tallow")
-                .setTarget(TileEntityType.FURNACE)
+                .addTarget(TileEntityType.FURNACE)
                 .setInput(Ingredient.fromTag(WorkshopItemTagsProvider.RAW_MEAT))
                 .addOutput(new ItemStack(WorkshopItems.TALLOW.get()), 1)
                 .build());
         recipes.add(new Builder("saplings_to_ash")
-                .setTarget(TileEntityType.FURNACE)
+                .addTarget(TileEntityType.FURNACE)
                 .setInput(Ingredient.fromTag(ItemTags.SAPLINGS))
                 .addOutput(new ItemStack(WorkshopItems.ASH.get()), 1)
                 .build());
-        recipes.add(new Builder("gold_to_silver_and_copper")
-                .setTarget(TileEntityType.FURNACE)
-                .setInput(Ingredient.fromItems(Items.GOLD_ORE))
-                .build());
+//        recipes.add(new Builder("gold_to_silver_and_copper")
+//                .addTarget(TileEntityType.FURNACE)
+//                .setInput(Ingredient.fromItems(Items.GOLD_ORE))
+//                .addOutput(new ItemStack())
+//                .build());
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }
 
     protected static class Builder {
         private final ResourceLocation name;
-        private TileEntityType targetTileType;
+        private List<TileEntityType> targetTileType;
         private Ingredient input;
         private List<Pair<ItemStack, Integer>> outputs;
         private int processingTime = 10;
@@ -57,13 +57,14 @@ public class CollectorRecipeProvider extends TitaniumSerializableProvider {
         public Builder(String name) {
             this.name = new ResourceLocation(Workshop.MOD_ID, name);
             this.outputs = new ArrayList<>();
+            this.targetTileType = new ArrayList<>();
         }
-
-        public Builder setTarget(TileEntityType type) {
-            this.targetTileType = type;
+        
+        public Builder addTarget(TileEntityType type){
+            this.targetTileType.add(type);
             return this;
         }
-
+        
         public Builder setInput(Ingredient input) {
             this.input = input;
             return this;
