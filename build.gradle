@@ -41,7 +41,7 @@ minecraft {
             properties 'fml.earlyprogresswindow': 'false'
 
             args '--all', '--output', file('src/datagen/resources/'),
-                    '--mod', '${mod_name}', '--reports',
+                    '--mod', "${mod_name}".toString().toLowerCase(), '--reports',
                     '--existing', sourceSets.main.resources.srcDirs[0]
         }
     }
@@ -61,11 +61,11 @@ repositories {
         name = "Progwml6 maven"
         url = "https://dvs1.progwml6.com/files/maven/"
     }
-//    maven {
-//        // location of a maven mirror for JEI files, as a fallback
-//        name = "ModMaven"
-//        url = "https://modmaven.k-4u.nl"
-//    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.k-4u.nl"
+    }
 }
 
 dependencies {
