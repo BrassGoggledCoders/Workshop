@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.hrznstudio.titanium.recipe.serializer.JSONSerializableDataHandler;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
@@ -13,6 +14,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.commons.lang3.tuple.Pair;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.datagen.language.WorkshopGBLanguageProvider;
 import xyz.brassgoggledcoders.workshop.datagen.language.WorkshopUSLanguageProvider;
@@ -22,10 +24,12 @@ import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopItemModelProvider;
 import xyz.brassgoggledcoders.workshop.datagen.recipe.*;
 import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopFluidTagsProvider;
 import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopItemTagsProvider;
+import xyz.brassgoggledcoders.workshop.recipe.CollectorRecipe;
 import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
 
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Workshop.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class WorkshopDataGenerator {
@@ -58,6 +62,33 @@ public class WorkshopDataGenerator {
                 stacks[i] = JSONSerializableDataHandler.read(RangedItemStack.class, jsonElement);
             }
             return stacks;
+        });
+        JSONSerializableDataHandler.map(CollectorRecipe.TileEntityList.class, list -> {
+            JsonArray array = new JsonArray();
+            list.getTileEntityTypes().forEach(type -> array.add(new JsonPrimitive(type.getRegistryName().toString())));
+            return array;
+        }, jsonElement -> {
+            CollectorRecipe.TileEntityList list = new CollectorRecipe.TileEntityList();
+            jsonElement.getAsJsonArray().forEach(te -> list.getTileEntityTypes().add(ForgeRegistries.TILE_ENTITIES.getValue(new ResourceLocation(te.getAsString()))));
+            return list;
+        });
+        JSONSerializableDataHandler.map(CollectorRecipe.WeightedOutputList.class, list -> {
+            JsonArray array = new JsonArray();
+            list.getOutputs().forEach(pair -> {
+                JsonObject object = new JsonObject();
+                object.addProperty("weight", pair.getRight());
+                object.add("stack", JSONSerializableDataHandler.writeItemStack(pair.getLeft()));
+                array.add(object);
+            });
+            return array;
+        }, jsonElement -> {
+            final CollectorRecipe.WeightedOutputList list = new CollectorRecipe.WeightedOutputList();
+            final List<Pair<ItemStack, Integer>> outputs = list.getOutputs();
+            jsonElement.getAsJsonArray().forEach(element -> {
+                final JsonObject jsonObject = element.getAsJsonObject();
+                outputs.add(Pair.of(JSONSerializableDataHandler.readItemStack(jsonObject.getAsJsonObject("stack")), jsonObject.getAsJsonPrimitive("weight").getAsInt()));
+            });
+            return list;
         });
     }
 

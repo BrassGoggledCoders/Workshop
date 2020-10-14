@@ -12,21 +12,22 @@ import org.apache.commons.lang3.tuple.Pair;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class CollectorRecipe extends WorkshopRecipe {
 
-    public List<TileEntityType> targetTileType;
+    public WeightedOutputList weightedOutputList;
+    public TileEntityList targetTileTypes;
     public Ingredient input;
-    public List<Pair<ItemStack, Integer>> outputs;
     public int processingTime = 500;
 
-    public CollectorRecipe(ResourceLocation resourceLocation, List<TileEntityType> targetType, Ingredient input, List<Pair<ItemStack, Integer>> outputs, int processingTime) {
+    public CollectorRecipe(ResourceLocation resourceLocation, TileEntityList targetType, Ingredient input, List<Pair<ItemStack, Integer>> outputs, int processingTime) {
         this(resourceLocation);
-        this.targetTileType = targetType;
+        this.targetTileTypes = targetType;
         this.input = input;
-        this.outputs = outputs;
+        this.weightedOutputList = new WeightedOutputList(outputs);
         this.processingTime = processingTime;
     }
 
@@ -35,7 +36,7 @@ public class CollectorRecipe extends WorkshopRecipe {
     }
 
     public List<Pair<ItemStack, Integer>> getOutputs() {
-        return outputs;
+        return weightedOutputList.outputs;
     }
 
     @Override
@@ -65,9 +66,9 @@ public class CollectorRecipe extends WorkshopRecipe {
     }
 
     public ItemStack getRecipeOutput(Random random) {
-        int weightSum = outputs.stream().mapToInt(Pair::getRight).sum();
+        int weightSum = weightedOutputList.outputs.stream().mapToInt(Pair::getRight).sum();
         int randomInt = random.nextInt(weightSum);
-        for (Pair<ItemStack, Integer> output : outputs) {
+        for (Pair<ItemStack, Integer> output : weightedOutputList.outputs) {
             if (randomInt < output.getRight()) {
                 return output.getLeft();
             }
@@ -75,6 +76,34 @@ public class CollectorRecipe extends WorkshopRecipe {
                 randomInt -= output.getRight();
             }
         }
-        return outputs.get(outputs.size() - 1).getLeft();
+        return weightedOutputList.outputs.get(weightedOutputList.outputs.size() - 1).getLeft();
+    }
+
+    public static class WeightedOutputList {
+        private List<Pair<ItemStack, Integer>> outputs;
+
+        public WeightedOutputList(List<Pair<ItemStack, Integer>> outputs) {
+            this.outputs = outputs;
+        }
+
+        public WeightedOutputList(){
+            this.outputs = new ArrayList<>();
+        }
+
+        public List<Pair<ItemStack, Integer>> getOutputs() {
+            return outputs;
+        }
+    }
+
+    public static class TileEntityList {
+        private final List<TileEntityType> tileEntityTypes;
+
+        public TileEntityList() {
+            tileEntityTypes = new ArrayList<>();
+        }
+
+        public List<TileEntityType> getTileEntityTypes() {
+            return tileEntityTypes;
+        }
     }
 }

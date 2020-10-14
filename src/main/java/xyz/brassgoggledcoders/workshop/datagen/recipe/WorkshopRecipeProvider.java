@@ -97,9 +97,11 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('B', Items.GLASS_BOTTLE)
                 .build(consumer);
         TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.COLLECTOR.getBlock())
-                .patternLine("C C")
-                .patternLine("CCC")
-                .key('C', Tags.Items.COBBLESTONE)
+                .patternLine("SS ")
+                .patternLine(" CS")
+                .patternLine("SS ")
+                .key('S', Tags.Items.STONE)
+                .key('C', Tags.Items.CHESTS)
                 .build(consumer);
         TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SCRAP_BIN.getBlock())
                 .patternLine("III")

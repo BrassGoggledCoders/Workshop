@@ -59,7 +59,7 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
     @Override
     public boolean matchesInputs(CollectorRecipe currentRecipe) {
         TileEntity tile = this.getWorld().getTileEntity(this.getPos().offset(this.getBlockState().get(CollectorBlock.FACING)));
-        if (currentRecipe.targetTileType.stream().anyMatch(type -> tile.getType().equals(type))) {
+        if (currentRecipe.targetTileTypes.getTileEntityTypes().stream().anyMatch(type -> tile.getType().equals(type))) {
             LazyOptional<ICollectorTarget> cap = tile.getCapability(WorkshopCapabilities.COLLECTOR_TARGET);
             return cap.map(target -> {
                 // Recipe is only valid if machine can accept all possible outputs from recipe

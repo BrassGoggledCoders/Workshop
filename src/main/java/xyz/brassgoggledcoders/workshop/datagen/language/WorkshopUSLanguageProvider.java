@@ -34,7 +34,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addBlock(WorkshopBlocks.TEA_PLANT, "Tea");
         this.addBlock(WorkshopBlocks.SEALED_BARREL, "Sealed Barrel");
         this.addBlock(WorkshopBlocks.BELLOWS, "Bellows");
-        this.addBlock(WorkshopBlocks.COLLECTOR, "Collector");
+        this.addBlock(WorkshopBlocks.COLLECTOR, "Byproduct Collector");
         this.addBlock(WorkshopBlocks.SCRAP_BIN, "Scrap Bin");
         this.addBlock(WorkshopBlocks.MORTAR, "Mortar and Pestle");
         this.addBlock(WorkshopBlocks.CHALK_WRITING, "Chalk");
