@@ -20,6 +20,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import xyz.brassgoggledcoders.workshop.tileentity.SinteringFurnaceTileEntity;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
 public class SinteringFurnaceBlock extends TileBlock<SinteringFurnaceTileEntity> {
@@ -43,18 +44,21 @@ public class SinteringFurnaceBlock extends TileBlock<SinteringFurnaceTileEntity>
     }
 
     @Override
+    @ParametersAreNonnullByDefault
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         super.fillStateContainer(builder);
         builder.add(FACING, LIT);
     }
 
     @Override
+    @ParametersAreNonnullByDefault
     public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
         return false;
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
+    @ParametersAreNonnullByDefault
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
         if (stateIn.get(LIT)) {
             double d0 = (double)pos.getX() + 0.5D;
@@ -63,7 +67,6 @@ public class SinteringFurnaceBlock extends TileBlock<SinteringFurnaceTileEntity>
             if (rand.nextDouble() < 0.1D) {
                 worldIn.playSound(d0, d1, d2, SoundEvents.BLOCK_BLASTFURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
             }
-
             Direction direction = stateIn.get(FACING);
             Direction.Axis direction$axis = direction.getAxis();
             double d4 = rand.nextDouble() * 0.6D - 0.3D;
