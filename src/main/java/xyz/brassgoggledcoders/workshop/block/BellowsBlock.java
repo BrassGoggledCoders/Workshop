@@ -31,6 +31,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Random;
 
+@ParametersAreNonnullByDefault
 public class BellowsBlock extends Block {
 
     protected static final VoxelShape UNPRESSED_AABB = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 15.0D, 16.0D);
@@ -53,23 +54,21 @@ public class BellowsBlock extends Block {
 
     @Override
     @Nonnull
-    @ParametersAreNonnullByDefault
     @SuppressWarnings("deprecation")
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return state.get(PRESSED) ? PRESSED_AABB : UNPRESSED_AABB;
     }
 
     @Override
-    @ParametersAreNonnullByDefault
     @SuppressWarnings("deprecation")
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
         if (!worldIn.isRemote && !state.get(PRESSED)) {
             this.updateState(worldIn, pos, state, true);
             worldIn.playSound(null, pos, SoundEvents.ENTITY_CAT_HISS, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            double x = (double) pos.getX() + worldIn.rand.nextDouble() * (double) 0.1F;
-            double y = (double) pos.getY() + worldIn.rand.nextDouble();
-            double z = (double) pos.getZ() + worldIn.rand.nextDouble();
-            worldIn.addParticle(ParticleTypes.SMOKE, x, y, z, state.get(FACING).getDirectionVec().getX(), 0, state.get(FACING).getDirectionVec().getZ());
+            for(int i = 0; i < 20 + worldIn.rand.nextInt(10); i++) {
+                worldIn.addParticle(ParticleTypes.SMOKE, randomise(worldIn, pos.getX()), randomise(worldIn, pos.getY()), randomise(worldIn, pos.getZ()),
+                        randomise(worldIn, state.get(FACING).getDirectionVec().getX()) * 0.01, worldIn.getRandom().nextDouble() * 0.01, randomise(worldIn, state.get(FACING).getDirectionVec().getZ()) * 0.01);
+            }
             Direction facing = state.get(FACING);
             BlockPos offsetPos = pos.offset(facing);
             if (worldIn.getTileEntity(offsetPos) instanceof AbstractFurnaceTileEntity) {
@@ -84,15 +83,17 @@ public class BellowsBlock extends Block {
             } else if (worldIn.isAirBlock(offsetPos)) {
                 List<Entity> entityList = worldIn.getEntitiesWithinAABB(Entity.class,
                         new AxisAlignedBB(offsetPos), entity -> entity instanceof ItemEntity || entity.canBePushed());
-                final double divisor = 0.25D;
-                entityList.forEach(entity -> entity.setMotion(facing.getXOffset() + (worldIn.getRandom().nextGaussian() * divisor) - (worldIn.getRandom().nextGaussian() * divisor),
-                        worldIn.getRandom().nextGaussian() * divisor, facing.getZOffset() + (worldIn.getRandom().nextGaussian() * divisor) - (worldIn.getRandom().nextGaussian() * divisor)));
+                entityList.forEach(entity -> entity.setMotion(randomise(worldIn,facing.getXOffset()),
+                        worldIn.getRandom().nextDouble() * 0.1D, randomise(worldIn,facing.getZOffset())));
             }
         }
     }
 
+    private double randomise(World worldIn, double start) {
+        return start + 0.5D + ((double)worldIn.rand.nextFloat() - 0.5D) * 2.0D;
+    }
+
     @Override
-    @ParametersAreNonnullByDefault
     @SuppressWarnings("deprecation")
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
         if (state.get(PRESSED)) {
