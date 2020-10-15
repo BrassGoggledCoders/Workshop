@@ -36,16 +36,18 @@ public class WorkshopBookProvider extends PatchouliBookProvider implements IData
         addStandardEntry(machineCategory, "spinning_wheel", "The $(item)Spinning Wheel$() takes fibers and often something else and transforms it into threads, cords, or ropes.", WorkshopBlocks.SPINNING_WHEEL.getItem());
         addStandardEntry(machineCategory, "mortar", "The $(item)Mortar and Pestle$() can be used for grinding things, such as metal into powder and gravel into sand", WorkshopBlocks.MORTAR.getItem());
         addStandardEntry(machineCategory, "molten_chamber", "The $(item)Molten Reaction Chamber$() is similar to the $(item)Seasoning Barrel except with the ability to hold and process hot liquids.", WorkshopBlocks.MOLTEN_CHAMBER.getItem());
+        addStandardEntry(machineCategory, "drying_basin", "The $(item)Drying Basin$() is for...well...drying things. It can dry items into drier versions of themselves, or evaporate off fluid to get the residue. It's pretty slow.", WorkshopBlocks.DRYING_BASIN.getItem());
         final CategoryBuilder otherMachineCategory =
                 builder.addCategory("other_machine_category", "Other Machines", "More useful machines", new ItemStack(WorkshopBlocks.SCRAP_BIN.getItem()));
         EntryBuilder binEntry = addStandardEntry(otherMachineCategory, "scrap_bin", "The $(item)Scrap Bin$() is useful for recycling items/blocks you may have great quantities of. If more than a stack of any particular item is inserted to it, the amount over a single stack will be destroyed, and value added to the scrap bin.", WorkshopBlocks.SCRAP_BIN.getItem());
         binEntry.addSpotlightPage(new ItemStack(WorkshopItems.SCRAP_BAG.get())).setText("With enough scrap value, a scrap bin will generate a $(item)Scrap Bag$() which may be opened for an assortment of useful (or not!) stuff. However, opening the bag gives you a lingering smell that must be washed off using$(item)Soap$() before villagers will trade with you.");
         addStandardEntry(otherMachineCategory, "bellows", "The $(item)Bellows$() can be pointed at a furnace, and then when actuated by mechanical force - i.e. jumping up and down on it - will speed the furnace's smelting considerably", WorkshopBlocks.BELLOWS.getItem());
         addStandardEntry(otherMachineCategory, "collector", "The $(item)Collector$() allows obtaining by-products from other machines that would be otherwise lost. For example, meat cooked in a furnace results in tallow collected in the Collector.", WorkshopBlocks.COLLECTOR.getItem());
-        addStandardEntry(otherMachineCategory, "sealed_barrel", "The $(item)Sealed Barrel$() can hold up to four buckets of any liquid cooler than lava, and keeps its inventory when broken", WorkshopBlocks.SEALED_BARREL.getItem());
         final CategoryBuilder miscCategory =
                 builder.addCategory("misc_category", "Miscellaneous", "Small things and features that don't fit into the other categories", new ItemStack(WorkshopBlocks.OBSIDIAN_PLATE.getItem()));
         addStandardEntry(miscCategory, "obsidian_plate", "The $(item)Obsidian Plate$() acts like a $(item)Pressure Plate$() except it will only react to players. It may be right-clicked with a name tag to blacklist that player from triggering the pressure plate. This does not consume the name tag.", WorkshopBlocks.OBSIDIAN_PLATE.getItem());
+        addStandardEntry(miscCategory, "sealed_barrel", "The $(item)Sealed Barrel$() can hold up to four buckets of any liquid cooler than lava, and keeps its inventory when broken", WorkshopBlocks.SEALED_BARREL.getItem());
+        addStandardEntry(miscCategory, "silo_barrel", "The $(item)Silo Barrel$() is a barrel with a built in hopper, so it automatically pushes items downwards", WorkshopBlocks.SILO_BARREL.getItem());
         builder.build(consumer);
     }
 

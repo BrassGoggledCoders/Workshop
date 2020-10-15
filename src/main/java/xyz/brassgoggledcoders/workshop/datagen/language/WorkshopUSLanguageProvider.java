@@ -91,6 +91,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addFacingTooltip("container", "Container");
         this.addFacingTooltip("powderinventory", "Powder");
         this.addFacingTooltip("fuelinventory", "Fuel");
+        this.addFacingTooltip("output", "Output");
         //endregion
 
         //region Resources

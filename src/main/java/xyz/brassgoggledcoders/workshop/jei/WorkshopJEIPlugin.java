@@ -27,7 +27,8 @@ public class WorkshopJEIPlugin implements IModPlugin {
                 new MoltenChamberRecipeCategory(guiHelper),
                 new MortarRecipeCategory(guiHelper),
                 new SinteringFurnaceRecipeCategory(guiHelper),
-                new PressRecipeCategory(guiHelper));
+                new PressRecipeCategory(guiHelper),
+                new DryingBasinRecipeCategory(guiHelper));
     }
 
     @Override
@@ -41,6 +42,7 @@ public class WorkshopJEIPlugin implements IModPlugin {
             registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.SINTERING_FURNACE_SERIALIZER.get().getRecipeType()).values(), SinteringFurnaceRecipeCategory.ID);
             registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.MORTAR_SERIALIZER.get().getRecipeType()).values(), MortarRecipeCategory.ID);
             registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.PRESS_SERIALIZER.get().getRecipeType()).values(), PressRecipeCategory.ID);
+            registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.DRYING_BASIN_SERIALIZER.get().getRecipeType()).values(), DryingBasinRecipeCategory.ID);
         }
     }
 
