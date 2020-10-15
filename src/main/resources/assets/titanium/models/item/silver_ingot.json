@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "workshop:items/resource/pipe"
+    "layer0": "titanium:items/resource/ingot"
   }
 }

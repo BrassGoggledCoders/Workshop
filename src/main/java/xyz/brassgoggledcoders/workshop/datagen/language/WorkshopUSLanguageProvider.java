@@ -98,9 +98,14 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.add("resource.titanium.material.iron", "Iron");
         this.add("resource.titanium.material.gold", "Gold");
         this.add("resource.titanium.material.glass", "Glass");
+        this.add("resource.titanium.material.copper", "Copper");
+        this.add("resource.titanium.material.silver", "Silver");
         this.addResource("dust", "%s Powder");
         this.addResource("film", "%s Film");
         this.addResource("pipe", "%s Pipe");
+        this.addResource("nugget", "%s Nugget");
+        this.addResource("ingot", "%s Ingot");
+        this.addResource("metal_block", "Block of %s");
         //endregion
 
         //region Effects
