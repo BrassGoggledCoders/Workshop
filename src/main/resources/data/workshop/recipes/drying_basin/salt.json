@@ -1,0 +1,9 @@
+{
+  "fluidIn": "{FluidName:\"minecraft:water\",Amount:250}",
+  "itemOut": {
+    "item": "workshop:salt",
+    "count": 1
+  },
+  "dryingTime": 1000,
+  "type": "workshop:drying_basin"
+}

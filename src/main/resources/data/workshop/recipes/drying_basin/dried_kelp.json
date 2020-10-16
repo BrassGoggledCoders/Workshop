@@ -1,0 +1,11 @@
+{
+  "itemIn": {
+    "item": "minecraft:kelp"
+  },
+  "itemOut": {
+    "item": "minecraft:dried_kelp",
+    "count": 1
+  },
+  "dryingTime": 500,
+  "type": "workshop:drying_basin"
+}

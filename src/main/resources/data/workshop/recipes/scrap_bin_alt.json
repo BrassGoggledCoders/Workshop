@@ -6,7 +6,7 @@
         {
           "values": [
             {
-              "item": "workshop:collector",
+              "item": "workshop:scrap_bin",
               "type": "forge:item_exists"
             }
           ],
@@ -16,16 +16,20 @@
       "recipe": {
         "type": "minecraft:crafting_shaped",
         "pattern": [
-          "C C",
-          "CCC"
+          "III",
+          "ICI",
+          "III"
         ],
         "key": {
+          "I": {
+            "item": "minecraft:heavy_weighted_pressure_plate"
+          },
           "C": {
-            "tag": "forge:cobblestone"
+            "item": "minecraft:composter"
           }
         },
         "result": {
-          "item": "workshop:collector"
+          "item": "workshop:scrap_bin"
         }
       }
     }

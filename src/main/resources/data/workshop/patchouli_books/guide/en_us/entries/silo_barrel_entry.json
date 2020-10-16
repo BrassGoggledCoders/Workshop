@@ -1,0 +1,15 @@
+{
+  "name": "Silo Barrel",
+  "category": "misc_category",
+  "icon": "workshop:silo_barrel",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The $(item)Silo Barrel$() is a barrel with a built in hopper, so it automatically pushes items downwards"
+    },
+    {
+      "type": "crafting",
+      "recipe": "workshop:silo_barrel"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "name": "Sealed Barrel",
-  "category": "other_machine_category",
+  "category": "misc_category",
   "icon": "workshop:sealed_barrel",
   "pages": [
     {

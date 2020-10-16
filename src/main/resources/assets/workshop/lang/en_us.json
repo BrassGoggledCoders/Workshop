@@ -107,6 +107,7 @@
   "tooltip.titanium.facing_handler.fuelinventory": "Fuel",
   "tooltip.titanium.facing_handler.item_input": "Item Input",
   "tooltip.titanium.facing_handler.item_output": "Item Output",
+  "tooltip.titanium.facing_handler.output": "Output",
   "tooltip.titanium.facing_handler.powderinventory": "Powder",
   "tooltip.titanium.facing_handler.residue": "Residue"
 }

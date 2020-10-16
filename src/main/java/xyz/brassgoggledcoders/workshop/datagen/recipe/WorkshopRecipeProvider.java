@@ -48,7 +48,7 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('L', WorkshopBlocks.SEASONED_LOG.get())
                 .key('S', Blocks.OAK_SLAB)
                 .build(consumer);
-        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SPINNING_WHEEL.getBlock())
+        /*TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SPINNING_WHEEL.getBlock())
                 .patternLine("W I")
                 .patternLine("WWW")
                 .patternLine("SSS")
@@ -64,7 +64,7 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('G', Tags.Items.GLASS)
                 .key('D', Blocks.DROPPER)
                 .key('F', Blocks.FURNACE)
-                .build(consumer);
+                .build(consumer);*/
         TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.BELLOWS.getBlock())
                 .patternLine("PPP")
                 .patternLine("WWW")
@@ -77,7 +77,7 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .patternLine(" G ")
                 .key('G', Blocks.GRANITE)
                 .build(consumer);
-        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.PRESS.getBlock())
+        /*TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.PRESS.getBlock())
                 .patternLine("WPW")
                 .patternLine("WGW")
                 .patternLine("WCW")
@@ -101,13 +101,6 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .patternLine("CCC")
                 .key('C', Tags.Items.COBBLESTONE)
                 .build(consumer);
-        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SCRAP_BIN.getBlock())
-                .patternLine("III")
-                .patternLine("ICI")
-                .patternLine("III")
-                .key('I', ItemTags.getCollection().getOrCreate(new ResourceLocation("forge", "films/iron")))
-                .key('C', Items.COMPOSTER)
-                .build(consumer);
         TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.MOLTEN_CHAMBER.getBlock())
                 .patternLine("COC")
                 .patternLine("C C")
@@ -115,18 +108,34 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('C', WorkshopItemTagsProvider.REBARRED_CONCRETE)
                 .key('O', WorkshopBlocks.OBSIDIAN_PLATE.getItem())
                 .build(consumer);
-        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.DRYING_BASIN.getBlock())
-                .patternLine("A A")
-                .patternLine("A A")
-                .patternLine("AAA")
-                .key('A', Blocks.POLISHED_ANDESITE)
-                .build(consumer);
         TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.FLUID_FUNNEL.getBlock())
                 .patternLine("L L")
                 .patternLine("LCL")
                 .patternLine(" L ")
                 .key('L', WorkshopBlocks.SEASONED_LOG.getItem())
                 .key('C', Tags.Items.CHESTS_WOODEN)
+                .build(consumer);
+                */
+        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SCRAP_BIN.getBlock())
+                .patternLine("III")
+                .patternLine("ICI")
+                .patternLine("III")
+                .key('I', ItemTags.getCollection().getOrCreate(new ResourceLocation("forge", "films/iron")))
+                .key('C', Items.COMPOSTER)
+                .build(consumer);
+        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SCRAP_BIN.getBlock())
+                .setName(new ResourceLocation(Workshop.MOD_ID, "scrap_bin_alt"))
+                .patternLine("III")
+                .patternLine("ICI")
+                .patternLine("III")
+                .key('I', Items.HEAVY_WEIGHTED_PRESSURE_PLATE)
+                .key('C', Items.COMPOSTER)
+                .build(consumer);
+        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.DRYING_BASIN.getBlock())
+                .patternLine("A A")
+                .patternLine("A A")
+                .patternLine("AAA")
+                .key('A', Blocks.POLISHED_ANDESITE)
                 .build(consumer);
         TitaniumShapelessRecipeBuilder.shapelessRecipe(WorkshopBlocks.SILO_BARREL.getBlock())
                 .addIngredient(Blocks.BARREL)
