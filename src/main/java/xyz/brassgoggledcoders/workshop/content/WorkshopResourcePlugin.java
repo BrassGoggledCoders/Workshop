@@ -13,11 +13,20 @@ public class WorkshopResourcePlugin implements FeaturePluginInstance {
     @MaterialReference(type = "pipe", material = "glass")
     public static Item GLASS_PIPE;
 
+    @MaterialReference(type = "nugget", material = "copper")
+    public static Item COPPER_NUGGET;
+
+    @MaterialReference(type = "nugget", material = "silver")
+    public static Item SILVER_NUGGET;
+
+
     @Override
     public void execute(PluginPhase phase) {
         if (phase == PluginPhase.CONSTRUCTION) {
             ResourceRegistry.getOrCreate("iron").addAll(ResourceType.DUST, WorkshopResourceType.FILM, WorkshopResourceType.PIPE);
             ResourceRegistry.getOrCreate("gold").addAll(ResourceType.DUST, WorkshopResourceType.FILM, WorkshopResourceType.PIPE);
+            ResourceRegistry.getOrCreate("copper").addAll(ResourceType.NUGGET, ResourceType.INGOT, ResourceType.METAL_BLOCK);
+            ResourceRegistry.getOrCreate("silver").addAll(ResourceType.NUGGET, ResourceType.INGOT, ResourceType.METAL_BLOCK);
             ResourceRegistry.getOrCreate("glass").setColor(WorkshopFluids.fromHex("80FFFFFF")).add(WorkshopResourceType.PIPE);
         }
     }

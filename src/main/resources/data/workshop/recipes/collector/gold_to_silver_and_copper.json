@@ -3,14 +3,14 @@
     {
       "weight": 1,
       "stack": {
-        "item": "workshop:silver_nugget",
+        "item": "titanium:copper_nugget",
         "count": 1
       }
     },
     {
       "weight": 1,
       "stack": {
-        "item": "workshop:copper_nugget",
+        "item": "titanium:silver_nugget",
         "count": 1
       }
     }

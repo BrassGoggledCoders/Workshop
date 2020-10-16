@@ -22,9 +22,6 @@ import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 public class WorkshopItems {
 
     private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MOD_ID);
-    //metals
-    public static final RegistryObject<Item> COPPER_NUGGET = ITEMS.register("copper_nugget", () -> new Item(defaultProperties()));
-    public static final RegistryObject<Item> SILVER_NUGGET = ITEMS.register("silver_nugget", () -> new Item(defaultProperties()));
 
     //region Ingredients
     public static final RegistryObject<Item> SALT = ITEMS.register("salt", () -> new Item(defaultProperties()));

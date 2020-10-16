@@ -1,5 +1,6 @@
 package xyz.brassgoggledcoders.workshop.datagen.recipe;
 
+import com.hrznstudio.titanium.material.ResourceRegistry;
 import com.hrznstudio.titanium.recipe.generator.IJSONGenerator;
 import com.hrznstudio.titanium.recipe.generator.IJsonFile;
 import com.hrznstudio.titanium.recipe.generator.TitaniumSerializableProvider;
@@ -15,6 +16,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
+import xyz.brassgoggledcoders.workshop.content.WorkshopResourcePlugin;
+import xyz.brassgoggledcoders.workshop.content.WorkshopResourceType;
 import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopItemTagsProvider;
 import xyz.brassgoggledcoders.workshop.recipe.CollectorRecipe;
 
@@ -75,8 +78,8 @@ public class CollectorRecipeProvider extends TitaniumSerializableProvider {
                 .addTarget(TileEntityType.BLAST_FURNACE)
                 .setInput(Ingredient.fromTag(Tags.Items.ORES_GOLD))
                 .setTime(200)
-                .addOutput(new ItemStack(WorkshopItems.SILVER_NUGGET.get()), 1)
-                .addOutput(new ItemStack(WorkshopItems.COPPER_NUGGET.get()), 1)
+                .addOutput(new ItemStack(WorkshopResourcePlugin.COPPER_NUGGET), 1)
+                .addOutput(new ItemStack(WorkshopResourcePlugin.SILVER_NUGGET), 1)
                 .build());
         recipes.add(new Builder("magma_to_magma_cream")
                 .addTarget(WorkshopBlocks.PRESS.getTileEntityType())
