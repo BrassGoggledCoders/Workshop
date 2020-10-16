@@ -1,5 +1,6 @@
 package xyz.brassgoggledcoders.workshop.datagen.models;
 
+import com.hrznstudio.titanium.Titanium;
 import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
@@ -33,13 +34,6 @@ public class WorkshopItemModelProvider extends ModelProvider<PropertiedItemModel
         for (BlockRegistryObjectGroup<Block, BlockItem, ?> concrete : WorkshopBlocks.CONCRETES) {
             this.withExistingParent(concrete.getItem().getRegistryName().getPath(), modLoc(BLOCK_FOLDER + "/" + concrete.getName()));
         }
-        //Manually for now TODO these need to be in titanium folder. Texture name needs to change from 'texture' to 'layer0'.
-        /*this.singleTexture("iron_dust", mcLoc("item/generated"), new ResourceLocation(Titanium.MODID, "items/resource/dust"));
-        this.singleTexture("gold_dust", mcLoc("item/generated"), new ResourceLocation(Titanium.MODID, "items/resource/dust"));
-        this.singleTexture("iron_pipe", mcLoc("item/generated"), modLoc("items/resource/pipe"));
-        this.singleTexture("gold_pipe", mcLoc("item/generated"), modLoc("items/resource/pipe"));
-        this.singleTexture("iron_film", mcLoc("item/generated"), modLoc("items/resource/film"));
-        this.singleTexture("gold_film", mcLoc("item/generated"), modLoc("items/resource/film"));*/
 
         //this.singleTexture("tallow", mcLoc("item/generated"), modLoc("items/tallow"));
         // this.singleTexture("lye", mcLoc("item/generated"), modLoc("items/lye"));
@@ -51,6 +45,7 @@ public class WorkshopItemModelProvider extends ModelProvider<PropertiedItemModel
         this.withExistingParent(WorkshopBlocks.DRYING_BASIN.getName(), modLoc(BLOCK_FOLDER + "/drying_basin"));
         this.withExistingParent(WorkshopBlocks.SEASONED_LOG.getName(), modLoc(BLOCK_FOLDER + "/seasoned_log"));
         this.withExistingParent(WorkshopBlocks.SILO_BARREL.getName(), modLoc(BLOCK_FOLDER + "/silo_barrel"));
+        this.withExistingParent(WorkshopBlocks.FLUID_FUNNEL.getName(), modLoc(BLOCK_FOLDER + "/fluid_funnel"));
     }
 
     private void bucket(ResourceLocation fluidName) {

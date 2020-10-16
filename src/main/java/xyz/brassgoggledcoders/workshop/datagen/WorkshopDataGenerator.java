@@ -21,6 +21,8 @@ import xyz.brassgoggledcoders.workshop.datagen.language.WorkshopUSLanguageProvid
 import xyz.brassgoggledcoders.workshop.datagen.loot.WorkshopLootTableProvider;
 import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopBlockstateProvider;
 import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopItemModelProvider;
+import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopResourceBlockstateProvider;
+import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopResourceModelProvider;
 import xyz.brassgoggledcoders.workshop.datagen.recipe.*;
 import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopFluidTagsProvider;
 import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopItemTagsProvider;
@@ -102,6 +104,8 @@ public class WorkshopDataGenerator {
             dataGenerator.addProvider(new WorkshopGBLanguageProvider(dataGenerator));
             dataGenerator.addProvider(new WorkshopBlockstateProvider(dataGenerator, existingFileHelper));
             dataGenerator.addProvider(new WorkshopItemModelProvider(dataGenerator, existingFileHelper));
+            dataGenerator.addProvider(new WorkshopResourceModelProvider(dataGenerator, existingFileHelper));
+            dataGenerator.addProvider(new WorkshopResourceBlockstateProvider(dataGenerator, existingFileHelper));
         }
 
         if (event.includeServer()) {

@@ -55,7 +55,6 @@
   "fluid.workshop.tea_liquid": "Tea",
   "guide.workshop.landing_text": "A pocket handbook to the world of small scale manufacturing",
   "guide.workshop.name": "Workshop Guide",
-  "ingot": "%s Ingot",
   "item.workshop.adhesive_oils_bottle": "Bottle of Adhesive Oils",
   "item.workshop.adhesive_oils_bucket": "Bucket of Adhesive Oils",
   "item.workshop.apple_juice_bottle": "Bottle of Apple Juice",
@@ -97,9 +96,10 @@
   "resource.titanium.material.silver": "Silver",
   "resource.titanium.type.dust": "%s Powder",
   "resource.titanium.type.film": "%s Film",
+  "resource.titanium.type.ingot": "%s Ingot",
+  "resource.titanium.type.metal_block": "Block of %s",
   "resource.titanium.type.nugget": "%s Nugget",
   "resource.titanium.type.pipe": "%s Pipe",
-  "resource.titanium.type.storage_blocks": "Block of %s",
   "tooltip.titanium.facing_handler.colditem": "Cooling Source",
   "tooltip.titanium.facing_handler.container": "Container",
   "tooltip.titanium.facing_handler.fluid_input": "Fluid Input",
@@ -107,6 +107,7 @@
   "tooltip.titanium.facing_handler.fuelinventory": "Fuel",
   "tooltip.titanium.facing_handler.item_input": "Item Input",
   "tooltip.titanium.facing_handler.item_output": "Item Output",
+  "tooltip.titanium.facing_handler.output": "Output",
   "tooltip.titanium.facing_handler.powderinventory": "Powder",
   "tooltip.titanium.facing_handler.residue": "Residue"
 }

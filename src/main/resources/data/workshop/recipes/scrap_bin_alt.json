@@ -6,7 +6,7 @@
         {
           "values": [
             {
-              "item": "workshop:spinning_wheel",
+              "item": "workshop:scrap_bin",
               "type": "forge:item_exists"
             }
           ],
@@ -16,23 +16,20 @@
       "recipe": {
         "type": "minecraft:crafting_shaped",
         "pattern": [
-          "W I",
-          "WWW",
-          "SSS"
+          "III",
+          "ICI",
+          "III"
         ],
         "key": {
-          "S": {
-            "tag": "minecraft:wooden_slabs"
-          },
-          "W": {
-            "tag": "minecraft:planks"
-          },
           "I": {
-            "tag": "forge:ingots/iron"
+            "item": "minecraft:heavy_weighted_pressure_plate"
+          },
+          "C": {
+            "item": "minecraft:composter"
           }
         },
         "result": {
-          "item": "workshop:spinning_wheel"
+          "item": "workshop:scrap_bin"
         }
       }
     }

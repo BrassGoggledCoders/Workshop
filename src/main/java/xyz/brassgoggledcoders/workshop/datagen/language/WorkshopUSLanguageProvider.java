@@ -91,6 +91,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addFacingTooltip("container", "Container");
         this.addFacingTooltip("powderinventory", "Powder");
         this.addFacingTooltip("fuelinventory", "Fuel");
+        this.addFacingTooltip("output", "Output");
         //endregion
 
         //region Resources
@@ -103,9 +104,9 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addResource("dust", "%s Powder");
         this.addResource("film", "%s Film");
         this.addResource("pipe", "%s Pipe");
-        this.addResource("metal_block", "Block of %s");
         this.addResource("nugget", "%s Nugget");
         this.addResource("ingot", "%s Ingot");
+        this.addResource("metal_block", "Block of %s");
         //endregion
 
         //region Effects

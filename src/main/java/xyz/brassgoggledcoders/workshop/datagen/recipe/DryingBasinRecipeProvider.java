@@ -4,11 +4,14 @@ import com.hrznstudio.titanium.recipe.generator.IJSONGenerator;
 import com.hrznstudio.titanium.recipe.generator.IJsonFile;
 import com.hrznstudio.titanium.recipe.generator.TitaniumSerializableProvider;
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
@@ -40,6 +43,15 @@ public class DryingBasinRecipeProvider extends TitaniumSerializableProvider {
         recipes.add(new Builder("log_drying")
                 .setItemIn(Ingredient.fromTag(ItemTags.LOGS))
                 .setItemOut(new ItemStack(WorkshopBlocks.SEASONED_LOG.get()))
+                .build());
+        recipes.add(new Builder("salt")
+                .setFluidIn(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME / 4))
+                .setItemOut(new ItemStack(WorkshopItems.SALT.get()))
+                .build());
+        recipes.add(new Builder("dried_kelp")
+                .setItemIn(Ingredient.fromItems(Items.KELP))
+                .setItemOut(new ItemStack(Items.DRIED_KELP))
+                .setTime(500)
                 .build());
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }

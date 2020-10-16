@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.tileentity.BasicInventoryTileEntity;
 import xyz.brassgoggledcoders.workshop.tileentity.BasicMachineTileEntity;
 import xyz.brassgoggledcoders.workshop.tileentity.GUITile;
@@ -75,6 +76,13 @@ public class TileBlock<T extends TileEntity & GUITile> extends Block {
             }
             super.onReplaced(state, worldIn, pos, newState, isMoving);
         }
+    }
+
+    @Override
+    public boolean eventReceived(BlockState state, World worldIn, BlockPos pos, int id, int param) {
+        super.eventReceived(state, worldIn, pos, id, param);
+        TileEntity tileentity = worldIn.getTileEntity(pos);
+        return tileentity != null && tileentity.receiveClientEvent(id, param);
     }
 
     @Override
