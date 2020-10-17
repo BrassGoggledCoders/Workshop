@@ -5,12 +5,10 @@ import mezz.jei.api.helpers.IGuiHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.SeasoningBarrelRecipe;
+import xyz.brassgoggledcoders.workshop.tileentity.SeasoningBarrelTileEntity;
 
 public class SeasoningBarrelRecipeCategory extends AbstractBarrelRecipeCategory<SeasoningBarrelRecipe> {
-
-    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.SEASONING_BARREL_SERIALIZER.get().getRecipeType().toString());
 
     public SeasoningBarrelRecipeCategory(IGuiHelper guiHelper) {
         super(guiHelper);
@@ -18,7 +16,7 @@ public class SeasoningBarrelRecipeCategory extends AbstractBarrelRecipeCategory<
 
     @Override
     public ResourceLocation getUid() {
-        return ID;
+        return SeasoningBarrelTileEntity.ID;
     }
 
     @Override

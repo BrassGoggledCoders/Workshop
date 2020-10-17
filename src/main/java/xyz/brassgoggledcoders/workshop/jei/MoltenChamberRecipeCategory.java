@@ -5,12 +5,10 @@ import mezz.jei.api.helpers.IGuiHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.MoltenChamberRecipe;
+import xyz.brassgoggledcoders.workshop.tileentity.MoltenChamberTileEntity;
 
 public class MoltenChamberRecipeCategory extends AbstractBarrelRecipeCategory {
-
-    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.MOLTEN_CHAMBER_SERIALIZER.get().getRecipeType().toString());
 
     public MoltenChamberRecipeCategory(IGuiHelper guiHelper) {
         super(guiHelper);
@@ -18,7 +16,7 @@ public class MoltenChamberRecipeCategory extends AbstractBarrelRecipeCategory {
 
     @Override
     public ResourceLocation getUid() {
-        return ID;
+        return MoltenChamberTileEntity.ID;
     }
 
     @Override

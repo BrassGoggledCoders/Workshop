@@ -12,14 +12,12 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.SpinningWheelRecipe;
+import xyz.brassgoggledcoders.workshop.tileentity.SpinningWheelTileEntity;
 
 import java.util.Arrays;
 
 public class SpinningWheelRecipeCategory implements IRecipeCategory<SpinningWheelRecipe> {
-
-    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.SPINNING_WHEEL_SERIALIZER.get().getRecipeType().toString());
 
     private final IGuiHelper guiHelper;
     private final IDrawable slot;
@@ -34,7 +32,7 @@ public class SpinningWheelRecipeCategory implements IRecipeCategory<SpinningWhee
 
     @Override
     public ResourceLocation getUid() {
-        return ID;
+        return SpinningWheelTileEntity.ID;
     }
 
     @Override

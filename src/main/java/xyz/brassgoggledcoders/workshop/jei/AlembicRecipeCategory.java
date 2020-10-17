@@ -13,7 +13,6 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
 import xyz.brassgoggledcoders.workshop.tileentity.AlembicTileEntity;
 import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
@@ -23,8 +22,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AlembicRecipeCategory implements IRecipeCategory<AlembicRecipe> {
-
-    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.ALEMBIC_SERIALIZER.get().getRecipeType().toString());
 
     private final IGuiHelper guiHelper;
     private final IDrawable slot;
@@ -41,7 +38,7 @@ public class AlembicRecipeCategory implements IRecipeCategory<AlembicRecipe> {
 
     @Override
     public ResourceLocation getUid() {
-        return ID;
+        return AlembicTileEntity.ID;
     }
 
     @Override

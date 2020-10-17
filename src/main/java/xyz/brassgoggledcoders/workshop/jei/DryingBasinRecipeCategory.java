@@ -14,14 +14,10 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.DryingBasinRecipe;
-import xyz.brassgoggledcoders.workshop.recipe.SeasoningBarrelRecipe;
-import xyz.brassgoggledcoders.workshop.recipe.SinteringFurnaceRecipe;
+import xyz.brassgoggledcoders.workshop.tileentity.DryingBasinTileEntity;
 
 public class DryingBasinRecipeCategory implements IRecipeCategory<DryingBasinRecipe> {
-
-    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.DRYING_BASIN_SERIALIZER.get().getRecipeType().toString());
 
     private final IGuiHelper guiHelper;
     private final IDrawable slot;
@@ -38,7 +34,7 @@ public class DryingBasinRecipeCategory implements IRecipeCategory<DryingBasinRec
 
     @Override
     public ResourceLocation getUid() {
-        return ID;
+        return DryingBasinTileEntity.ID;
     }
 
     @Override

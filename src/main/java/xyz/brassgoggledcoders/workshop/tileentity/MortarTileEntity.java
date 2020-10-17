@@ -10,6 +10,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -22,6 +23,7 @@ import javax.annotation.Nonnull;
 
 public class MortarTileEntity extends BasicMachineTileEntity<MortarTileEntity, MortarRecipe> {
 
+    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.MORTAR_SERIALIZER.get().getRecipeType().toString());
     private final InventoryComponent<MortarTileEntity> input;
     private final FluidTankComponent<MortarTileEntity> fluidInput;
     private final InventoryComponent<MortarTileEntity> output;
@@ -63,6 +65,11 @@ public class MortarTileEntity extends BasicMachineTileEntity<MortarTileEntity, M
         compound.put("inputFluidTank", fluidInput.writeToNBT(new CompoundNBT()));
         compound.put("output", output.serializeNBT());
         return super.write(compound);
+    }
+
+    @Override
+    public ResourceLocation getRecipeCategoryUID() {
+        return ID;
     }
 
     @Override

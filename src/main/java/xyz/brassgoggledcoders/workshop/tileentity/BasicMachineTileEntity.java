@@ -5,6 +5,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.component.machine.IRecipeMachineHarness;
 import xyz.brassgoggledcoders.workshop.component.machine.RecipeMachineComponent;
 import xyz.brassgoggledcoders.workshop.recipe.IMachineRecipe;
@@ -42,4 +43,6 @@ public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T,
         compound.put("progress", this.getMachineComponent().getPrimaryBar().serializeNBT());
         return super.write(compound);
     }
+
+    public abstract ResourceLocation getRecipeCategoryUID();
 }

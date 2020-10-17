@@ -3,11 +3,14 @@ package xyz.brassgoggledcoders.workshop.tileentity;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.SeasoningBarrelRecipe;
 
 public class SeasoningBarrelTileEntity extends AbstractBarrelTileEntity<SeasoningBarrelTileEntity, SeasoningBarrelRecipe> {
+
+    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.SEASONING_BARREL_SERIALIZER.get().getRecipeType().toString());
 
     public SeasoningBarrelTileEntity() {
         super(WorkshopBlocks.SEASONING_BARREL.getTileEntityType(), new ProgressBarComponent<SeasoningBarrelTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
@@ -28,5 +31,10 @@ public class SeasoningBarrelTileEntity extends AbstractBarrelTileEntity<Seasonin
     @Override
     public SeasoningBarrelRecipe castRecipe(IRecipe<?> iRecipe) {
         return (SeasoningBarrelRecipe) iRecipe;
+    }
+
+    @Override
+    public ResourceLocation getRecipeCategoryUID() {
+        return ID;
     }
 }
