@@ -3,11 +3,6 @@ package xyz.brassgoggledcoders.workshop.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.dispenser.DispenseBoatBehavior;
-import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.dispenser.IPosition;
-import net.minecraft.dispenser.Position;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -17,7 +12,6 @@ import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.AbstractFurnaceTileEntity;
-import net.minecraft.tileentity.DispenserTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -31,6 +25,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import xyz.brassgoggledcoders.workshop.Workshop;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -66,15 +61,11 @@ public class BellowsBlock extends Block {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+    public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
+        BlockState state = worldIn.getBlockState(pos);
         if (!worldIn.isRemote && !state.get(PRESSED)) {
             this.updateState(worldIn, pos, state, true);
             worldIn.playSound(null, pos, SoundEvents.ENTITY_CAT_HISS, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            for(int i = 0; i < 20 + worldIn.rand.nextInt(10); i++) {
-                worldIn.addParticle(ParticleTypes.SMOKE, randomise(worldIn, pos.getX()), randomise(worldIn, pos.getY()), randomise(worldIn, pos.getZ()),
-                        randomise(worldIn, state.get(FACING).getDirectionVec().getX()) * 0.01, worldIn.getRandom().nextDouble() * 0.01, randomise(worldIn, state.get(FACING).getDirectionVec().getZ()) * 0.01);
-            }
             Direction facing = state.get(FACING);
             BlockPos offsetPos = pos.offset(facing);
             if (worldIn.getTileEntity(offsetPos) instanceof AbstractFurnaceTileEntity) {
@@ -89,8 +80,8 @@ public class BellowsBlock extends Block {
             } else if (worldIn.isAirBlock(offsetPos)) {
                 List<Entity> entityList = worldIn.getEntitiesWithinAABB(Entity.class,
                         new AxisAlignedBB(offsetPos), entity -> entity instanceof ItemEntity || entity.canBePushed());
-                entityList.forEach(entity -> entity.setMotion(randomise(worldIn,facing.getXOffset()),
-                        worldIn.getRandom().nextDouble() * 0.1D, randomise(worldIn,facing.getZOffset())));
+                entityList.forEach(entity -> entity.setMotion(randomise(worldIn, facing.getXOffset() * 0.2),
+                        worldIn.getRandom().nextDouble() * 0.1D, randomise(worldIn, facing.getZOffset() * 0.2)));
             }
         }
     }
@@ -99,26 +90,12 @@ public class BellowsBlock extends Block {
         return start + 0.5D + ((double)worldIn.rand.nextFloat() - 0.5D) * 2.0D;
     }
 
-    @Override
-    @SuppressWarnings("deprecation")
-    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
-        if (state.get(PRESSED)) {
-            this.updateState(worldIn, pos, state, false);
-        }
-    }
-
     protected void updateState(World worldIn, BlockPos pos, BlockState state, boolean pressed) {
         BlockState blockstate = state.with(PRESSED, pressed);
         worldIn.setBlockState(pos, blockstate, 2);
         worldIn.notifyNeighborsOfStateChange(pos, this);
-        worldIn.notifyNeighborsOfStateChange(pos.down(), this);
         worldIn.markBlockRangeForRenderUpdate(pos, state, blockstate);
         worldIn.getPendingBlockTicks().scheduleTick(new BlockPos(pos), this, this.tickRate(worldIn));
-    }
-
-    @Override
-    public int tickRate(IWorldReader worldIn) {
-        return 5; //Quarter of a second, should be quick enough to make it smooth when jumped on
     }
 
     @Override
@@ -130,10 +107,23 @@ public class BellowsBlock extends Block {
     @Override
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
         if (stateIn.get(PRESSED)) {
-            double x = (double) pos.getX() + worldIn.rand.nextDouble() * (double) 0.1F;
-            double y = (double) pos.getY() + worldIn.rand.nextDouble();
-            double z = (double) pos.getZ() + worldIn.rand.nextDouble();
-            worldIn.addParticle(ParticleTypes.SMOKE, x, y, z, stateIn.get(FACING).getDirectionVec().getX(), 0, stateIn.get(FACING).getDirectionVec().getZ());
+            for(int i = 0; i < 20 + worldIn.rand.nextInt(10); i++) {
+                worldIn.addParticle(ParticleTypes.SMOKE, randomise(worldIn, pos.getX()), randomise(worldIn, pos.getY()), randomise(worldIn, pos.getZ()),
+                        randomise(worldIn, stateIn.get(FACING).getDirectionVec().getX()) * 0.01, worldIn.getRandom().nextDouble() * 0.01, randomise(worldIn, stateIn.get(FACING).getDirectionVec().getZ()) * 0.01);
+            }
         }
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
+        if (state.get(PRESSED)) {
+            this.updateState(worldIn, pos, state, false);
+        }
+    }
+
+    @Override
+    public int tickRate(IWorldReader worldIn) {
+        return 5; //Quarter of a second, should be quick enough to make it smooth when jumped on
     }
 }

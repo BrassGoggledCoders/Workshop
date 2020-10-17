@@ -21,7 +21,7 @@ import xyz.brassgoggledcoders.workshop.tileentity.SealedBarrelTileEntity;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class SealedBarrelBlock extends TileBlock<SealedBarrelTileEntity> {
+public class SealedBarrelBlock extends GUITileBlock<SealedBarrelTileEntity> {
 
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 

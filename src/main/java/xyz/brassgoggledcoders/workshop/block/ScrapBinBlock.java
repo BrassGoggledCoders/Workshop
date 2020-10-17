@@ -14,12 +14,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import xyz.brassgoggledcoders.workshop.tileentity.BasicMachineTileEntity;
 import xyz.brassgoggledcoders.workshop.tileentity.ScrapBinTileEntity;
 
 import javax.annotation.Nonnull;
 
-public class ScrapBinBlock extends TileBlock<ScrapBinTileEntity> {
+public class ScrapBinBlock extends GUITileBlock<ScrapBinTileEntity> {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 

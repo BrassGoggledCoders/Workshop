@@ -14,7 +14,7 @@ import xyz.brassgoggledcoders.workshop.tileentity.AlembicTileEntity;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public class AlembicBlock extends TileBlock<AlembicTileEntity> {
+public class AlembicBlock extends GUITileBlock<AlembicTileEntity> {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
