@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 public class DryingBasinTileEntity extends BasicMachineTileEntity<DryingBasinTileEntity, DryingBasinRecipe> {
 
     public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.DRYING_BASIN_SERIALIZER.get().getRecipeType().toString());
-    protected static final int tankSize = 4000; // mB
+    public static final int tankSize = 4000; // mB
 
     protected final InventoryComponent<DryingBasinTileEntity> inputInventory;
     protected final FluidTankComponent<DryingBasinTileEntity> inputFluidTank;

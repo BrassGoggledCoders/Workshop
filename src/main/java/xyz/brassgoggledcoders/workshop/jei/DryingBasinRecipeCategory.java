@@ -49,7 +49,7 @@ public class DryingBasinRecipeCategory implements IRecipeCategory<DryingBasinRec
 
     @Override
     public IDrawable getBackground() {
-        return this.guiHelper.createBlankDrawable(160, 52);
+        return this.guiHelper.createBlankDrawable(160, 54);
     }
 
     @Override
@@ -60,17 +60,19 @@ public class DryingBasinRecipeCategory implements IRecipeCategory<DryingBasinRec
     @Override
     public void draw(DryingBasinRecipe recipe, double mouseX, double mouseY) {
         //Input
-        slot.draw(34, 22);
-        this.tank.draw(50, 0);
+        slot.draw(0, 22);
+        this.tank.draw(20, 0);
         //Output
-        slot.draw(120, 22);
-        //arrow.draw(24, 18);
+        slot.draw(100, 22);
+        arrow.draw(40, 20);
     }
 
     @Override
     public void setIngredients(DryingBasinRecipe recipe, IIngredients iIngredients) {
         iIngredients.setInputIngredients(Lists.newArrayList(recipe.itemIn));
-        iIngredients.setInput(VanillaTypes.FLUID, recipe.fluidIn);
+        if(!recipe.fluidIn.isEmpty()) {
+            iIngredients.setInput(VanillaTypes.FLUID, recipe.fluidIn);
+        }
         iIngredients.setOutput(VanillaTypes.ITEM, recipe.itemOut);
     }
 
@@ -79,9 +81,9 @@ public class DryingBasinRecipeCategory implements IRecipeCategory<DryingBasinRec
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
         IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
-        guiItemStacks.init(0, true, 32, 22);
-        guiFluidStacks.init(1, true, 50, 0);
-        guiItemStacks.init(2, false, 120, 22);
+        guiItemStacks.init(0, true, 0, 22);
+        guiFluidStacks.init(1, true, 24, 4, 12, 50, DryingBasinTileEntity.tankSize, true, null);
+        guiItemStacks.init(2, false, 100, 22);
 
         guiItemStacks.set(ingredients);
         guiFluidStacks.set(ingredients);
