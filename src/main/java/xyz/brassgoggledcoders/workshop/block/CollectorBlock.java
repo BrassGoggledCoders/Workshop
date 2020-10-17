@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.workshop.tileentity.CollectorTileEntity;
 
-public class CollectorBlock extends TileBlock<CollectorTileEntity> {
+public class CollectorBlock extends GUITileBlock<CollectorTileEntity> {
 
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 

@@ -15,13 +15,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.MortarRecipe;
 import xyz.brassgoggledcoders.workshop.tileentity.MortarTileEntity;
 
 public class MortarRecipeCategory implements IRecipeCategory<MortarRecipe> {
-
-    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.MORTAR_SERIALIZER.get().getRecipeType().toString());
 
     private final IGuiHelper guiHelper;
     private final IDrawable slot;
@@ -38,7 +35,7 @@ public class MortarRecipeCategory implements IRecipeCategory<MortarRecipe> {
 
     @Override
     public ResourceLocation getUid() {
-        return ID;
+        return MortarTileEntity.ID;
     }
 
     @Override

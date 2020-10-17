@@ -8,6 +8,7 @@ import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -22,6 +23,7 @@ import javax.annotation.Nonnull;
 
 public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity, AlembicRecipe> {
 
+    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.ALEMBIC_SERIALIZER.get().getRecipeType().toString());
     private final InventoryComponent<AlembicTileEntity> input;
     private final FluidTankComponent<AlembicTileEntity> output;
     private final InventoryComponent<AlembicTileEntity> residue;
@@ -83,6 +85,11 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
         compound.put("coldItem", coldItem.serializeNBT());
         compound.put("meltTime", meltTime.serializeNBT());
         return super.write(compound);
+    }
+
+    @Override
+    public ResourceLocation getRecipeCategoryUID() {
+        return ID;
     }
 
     @Override

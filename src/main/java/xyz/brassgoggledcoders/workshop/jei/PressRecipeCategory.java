@@ -15,10 +15,10 @@ import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.PressRecipe;
+import xyz.brassgoggledcoders.workshop.tileentity.PressTileEntity;
 
 public class PressRecipeCategory implements IRecipeCategory<PressRecipe> {
 
-    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.PRESS_SERIALIZER.get().getRecipeType().toString());
 
     private final IGuiHelper guiHelper;
     private final IDrawable slot;
@@ -32,7 +32,7 @@ public class PressRecipeCategory implements IRecipeCategory<PressRecipe> {
 
     @Override
     public ResourceLocation getUid() {
-        return ID;
+        return PressTileEntity.ID;
     }
 
     @Override

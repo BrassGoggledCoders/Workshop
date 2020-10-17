@@ -43,6 +43,7 @@
   "block.workshop.tea_liquid": "Tea",
   "block.workshop.white_rebarred_concrete": "White Rebarred Concrete",
   "block.workshop.yellow_rebarred_concrete": "Yellow Rebarred Concrete",
+  "description.jei.scrap_bag": "Scrap bags are generated when a Scrap Bin destroys enough excess items (more than a stack of any one item). They can be opened by hand or in a dispenser for some items.",
   "effect.workshop.stinky": "Stinky",
   "fluid.workshop.adhesive_oils": "Adhesive Oils",
   "fluid.workshop.apple_juice": "Apple Juice",

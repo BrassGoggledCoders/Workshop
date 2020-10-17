@@ -16,7 +16,7 @@ import xyz.brassgoggledcoders.workshop.tileentity.SpinningWheelTileEntity;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public class SpinningWheelBlock extends TileBlock<SpinningWheelTileEntity> {
+public class SpinningWheelBlock extends GUITileBlock<SpinningWheelTileEntity> {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 

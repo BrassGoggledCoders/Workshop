@@ -10,7 +10,7 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import xyz.brassgoggledcoders.workshop.tileentity.SeasoningBarrelTileEntity;
 
-public class SeasoningBarrelBlock extends TileBlock<SeasoningBarrelTileEntity> {
+public class SeasoningBarrelBlock extends GUITileBlock<SeasoningBarrelTileEntity> {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     public SeasoningBarrelBlock() {

@@ -5,6 +5,7 @@ import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.apache.commons.lang3.tuple.Pair;
@@ -54,6 +55,11 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
     @Override
     public int getProcessingTime(CollectorRecipe currentRecipe) {
         return currentRecipe.getProcessingTime();
+    }
+
+    @Override
+    public ResourceLocation getRecipeCategoryUID() {
+        return new ResourceLocation("");
     }
 
     @Override

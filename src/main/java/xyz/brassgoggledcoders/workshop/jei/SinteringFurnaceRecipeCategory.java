@@ -13,12 +13,10 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.SinteringFurnaceRecipe;
+import xyz.brassgoggledcoders.workshop.tileentity.SinteringFurnaceTileEntity;
 
 public class SinteringFurnaceRecipeCategory implements IRecipeCategory<SinteringFurnaceRecipe> {
-
-    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.SINTERING_FURNACE_SERIALIZER.get().getRecipeType().toString());
 
     private final IGuiHelper guiHelper;
     private final IDrawable slot;
@@ -33,7 +31,7 @@ public class SinteringFurnaceRecipeCategory implements IRecipeCategory<Sintering
 
     @Override
     public ResourceLocation getUid() {
-        return ID;
+        return SinteringFurnaceTileEntity.ID;
     }
 
     @Override

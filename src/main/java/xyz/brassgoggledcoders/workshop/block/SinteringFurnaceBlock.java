@@ -23,7 +23,7 @@ import xyz.brassgoggledcoders.workshop.tileentity.SinteringFurnaceTileEntity;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
-public class SinteringFurnaceBlock extends TileBlock<SinteringFurnaceTileEntity> {
+public class SinteringFurnaceBlock extends GUITileBlock<SinteringFurnaceTileEntity> {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = RedstoneTorchBlock.LIT;

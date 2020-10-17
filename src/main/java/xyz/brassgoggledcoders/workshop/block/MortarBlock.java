@@ -11,7 +11,7 @@ import xyz.brassgoggledcoders.workshop.tileentity.MortarTileEntity;
 
 import javax.annotation.Nonnull;
 
-public class MortarBlock extends TileBlock<MortarTileEntity> {
+public class MortarBlock extends GUITileBlock<MortarTileEntity> {
 
     public MortarBlock() {
         super(Properties.from(Blocks.GRANITE).notSolid(), MortarTileEntity::new);

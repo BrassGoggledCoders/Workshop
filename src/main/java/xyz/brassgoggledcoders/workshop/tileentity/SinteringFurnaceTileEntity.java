@@ -7,10 +7,9 @@ import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.ItemHandlerHelper;
-import xyz.brassgoggledcoders.workshop.Workshop;
-import xyz.brassgoggledcoders.workshop.block.SinteringFurnaceBlock;
 import xyz.brassgoggledcoders.workshop.component.machine.BurnTimerComponent;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
@@ -21,6 +20,7 @@ import javax.annotation.Nonnull;
 
 public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<SinteringFurnaceTileEntity, SinteringFurnaceRecipe> {
 
+    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.SINTERING_FURNACE_SERIALIZER.get().getRecipeType().toString());
     private final SidedInventoryComponent<SinteringFurnaceTileEntity> powderInventory;
     private final SidedInventoryComponent<SinteringFurnaceTileEntity> inputInventory;
     private final SidedInventoryComponent<SinteringFurnaceTileEntity> outputInventory;
@@ -70,6 +70,11 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
         compound.put("fuelInventory", fuelInventory.serializeNBT());
         compound.put("burnTimer", burnTimer.serializeNBT());
         return super.write(compound);
+    }
+
+    @Override
+    public ResourceLocation getRecipeCategoryUID() {
+        return ID;
     }
 
     @Override

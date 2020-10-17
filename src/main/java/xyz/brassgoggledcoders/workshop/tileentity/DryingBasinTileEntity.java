@@ -7,6 +7,7 @@ import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
@@ -18,7 +19,8 @@ import javax.annotation.Nonnull;
 
 public class DryingBasinTileEntity extends BasicMachineTileEntity<DryingBasinTileEntity, DryingBasinRecipe> {
 
-    protected static final int tankSize = 4000; // mB
+    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.DRYING_BASIN_SERIALIZER.get().getRecipeType().toString());
+    public static final int tankSize = 4000; // mB
 
     protected final InventoryComponent<DryingBasinTileEntity> inputInventory;
     protected final FluidTankComponent<DryingBasinTileEntity> inputFluidTank;
@@ -62,6 +64,11 @@ public class DryingBasinTileEntity extends BasicMachineTileEntity<DryingBasinTil
         compound.put("inputFluidTank", inputFluidTank.writeToNBT(new CompoundNBT()));
         compound.put("outputInventory", outputInventory.serializeNBT());
         return super.write(compound);
+    }
+
+    @Override
+    public ResourceLocation getRecipeCategoryUID() {
+        return ID;
     }
 
     @Override

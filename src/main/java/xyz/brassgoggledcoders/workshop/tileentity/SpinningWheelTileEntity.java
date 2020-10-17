@@ -9,6 +9,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
@@ -20,6 +21,7 @@ import javax.annotation.Nonnull;
 
 public class SpinningWheelTileEntity extends BasicMachineTileEntity<SpinningWheelTileEntity, SpinningWheelRecipe> {
 
+    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.SPINNING_WHEEL_SERIALIZER.get().getRecipeType().toString());
     private final InventoryComponent<SpinningWheelTileEntity> input;
     private final InventoryComponent<SpinningWheelTileEntity> output;
 
@@ -83,6 +85,11 @@ public class SpinningWheelTileEntity extends BasicMachineTileEntity<SpinningWhee
         compound.putInt("halfspeedWorkingTime", halfspeedWorkingTime);
         compound.putBoolean("skipTick", skipTick);
         return super.write(compound);
+    }
+
+    @Override
+    public ResourceLocation getRecipeCategoryUID() {
+        return ID;
     }
 
     @Override

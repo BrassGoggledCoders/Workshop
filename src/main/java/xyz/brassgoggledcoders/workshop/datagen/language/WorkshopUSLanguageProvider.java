@@ -9,9 +9,12 @@ import org.codehaus.plexus.util.StringUtils;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.capabilities.BottleCapabilityProvider;
 import xyz.brassgoggledcoders.workshop.content.*;
+import xyz.brassgoggledcoders.workshop.jei.WorkshopJEIPlugin;
 import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
 public class WorkshopUSLanguageProvider extends LanguageProvider {
+    public static final String SCRAP_BAG_DESC = "description.jei.scrap_bag";
+
     public WorkshopUSLanguageProvider(DataGenerator gen) {
         super(gen, Workshop.MOD_ID, "en_us");
     }
@@ -111,6 +114,10 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
 
         //region Effects
         this.addEffect(WorkshopEffects.STINKY, "Stinky");
+        //endregion
+
+        //region JEI
+        this.add(SCRAP_BAG_DESC, "Scrap bags are generated when a Scrap Bin destroys enough excess items (more than a stack of any one item). They can be opened by hand or in a dispenser for some items.");
         //endregion
     }
 

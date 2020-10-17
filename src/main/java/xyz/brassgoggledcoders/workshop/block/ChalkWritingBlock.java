@@ -20,7 +20,7 @@ import xyz.brassgoggledcoders.workshop.tileentity.ChalkWritingTileEntity;
 import javax.annotation.Nullable;
 import java.util.Map;
 
-public class ChalkWritingBlock extends TileBlock<ChalkWritingTileEntity> {
+public class ChalkWritingBlock extends GUITileBlock<ChalkWritingTileEntity> {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     //Copied from sign
     private static final Map<Direction, VoxelShape> SHAPES = Maps.newEnumMap(

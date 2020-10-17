@@ -21,7 +21,7 @@ import xyz.brassgoggledcoders.workshop.tileentity.FluidFunnelTileEntity;
 
 import javax.annotation.Nonnull;
 
-public class FluidFunnelBlock extends TileBlock<FluidFunnelTileEntity> {
+public class FluidFunnelBlock extends GUITileBlock<FluidFunnelTileEntity> {
     public static final DirectionProperty FACING = BlockStateProperties.FACING_EXCEPT_UP;
     public static final BooleanProperty ENABLED = BlockStateProperties.ENABLED;
     private static final VoxelShape INPUT_SHAPE = Block.makeCuboidShape(0.0D, 10.0D, 0.0D, 16.0D, 16.0D, 16.0D);

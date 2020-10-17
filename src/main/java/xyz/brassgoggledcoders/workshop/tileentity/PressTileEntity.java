@@ -7,15 +7,19 @@ import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
+import xyz.brassgoggledcoders.workshop.jei.PressRecipeCategory;
 import xyz.brassgoggledcoders.workshop.recipe.PressRecipe;
 import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
 import javax.annotation.Nonnull;
 
 public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, PressRecipe> {
+
+    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.PRESS_SERIALIZER.get().getRecipeType().toString());
 
     private final InventoryComponent<PressTileEntity> inputInventory;
     private final FluidTankComponent<PressTileEntity> outputFluid;
@@ -111,6 +115,11 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
         compound.put("input", inputInventory.serializeNBT());
         compound.put("output", outputFluid.writeToNBT(new CompoundNBT()));
         return super.write(compound);
+    }
+
+    @Override
+    public ResourceLocation getRecipeCategoryUID() {
+        return ID;
     }
 
     @Override
