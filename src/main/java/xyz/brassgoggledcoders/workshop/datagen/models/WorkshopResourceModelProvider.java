@@ -21,10 +21,10 @@ public class WorkshopResourceModelProvider extends ModelProvider<PropertiedItemM
         this.singleTexture("gold_pipe", mcLoc("item/generated"), "layer0", new ResourceLocation(Workshop.MOD_ID,"items/resource/pipe"));
         this.singleTexture("iron_film", mcLoc("item/generated"), "layer0", new ResourceLocation(Workshop.MOD_ID,"items/resource/film"));
         this.singleTexture("gold_film", mcLoc("item/generated"), "layer0", new ResourceLocation(Workshop.MOD_ID,"items/resource/film"));
-        this.singleTexture("copper_nugget", mcLoc("item/generated"), "layer0", new ResourceLocation(Titanium.MODID, "items/resource/nugget"));
-        this.singleTexture("silver_nugget", mcLoc("item/generated"), "layer0", new ResourceLocation(Titanium.MODID, "items/resource/nugget"));
-        this.singleTexture("copper_ingot", mcLoc("item/generated"), "layer0", new ResourceLocation(Titanium.MODID, "items/resource/ingot"));
-        this.singleTexture("silver_ingot", mcLoc("item/generated"), "layer0", new ResourceLocation(Titanium.MODID, "items/resource/ingot"));
+        this.singleTexture("copper_nugget", mcLoc("item/generated"), "layer0", new ResourceLocation(Titanium.MODID, "item/copper_nugget"));
+        this.singleTexture("silver_nugget", mcLoc("item/generated"), "layer0", new ResourceLocation(Titanium.MODID, "item/silver_nugget"));
+        this.singleTexture("copper_ingot", mcLoc("item/generated"), "layer0", new ResourceLocation(Titanium.MODID, "item/copper_ingot"));
+        this.singleTexture("silver_ingot", mcLoc("item/generated"), "layer0", new ResourceLocation(Titanium.MODID, "item/silver_ingot"));
         this.withExistingParent("copper_metal_block", modLoc(BLOCK_FOLDER + "/copper_metal_block"));
         this.withExistingParent("silver_metal_block", modLoc(BLOCK_FOLDER + "/silver_metal_block"));
     }

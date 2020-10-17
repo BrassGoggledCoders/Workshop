@@ -29,7 +29,7 @@ public class WorkshopResourceBlockstateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        this.simpleBlock(WorkshopResourcePlugin.COPPER_BLOCK, this.models().cubeAll("copper_metal_block", new ResourceLocation(Titanium.MODID, "blocks/resource/block")));
-        this.simpleBlock(WorkshopResourcePlugin.SILVER_BLOCK, this.models().cubeAll("silver_metal_block", new ResourceLocation(Titanium.MODID, "blocks/resource/block")));
+        this.simpleBlock(WorkshopResourcePlugin.COPPER_BLOCK);
+        this.simpleBlock(WorkshopResourcePlugin.SILVER_BLOCK);
     }
 }
