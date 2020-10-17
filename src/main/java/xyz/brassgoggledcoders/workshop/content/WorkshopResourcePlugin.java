@@ -18,9 +18,12 @@ public class WorkshopResourcePlugin implements FeaturePluginInstance {
     @MaterialReference(type = "metal_block", material = "silver")
     public static Block SILVER_BLOCK;
 
+    @MaterialReference(type = "ingot", material = "copper")
+    public static Item COPPER_INGOT;
+    @MaterialReference(type = "ingot", material = "silver")
+    public static Item SILVER_INGOT;
     @MaterialReference(type = "nugget", material = "copper")
     public static Item COPPER_NUGGET;
-
     @MaterialReference(type = "nugget", material = "silver")
     public static Item SILVER_NUGGET;
 

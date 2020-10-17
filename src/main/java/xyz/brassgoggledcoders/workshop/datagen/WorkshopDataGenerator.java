@@ -24,6 +24,7 @@ import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopItemModelProvider;
 import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopResourceBlockstateProvider;
 import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopResourceModelProvider;
 import xyz.brassgoggledcoders.workshop.datagen.recipe.*;
+import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopBlockTagsProvider;
 import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopFluidTagsProvider;
 import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopItemTagsProvider;
 import xyz.brassgoggledcoders.workshop.recipe.CollectorRecipe;
@@ -124,7 +125,7 @@ public class WorkshopDataGenerator {
 
             dataGenerator.addProvider(new WorkshopItemTagsProvider(dataGenerator));
             dataGenerator.addProvider(new WorkshopFluidTagsProvider(dataGenerator));
-            //dataGenerator.addProvider(new WorkshopBlockTagsProvider(dataGenerator));
+            dataGenerator.addProvider(new WorkshopBlockTagsProvider(dataGenerator));
 
             dataGenerator.addProvider(new WorkshopBookProvider(dataGenerator));
         }

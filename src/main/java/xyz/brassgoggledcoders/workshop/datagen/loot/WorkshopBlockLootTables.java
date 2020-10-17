@@ -13,8 +13,10 @@ import net.minecraft.world.storage.loot.functions.CopyNbt;
 import net.minecraftforge.fml.RegistryObject;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
+import xyz.brassgoggledcoders.workshop.content.WorkshopResourcePlugin;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -22,10 +24,13 @@ public class WorkshopBlockLootTables extends BlockLootTables {
     @Override
     @Nonnull
     protected Iterable<Block> getKnownBlocks() {
-        return WorkshopBlocks.getAllBlocks()
+        final List<Block> workshopBlocks = WorkshopBlocks.getAllBlocks()
                 .stream()
                 .map(RegistryObject::get)
                 .collect(Collectors.toList());
+        workshopBlocks.add(WorkshopResourcePlugin.COPPER_BLOCK);
+        workshopBlocks.add(WorkshopResourcePlugin.SILVER_BLOCK);
+        return workshopBlocks;
     }
 
     @Override
@@ -37,6 +42,8 @@ public class WorkshopBlockLootTables extends BlockLootTables {
         this.registerDropSelfLootTable(WorkshopBlocks.OBSIDIAN_PLATE.getBlock());
         this.registerDropSelfLootTable(WorkshopBlocks.BELLOWS.getBlock());
         this.registerDropSelfLootTable(WorkshopBlocks.SEASONED_LOG.getBlock());
+        this.registerDropSelfLootTable(WorkshopResourcePlugin.COPPER_BLOCK.getBlock());
+        this.registerDropSelfLootTable(WorkshopResourcePlugin.SILVER_BLOCK.getBlock());
 
         this.registerLootTable(WorkshopBlocks.TEA_PLANT.getBlock(), droppingAndBonusWhen(WorkshopBlocks.TEA_PLANT.getBlock(), WorkshopItems.TEA_LEAVES.get(), WorkshopBlocks.TEA_PLANT.getItem(),
                 BlockStateProperty.builder(WorkshopBlocks.TEA_PLANT.getBlock()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(CropsBlock.AGE, 1))));
