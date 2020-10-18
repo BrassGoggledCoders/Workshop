@@ -4,6 +4,7 @@ import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.LazyOptional;
@@ -17,6 +18,7 @@ import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.CollectorRecipe;
 import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
+import javax.annotation.Nonnull;
 import java.util.stream.Stream;
 
 public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEntity, CollectorRecipe> {
@@ -27,7 +29,7 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
         super(WorkshopBlocks.COLLECTOR.getTileEntityType(),
                 new ProgressBarComponent<CollectorTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.VERTICAL_UP));
         int pos = 0;
-        this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<CollectorTileEntity>(InventoryUtil.ITEM_OUTPUT, 102, 44, 1, pos++)
+        this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<CollectorTileEntity>(InventoryUtil.ITEM_OUTPUT, 102, 44, 5, pos + 1)
                 .setColor(InventoryUtil.ITEM_OUTPUT_COLOR)
                 .setInputFilter((stack, integer) -> false));
     }
@@ -82,5 +84,18 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
     public void handleComplete(CollectorRecipe currentRecipe) {
         ItemHandlerHelper.insertItemStacked(this.output, currentRecipe.getRecipeOutput(world.getRandom()), false);
         this.getMachineComponent().forceRecipeRecheck();
+    }
+
+    @Override
+    public void read(CompoundNBT compound) {
+        super.read(compound);
+        output.deserializeNBT(compound.getCompound("output"));
+    }
+
+    @Nonnull
+    @Override
+    public CompoundNBT write(@Nonnull CompoundNBT compound) {
+        compound.put("output", output.serializeNBT());
+        return super.write(compound);
     }
 }
