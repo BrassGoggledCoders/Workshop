@@ -51,8 +51,8 @@ public class DryingBasinTileEntityRenderer extends TileEntityRenderer<DryingBasi
         stack.push();
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
         if(item.getItem() instanceof BlockItem) {
-            stack.translate(0.1, 0.2, 0.1);
-            stack.scale(0.8F, 0.8F, 0.8F);
+            stack.translate(0.14, 0.2, 0.14);
+            stack.scale(0.73F, 0.8F, 0.73F);
             Minecraft.getInstance().getBlockRendererDispatcher().renderBlock(Block.getBlockFromItem(item.getItem()).getDefaultState(), stack, buf, combinedLight, combinedOverlay);
         } else {
             stack.translate(0.5, 0.4, 0.5);
@@ -67,11 +67,11 @@ public class DryingBasinTileEntityRenderer extends TileEntityRenderer<DryingBasi
     private void renderFluidBlock(FluidTankComponent<?> tank, MatrixStack stack, IRenderTypeBuffer buf, int combinedLight) {
         stack.push();
         IVertexBuilder builder = buf.getBuffer(FluidRenderer.getBlockRenderType());
-        float minY = 1.1F;
+        float minY = 3.1F;
         float maxY = 15F;
         float sections = (maxY - minY)/tank.getCapacity();
         float height = (float)tank.getFluidAmount()*sections;
-        FluidRenderer.renderScaledFluidCuboid(tank.getFluid(),stack,builder,combinedLight,2.2F,minY,2.1F,13.9F,minY + height,13.9F);
+        FluidRenderer.renderScaledFluidCuboid(tank.getFluid(),stack,builder,combinedLight,2F,minY,2F,13.9F,minY + height,13.9F);
         stack.pop();
     }
 
