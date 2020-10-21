@@ -61,7 +61,7 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
 
     @Override
     public ResourceLocation getRecipeCategoryUID() {
-        return new ResourceLocation("");
+        return WorkshopRecipes.COLLECTOR_SERIALIZER.get().getRegistryName();
     }
 
     @Override
