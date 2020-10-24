@@ -66,7 +66,7 @@ public class RecipeMachineComponent<T extends IRecipeMachineHarness<T, U>, U ext
                 }
             }
 
-            if (currentRecipe == null) {
+            if (currentRecipe == null || recheck) {
                 handleNoRecipe(recheck);
             }
             else {
