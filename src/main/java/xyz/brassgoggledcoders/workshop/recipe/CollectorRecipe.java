@@ -76,11 +76,11 @@ public class CollectorRecipe extends WorkshopRecipe {
                 randomInt -= output.getRight();
             }
         }
-        return weightedOutputList.outputs.get(weightedOutputList.outputs.size() - 1).getLeft();
+        return weightedOutputList.outputs.get(weightedOutputList.outputs.size() - 1).getLeft().copy();
     }
 
     public static class WeightedOutputList {
-        private List<Pair<ItemStack, Integer>> outputs;
+        private final List<Pair<ItemStack, Integer>> outputs;
 
         public WeightedOutputList(List<Pair<ItemStack, Integer>> outputs) {
             this.outputs = outputs;
