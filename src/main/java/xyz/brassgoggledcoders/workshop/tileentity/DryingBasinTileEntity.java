@@ -49,6 +49,18 @@ public class DryingBasinTileEntity extends BasicMachineTileEntity<DryingBasinTil
         return this;
     }
 
+    public InventoryComponent<DryingBasinTileEntity> getInputInventory() {
+        return inputInventory;
+    }
+
+    public FluidTankComponent<DryingBasinTileEntity> getInputFluidTank() {
+        return inputFluidTank;
+    }
+
+    public InventoryComponent<DryingBasinTileEntity> getOutputInventory() {
+        return outputInventory;
+    }
+
     @Override
     public void read(CompoundNBT compound) {
         inputInventory.deserializeNBT(compound.getCompound("inputInventory"));
