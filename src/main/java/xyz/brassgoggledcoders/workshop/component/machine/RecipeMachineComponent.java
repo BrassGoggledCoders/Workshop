@@ -119,15 +119,17 @@ public class RecipeMachineComponent<T extends IRecipeMachineHarness<T, U>, U ext
         else {
             compoundNBT.putBoolean("recipeExists", false);
         }
+        compoundNBT.put("progress", primaryBar.serializeNBT());
         return compoundNBT;
     }
 
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
-        super.deserializeNBT(nbt);
         if (nbt.getBoolean("recipeExists")){
             recipeResourceLocation = new ResourceLocation(nbt.getString("recipe"));
         }
+        primaryBar.deserializeNBT(nbt.getCompound("progress"));
+        super.deserializeNBT(nbt);
     }
 
     protected void handleRecipe() {

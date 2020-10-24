@@ -36,9 +36,6 @@ public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T,
     @Override
     public void read(CompoundNBT compound) {
         machineComponent.deserializeNBT(compound.getCompound("machineComponent"));
-        if (compound.contains("progress")){
-            machineComponent.getPrimaryBar().deserializeNBT(compound.getCompound("progress"));
-        }
         super.read(compound);
     }
 
@@ -46,7 +43,6 @@ public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T,
     @Nonnull
     public CompoundNBT write(@Nonnull CompoundNBT compound) {
         compound.put("machineComponent", machineComponent.serializeNBT());
-        compound.put("progress", machineComponent.getPrimaryBar().serializeNBT());
         return super.write(compound);
     }
 

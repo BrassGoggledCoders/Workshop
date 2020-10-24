@@ -88,8 +88,8 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
 
     @Override
     public void read(CompoundNBT compound) {
-        super.read(compound);
         output.deserializeNBT(compound.getCompound("output"));
+        super.read(compound);
     }
 
     @Nonnull
@@ -97,5 +97,10 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
     public CompoundNBT write(@Nonnull CompoundNBT compound) {
         compound.put("output", output.serializeNBT());
         return super.write(compound);
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundNBT tag) {
+        // Do nothing
     }
 }
