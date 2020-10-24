@@ -98,9 +98,4 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
         compound.put("output", output.serializeNBT());
         return super.write(compound);
     }
-
-    @Override
-    public void handleUpdateTag(CompoundNBT tag) {
-        // Do nothing
-    }
 }

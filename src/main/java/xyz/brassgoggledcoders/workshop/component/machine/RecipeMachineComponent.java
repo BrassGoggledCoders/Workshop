@@ -25,7 +25,7 @@ public class RecipeMachineComponent<T extends IRecipeMachineHarness<T, U>, U ext
         super(componentHarness, posSupplier);
         this.primaryBar = primaryBar;
         if (primaryBar != null) {
-            this.primaryBar.setCanIncrease(value -> currentRecipe != null);
+            this.primaryBar.setCanIncrease(value -> getCurrentRecipe() != null);
             this.addProgressBar(primaryBar);
         }
     }
@@ -65,18 +65,8 @@ public class RecipeMachineComponent<T extends IRecipeMachineHarness<T, U>, U ext
                 }
             }
 
-            if (currentRecipe == null && recipeResourceLocation == null) {
+            if (currentRecipe == null) {
                 handleNoRecipe(recheck);
-            }
-            else if (currentRecipe == null) {
-                currentRecipe = componentHarness.getComponentWorld().getRecipeManager()
-                        .getRecipes()
-                        .stream()
-                        .filter(iRecipe -> iRecipe.getId().equals(recipeResourceLocation))
-                        .map(componentHarness::castRecipe)
-                        .findFirst()
-                        .orElse(null);
-                recipeResourceLocation = null;
             }
             else {
                 handleRecipe();
@@ -93,18 +83,17 @@ public class RecipeMachineComponent<T extends IRecipeMachineHarness<T, U>, U ext
         if (timeSinceLastRecipeCheck-- <= 0 || didWork) {
             timeSinceLastRecipeCheck = 50;
             if (componentHarness.hasInputs()) {
-                currentRecipe = componentHarness.getComponentWorld().getRecipeManager()
-                        .getRecipes()
-                        .stream()
-                        .filter(componentHarness::checkRecipe)
-                        .map(componentHarness::castRecipe)
-                        .filter(componentHarness::matchesInputs)
-                        .findFirst()
-                        .orElse(null);
+                currentRecipe = getCurrentRecipe();
                 primaryBar.setProgress(0);
                 if (currentRecipe != null) {
                     primaryBar.setMaxProgress(componentHarness.getProcessingTime(currentRecipe));
                 }
+            }
+        }
+        else if (recipeResourceLocation != null){
+            currentRecipe = getCurrentRecipe();
+            if (currentRecipe != null) {
+                primaryBar.setMaxProgress(componentHarness.getProcessingTime(currentRecipe));
             }
         }
     }
@@ -113,22 +102,20 @@ public class RecipeMachineComponent<T extends IRecipeMachineHarness<T, U>, U ext
     public CompoundNBT serializeNBT() {
         final CompoundNBT compoundNBT = super.serializeNBT();
         if (currentRecipe != null){
-            compoundNBT.putBoolean("recipeExists", true);
             compoundNBT.putString("recipe", getCurrentRecipe().getId().toString());
         }
-        else {
-            compoundNBT.putBoolean("recipeExists", false);
-        }
-        compoundNBT.put("progress", primaryBar.serializeNBT());
+        compoundNBT.put("progressBar", primaryBar.serializeNBT());
         return compoundNBT;
     }
 
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
-        if (nbt.getBoolean("recipeExists")){
+        if (nbt.contains("recipe")){
             recipeResourceLocation = new ResourceLocation(nbt.getString("recipe"));
         }
-        primaryBar.deserializeNBT(nbt.getCompound("progress"));
+        if (nbt.contains("progressBar")){
+            primaryBar.deserializeNBT(nbt.getCompound("progressBar"));
+        }
         super.deserializeNBT(nbt);
     }
 
@@ -154,7 +141,30 @@ public class RecipeMachineComponent<T extends IRecipeMachineHarness<T, U>, U ext
     }
 
     public U getCurrentRecipe() {
-        return currentRecipe;
+        if (currentRecipe != null){
+            return currentRecipe;
+        }
+        else if (recipeResourceLocation != null){
+            final U recipe = componentHarness.getComponentWorld().getRecipeManager()
+                    .getRecipes()
+                    .stream()
+                    .filter(iRecipe -> iRecipe.getId().equals(recipeResourceLocation))
+                    .map(componentHarness::castRecipe)
+                    .findFirst()
+                    .orElse(null);
+            recipeResourceLocation = null;
+            return recipe;
+        }
+        else {
+            return componentHarness.getComponentWorld().getRecipeManager()
+                    .getRecipes()
+                    .stream()
+                    .filter(componentHarness::checkRecipe)
+                    .map(componentHarness::castRecipe)
+                    .filter(componentHarness::matchesInputs)
+                    .findFirst()
+                    .orElse(null);
+        }
     }
 
     public void setCurrentRecipe(U currentRecipe) {
