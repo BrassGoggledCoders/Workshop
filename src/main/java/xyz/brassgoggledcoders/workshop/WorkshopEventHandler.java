@@ -8,6 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootEntry;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.TableLootEntry;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -15,6 +16,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import xyz.brassgoggledcoders.workshop.content.WorkshopEffects;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
+import xyz.brassgoggledcoders.workshop.util.HUDRender;
 
 @Mod.EventBusSubscriber(modid = Workshop.MOD_ID)
 @SuppressWarnings("unused")
@@ -67,5 +69,17 @@ public class WorkshopEventHandler {
         ResourceLocation table = new ResourceLocation(Workshop.MOD_ID, "inject/" + name);
         return TableLootEntry.builder(table)
                 .weight(1);
+    }
+
+    //TODO Can we do this more efficiently?
+    @SubscribeEvent
+    public static void onRenderGameOverlayPostEvent(RenderGameOverlayEvent.Post event) {
+        RenderGameOverlayEvent.ElementType type = event.getType();
+
+        if (type != RenderGameOverlayEvent.ElementType.TEXT) {
+            return;
+        }
+
+        HUDRender.render();
     }
 }

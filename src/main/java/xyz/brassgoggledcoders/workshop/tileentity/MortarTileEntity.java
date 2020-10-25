@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.items.ItemStackHandler;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.MortarRecipe;
@@ -65,6 +66,14 @@ public class MortarTileEntity extends BasicMachineTileEntity<MortarTileEntity, M
         compound.put("inputFluidTank", fluidInput.writeToNBT(new CompoundNBT()));
         compound.put("output", output.serializeNBT());
         return super.write(compound);
+    }
+
+    public ItemStackHandler getInputInventory() {
+        return this.input;
+    }
+
+    public ItemStackHandler getOutputInventory() {
+        return this.output;
     }
 
     @Override
