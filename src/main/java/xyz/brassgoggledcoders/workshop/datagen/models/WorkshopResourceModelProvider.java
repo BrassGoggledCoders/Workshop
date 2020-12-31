@@ -3,11 +3,9 @@ package xyz.brassgoggledcoders.workshop.datagen.models;
 import com.hrznstudio.titanium.Titanium;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.client.model.generators.ModelProvider;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import xyz.brassgoggledcoders.workshop.Workshop;
-import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.content.WorkshopResourcePlugin;
 
 public class WorkshopResourceModelProvider extends ModelProvider<PropertiedItemModelBuilder> {
     public WorkshopResourceModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {

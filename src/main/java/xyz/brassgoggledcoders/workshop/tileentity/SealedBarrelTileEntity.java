@@ -4,6 +4,7 @@ import com.hrznstudio.titanium.component.fluid.FluidTankComponent;
 import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
+import net.minecraft.block.BlockState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
@@ -40,11 +41,11 @@ public class SealedBarrelTileEntity extends BasicInventoryTileEntity<SealedBarre
     }
 
     @Override
-    public void read(CompoundNBT compound) {
+    public void read(BlockState state, CompoundNBT compound) {
         tank.readFromNBT(compound.getCompound("capability"));
         drainingInventory.deserializeNBT(compound.getCompound("draining"));
         fillingInventory.deserializeNBT(compound.getCompound("filling"));
-        super.read(compound);
+        super.read(state, compound);
     }
 
     @Override

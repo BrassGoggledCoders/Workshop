@@ -5,6 +5,7 @@ import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
@@ -33,7 +34,7 @@ public class MortarTileEntity extends BasicMachineTileEntity<MortarTileEntity, M
     public static final int inputSize = 6;
 
     public MortarTileEntity() {
-        super(WorkshopBlocks.MORTAR.getTileEntityType(), new ProgressBarComponent<MortarTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
+        super(WorkshopBlocks.MORTAR.getTileEntityType(), new ProgressBarComponent<MortarTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.ARROW_RIGHT));
         int pos = 0;
         this.getMachineComponent().addInventory(this.input = new SidedInventoryComponent<MortarTileEntity>(InventoryUtil.ITEM_INPUT, 10, 25, inputSize, pos++)
                 .setColor(InventoryUtil.ITEM_INPUT_COLOR)
@@ -52,11 +53,11 @@ public class MortarTileEntity extends BasicMachineTileEntity<MortarTileEntity, M
     }
 
     @Override
-    public void read(CompoundNBT compound) {
+    public void read(BlockState state, CompoundNBT compound) {
         input.deserializeNBT(compound.getCompound("input"));
         fluidInput.readFromNBT(compound.getCompound("inputFluidTank"));
         output.deserializeNBT(compound.getCompound("output"));
-        super.read(compound);
+        super.read(state, compound);
     }
 
     @Override

@@ -48,8 +48,8 @@ public class PressBlock extends GUITileBlock<PressTileEntity> {
         BlockPos blockpos = pos.up();
         BlockState blockstate = world.getBlockState(blockpos);
         if (blockstate.getBlock() != WorkshopBlocks.PRESS_TOP.getBlock()) {
-            World newWorld = Objects.requireNonNull(world.getChunk(pos).getWorldForge()).getWorld();
-            newWorld.setBlockState(pos, Blocks.AIR.getDefaultState());
+            //World newWorld = Objects.requireNonNull(world.getChunk(pos).getWorldForge()).getWorld();
+            //newWorld.setBlockState(pos, Blocks.AIR.getDefaultState());
         }
     }
 
@@ -59,8 +59,8 @@ public class PressBlock extends GUITileBlock<PressTileEntity> {
         if (!worldIn.isRemote) {
             BlockPos blockpos = pos.offset(Direction.UP);
             worldIn.setBlockState(blockpos, WorkshopBlocks.PRESS_TOP.getBlock().getDefaultState(), 3);
-            worldIn.notifyNeighbors(pos, Blocks.AIR);
-            state.updateNeighbors(worldIn, pos, 3);
+            //worldIn.notifyNeighbors(pos, Blocks.AIR);
+            //state.updateNeighbors(worldIn, pos, 3);
         }
     }
 

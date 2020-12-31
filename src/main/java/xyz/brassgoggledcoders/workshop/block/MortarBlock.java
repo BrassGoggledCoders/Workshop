@@ -18,11 +18,6 @@ public class MortarBlock extends GUITileBlock<MortarTileEntity> {
     }
 
     @Override
-    public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return false;
-    }
-
-    @Override
     @Nonnull
     @SuppressWarnings("deprecation")
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {

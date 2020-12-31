@@ -15,7 +15,7 @@ import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
 public class WorkshopRecipes {
 
-    private static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZER = new DeferredRegister<>(ForgeRegistries.RECIPE_SERIALIZERS, MOD_ID);
+    private static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MOD_ID);
 
     public static final RegistryObject<GenericSerializer<SpinningWheelRecipe>> SPINNING_WHEEL_SERIALIZER = serializer("spinning_wheel", SpinningWheelRecipe.class);
     public static final RegistryObject<GenericSerializer<PressRecipe>> PRESS_SERIALIZER = serializer("press", PressRecipe.class);

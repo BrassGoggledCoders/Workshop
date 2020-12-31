@@ -64,7 +64,7 @@ public class MortarRecipeProvider extends TitaniumSerializableProvider {
             Map<String, ForgeRegistryEntry> generated = material.getGenerated();
             if (generated.containsKey("dusts")) {
                 recipes.add(new Builder(material.getMaterialType() + "_dust")
-                        .setItemsIn(Ingredient.fromTag(ItemTags.getCollection().getOrCreate(new ResourceLocation("forge", "ingots/" + material.getMaterialType()))))
+                        .setItemsIn(Ingredient.fromTag(ItemTags.getCollection().get(new ResourceLocation("forge", "ingots/" + material.getMaterialType()))))
                         //TODO Eugh
                         .setItemOut(new ItemStack(((ForgeRegistryEntry<Item>) generated.get("dusts")).delegate.get()))
                         .build());

@@ -80,7 +80,7 @@ public class MachineComponent<T extends IMachineHarness<T>> implements IScreenAd
         if (this.multiProgressBarHandler == null) {
             this.multiProgressBarHandler = new MultiProgressBarHandler<T>();
         }
-        this.multiProgressBarHandler.addBar(progressBarComponent.setComponentHarness(componentHarness));
+        this.multiProgressBarHandler.add(progressBarComponent.setComponentHarness(componentHarness));
     }
 
     public void addInventory(InventoryComponent<T> handler) {
@@ -101,7 +101,7 @@ public class MachineComponent<T extends IMachineHarness<T>> implements IScreenAd
         if (this.multiButtonComponent == null) {
             this.multiButtonComponent = new MultiButtonComponent();
         }
-        this.multiButtonComponent.addButton(button);
+        this.multiButtonComponent.add(button);
     }
 
     public void addFilter(IFilter<?> filter) {

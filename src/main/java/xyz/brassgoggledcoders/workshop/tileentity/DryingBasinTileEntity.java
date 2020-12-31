@@ -5,6 +5,7 @@ import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
@@ -27,7 +28,7 @@ public class DryingBasinTileEntity extends BasicMachineTileEntity<DryingBasinTil
     protected final InventoryComponent<DryingBasinTileEntity> outputInventory;
 
     public DryingBasinTileEntity() {
-        super(WorkshopBlocks.DRYING_BASIN.getTileEntityType(), new ProgressBarComponent<DryingBasinTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
+        super(WorkshopBlocks.DRYING_BASIN.getTileEntityType(), new ProgressBarComponent<DryingBasinTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.ARROW_RIGHT));
         int pos = 0;
         this.getMachineComponent().addInventory(this.inputInventory = new SidedInventoryComponent<DryingBasinTileEntity>(
                 InventoryUtil.ITEM_INPUT, 29, 42, 1, pos++)
@@ -62,11 +63,11 @@ public class DryingBasinTileEntity extends BasicMachineTileEntity<DryingBasinTil
     }
 
     @Override
-    public void read(CompoundNBT compound) {
+    public void read(BlockState state, CompoundNBT compound) {
         inputInventory.deserializeNBT(compound.getCompound("inputInventory"));
         inputFluidTank.readFromNBT(compound.getCompound("inputFluidTank"));
         outputInventory.deserializeNBT(compound.getCompound("outputInventory"));
-        super.read(compound);
+        super.read(state, compound);
     }
 
     @Override

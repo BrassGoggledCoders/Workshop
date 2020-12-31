@@ -1,6 +1,7 @@
 package xyz.brassgoggledcoders.workshop.tileentity;
 
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import net.minecraft.block.BlockState;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
@@ -32,9 +33,9 @@ public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T,
     }
 
     @Override
-    public void read(CompoundNBT compound) {
+    public void read(BlockState state, CompoundNBT compound) {
         this.getMachineComponent().getPrimaryBar().deserializeNBT(compound.getCompound("progress"));
-        super.read(compound);
+        super.read(state, compound);
     }
 
     @Override

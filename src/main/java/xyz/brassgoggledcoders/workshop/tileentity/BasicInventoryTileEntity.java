@@ -7,6 +7,7 @@ import com.hrznstudio.titanium.network.IButtonHandler;
 import com.hrznstudio.titanium.network.locator.LocatorFactory;
 import com.hrznstudio.titanium.network.locator.LocatorInstance;
 import com.hrznstudio.titanium.network.locator.instance.TileEntityLocatorInstance;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -85,8 +86,8 @@ public abstract class BasicInventoryTileEntity<T extends BasicInventoryTileEntit
     @Override
     @Nonnull
     public ITextComponent getDisplayName() {
-        return getCustomName() != null ? getCustomName() : new TranslationTextComponent(this.getBlockState().getBlock().getTranslationKey())
-                .applyTextStyle(TextFormatting.BLACK);
+        return getCustomName() != null ? getCustomName() : new TranslationTextComponent(this.getBlockState().getBlock().getTranslationKey());
+                //.applyTextStyle(TextFormatting.BLACK);
     }
 
     @Nullable
@@ -120,11 +121,11 @@ public abstract class BasicInventoryTileEntity<T extends BasicInventoryTileEntit
     }
 
     @Override
-    public void read(CompoundNBT compound) {
+    public void read(BlockState state, CompoundNBT compound) {
         if (compound.contains("CustomName", 8)) {
-            this.customName = ITextComponent.Serializer.fromJson(compound.getString("CustomName"));
+            this.customName = ITextComponent.Serializer.getComponentFromJson(compound.getString("CustomName"));
         }
-        super.read(compound);
+        super.read(state, compound);
     }
 
     @Override
@@ -154,7 +155,7 @@ public abstract class BasicInventoryTileEntity<T extends BasicInventoryTileEntit
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        handleUpdateTag(pkt.getNbtCompound());
+        handleUpdateTag(this.getBlockState(), pkt.getNbtCompound());
     }
 
     @Nonnull

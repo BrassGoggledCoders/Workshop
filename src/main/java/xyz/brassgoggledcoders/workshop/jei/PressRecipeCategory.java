@@ -13,7 +13,6 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.PressRecipe;
 import xyz.brassgoggledcoders.workshop.tileentity.PressTileEntity;
 

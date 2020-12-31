@@ -1,12 +1,13 @@
 package xyz.brassgoggledcoders.workshop.datagen.tags;
 
 
+import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.ItemTagsProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.fluids.FluidStack;
@@ -20,32 +21,32 @@ import javax.annotation.Nonnull;
 
 public class WorkshopItemTagsProvider extends ItemTagsProvider {
 
-    public static final Tag<Item> TEA_SEEDS = new ItemTags.Wrapper(new ResourceLocation("forge", "seeds/tea"));
-    public static final Tag<Item> RAW_MEAT = new ItemTags.Wrapper(new ResourceLocation("forge", "raw_meats"));
-    public static final Tag<Item> COLD = new ItemTags.Wrapper(new ResourceLocation(Workshop.MOD_ID, "cold"));
-    public static final Tag<Item> REBARRED_CONCRETE = new ItemTags.Wrapper(new ResourceLocation(Workshop.MOD_ID, "rebarred_concrete"));
-    public static final Tag<Item> ROOTS = new ItemTags.Wrapper(new ResourceLocation(Workshop.MOD_ID, "roots"));
-    public static final Tag<Item> TALLOW = new ItemTags.Wrapper(new ResourceLocation("forge", "tallow"));
-    public static final Tag<Item> SALT = new ItemTags.Wrapper(new ResourceLocation("forge", "dusts/salt"));
+    public static final ITag.INamedTag<Item> TEA_SEEDS = ItemTags.makeWrapperTag("forge:seeds/tea");
+    public static final ITag.INamedTag<Item> RAW_MEAT = ItemTags.makeWrapperTag("forge:raw_meats");
+    public static final ITag.INamedTag<Item> COLD = ItemTags.makeWrapperTag(Workshop.MOD_ID + ":cold");
+    public static final ITag.INamedTag<Item> REBARRED_CONCRETE = ItemTags.makeWrapperTag(Workshop.MOD_ID + ":rebarred_concrete");
+    public static final ITag.INamedTag<Item> ROOTS = ItemTags.makeWrapperTag(Workshop.MOD_ID + ":roots");
+    public static final ITag.INamedTag<Item> TALLOW = ItemTags.makeWrapperTag("forge:tallow");
+    public static final ITag.INamedTag<Item> SALT = ItemTags.makeWrapperTag("forge:dusts/salt");
     //Filled automatically by Titanium
-    public static final Tag<Item> IRON_FILM = new ItemTags.Wrapper(new ResourceLocation("forge", "films/iron"));
+    public static final ITag.INamedTag<Item> IRON_FILM = ItemTags.makeWrapperTag("forge:films/iron");
 
-    public WorkshopItemTagsProvider(DataGenerator generator) {
-        super(generator);
+    public WorkshopItemTagsProvider(DataGenerator generator, BlockTagsProvider blockTagsProvider) {
+        super(generator, blockTagsProvider);
     }
 
     @Override
     protected void registerTags() {
-        this.getBuilder(RAW_MEAT).add(Items.RABBIT, Items.CHICKEN, Items.BEEF, Items.MUTTON, Items.PORKCHOP);
-        this.getBuilder(Tags.Items.SLIMEBALLS).add(BottleCapabilityProvider.getFilledBottle(new FluidStack(WorkshopFluids.ADHESIVE_OILS.getFluid().getFluid(), WorkshopFluids.BOTTLE_VOLUME)).getItem());
-        this.getBuilder(TEA_SEEDS).add(WorkshopBlocks.TEA_PLANT.getItem());
-        this.getBuilder(Tags.Items.SEEDS).add(WorkshopBlocks.TEA_PLANT.getItem());
-        this.getBuilder(COLD).add(Items.SNOW, Items.SNOW_BLOCK, Items.SNOWBALL, Items.ICE, Items.BLUE_ICE, Items.PACKED_ICE);
-        WorkshopBlocks.CONCRETES.forEach(c -> this.getBuilder(REBARRED_CONCRETE).add(c.getItem()));
-        this.getBuilder(TALLOW).add(WorkshopItems.TALLOW.get());
-        this.getBuilder(ROOTS).add(Items.POISONOUS_POTATO).addOptional(ItemTags.getCollection(), new ResourceLocation("quark", "root_item"));
-        this.getBuilder(SALT).add(WorkshopItems.SALT.get());
-        this.getBuilder(new ItemTags.Wrapper(new ResourceLocation("forge", "salt"))).add(WorkshopItems.SALT.get());
+        this.getOrCreateBuilder(RAW_MEAT).add(Items.RABBIT, Items.CHICKEN, Items.BEEF, Items.MUTTON, Items.PORKCHOP);
+        this.getOrCreateBuilder(Tags.Items.SLIMEBALLS).add(BottleCapabilityProvider.getFilledBottle(new FluidStack(WorkshopFluids.ADHESIVE_OILS.getFluid().getFluid(), WorkshopFluids.BOTTLE_VOLUME)).getItem());
+        this.getOrCreateBuilder(TEA_SEEDS).add(WorkshopBlocks.TEA_PLANT.getItem());
+        this.getOrCreateBuilder(Tags.Items.SEEDS).add(WorkshopBlocks.TEA_PLANT.getItem());
+        this.getOrCreateBuilder(COLD).add(Items.SNOW, Items.SNOW_BLOCK, Items.SNOWBALL, Items.ICE, Items.BLUE_ICE, Items.PACKED_ICE);
+        WorkshopBlocks.CONCRETES.forEach(c -> this.getOrCreateBuilder(REBARRED_CONCRETE).add(c.getItem()));
+        this.getOrCreateBuilder(TALLOW).add(WorkshopItems.TALLOW.get());
+        this.getOrCreateBuilder(ROOTS).add(Items.POISONOUS_POTATO).addOptional(new ResourceLocation("quark", "root_item"));
+        this.getOrCreateBuilder(SALT).add(WorkshopItems.SALT.get());
+        this.getOrCreateBuilder(ItemTags.makeWrapperTag("forge:salt")).add(WorkshopItems.SALT.get());
     }
 
     @Override

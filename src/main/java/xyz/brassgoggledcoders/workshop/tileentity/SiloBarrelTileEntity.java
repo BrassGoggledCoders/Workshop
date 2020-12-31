@@ -1,6 +1,7 @@
 package xyz.brassgoggledcoders.workshop.tileentity;
 
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -32,9 +33,9 @@ public class SiloBarrelTileEntity extends BasicInventoryTileEntity<SiloBarrelTil
     }
 
     @Override
-    public void read(CompoundNBT compound) {
+    public void read(BlockState state, CompoundNBT compound) {
         inventoryComponent.deserializeNBT(compound.getCompound("capability"));
-        super.read(compound);
+        super.read(state, compound);
     }
 
     @Override

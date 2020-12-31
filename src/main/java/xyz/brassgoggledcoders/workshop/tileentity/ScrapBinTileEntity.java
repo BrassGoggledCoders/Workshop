@@ -2,6 +2,7 @@ package xyz.brassgoggledcoders.workshop.tileentity;
 
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -58,11 +59,11 @@ public class ScrapBinTileEntity extends BasicInventoryTileEntity<ScrapBinTileEnt
     }
 
     @Override
-    public void read(CompoundNBT compound) {
+    public void read(BlockState state, CompoundNBT compound) {
         inventoryComponent.deserializeNBT(compound.getCompound("inventory"));
         scrapOutput.deserializeNBT(compound.getCompound("scrap"));
         scrapValue.deserializeNBT(compound.getCompound("scrapValue"));
-        super.read(compound);
+        super.read(state, compound);
     }
 
     @Override

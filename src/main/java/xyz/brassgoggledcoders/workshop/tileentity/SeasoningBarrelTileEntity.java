@@ -13,7 +13,7 @@ public class SeasoningBarrelTileEntity extends AbstractBarrelTileEntity<Seasonin
     public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.SEASONING_BARREL_SERIALIZER.get().getRecipeType().toString());
 
     public SeasoningBarrelTileEntity() {
-        super(WorkshopBlocks.SEASONING_BARREL.getTileEntityType(), new ProgressBarComponent<SeasoningBarrelTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
+        super(WorkshopBlocks.SEASONING_BARREL.getTileEntityType(), new ProgressBarComponent<SeasoningBarrelTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.ARROW_RIGHT));
         this.inputFluidTank.setValidator(fluidStack -> fluidStack.getFluid().getFluid().getAttributes().getTemperature() < Fluids.LAVA.getAttributes().getTemperature());
         this.outputFluidTank.setValidator(fluidStack -> fluidStack.getFluid().getFluid().getAttributes().getTemperature() < Fluids.LAVA.getAttributes().getTemperature());
     }

@@ -31,13 +31,6 @@ public class SpinningWheelBlock extends GUITileBlock<SpinningWheelTileEntity> {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    @ParametersAreNonnullByDefault
-    public boolean isNormalCube(BlockState state, IBlockReader world, BlockPos pos) {
-        return false;
-    }
-
-    @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         super.fillStateContainer(builder);
         builder.add(FACING);

@@ -4,19 +4,19 @@ import net.minecraft.block.DispenserBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameterSets;
+import net.minecraft.loot.LootParameters;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootParameterSets;
-import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.wrapper.PlayerInvWrapper;
 import xyz.brassgoggledcoders.workshop.content.WorkshopEffects;
-import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 import xyz.brassgoggledcoders.workshop.datagen.loot.WorkshopGiftLootTables;
 
 import javax.annotation.Nonnull;
@@ -53,7 +53,8 @@ public class ScrapBagItem extends Item {
                     .getLootTableManager()
                     .getLootTableFromLocation(WorkshopGiftLootTables.SCRAP_BAG)
                     .generate(new LootContext.Builder(worldIn)
-                            .withParameter(LootParameters.POSITION, position).withNullableParameter(LootParameters.THIS_ENTITY, playerIn)
+                            .withParameter(LootParameters.field_237457_g_, new Vector3d(position.getX(), position.getY(), position.getZ()))
+                            .withNullableParameter(LootParameters.THIS_ENTITY, playerIn)
                             //Has to have pos, entity is optional
                             .build(LootParameterSets.COMMAND));
         }

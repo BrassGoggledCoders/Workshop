@@ -20,12 +20,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import xyz.brassgoggledcoders.workshop.Workshop;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -95,7 +93,7 @@ public class BellowsBlock extends Block {
         worldIn.setBlockState(pos, blockstate, 2);
         worldIn.notifyNeighborsOfStateChange(pos, this);
         worldIn.markBlockRangeForRenderUpdate(pos, state, blockstate);
-        worldIn.getPendingBlockTicks().scheduleTick(new BlockPos(pos), this, this.tickRate(worldIn));
+        worldIn.getPendingBlockTicks().scheduleTick(new BlockPos(pos), this, this.tickRate());
     }
 
     @Override
@@ -122,8 +120,8 @@ public class BellowsBlock extends Block {
         }
     }
 
-    @Override
-    public int tickRate(IWorldReader worldIn) {
+    //@Override
+    public int tickRate() {
         return 5; //Quarter of a second, should be quick enough to make it smooth when jumped on
     }
 }

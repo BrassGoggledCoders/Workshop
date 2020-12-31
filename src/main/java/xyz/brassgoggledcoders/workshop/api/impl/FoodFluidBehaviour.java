@@ -1,12 +1,12 @@
 package xyz.brassgoggledcoders.workshop.api.impl;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Food;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.tuple.Pair;
 import xyz.brassgoggledcoders.workshop.api.IDrinkableFluidBehaviour;
 
 public class FoodFluidBehaviour implements IDrinkableFluidBehaviour {
@@ -24,8 +24,8 @@ public class FoodFluidBehaviour implements IDrinkableFluidBehaviour {
             entityLiving.heal(food.getHealing());
         }
         for (Pair<EffectInstance, Float> pair : food.getEffects()) {
-            if (!worldIn.isRemote && pair.getLeft() != null && worldIn.rand.nextFloat() < pair.getRight()) {
-                entityLiving.addPotionEffect(new EffectInstance(pair.getLeft()));
+            if (!worldIn.isRemote && pair.getFirst() != null && worldIn.rand.nextFloat() < pair.getSecond()) {
+                entityLiving.addPotionEffect(new EffectInstance(pair.getFirst()));
             }
         }
     }

@@ -33,11 +33,4 @@ public class AlembicBlock extends GUITileBlock<AlembicTileEntity> {
         super.fillStateContainer(builder);
         builder.add(FACING);
     }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    @ParametersAreNonnullByDefault
-    public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return false;
-    }
 }

@@ -2,8 +2,8 @@ package xyz.brassgoggledcoders.workshop.datagen.models;
 
 import com.google.gson.JsonObject;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.client.model.generators.ModelBuilder;
+import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

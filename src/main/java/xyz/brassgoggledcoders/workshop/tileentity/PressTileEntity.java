@@ -5,13 +5,13 @@ import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
-import xyz.brassgoggledcoders.workshop.jei.PressRecipeCategory;
 import xyz.brassgoggledcoders.workshop.recipe.PressRecipe;
 import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
@@ -28,7 +28,7 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
 
     public PressTileEntity() {
         super(WorkshopBlocks.PRESS.getTileEntityType(), new ProgressBarComponent<PressTileEntity>(70, 40, 120).
-                setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
+                setBarDirection(ProgressBarComponent.BarDirection.ARROW_RIGHT));
         int pos = 0;
         this.getMachineComponent().addInventory(this.inputInventory = new SidedInventoryComponent<PressTileEntity>(InventoryUtil.ITEM_INPUT, 45, 50, 1, pos++)
                 .setColor(InventoryUtil.ITEM_INPUT_COLOR)
@@ -97,16 +97,16 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
     }
 
     @Override
-    public void handleUpdateTag(CompoundNBT tag) {
+    public void handleUpdateTag(BlockState state, CompoundNBT tag) {
         deserializeNBT(tag);
         updatePressProgress();
     }
 
     @Override
-    public void read(CompoundNBT compound) {
+    public void read(BlockState state, CompoundNBT compound) {
         inputInventory.deserializeNBT(compound.getCompound("input"));
         outputFluid.readFromNBT(compound.getCompound("output"));
-        super.read(compound);
+        super.read(state, compound);
     }
 
     @Override

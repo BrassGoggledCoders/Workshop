@@ -59,6 +59,6 @@ public class WorkshopPacketHandler {
 
     public static void register() {
         int id = 0;
-        INSTANCE.registerMessage(id++, UpdateChalkPacket.class, UpdateChalkPacket::encode, UpdateChalkPacket::decode, UpdateChalkPacket::handle);
+        //INSTANCE.registerMessage(id++, UpdateChalkPacket.class, UpdateChalkPacket::encode, UpdateChalkPacket::decode, UpdateChalkPacket::handle);
     }
 }

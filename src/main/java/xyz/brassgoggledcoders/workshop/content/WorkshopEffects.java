@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorkshopEffects {
-    private static final DeferredRegister<Effect> EFFECTS = new DeferredRegister<>(ForgeRegistries.POTIONS, Workshop.MOD_ID);
+    private static final DeferredRegister<Effect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, Workshop.MOD_ID);
 
     public static final RegistryObject<Effect> STINKY = EFFECTS.register("stinky", StinkyEffect::new);
 

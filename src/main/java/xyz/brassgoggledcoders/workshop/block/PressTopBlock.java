@@ -46,8 +46,8 @@ public class PressTopBlock extends Block {
         BlockPos blockpos = pos.down();
         BlockState blockstate = world.getBlockState(blockpos);
         if (blockstate.getBlock() != WorkshopBlocks.PRESS.getBlock()) {
-            World newWorld = Objects.requireNonNull(world.getChunk(pos).getWorldForge()).getWorld();
-            newWorld.setBlockState(pos, Blocks.AIR.getDefaultState());
+            //World newWorld = Objects.requireNonNull(world.getChunk(pos).getWorldForge()).getWorld();
+            //newWorld.setBlockState(pos, Blocks.AIR.getDefaultState());
         }
     }
 
@@ -61,13 +61,6 @@ public class PressTopBlock extends Block {
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.INVISIBLE;
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    @ParametersAreNonnullByDefault
-    public boolean isNormalCube(BlockState state, IBlockReader world, BlockPos pos) {
-        return false;
     }
 
     @Override

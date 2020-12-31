@@ -9,7 +9,6 @@ import org.codehaus.plexus.util.StringUtils;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.capabilities.BottleCapabilityProvider;
 import xyz.brassgoggledcoders.workshop.content.*;
-import xyz.brassgoggledcoders.workshop.jei.WorkshopJEIPlugin;
 import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
 public class WorkshopUSLanguageProvider extends LanguageProvider {
@@ -32,7 +31,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addBlock(WorkshopBlocks.SPINNING_WHEEL, "Spinning Wheel");
         int i = 0;
         for (BlockRegistryObjectGroup<?, ?, ?> concrete : WorkshopBlocks.CONCRETES) {
-            this.addBlock(concrete, String.format("%s Rebarred Concrete", StringUtils.capitaliseAllWords(DyeColor.values()[i++].getName().replace("_", " "))));
+            this.addBlock(concrete, String.format("%s Rebarred Concrete", StringUtils.capitaliseAllWords(DyeColor.values()[i++].name().replace("_", " "))));
         }
         this.addBlock(WorkshopBlocks.TEA_PLANT, "Tea");
         this.addBlock(WorkshopBlocks.SEALED_BARREL, "Sealed Barrel");
@@ -40,7 +39,6 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addBlock(WorkshopBlocks.COLLECTOR, "Collector");
         this.addBlock(WorkshopBlocks.SCRAP_BIN, "Scrap Bin");
         this.addBlock(WorkshopBlocks.MORTAR, "Mortar and Pestle");
-        this.addBlock(WorkshopBlocks.CHALK_WRITING, "Chalk");
         this.addBlock(WorkshopBlocks.SEASONED_LOG, "Seasoned Log");
         this.addBlock(WorkshopBlocks.DRYING_BASIN, "Drying Basin");
         this.addBlock(WorkshopBlocks.FLUID_FUNNEL, "Fluid Funnel");

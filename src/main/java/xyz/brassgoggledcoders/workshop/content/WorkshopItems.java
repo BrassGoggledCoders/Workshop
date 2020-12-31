@@ -21,7 +21,7 @@ import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 @SuppressWarnings("unused")
 public class WorkshopItems {
 
-    private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MOD_ID);
+    private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
 
     //region Ingredients
     public static final RegistryObject<Item> SALT = ITEMS.register("salt", () -> new Item(defaultProperties()));

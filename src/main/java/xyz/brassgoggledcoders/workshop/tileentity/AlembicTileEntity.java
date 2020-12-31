@@ -5,6 +5,7 @@ import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
@@ -34,7 +35,7 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
     public static final int residueSize = 4;
 
     public AlembicTileEntity() {
-        super(WorkshopBlocks.ALEMBIC.getTileEntityType(), new ProgressBarComponent<AlembicTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
+        super(WorkshopBlocks.ALEMBIC.getTileEntityType(), new ProgressBarComponent<AlembicTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.ARROW_RIGHT));
         int pos = 0;
         this.getMachineComponent().addInventory(this.input = new SidedInventoryComponent<AlembicTileEntity>(InventoryUtil.ITEM_INPUT, 34, 25, inputSize, pos++)
                 .setColor(InventoryUtil.ITEM_INPUT_COLOR)
@@ -65,7 +66,7 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
     }
 
     @Override
-    public void read(CompoundNBT compound) {
+    public void read(BlockState state, CompoundNBT compound) {
         input.deserializeNBT(compound.getCompound("input"));
         residue.deserializeNBT(compound.getCompound("residue"));
         output.readFromNBT(compound.getCompound("output"));
@@ -73,7 +74,7 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
         //Ensure we check for cold items on load
         coldItem.getOnSlotChanged().accept(coldItem.getStackInSlot(0), 0);
         meltTime.deserializeNBT(compound.getCompound("meltTime"));
-        super.read(compound);
+        super.read(state, compound);
     }
 
     @Override
@@ -101,7 +102,7 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
     }
 
     @Override
-    public void handleUpdateTag(CompoundNBT tag) {
+    public void handleUpdateTag(BlockState state, CompoundNBT tag) {
         output.readFromNBT(tag.getCompound("output"));
     }
 

@@ -1,30 +1,18 @@
 package xyz.brassgoggledcoders.workshop.block;
 
-import com.hrznstudio.titanium.component.inventory.InventoryComponent;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import xyz.brassgoggledcoders.workshop.Workshop;
-import xyz.brassgoggledcoders.workshop.tileentity.BasicInventoryTileEntity;
-import xyz.brassgoggledcoders.workshop.tileentity.BasicMachineTileEntity;
 import xyz.brassgoggledcoders.workshop.tileentity.GUITile;
-import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Supplier;

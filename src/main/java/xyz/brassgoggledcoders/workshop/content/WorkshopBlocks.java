@@ -1,9 +1,10 @@
 package xyz.brassgoggledcoders.workshop.content;
 
 import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LogBlock;
+import net.minecraft.block.RotatedPillarBlock;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.BlockItem;
@@ -11,13 +12,13 @@ import net.minecraft.item.BlockNamedItem;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.block.*;
-import xyz.brassgoggledcoders.workshop.item.ChalkItem;
 import xyz.brassgoggledcoders.workshop.tileentity.*;
 
 import java.util.Collection;
@@ -44,7 +45,7 @@ public class WorkshopBlocks {
                     .register(BLOCKS, ITEMS);
 
     public static final List<BlockRegistryObjectGroup<Block, BlockItem, ?>> CONCRETES = Stream.of(DyeColor.values())
-            .map(dyeColor -> new BlockRegistryObjectGroup<>(dyeColor.getName() + "_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, dyeColor).hardnessAndResistance(5F)), blockItemCreator())
+            .map(dyeColor -> new BlockRegistryObjectGroup<>(dyeColor.name() + "_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, dyeColor).hardnessAndResistance(5F)), blockItemCreator())
                     .register(BLOCKS, ITEMS))
             .collect(Collectors.toList());
 
@@ -118,13 +119,8 @@ public class WorkshopBlocks {
     public static final BlockRegistryObjectGroup<SiloBarrelBlock, BlockItem, SiloBarrelTileEntity> SILO_BARREL = new BlockRegistryObjectGroup<>("silo_barrel", SiloBarrelBlock::new, blockItemCreator(), SiloBarrelTileEntity::new)
             .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
-    public static final BlockRegistryObjectGroup<ChalkWritingBlock, ChalkItem, ChalkWritingTileEntity> CHALK_WRITING =
-            new BlockRegistryObjectGroup<>("chalk", ChalkWritingBlock::new,
-                    block -> new ChalkItem(new Item.Properties().group(Workshop.ITEM_GROUP)), ChalkWritingTileEntity::new)
-                    .register(BLOCKS, ITEMS, TILE_ENTITIES);
-
-    public static final BlockRegistryObjectGroup<LogBlock, BlockItem, ?> SEASONED_LOG =
-            new BlockRegistryObjectGroup<>("seasoned_log", () -> new LogBlock(MaterialColor.ADOBE, Block.Properties.from(Blocks.OAK_LOG)), blockItemCreator())
+    public static final BlockRegistryObjectGroup<RotatedPillarBlock, BlockItem, ?> SEASONED_LOG =
+            new BlockRegistryObjectGroup<>("seasoned_log", () -> createLogBlock(MaterialColor.ADOBE, MaterialColor.CLAY), blockItemCreator())
             .register(BLOCKS, ITEMS);
 
     public static void register(IEventBus bus) {
@@ -143,5 +139,10 @@ public class WorkshopBlocks {
 
     public static Collection<RegistryObject<Block>> getAllBlocks() {
         return BLOCKS.getEntries();
+    }
+
+    //Copied and pasted from vanilla
+    private static RotatedPillarBlock createLogBlock(MaterialColor topColor, MaterialColor barkColor) {
+        return new RotatedPillarBlock(AbstractBlock.Properties.create(Material.WOOD, (p_lambda$createLogBlock$36_2_) -> p_lambda$createLogBlock$36_2_.get(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? topColor : barkColor).hardnessAndResistance(2.0F).sound(SoundType.WOOD));
     }
 }

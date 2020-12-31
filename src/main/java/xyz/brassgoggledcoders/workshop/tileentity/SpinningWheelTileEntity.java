@@ -3,6 +3,7 @@ package xyz.brassgoggledcoders.workshop.tileentity;
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -67,13 +68,13 @@ public class SpinningWheelTileEntity extends BasicMachineTileEntity<SpinningWhee
     }
 
     @Override
-    public void read(CompoundNBT compound) {
+    public void read(BlockState state, CompoundNBT compound) {
         input.deserializeNBT(compound.getCompound("inputInventory"));
         output.deserializeNBT(compound.getCompound("outputInventory"));
         workingTime = compound.getInt("workingTime");
         halfspeedWorkingTime = compound.getInt("halfspeedWorkingTime");
         skipTick = compound.getBoolean("skipTick");
-        super.read(compound);
+        super.read(state, compound);
     }
 
     @Override

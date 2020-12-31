@@ -2,6 +2,7 @@ package xyz.brassgoggledcoders.workshop.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.RedstoneTorchBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItemUseContext;
@@ -29,13 +30,8 @@ public class SinteringFurnaceBlock extends GUITileBlock<SinteringFurnaceTileEnti
     public static final BooleanProperty LIT = RedstoneTorchBlock.LIT;
 
     public SinteringFurnaceBlock() {
-        super(Properties.create(Material.GLASS).hardnessAndResistance(3.5F).lightValue(13).notSolid(), SinteringFurnaceTileEntity::new);
+        super(Properties.create(Material.GLASS).hardnessAndResistance(3.5F).setLightLevel((state) -> state.get(LIT) ? 13 : 0).notSolid(), SinteringFurnaceTileEntity::new);
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH).with(LIT, false));
-    }
-
-    @Override
-    public int getLightValue(BlockState state) {
-        return state.get(LIT) ? super.getLightValue(state) : 0;
     }
 
     @Override
@@ -48,12 +44,6 @@ public class SinteringFurnaceBlock extends GUITileBlock<SinteringFurnaceTileEnti
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         super.fillStateContainer(builder);
         builder.add(FACING, LIT);
-    }
-
-    @Override
-    @ParametersAreNonnullByDefault
-    public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return false;
     }
 
     @OnlyIn(Dist.CLIENT)

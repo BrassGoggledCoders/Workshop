@@ -32,7 +32,7 @@ public enum WorkshopResourceType implements IResourceType, IStringSerializable {
     }
 
     @Override
-    public String getName() {
+    public String getString() {
         return name().toLowerCase();
     }
 }

@@ -4,7 +4,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Matrix4f;
 import net.minecraft.client.renderer.RenderState;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.IBakedModel;
@@ -13,6 +12,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IItemProvider;
+import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nullable;

@@ -1,5 +1,6 @@
 package xyz.brassgoggledcoders.workshop.tileentity;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
@@ -25,8 +26,8 @@ public class ObsidianPlateTileEntity extends TileEntity {
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
+    public void read(BlockState state, CompoundNBT compound) {
+        super.read(state, compound);
         for (int i = 0; i < compound.getInt("size"); i++) {
             playerNames.set(i, compound.getUniqueId("name" + i));
         }

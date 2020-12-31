@@ -63,7 +63,7 @@ public class SinteringFurnaceRecipeProvider extends TitaniumSerializableProvider
             if (generated.containsKey("dust")) {
                 if (generated.containsKey("film")) {
                     recipes.add(new Builder(material.getMaterialType() + "_" + WorkshopResourceType.FILM.toString().toLowerCase())
-                            .setPowder(Ingredient.fromTag(ItemTags.getCollection().getOrCreate(new ResourceLocation("forge", "dusts/" + material.getMaterialType()))))
+                            .setPowder(Ingredient.fromTag(ItemTags.getCollection().get(new ResourceLocation("forge", "dusts/" + material.getMaterialType()))))
                             .setInput(Ingredient.fromItems(Items.PAPER))
                             //TODO Eugh
                             .setOutput(new ItemStack(((ForgeRegistryEntry<Item>) generated.get("film")).delegate.get()))
@@ -72,7 +72,7 @@ public class SinteringFurnaceRecipeProvider extends TitaniumSerializableProvider
                 }
                 if (generated.containsKey("pipe")) {
                     recipes.add(new Builder(material.getMaterialType() + "_" + WorkshopResourceType.PIPE.toString().toLowerCase())
-                            .setPowder(Ingredient.fromTag(ItemTags.getCollection().getOrCreate(new ResourceLocation("forge", "dusts/" + material.getMaterialType()))))
+                            .setPowder(Ingredient.fromTag(ItemTags.getCollection().get(new ResourceLocation("forge", "dusts/" + material.getMaterialType()))))
                             .setInput(Ingredient.fromItems(Items.BAMBOO))
                             //TODO Eugh
                             .setOutput(new ItemStack(((ForgeRegistryEntry<Item>) generated.get("pipe")).delegate.get()))
@@ -95,7 +95,7 @@ public class SinteringFurnaceRecipeProvider extends TitaniumSerializableProvider
                 .build());
         recipes.add(new Builder("golden_apple")
                 .setInput(Ingredient.fromItems(WorkshopItems.CARAMEL_APPLE.get()))
-                .setPowder(Ingredient.fromTag(new ItemTags.Wrapper(new ResourceLocation("forge", "dusts/gold"))))
+                .setPowder(Ingredient.fromTag(ItemTags.getCollection().get(new ResourceLocation("forge", "dusts/gold"))))
                 .setOutput(new ItemStack(Items.GOLDEN_APPLE))
                 .setTime(120)
                 .build());

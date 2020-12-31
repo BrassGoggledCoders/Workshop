@@ -50,7 +50,7 @@ public class BrokenAnvilBlock extends FallingBlock {
     }
 
     @Override
-    public void onEndFalling(World worldIn, BlockPos pos, BlockState fallingState, BlockState hitState) {
+    public void onEndFalling(World worldIn, BlockPos pos, BlockState fallingState, BlockState hitState, FallingBlockEntity entity) {
         worldIn.playEvent(1031, pos, 0);
     }
 

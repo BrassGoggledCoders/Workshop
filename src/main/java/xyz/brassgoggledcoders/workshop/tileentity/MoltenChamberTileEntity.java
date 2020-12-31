@@ -11,7 +11,7 @@ public class MoltenChamberTileEntity extends AbstractBarrelTileEntity<MoltenCham
     public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.MOLTEN_CHAMBER_SERIALIZER.get().getRecipeType().toString());
 
     public MoltenChamberTileEntity() {
-        super(WorkshopBlocks.MOLTEN_CHAMBER.getTileEntityType(), new ProgressBarComponent<MoltenChamberTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
+        super(WorkshopBlocks.MOLTEN_CHAMBER.getTileEntityType(), new ProgressBarComponent<MoltenChamberTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.ARROW_RIGHT));
     }
 
     @Override

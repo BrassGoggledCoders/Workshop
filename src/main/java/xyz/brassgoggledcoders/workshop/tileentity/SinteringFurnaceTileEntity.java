@@ -3,6 +3,7 @@ package xyz.brassgoggledcoders.workshop.tileentity;
 
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -31,7 +32,7 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
     public SinteringFurnaceTileEntity() {
         super(WorkshopBlocks.SINTERING_FURNACE.getTileEntityType(),
                 new ProgressBarComponent<SinteringFurnaceTileEntity>(76, 42, 100)
-                        .setBarDirection(ProgressBarComponent.BarDirection.HORIZONTAL_RIGHT));
+                        .setBarDirection(ProgressBarComponent.BarDirection.ARROW_RIGHT));
         int pos = 0;
         this.getMachineComponent().addInventory(this.fuelInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("fuelInventory", 78, 70, 1, pos++)
                 .setColor(DyeColor.BLACK)
@@ -52,13 +53,13 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
     }
 
     @Override
-    public void read(CompoundNBT compound) {
+    public void read(BlockState state, CompoundNBT compound) {
         powderInventory.deserializeNBT(compound.getCompound("powderInventory"));
         inputInventory.deserializeNBT(compound.getCompound("targetInputInventory"));
         outputInventory.deserializeNBT(compound.getCompound("outputInventory"));
         fuelInventory.deserializeNBT(compound.getCompound("fuelInventory"));
         burnTimer.deserializeNBT(compound.getCompound("burnTimer"));
-        super.read(compound);
+        super.read(state, compound);
     }
 
     @Override

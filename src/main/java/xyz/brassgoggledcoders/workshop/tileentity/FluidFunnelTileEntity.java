@@ -2,6 +2,7 @@ package xyz.brassgoggledcoders.workshop.tileentity;
 
 import com.hrznstudio.titanium.component.fluid.FluidTankComponent;
 import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
+import net.minecraft.block.BlockState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.DyeColor;
 import net.minecraft.nbt.CompoundNBT;
@@ -35,9 +36,9 @@ public class FluidFunnelTileEntity extends BasicInventoryTileEntity<FluidFunnelT
     }
 
     @Override
-    public void read(CompoundNBT compound) {
+    public void read(BlockState state, CompoundNBT compound) {
         tank.readFromNBT(compound.getCompound("capability"));
-        super.read(compound);
+        super.read(state, compound);
     }
 
     @Override

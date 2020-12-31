@@ -4,12 +4,12 @@ import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.data.loot.BlockLootTables;
-import net.minecraft.world.storage.loot.ItemLootEntry;
-import net.minecraft.world.storage.loot.LootPool;
-import net.minecraft.world.storage.loot.LootTable;
-import net.minecraft.world.storage.loot.RandomValueRange;
-import net.minecraft.world.storage.loot.conditions.BlockStateProperty;
-import net.minecraft.world.storage.loot.functions.CopyNbt;
+import net.minecraft.loot.ItemLootEntry;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.RandomValueRange;
+import net.minecraft.loot.conditions.BlockStateProperty;
+import net.minecraft.loot.functions.CopyNbt;
 import net.minecraftforge.fml.RegistryObject;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
@@ -58,7 +58,6 @@ public class WorkshopBlockLootTables extends BlockLootTables {
 
         this.registerLootTable(WorkshopBlocks.PRESS_ARM.getBlock(), new LootTable.Builder());
         this.registerLootTable(WorkshopBlocks.PRESS_TOP.getBlock(), new LootTable.Builder());
-        this.registerLootTable(WorkshopBlocks.CHALK_WRITING.getBlock(), new LootTable.Builder());
 
         this.registerLootTable(WorkshopBlocks.SEALED_BARREL.getBlock(), new LootTable.Builder()
                 .addLootPool(LootPool.builder()

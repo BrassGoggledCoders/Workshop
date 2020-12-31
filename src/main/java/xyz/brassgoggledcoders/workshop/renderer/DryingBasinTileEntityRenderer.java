@@ -7,20 +7,17 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.fluids.FluidStack;
+import net.minecraft.util.math.vector.Vector3f;
 import xyz.brassgoggledcoders.workshop.tileentity.DryingBasinTileEntity;
 import xyz.brassgoggledcoders.workshop.util.FluidRenderer;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-
-import static xyz.brassgoggledcoders.workshop.block.PressBlock.FACING;
 
 public class DryingBasinTileEntityRenderer extends TileEntityRenderer<DryingBasinTileEntity> {
 

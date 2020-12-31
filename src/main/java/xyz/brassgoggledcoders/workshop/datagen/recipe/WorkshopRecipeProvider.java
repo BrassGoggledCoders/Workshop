@@ -120,7 +120,7 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .patternLine("III")
                 .patternLine("ICI")
                 .patternLine("III")
-                .key('I', ItemTags.getCollection().getOrCreate(new ResourceLocation("forge", "films/iron")))
+                .key('I', ItemTags.getCollection().get(new ResourceLocation("forge", "films/iron")))
                 .key('C', Items.COMPOSTER)
                 .build(consumer);
         TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SCRAP_BIN.getBlock())

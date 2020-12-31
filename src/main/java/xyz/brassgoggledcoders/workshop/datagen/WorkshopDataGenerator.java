@@ -8,7 +8,7 @@ import com.hrznstudio.titanium.recipe.serializer.JSONSerializableDataHandler;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.generators.ExistingFileHelper;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
@@ -91,9 +91,8 @@ public class WorkshopDataGenerator {
             dataGenerator.addProvider(new MortarRecipeProvider(dataGenerator));
             dataGenerator.addProvider(new DryingBasinRecipeProvider(dataGenerator));
 
-            dataGenerator.addProvider(new WorkshopItemTagsProvider(dataGenerator));
+            dataGenerator.addProvider(new WorkshopItemTagsProvider(dataGenerator, null));
             dataGenerator.addProvider(new WorkshopFluidTagsProvider(dataGenerator));
-            //dataGenerator.addProvider(new WorkshopBlockTagsProvider(dataGenerator));
 
             dataGenerator.addProvider(new WorkshopBookProvider(dataGenerator));
         }

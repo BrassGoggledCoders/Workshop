@@ -3,32 +3,23 @@ package xyz.brassgoggledcoders.workshop.datagen.recipe;
 import com.hrznstudio.titanium.recipe.generator.IJSONGenerator;
 import com.hrznstudio.titanium.recipe.generator.IJsonFile;
 import com.hrznstudio.titanium.recipe.generator.TitaniumSerializableProvider;
-import com.mojang.datafixers.util.Pair;
-import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
-import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopItemTagsProvider;
 import xyz.brassgoggledcoders.workshop.recipe.DryingBasinRecipe;
-import xyz.brassgoggledcoders.workshop.recipe.SeasoningBarrelRecipe;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 public class DryingBasinRecipeProvider extends TitaniumSerializableProvider {
 
