@@ -27,7 +27,7 @@ import java.util.Random;
 public class SinteringFurnaceBlock extends GUITileBlock<SinteringFurnaceTileEntity> {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-    public static final BooleanProperty LIT = RedstoneTorchBlock.LIT;
+    public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
     public SinteringFurnaceBlock() {
         super(Properties.create(Material.GLASS).hardnessAndResistance(3.5F).setLightLevel((state) -> state.get(LIT) ? 13 : 0).notSolid(), SinteringFurnaceTileEntity::new);

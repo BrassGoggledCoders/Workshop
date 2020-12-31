@@ -40,7 +40,7 @@ public class FluidFunnelBlock extends GUITileBlock<FluidFunnelTileEntity> {
     private static final VoxelShape WEST_RAYTRACE_SHAPE = VoxelShapes.or(IHopper.INSIDE_BOWL_SHAPE, Block.makeCuboidShape(0.0D, 8.0D, 6.0D, 4.0D, 10.0D, 10.0D));
 
     public FluidFunnelBlock() {
-        super(Block.Properties.from(Blocks.OAK_LOG), FluidFunnelTileEntity::new);
+        super(Block.Properties.from(Blocks.OAK_PLANKS), FluidFunnelTileEntity::new);
         this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.DOWN).with(ENABLED, Boolean.TRUE));
     }
 

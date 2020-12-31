@@ -16,7 +16,7 @@ public class CollectorBlock extends GUITileBlock<CollectorTileEntity> {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     public CollectorBlock() {
-        super(Properties.from(Blocks.FURNACE), CollectorTileEntity::new);
+        super(Properties.from(Blocks.STONE), CollectorTileEntity::new);
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.DOWN));
     }
 

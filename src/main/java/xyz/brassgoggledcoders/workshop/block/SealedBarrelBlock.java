@@ -26,7 +26,7 @@ public class SealedBarrelBlock extends GUITileBlock<SealedBarrelTileEntity> {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     public SealedBarrelBlock() {
-        super(Properties.from(Blocks.OAK_LOG), SealedBarrelTileEntity::new);
+        super(Properties.from(Blocks.OAK_PLANKS), SealedBarrelTileEntity::new);
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.UP));
     }
 

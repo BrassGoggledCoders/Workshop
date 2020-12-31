@@ -1,6 +1,7 @@
 package xyz.brassgoggledcoders.workshop;
 
 import com.hrznstudio.titanium.tab.TitaniumTab;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.item.Foods;
 import net.minecraft.item.ItemGroup;

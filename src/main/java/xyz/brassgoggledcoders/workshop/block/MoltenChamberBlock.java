@@ -5,6 +5,6 @@ import xyz.brassgoggledcoders.workshop.tileentity.MoltenChamberTileEntity;
 
 public class MoltenChamberBlock extends GUITileBlock<MoltenChamberTileEntity> {
     public MoltenChamberBlock() {
-        super(Properties.from(Blocks.FURNACE).notSolid(), MoltenChamberTileEntity::new);
+        super(Properties.from(Blocks.STONE).notSolid(), MoltenChamberTileEntity::new);
     }
 }
