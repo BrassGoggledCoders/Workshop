@@ -1,6 +1,7 @@
 package xyz.brassgoggledcoders.workshop.jei;
 
 import com.hrznstudio.titanium.Titanium;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -35,10 +36,10 @@ public abstract class AbstractBarrelRecipeCategory<T extends AbstractBarrelRecip
     }
 
     @Override
-    public void draw(T recipe, double mouseX, double mouseY) {
-        slot.draw(0, 0);
-        slot.draw(90, 0);
-        arrow.draw(40, 0);
+    public void draw(T recipe, MatrixStack stack, double mouseX, double mouseY) {
+        slot.draw(stack, 0, 0);
+        slot.draw(stack, 90, 0);
+        arrow.draw(stack, 40, 0);
     }
 
     @Override

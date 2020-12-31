@@ -1,6 +1,7 @@
 package xyz.brassgoggledcoders.workshop.jei;
 
 import com.google.common.collect.Lists;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -55,10 +56,10 @@ public class PressRecipeCategory implements IRecipeCategory<PressRecipe> {
     }
 
     @Override
-    public void draw(PressRecipe recipe, double mouseX, double mouseY) {
+    public void draw(PressRecipe recipe, MatrixStack stack, double mouseX, double mouseY) {
         //Input
-        slot.draw(0, 0);
-        arrow.draw(20, 0);
+        slot.draw(stack, 0, 0);
+        arrow.draw(stack, 20, 0);
     }
 
     @Override

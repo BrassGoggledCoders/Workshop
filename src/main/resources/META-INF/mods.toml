@@ -1,21 +1,27 @@
 modLoader="javafml"
-loaderVersion="[31,)"
+loaderVersion="[${loader_version},)"
 issueTrackerURL="https://github.com/BrassGoggledCoders/Workshop/issues"
+license="MIT"
 
 [[mods]]
     modId="workshop"
-    version="${file.jarVersion}"
+    version="${mod_version}"
     displayName="Workshop"
     credits="Divine for the design, Snurly and VeyezX for the art probably"
     authors="Brass Goggled Coders"
     description='''
-        This mod adds various lower tier machines to work in tandum with our higher tier machines in other mods to give you a stepping stone type feel
-        Spinning Wheel, Sintering Furnace, Seasoning Barrel, Press and Alembic Machines are used to create various types of materials and items!
+        This mod adds various lower tier machines to work in tandum with our higher tier machines in other mods to give you a stepping stone type feel...
     '''
+[[dependencies.workshop]]
+    modId="forge"
+    mandatory=true
+    versionRange="[${forge_version},)"
+    ordering="NONE"
+    side="BOTH"
 
 [[dependencies.workshop]]
     modId="titanium"
     mandatory=true
-    versionRange="[2.3.7,)"
+    versionRange="[${titanium_version},)"
     ordering="NONE"
     side="BOTH"

@@ -2,6 +2,7 @@ package xyz.brassgoggledcoders.workshop.jei;
 
 import com.google.common.collect.Lists;
 import com.hrznstudio.titanium.Titanium;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -58,13 +59,13 @@ public class DryingBasinRecipeCategory implements IRecipeCategory<DryingBasinRec
     }
 
     @Override
-    public void draw(DryingBasinRecipe recipe, double mouseX, double mouseY) {
+    public void draw(DryingBasinRecipe recipe, MatrixStack stack, double mouseX, double mouseY) {
         //Input
-        slot.draw(0, 22);
-        this.tank.draw(20, 0);
+        slot.draw(stack, 0, 22);
+        this.tank.draw(stack, 20, 0);
         //Output
-        slot.draw(100, 22);
-        arrow.draw(40, 20);
+        slot.draw(stack, 100, 22);
+        arrow.draw(stack, 40, 20);
     }
 
     @Override

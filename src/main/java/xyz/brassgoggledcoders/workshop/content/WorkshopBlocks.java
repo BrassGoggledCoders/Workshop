@@ -45,7 +45,7 @@ public class WorkshopBlocks {
                     .register(BLOCKS, ITEMS);
 
     public static final List<BlockRegistryObjectGroup<Block, BlockItem, ?>> CONCRETES = Stream.of(DyeColor.values())
-            .map(dyeColor -> new BlockRegistryObjectGroup<>(dyeColor.name() + "_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, dyeColor).hardnessAndResistance(5F)), blockItemCreator())
+            .map(dyeColor -> new BlockRegistryObjectGroup<>(dyeColor.name().toLowerCase() + "_rebarred_concrete", () -> new Block(Block.Properties.create(Material.ROCK, dyeColor).hardnessAndResistance(5F)), blockItemCreator())
                     .register(BLOCKS, ITEMS))
             .collect(Collectors.toList());
 

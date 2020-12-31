@@ -1,6 +1,7 @@
 package xyz.brassgoggledcoders.workshop.jei;
 
 import com.hrznstudio.titanium.Titanium;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -56,12 +57,12 @@ public class SpinningWheelRecipeCategory implements IRecipeCategory<SpinningWhee
     }
 
     @Override
-    public void draw(SpinningWheelRecipe recipe, double mouseX, double mouseY) {
+    public void draw(SpinningWheelRecipe recipe, MatrixStack stack, double mouseX, double mouseY) {
         for (int i = 0; i < 3; i++) {
-            slot.draw(0, (i * 17));
+            slot.draw(stack, 0, (i * 17));
         }
-        slot.draw(50, 22);
-        arrow.draw(24, 18);
+        slot.draw(stack, 50, 22);
+        arrow.draw(stack, 24, 18);
     }
 
     @Override

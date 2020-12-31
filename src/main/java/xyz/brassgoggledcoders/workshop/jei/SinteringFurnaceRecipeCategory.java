@@ -2,6 +2,7 @@ package xyz.brassgoggledcoders.workshop.jei;
 
 import com.google.common.collect.Lists;
 import com.hrznstudio.titanium.Titanium;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -55,14 +56,14 @@ public class SinteringFurnaceRecipeCategory implements IRecipeCategory<Sintering
     }
 
     @Override
-    public void draw(SinteringFurnaceRecipe recipe, double mouseX, double mouseY) {
+    public void draw(SinteringFurnaceRecipe recipe, MatrixStack stack, double mouseX, double mouseY) {
         //Input
-        slot.draw(34, 22);
+        slot.draw(stack,34, 22);
         //Powder
-        slot.draw(70, 0);
-        slot.draw(87, 0);
+        slot.draw(stack,70, 0);
+        slot.draw(stack,87, 0);
         //Output
-        slot.draw(120, 22);
+        slot.draw(stack,120, 22);
         //arrow.draw(24, 18);
     }
 

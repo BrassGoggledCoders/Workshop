@@ -2,6 +2,7 @@ package xyz.brassgoggledcoders.workshop.jei;
 
 import com.google.common.collect.Lists;
 import com.hrznstudio.titanium.Titanium;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -59,18 +60,18 @@ public class MortarRecipeCategory implements IRecipeCategory<MortarRecipe> {
     }
 
     @Override
-    public void draw(MortarRecipe recipe, double mouseX, double mouseY) {
+    public void draw(MortarRecipe recipe, MatrixStack stack, double mouseX, double mouseY) {
         //Input
         for (int i = 0; i < MortarTileEntity.inputSize / 2; i++) {
-            slot.draw(0, i * 18);
-            slot.draw(18, i * 18);
+            slot.draw(stack, 0, i * 18);
+            slot.draw(stack, 18, i * 18);
         }
         if (!recipe.fluidInput.isEmpty()) {
-            this.tank.draw(40, 0);
+            this.tank.draw(stack, 40, 0);
         }
         //Output
-        slot.draw(100, 20);
-        arrow.draw(60, 18);
+        slot.draw(stack, 100, 20);
+        arrow.draw(stack, 60, 18);
     }
 
     @Override

@@ -21,6 +21,22 @@ archivesBaseName = "${mod_name}"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
+def version_properties = [
+        "mod_version"       : mod_version,
+        "titanium_version"    : titanium_version,
+        "forge_version" : forge_version,
+        "loader_version": loader_version
+]
+
+processResources {
+    outputs.upToDateWhen { false }
+    from(sourceSets.main.resources) {
+        include "META-INF/mods.toml"
+        expand version_properties
+    }
+    into "$buildDir/resources/main/"
+}
+
 minecraft {
     mappings channel: "snapshot", version: "${mappings_version}"
 
@@ -77,9 +93,9 @@ dependencies {
             transitive = false
         })
     }
-    compile fg.deobf("mezz.jei:jei-1.15.2:6.0.0.2")
+    compile fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
     compile fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
-    compile fg.deobf("xyz.brassgoggledcoders:PatchouliProvider:1.15.2-1.0.0-Snapshot.5")
+    //compile fg.deobf("xyz.brassgoggledcoders:PatchouliProvider:1.15.2-1.0.0-Snapshot.5")
 }
 
 jar {

@@ -71,7 +71,7 @@ public class WorkshopJEIPlugin implements IModPlugin {
         registration.addGuiContainerHandler(BasicAddonScreen.class, new IGuiContainerHandler<BasicAddonScreen>() {
             @Override
             @Nonnull
-            public Collection<IGuiClickableArea> getGuiClickableAreas(@Nonnull BasicAddonScreen containerScreen) {
+            public Collection<IGuiClickableArea> getGuiClickableAreas(@Nonnull BasicAddonScreen containerScreen, double mouseX, double mouseY) {
                 Collection<IGuiClickableArea> areas = new ArrayList<>();
                 if(containerScreen.getContainer().getProvider() instanceof BasicMachineTileEntity) {
                     containerScreen.getAddons().stream()

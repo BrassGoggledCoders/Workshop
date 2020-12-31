@@ -94,7 +94,7 @@ public class WorkshopDataGenerator {
             dataGenerator.addProvider(new WorkshopItemTagsProvider(dataGenerator, null));
             dataGenerator.addProvider(new WorkshopFluidTagsProvider(dataGenerator));
 
-            dataGenerator.addProvider(new WorkshopBookProvider(dataGenerator));
+            //dataGenerator.addProvider(new WorkshopBookProvider(dataGenerator));
         }
     }
 }
