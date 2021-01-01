@@ -44,17 +44,20 @@ minecraft {
         client {
             workingDirectory project.file("run")
             source sourceSets.main
+            properties 'mixin.env.disableRefMap': 'true'
         }
 
         server {
             workingDirectory project.file("run")
             source sourceSets.main
+            properties 'mixin.env.disableRefMap': 'true'
         }
 
         data {
             workingDirectory project.file("run")
             environment 'target', 'fmluserdevdata'
             properties 'fml.earlyprogresswindow': 'false'
+            properties 'mixin.env.disableRefMap': 'true'
 
             args '--all', '--output', file('src/datagen/resources/'),
                     '--mod', '${mod_name}', '--reports',
