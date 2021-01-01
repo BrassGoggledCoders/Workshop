@@ -14,11 +14,14 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import xyz.brassgoggledcoders.workshop.tileentity.DryingBasinTileEntity;
 import xyz.brassgoggledcoders.workshop.util.FluidRenderer;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+@OnlyIn(value = Dist.CLIENT)
 public class DryingBasinTileEntityRenderer extends TileEntityRenderer<DryingBasinTileEntity> {
 
     public DryingBasinTileEntityRenderer(TileEntityRendererDispatcher dispatcher) {

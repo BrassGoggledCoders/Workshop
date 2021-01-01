@@ -12,6 +12,8 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
 import xyz.brassgoggledcoders.workshop.tileentity.PressTileEntity;
 import xyz.brassgoggledcoders.workshop.util.FluidRenderer;
@@ -21,6 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import static xyz.brassgoggledcoders.workshop.block.PressBlock.FACING;
 import static xyz.brassgoggledcoders.workshop.content.WorkshopBlocks.PRESS_ARM;
 
+@OnlyIn(value = Dist.CLIENT)
 public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity> {
 
     public PressTileEntityRenderer(TileEntityRendererDispatcher dispatcher) {

@@ -1,7 +1,6 @@
 package xyz.brassgoggledcoders.workshop;
 
 import com.hrznstudio.titanium.tab.TitaniumTab;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.item.Foods;
 import net.minecraft.item.ItemGroup;
@@ -13,7 +12,6 @@ import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
@@ -36,7 +34,6 @@ public class Workshop {
     public Workshop() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         modBus.addListener(this::commonSetup);
-        modBus.addListener(this::clientSetup);
         WorkshopRecipes.register(modBus);
         WorkshopFluids.register(modBus);
         WorkshopItems.register(modBus);
@@ -64,9 +61,5 @@ public class Workshop {
             ComposterBlock.registerCompostable(0.05F, WorkshopBlocks.TEA_PLANT.getItem());
             ComposterBlock.registerCompostable(0.1F, WorkshopItems.TEA_LEAVES.get());
         });
-    }
-
-    private void clientSetup(final FMLClientSetupEvent event) {
-        ClientEventHandler.clientStartUpEvent();
     }
 }

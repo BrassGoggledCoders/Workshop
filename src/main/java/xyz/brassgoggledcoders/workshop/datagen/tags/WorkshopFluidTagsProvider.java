@@ -6,8 +6,6 @@ import net.minecraft.data.FluidTagsProvider;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ITag;
-import net.minecraft.tags.Tag;
-import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 
 import javax.annotation.Nonnull;

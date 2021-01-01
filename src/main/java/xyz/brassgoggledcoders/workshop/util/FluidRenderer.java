@@ -13,6 +13,8 @@ import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nullable;
@@ -26,6 +28,7 @@ import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
  *
  */
 
+@OnlyIn(value = Dist.CLIENT)
 public class FluidRenderer {
 
     protected static Minecraft mc = Minecraft.getInstance();

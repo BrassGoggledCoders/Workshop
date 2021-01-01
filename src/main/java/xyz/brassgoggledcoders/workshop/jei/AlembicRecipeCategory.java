@@ -19,7 +19,6 @@ import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
 import xyz.brassgoggledcoders.workshop.tileentity.AlembicTileEntity;
 import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

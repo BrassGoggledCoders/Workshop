@@ -28,6 +28,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.ItemStackHandler;
 import org.lwjgl.opengl.GL11;
 import xyz.brassgoggledcoders.workshop.tileentity.MortarTileEntity;
@@ -35,6 +37,7 @@ import xyz.brassgoggledcoders.workshop.tileentity.MortarTileEntity;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@OnlyIn(value = Dist.CLIENT)
 public class HUDRender {
 
     public static void render() {

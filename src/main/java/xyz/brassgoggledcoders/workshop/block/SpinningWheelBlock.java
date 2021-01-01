@@ -10,11 +10,8 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.workshop.tileentity.SpinningWheelTileEntity;
-
-import javax.annotation.ParametersAreNonnullByDefault;
 
 public class SpinningWheelBlock extends GUITileBlock<SpinningWheelTileEntity> {
 

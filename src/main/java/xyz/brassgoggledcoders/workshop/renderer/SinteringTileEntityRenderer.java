@@ -9,8 +9,11 @@ import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import xyz.brassgoggledcoders.workshop.tileentity.SinteringFurnaceTileEntity;
 
+@OnlyIn(value = Dist.CLIENT)
 public class SinteringTileEntityRenderer extends TileEntityRenderer<SinteringFurnaceTileEntity> {
 
     public SinteringTileEntityRenderer(TileEntityRendererDispatcher dispatcher) {

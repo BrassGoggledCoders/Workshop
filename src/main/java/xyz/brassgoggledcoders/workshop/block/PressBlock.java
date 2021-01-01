@@ -22,7 +22,6 @@ import xyz.brassgoggledcoders.workshop.tileentity.PressTileEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Objects;
 
 public class PressBlock extends GUITileBlock<PressTileEntity> {
 

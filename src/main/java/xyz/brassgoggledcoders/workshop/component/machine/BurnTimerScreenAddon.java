@@ -10,12 +10,15 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+@OnlyIn(value = Dist.CLIENT)
 public class BurnTimerScreenAddon<T extends IComponentHarness> extends BasicScreenAddon {
 
     private BurnTimerComponent<T> progressBar;

@@ -70,16 +70,4 @@ public class WorkshopEventHandler {
         return TableLootEntry.builder(table)
                 .weight(1);
     }
-
-    //TODO Can we do this more efficiently?
-    @SubscribeEvent
-    public static void onRenderGameOverlayPostEvent(RenderGameOverlayEvent.Post event) {
-        RenderGameOverlayEvent.ElementType type = event.getType();
-
-        if (type != RenderGameOverlayEvent.ElementType.TEXT) {
-            return;
-        }
-
-        HUDRender.render();
-    }
 }
