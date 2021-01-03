@@ -1,9 +1,18 @@
 package xyz.brassgoggledcoders.workshop.content;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.block.material.PushReaction;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.IWorldReader;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
@@ -11,8 +20,10 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.Workshop;
+import xyz.brassgoggledcoders.workshop.fluid.HoneyFluid;
 
 import java.util.Collection;
+import java.util.function.Supplier;
 
 public class WorkshopFluids {
     private static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, Workshop.MOD_ID);
@@ -20,6 +31,24 @@ public class WorkshopFluids {
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Workshop.MOD_ID);
 
     public static final int BOTTLE_VOLUME = 333;//mB
+
+    public static final Material HONEY_MATERIAL = (new Material.Builder(MaterialColor.WATER)).doesNotBlockMovement().notSolid().replaceable().liquid().build();
+    private static Supplier honey = () -> new HoneyFluid.Source(WorkshopFluids.HONEY_PROPERTIES);
+    public static final FluidRegistryObjectGroup<HoneyFluid.Source, HoneyFluid.Flowing> HONEY = new FluidRegistryObjectGroup<>("honey",
+            honey, () -> new HoneyFluid.Flowing(WorkshopFluids.HONEY_PROPERTIES), () -> new FlowingFluidBlock(honey, Block.Properties.create(HONEY_MATERIAL).noDrops()) {
+        @Override
+        public boolean isStickyBlock(BlockState state) {
+            return state.getFluidState().isSource();
+        }
+    }).register(FLUIDS, BLOCKS, ITEMS);
+
+    public static final ForgeFlowingFluid.Properties HONEY_PROPERTIES = new ForgeFlowingFluid.Properties(HONEY, HONEY::getFlowing,
+            FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
+                    new ResourceLocation("minecraft", "block/water_flow"))
+                    .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
+                    .color(fromHex("EBA937")))
+            .block(HONEY::getBlock)
+            .bucket(HONEY::getBucket);
 
     public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> BRINE = new FluidRegistryObjectGroup<>("brine", () ->
             new ForgeFlowingFluid.Source(WorkshopFluids.BRINE_PROPERTIES), () ->

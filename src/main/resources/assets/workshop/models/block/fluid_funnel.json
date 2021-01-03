@@ -1,5 +1,5 @@
 {
-  "parent": "block/hopper",
+  "parent": "minecraft:block/hopper",
   "textures": {
     "side": "workshop:blocks/seasoned_log",
     "inside": "workshop:blocks/seasoned_log",

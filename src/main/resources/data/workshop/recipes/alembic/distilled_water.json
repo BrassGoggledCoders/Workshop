@@ -29,14 +29,6 @@
         "item": "workshop:silt",
         "count": 1
       }
-    },
-    {
-      "min": 0,
-      "max": 1,
-      "stack": {
-        "item": "workshop:chalk",
-        "count": 1
-      }
     }
   ],
   "processingTime": 500,

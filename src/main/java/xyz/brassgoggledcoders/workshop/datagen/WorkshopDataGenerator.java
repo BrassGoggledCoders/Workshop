@@ -22,6 +22,7 @@ import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopItemModelProvider;
 import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopResourceBlockstateProvider;
 import xyz.brassgoggledcoders.workshop.datagen.models.WorkshopResourceModelProvider;
 import xyz.brassgoggledcoders.workshop.datagen.recipe.*;
+import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopBlockTagsProvider;
 import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopFluidTagsProvider;
 import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopItemTagsProvider;
 import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
@@ -31,7 +32,6 @@ import java.util.Iterator;
 
 @Mod.EventBusSubscriber(modid = Workshop.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class WorkshopDataGenerator {
-
     static {
         JSONSerializableDataHandler.map(TileEntityType.class, (type) -> new JsonPrimitive(type.getRegistryName().toString()),
                 (element) -> ForgeRegistries.TILE_ENTITIES.getValue(new ResourceLocation(element.getAsString())));
@@ -91,8 +91,10 @@ public class WorkshopDataGenerator {
             dataGenerator.addProvider(new MortarRecipeProvider(dataGenerator));
             dataGenerator.addProvider(new DryingBasinRecipeProvider(dataGenerator));
 
-            dataGenerator.addProvider(new WorkshopItemTagsProvider(dataGenerator, null));
-            dataGenerator.addProvider(new WorkshopFluidTagsProvider(dataGenerator));
+            WorkshopBlockTagsProvider blockTagsProvider = new WorkshopBlockTagsProvider(dataGenerator, existingFileHelper);
+            dataGenerator.addProvider(blockTagsProvider);
+            dataGenerator.addProvider(new WorkshopItemTagsProvider(dataGenerator, blockTagsProvider, existingFileHelper));
+            dataGenerator.addProvider(new WorkshopFluidTagsProvider(dataGenerator,existingFileHelper));
 
             //dataGenerator.addProvider(new WorkshopBookProvider(dataGenerator));
         }

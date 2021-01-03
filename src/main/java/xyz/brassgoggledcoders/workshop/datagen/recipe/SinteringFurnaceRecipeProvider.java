@@ -37,7 +37,7 @@ public class SinteringFurnaceRecipeProvider extends TitaniumSerializableProvider
 
     @Override
     public void add(Map<IJsonFile, IJSONGenerator> serializables) {
-        for (BlockRegistryObjectGroup<?, ?, ?> concrete : WorkshopBlocks.CONCRETES) {
+        /*for (BlockRegistryObjectGroup<?, ?, ?> concrete : WorkshopBlocks.CONCRETES) {
             ResourceLocation location = new ResourceLocation("minecraft", concrete.getName().replace("_rebarred_", "_") + "_powder");
             recipes.add(new Builder(concrete.getName())
                     .setInput(Ingredient.fromItems(Blocks.IRON_BARS))
@@ -99,7 +99,7 @@ public class SinteringFurnaceRecipeProvider extends TitaniumSerializableProvider
                 .setOutput(new ItemStack(Items.GOLDEN_APPLE))
                 .setTime(120)
                 .build());
-        recipes.forEach(recipe -> serializables.put(recipe, recipe));
+        recipes.forEach(recipe -> serializables.put(recipe, recipe));*/
     }
 
     protected static class Builder {

@@ -367,7 +367,7 @@ public class FluidRenderer {
         return null;
     }
 
-    private static RenderType blockRenderType = RenderType.makeType(MOD_ID + ":block_render_type",
+    private static final RenderType blockRenderType = RenderType.makeType(MOD_ID + ":block_render_type",
             DefaultVertexFormats.POSITION_COLOR_TEX_LIGHTMAP, 7, 256, true, false,
             RenderType.State.getBuilder().texture(new RenderState.TextureState(PlayerContainer.LOCATION_BLOCKS_TEXTURE, false, false))
                     .shadeModel(RenderType.SHADE_ENABLED)

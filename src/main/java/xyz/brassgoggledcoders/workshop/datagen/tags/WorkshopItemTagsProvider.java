@@ -10,6 +10,8 @@ import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.ForgeItemTagsProvider;
 import net.minecraftforge.fluids.FluidStack;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.capabilities.BottleCapabilityProvider;
@@ -31,12 +33,13 @@ public class WorkshopItemTagsProvider extends ItemTagsProvider {
     //Filled automatically by Titanium
     public static final ITag.INamedTag<Item> IRON_FILM = ItemTags.makeWrapperTag("forge:films/iron");
 
-    public WorkshopItemTagsProvider(DataGenerator generator, BlockTagsProvider blockTagsProvider) {
-        super(generator, blockTagsProvider);
+    public WorkshopItemTagsProvider(DataGenerator gen, BlockTagsProvider blockTagProvider, ExistingFileHelper existingFileHelper)
+    {
+        super(gen, blockTagProvider, Workshop.MOD_ID, existingFileHelper);
     }
 
     @Override
-    protected void registerTags() {
+    public void registerTags() {
         this.getOrCreateBuilder(RAW_MEAT).add(Items.RABBIT, Items.CHICKEN, Items.BEEF, Items.MUTTON, Items.PORKCHOP);
         this.getOrCreateBuilder(Tags.Items.SLIMEBALLS).add(BottleCapabilityProvider.getFilledBottle(new FluidStack(WorkshopFluids.ADHESIVE_OILS.getFluid().getFluid(), WorkshopFluids.BOTTLE_VOLUME)).getItem());
         this.getOrCreateBuilder(TEA_SEEDS).add(WorkshopBlocks.TEA_PLANT.getItem());

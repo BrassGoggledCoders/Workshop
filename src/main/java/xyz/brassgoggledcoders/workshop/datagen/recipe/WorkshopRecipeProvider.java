@@ -116,13 +116,13 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('C', Tags.Items.CHESTS_WOODEN)
                 .build(consumer);
                 */
-        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SCRAP_BIN.getBlock())
+        /*TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SCRAP_BIN.getBlock())
                 .patternLine("III")
                 .patternLine("ICI")
                 .patternLine("III")
                 .key('I', ItemTags.getCollection().get(new ResourceLocation("forge", "films/iron")))
                 .key('C', Items.COMPOSTER)
-                .build(consumer);
+                .build(consumer);*/
         TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SCRAP_BIN.getBlock())
                 .setName(new ResourceLocation(Workshop.MOD_ID, "scrap_bin_alt"))
                 .patternLine("III")

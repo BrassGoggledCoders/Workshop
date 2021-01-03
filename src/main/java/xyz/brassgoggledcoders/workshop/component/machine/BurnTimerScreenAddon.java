@@ -21,7 +21,7 @@ import java.util.List;
 @OnlyIn(value = Dist.CLIENT)
 public class BurnTimerScreenAddon<T extends IComponentHarness> extends BasicScreenAddon {
 
-    private BurnTimerComponent<T> progressBar;
+    private final BurnTimerComponent<T> progressBar;
     private IAssetProvider provider;
 
     public BurnTimerScreenAddon(int posX, int posY, BurnTimerComponent<T> progressBarComponent) {

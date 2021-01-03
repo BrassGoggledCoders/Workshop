@@ -22,7 +22,7 @@ public class FluidRegistryObjectGroup<F extends FlowingFluid, FF extends Fluid> 
     private final String name;
     private final Supplier<F> fluidCreator;
     private final Supplier<FF> flowingFluidCreator;
-    private final Supplier<FlowingFluidBlock> blockCreator;
+    private Supplier<FlowingFluidBlock> blockCreator;
 
     private RegistryObject<F> fluid;
     private RegistryObject<FF> flowingFluid;
@@ -30,10 +30,14 @@ public class FluidRegistryObjectGroup<F extends FlowingFluid, FF extends Fluid> 
     private RegistryObject<BucketItem> bucket;
 
     public FluidRegistryObjectGroup(String name, Supplier<F> fluidCreator, Supplier<FF> flowingFluidCreator) {
+        this(name, fluidCreator, flowingFluidCreator, () -> new FlowingFluidBlock(fluidCreator, Block.Properties.from(Blocks.WATER).noDrops()));
+    }
+
+    public FluidRegistryObjectGroup(String name, Supplier<F> fluidCreator, Supplier<FF> flowingFluidCreator, Supplier<FlowingFluidBlock> blockCreator) {
         this.name = name;
         this.fluidCreator = fluidCreator;
         this.flowingFluidCreator = flowingFluidCreator;
-        this.blockCreator = () -> new FlowingFluidBlock(fluid, Block.Properties.from(Blocks.WATER).noDrops()); //TODO
+        this.blockCreator = blockCreator; //TODO
     }
 
     public FluidRegistryObjectGroup<F, FF> register(DeferredRegister<Fluid> fluidRegistry, DeferredRegister<Block> blockRegistry) {
