@@ -20,7 +20,6 @@ import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
-import xyz.brassgoggledcoders.workshop.datagen.language.WorkshopUSLanguageProvider;
 import xyz.brassgoggledcoders.workshop.tileentity.BasicMachineTileEntity;
 import xyz.brassgoggledcoders.workshop.tileentity.DryingBasinTileEntity;
 import xyz.brassgoggledcoders.workshop.tileentity.MortarTileEntity;
@@ -33,6 +32,7 @@ import java.util.Collection;
 @JeiPlugin
 @SuppressWarnings("unused")
 public class WorkshopJEIPlugin implements IModPlugin {
+
     //TODO Category for displaying potential scrap bag loot
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
@@ -63,7 +63,7 @@ public class WorkshopJEIPlugin implements IModPlugin {
             registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.SEASONING_BARREL_SERIALIZER.get().getRecipeType()).values(), SeasoningBarrelTileEntity.ID);
             registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.DRYING_BASIN_SERIALIZER.get().getRecipeType()).values(), DryingBasinTileEntity.ID);
         }
-        registration.addIngredientInfo(new ItemStack(WorkshopItems.SCRAP_BAG.get()), VanillaTypes.ITEM, WorkshopUSLanguageProvider.SCRAP_BAG_DESC);
+        registration.addIngredientInfo(new ItemStack(WorkshopItems.SCRAP_BAG.get()), VanillaTypes.ITEM, Workshop.SCRAP_BAG_DESC);
     }
 
     @Override

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "workshop:block/obsidian_plate_up"
+    },
+    "powered=true": {
+      "model": "workshop:block/obsidian_plate_down"
+    }
+  }
+}

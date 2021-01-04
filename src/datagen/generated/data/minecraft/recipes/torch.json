@@ -1,0 +1,36 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "values": [
+            {
+              "item": "minecraft:torch",
+              "type": "forge:item_exists"
+            }
+          ],
+          "type": "forge:and"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "T",
+          "S"
+        ],
+        "key": {
+          "T": {
+            "tag": "forge:tallow"
+          },
+          "S": {
+            "tag": "forge:rods/wooden"
+          }
+        },
+        "result": {
+          "item": "minecraft:torch"
+        }
+      }
+    }
+  ]
+}

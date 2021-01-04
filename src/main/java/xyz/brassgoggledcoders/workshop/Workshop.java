@@ -31,6 +31,8 @@ public class Workshop {
     public static final ItemGroup ITEM_GROUP = new TitaniumTab(MOD_ID,
             () -> new ItemStack(WorkshopBlocks.SEASONING_BARREL.getBlock()));
 
+    public static final String SCRAP_BAG_DESC = "description.jei.scrap_bag";
+
     public Workshop() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         modBus.addListener(this::commonSetup);

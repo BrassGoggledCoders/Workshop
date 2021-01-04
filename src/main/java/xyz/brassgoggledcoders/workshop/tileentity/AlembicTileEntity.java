@@ -13,9 +13,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
+import xyz.brassgoggledcoders.workshop.WorkshopItemTags;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
-import xyz.brassgoggledcoders.workshop.datagen.tags.WorkshopItemTagsProvider;
 import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
 import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
@@ -51,7 +51,7 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
                 .setInputFilter((stack, integer) -> false));
         this.getMachineComponent().addInventory(this.coldItem = new SidedInventoryComponent<AlembicTileEntity>("coldItem", 79, 20, 1, pos++)
                 .setColor(DyeColor.LIGHT_BLUE)
-                .setInputFilter((stack, integer) -> stack.getItem().isIn(WorkshopItemTagsProvider.COLD))
+                .setInputFilter((stack, integer) -> stack.getItem().isIn(WorkshopItemTags.COLD))
                 .setOnSlotChanged((stack, slot) -> {
                     if (this.coldItem.getStackInSlot(0).isEmpty()) {
                         this.getMachineComponent().getPrimaryBar().setProgressIncrease(1);

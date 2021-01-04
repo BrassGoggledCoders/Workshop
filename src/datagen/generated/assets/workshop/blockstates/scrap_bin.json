@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "workshop:block/scrap_bin"
+    },
+    "facing=south": {
+      "model": "workshop:block/scrap_bin",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "workshop:block/scrap_bin",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "workshop:block/scrap_bin",
+      "y": 90
+    }
+  }
+}

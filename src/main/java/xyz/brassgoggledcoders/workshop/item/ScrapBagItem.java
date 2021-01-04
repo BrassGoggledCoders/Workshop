@@ -10,14 +10,15 @@ import net.minecraft.loot.LootParameters;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.wrapper.PlayerInvWrapper;
+import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopEffects;
-import xyz.brassgoggledcoders.workshop.datagen.loot.WorkshopGiftLootTables;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -51,7 +52,7 @@ public class ScrapBagItem extends Item {
         if(position != null) {
             return worldIn.getServer()
                     .getLootTableManager()
-                    .getLootTableFromLocation(WorkshopGiftLootTables.SCRAP_BAG)
+                    .getLootTableFromLocation( new ResourceLocation(Workshop.MOD_ID, "gameplay/scrap_bag"))
                     .generate(new LootContext.Builder(worldIn)
                             .withParameter(LootParameters.field_237457_g_, new Vector3d(position.getX(), position.getY(), position.getZ()))
                             .withNullableParameter(LootParameters.THIS_ENTITY, playerIn)

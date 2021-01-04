@@ -1,3 +1,6 @@
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
 buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
@@ -21,12 +24,45 @@ archivesBaseName = "${mod_name}"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+        resources {
+            include '**/**'
+            //Add the generated main module resources
+            srcDirs += 'src/datagen/generated/'
+            //But exclude the cache of the generated data from what gets built
+            exclude '.cache'
+        }
+    }
+    //Data gen modules for the different modules
+    datagenmain { setupDataGenSourceSet(datagenmain, 'main') }
+}
+
+def setupDataGenSourceSet(SourceSet datagenSourceSet, String name) {
+    datagenSourceSet.java.srcDirs = ['src/datagen/' + name + '/java']
+    datagenSourceSet.resources.srcDirs = ['src/datagen/' + name + '/resources']
+    //datagenSourceSet.compileClasspath += project.sourceSets.api.output
+    datagenSourceSet.compileClasspath += project.sourceSets.main.output
+}
+
+configurations {
+    datagenmainCompile.extendsFrom(compile)
+    datagenmainImplementation.extendsFrom(implementation)
+    datagenmainCompileOnly.extendsFrom(compileOnly)
+    datagenmainRuntimeOnly.extendsFrom(runtimeOnly)
+}
+
 def version_properties = [
         "mod_version"       : mod_version,
         "titanium_version"    : titanium_version,
         "forge_version" : forge_version,
         "loader_version": loader_version
 ]
+
+def jsonPatterns = ["**/*.json", "**/*.mcmeta"]
 
 processResources {
     outputs.upToDateWhen { false }
@@ -35,6 +71,12 @@ processResources {
         expand version_properties
     }
     into "$buildDir/resources/main/"
+    //Minify json resources
+    doLast {
+        fileTree(dir: getOutputs().getFiles().getAsPath(), includes: jsonPatterns).each {
+            File file -> file.setText(JsonOutput.toJson(new JsonSlurper().parse(file)))
+        }
+    }
 }
 
 minecraft {
@@ -59,9 +101,14 @@ minecraft {
             properties 'fml.earlyprogresswindow': 'false'
             properties 'mixin.env.disableRefMap': 'true'
 
-            args '--all', '--output', file('src/datagen/resources/'),
-                    '--mod', '${mod_name}', '--reports',
+            args '--all', '--output', file('src/datagen/generated/'),
+                    '--mod', 'workshop', '--reports',
                     '--existing', sourceSets.main.resources.srcDirs[0]
+
+            //datagenSourceSet.compileClasspath += project.sourceSets.main.output
+            mods {
+                workshop.sources((SourceSet[]) [sourceSets.main, sourceSets.datagenmain])
+            }
         }
     }
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
