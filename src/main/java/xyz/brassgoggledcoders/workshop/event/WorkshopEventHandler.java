@@ -1,10 +1,14 @@
 package xyz.brassgoggledcoders.workshop.event;
 
 import net.minecraft.entity.CreatureAttribute;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.merchant.IMerchant;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
+import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.DyeableArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootEntry;
@@ -14,12 +18,16 @@ import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.FoodStats;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -30,9 +38,33 @@ import xyz.brassgoggledcoders.workshop.api.IStackingEffect;
 import xyz.brassgoggledcoders.workshop.content.WorkshopEffects;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 
+import java.util.Random;
+
 @Mod.EventBusSubscriber(modid = Workshop.MOD_ID)
 @SuppressWarnings("unused")
 public class WorkshopEventHandler {
+
+    @SubscribeEvent
+    public static void onProjectileImpact(ProjectileImpactEvent event) {
+        if(RayTraceResult.Type.ENTITY.equals(event.getRayTraceResult().getType())) {
+            Entity hit = ((EntityRayTraceResult)event.getRayTraceResult()).getEntity();
+            if(hit instanceof LivingEntity && ((LivingEntity) hit).isPotionActive(WorkshopEffects.WIRED.get())) {
+                event.setCanceled(true);
+                Random random = ((LivingEntity)hit).getRNG();
+                if(random.nextBoolean()) {
+                    ((LivingEntity) hit).attemptTeleport(hit.getPosX() + random.nextDouble(), hit.getPosY(), hit.getPosZ() + random.nextDouble(), false);
+                }
+                else {
+                    ((LivingEntity) hit).attemptTeleport(hit.getPosX() - random.nextDouble(), hit.getPosY(), hit.getPosZ() - random.nextDouble(), false);
+                }
+                //Did you just catch a projectile out of the air? Yes. You're that wired.
+                if(hit instanceof PlayerEntity && event.getEntity() instanceof ArrowEntity && random.nextInt(1000) == 0) {
+                    ((PlayerEntity) hit).inventory.addItemStackToInventory(((ArrowEntity)event.getEntity()).getArrowStack());
+                    event.getEntity().remove();
+                }
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void onTakeDamage(LivingHurtEvent event) {
@@ -65,6 +97,13 @@ public class WorkshopEventHandler {
     @SubscribeEvent
     public static void wakeUp(PlayerWakeUpEvent event) {
         event.getPlayer().removePotionEffect(WorkshopEffects.DRUNK.get());
+    }
+
+    @SubscribeEvent
+    public static void trySleep(PlayerSleepInBedEvent event) {
+        if(event.getPlayer().isPotionActive(WorkshopEffects.WIRED.get())) {
+            event.setResult(PlayerEntity.SleepResult.NOT_POSSIBLE_NOW);
+        }
     }
 
     @SubscribeEvent

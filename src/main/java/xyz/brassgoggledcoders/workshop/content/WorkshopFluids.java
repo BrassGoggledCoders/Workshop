@@ -1,18 +1,21 @@
 package xyz.brassgoggledcoders.workshop.content;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.material.PushReaction;
+import net.minecraft.entity.Entity;
+import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
+import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
@@ -63,10 +66,22 @@ public class WorkshopFluids {
             .block(MEAD::getBlock)
             .bucket(MEAD::getBucket);
 
-    public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> BRINE = new FluidRegistryObjectGroup<>("brine", () ->
-            new ForgeFlowingFluid.Source(WorkshopFluids.BRINE_PROPERTIES), () ->
-            new ForgeFlowingFluid.Flowing(WorkshopFluids.BRINE_PROPERTIES)
-    ).register(FLUIDS, BLOCKS, ITEMS);
+    private static final Supplier<ForgeFlowingFluid.Source> brine = () ->
+                new ForgeFlowingFluid.Source(WorkshopFluids.BRINE_PROPERTIES);
+    public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> BRINE = new FluidRegistryObjectGroup<>("brine", brine, () ->
+                    new ForgeFlowingFluid.Flowing(WorkshopFluids.BRINE_PROPERTIES), () -> new FlowingFluidBlock(brine, AbstractBlock.Properties.from(Blocks.WATER)) {
+        @Override
+        @SuppressWarnings("unused")
+        public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+            BlockState blockstate = worldIn.getBlockState(pos.up());
+            if (blockstate.isAir(worldIn, pos)) {
+                entityIn.onEnterBubbleColumnWithAirAbove(false);
+            } else {
+                entityIn.onEnterBubbleColumn(false);
+            }
+
+        }
+    }).register(FLUIDS, BLOCKS, ITEMS);
 
     public static final ForgeFlowingFluid.Properties BRINE_PROPERTIES = new ForgeFlowingFluid.Properties(BRINE,
             BRINE::getFlowing, FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),

@@ -116,6 +116,8 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addEffect(WorkshopEffects.INEBRIATED, "Inebriated");
         this.addEffect(WorkshopEffects.DRUNK, "Drunk");
         this.addEffect(WorkshopEffects.MELLOW, "Mellow");
+        this.addEffect(WorkshopEffects.RUSH, "Caffeine Rush");
+        this.addEffect(WorkshopEffects.WIRED, "Wired");
         //endregion
 
         //region JEI
