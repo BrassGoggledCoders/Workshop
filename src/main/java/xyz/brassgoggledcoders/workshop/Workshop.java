@@ -8,12 +8,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.ParallelDispatchEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -53,6 +51,8 @@ public class Workshop {
         WorkshopAPI.addDrinkableFluidBehaviour(WorkshopFluids.CIDER.getFluid(), new PotionDrinkableFluidBehaviour(new EffectInstance(Effects.STRENGTH, 200),
                 new EffectInstance(Effects.NAUSEA, 100)));
         WorkshopAPI.addDrinkableFluidBehaviour(WorkshopFluids.APPLE_JUICE.getFluid(), new FoodFluidBehaviour(Foods.COD));
+        WorkshopAPI.addDrinkableFluidBehaviour(WorkshopFluids.MEAD.getFluid(), new PotionDrinkableFluidBehaviour(new EffectInstance(WorkshopEffects.INEBRIATED.get(), 1000),
+                new EffectInstance(WorkshopEffects.MELLOW.get(), 500)));
         //Just because you *can* doesn't mean you should...
         WorkshopAPI.addDrinkableFluidBehaviour(WorkshopFluids.ADHESIVE_OILS.getFluid(), new PotionDrinkableFluidBehaviour(new EffectInstance(Effects.SLOWNESS, 300)));
         WorkshopAPI.addDrinkableFluidBehaviour(WorkshopFluids.BRINE.getFluid(), new PotionDrinkableFluidBehaviour(new EffectInstance(Effects.NAUSEA, 100)));

@@ -6,9 +6,11 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.workshop.api.IDrinkableFluidBehaviour;
 
+import java.util.Arrays;
+
 public class PotionDrinkableFluidBehaviour implements IDrinkableFluidBehaviour {
 
-    private final EffectInstance[] effectinstances;
+    protected final EffectInstance[] effectinstances;
 
     public PotionDrinkableFluidBehaviour(EffectInstance... effectinstances) {
         this.effectinstances = effectinstances;
@@ -24,4 +26,5 @@ public class PotionDrinkableFluidBehaviour implements IDrinkableFluidBehaviour {
             }
         }
     }
+
 }

@@ -50,6 +50,19 @@ public class WorkshopFluids {
             .block(HONEY::getBlock)
             .bucket(HONEY::getBucket);
 
+    public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> MEAD = new FluidRegistryObjectGroup<>("mead", () ->
+            new ForgeFlowingFluid.Source(WorkshopFluids.MEAD_PROPERTIES), () ->
+            new ForgeFlowingFluid.Flowing(WorkshopFluids.MEAD_PROPERTIES)
+    ).register(FLUIDS, BLOCKS, ITEMS);
+
+    public static final ForgeFlowingFluid.Properties MEAD_PROPERTIES = new ForgeFlowingFluid.Properties(MEAD,
+            MEAD::getFlowing, FluidAttributes.builder(new ResourceLocation("minecraft", "block/water_still"),
+            new ResourceLocation("minecraft", "block/water_flow"))
+            .overlay(new ResourceLocation("minecraft", "block/water_overlay"))
+            .color(fromHex("EBA937")))
+            .block(MEAD::getBlock)
+            .bucket(MEAD::getBucket);
+
     public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> BRINE = new FluidRegistryObjectGroup<>("brine", () ->
             new ForgeFlowingFluid.Source(WorkshopFluids.BRINE_PROPERTIES), () ->
             new ForgeFlowingFluid.Flowing(WorkshopFluids.BRINE_PROPERTIES)

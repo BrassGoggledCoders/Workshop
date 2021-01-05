@@ -75,6 +75,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         //this.addFluid(WorkshopFluids.GLACIAL_WATER, "Glacial Water");
         this.addFluid(WorkshopFluids.TEA, "Tea");
         this.addFluid(WorkshopFluids.HONEY, "Honey");
+        this.addFluid(WorkshopFluids.MEAD, "Mead");
         //endregion
 
         //region Guide
@@ -112,6 +113,9 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
 
         //region Effects
         this.addEffect(WorkshopEffects.STINKY, "Stinky");
+        this.addEffect(WorkshopEffects.INEBRIATED, "Inebriated");
+        this.addEffect(WorkshopEffects.DRUNK, "Drunk");
+        this.addEffect(WorkshopEffects.MELLOW, "Mellow");
         //endregion
 
         //region JEI

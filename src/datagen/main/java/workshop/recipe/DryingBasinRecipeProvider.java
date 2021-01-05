@@ -3,6 +3,7 @@ package workshop.recipe;
 import com.hrznstudio.titanium.recipe.generator.IJSONGenerator;
 import com.hrznstudio.titanium.recipe.generator.IJsonFile;
 import com.hrznstudio.titanium.recipe.generator.TitaniumSerializableProvider;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
@@ -14,6 +15,7 @@ import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
+import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 import xyz.brassgoggledcoders.workshop.recipe.DryingBasinRecipe;
 
@@ -43,6 +45,11 @@ public class DryingBasinRecipeProvider extends TitaniumSerializableProvider {
                 .setItemIn(Ingredient.fromItems(Items.KELP))
                 .setItemOut(new ItemStack(Items.DRIED_KELP))
                 .setTime(500)
+                .build());
+        recipes.add(new Builder("honey")
+                .setFluidIn(new FluidStack(WorkshopFluids.HONEY.get(), FluidAttributes.BUCKET_VOLUME))
+                .setItemOut(new ItemStack(Blocks.HONEY_BLOCK))
+                .setTime(1500)
                 .build());
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }

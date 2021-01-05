@@ -17,3 +17,4 @@
 /output/
 /run/
 /logs/
+/src/datagen/generated/.cache/cache
