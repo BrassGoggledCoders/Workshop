@@ -13,9 +13,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
-import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.api.WorkshopAPI;
 import xyz.brassgoggledcoders.workshop.capabilities.BottleCapabilityProvider;
 
@@ -40,7 +37,6 @@ public class BottleItem extends BucketItem {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        Workshop.LOGGER.warn(FluidUtil.getFluidContained(playerIn.getHeldItem(handIn)).orElse(FluidStack.EMPTY).getFluid().getRegistryName());
         playerIn.setActiveHand(handIn);
         return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
     }

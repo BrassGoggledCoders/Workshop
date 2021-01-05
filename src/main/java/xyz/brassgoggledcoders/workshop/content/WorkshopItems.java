@@ -47,7 +47,7 @@ public class WorkshopItems {
 
     //region Fluid Items
     public static final Map<ResourceLocation, RegistryObject<BottleItem>> BOTTLES = WorkshopFluids.getAllFluids().stream()
-            .filter(fluid -> !fluid.getId().getPath().contains("flowing"))
+            .filter(fluid -> !(fluid.getId().getPath().contains("flowing") || fluid.getId().getPath().contains("honey")))
             .map(fluid -> Pair.of(fluid.getId(), ITEMS.register(fluid.getId().getPath() + "_bottle", () -> new BottleItem(fluid, defaultProperties()))))
             //Can't get the fluid from the stack because the stack isn't registered yet
             .collect(Collectors.toMap(Pair::getKey, Pair::getValue));

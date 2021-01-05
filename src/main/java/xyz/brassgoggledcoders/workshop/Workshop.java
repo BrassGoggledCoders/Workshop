@@ -13,6 +13,7 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.ParallelDispatchEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -58,7 +59,7 @@ public class Workshop {
         WorkshopAPI.addDrinkableFluidBehaviour(WorkshopFluids.HELLBLOOD.getFluid(), (stack, worldIn, entityLiving) -> {
             entityLiving.setFire(10);
         });
-        DeferredWorkQueue.runLater(() -> {
+        event.enqueueWork(() -> {
             ComposterBlock.registerCompostable(0.2F, WorkshopItems.ASH.get());
             ComposterBlock.registerCompostable(0.05F, WorkshopBlocks.TEA_PLANT.getItem());
             ComposterBlock.registerCompostable(0.1F, WorkshopItems.TEA_LEAVES.get());

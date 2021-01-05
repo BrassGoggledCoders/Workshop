@@ -2,10 +2,7 @@ package xyz.brassgoggledcoders.workshop.capabilities;
 
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.PotionItem;
+import net.minecraft.item.*;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.Direction;
@@ -15,6 +12,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 import xyz.brassgoggledcoders.workshop.item.BottleItem;
@@ -39,7 +37,7 @@ public class BottleCapabilityProvider implements IFluidHandlerItem, ICapabilityP
     }
 
     public boolean canFillFluidType(FluidStack fluid) {
-        if (fluid.getFluid() == Fluids.WATER) {
+        if (fluid.getFluid() == Fluids.WATER || fluid.getFluid() == WorkshopFluids.HONEY.getFluid()) {
             return true;
         }
         return !getFilledBottle(fluid).isEmpty();
@@ -50,7 +48,11 @@ public class BottleCapabilityProvider implements IFluidHandlerItem, ICapabilityP
         Item item = container.getItem();
         if (item instanceof PotionItem && Potions.WATER.equals(PotionUtils.getPotionFromItem(container))) {
             return new FluidStack(Fluids.WATER, WorkshopFluids.BOTTLE_VOLUME);
-        } else if (item instanceof BottleItem) {
+        }
+        else if (item instanceof HoneyBottleItem) {
+            return new FluidStack(WorkshopFluids.HONEY.getFluid(), WorkshopFluids.BOTTLE_VOLUME);
+        }
+        else if (item instanceof BottleItem) {
             return new FluidStack(((BottleItem) item).getFluid(), WorkshopFluids.BOTTLE_VOLUME);
         }
         return FluidStack.EMPTY;
@@ -146,7 +148,11 @@ public class BottleCapabilityProvider implements IFluidHandlerItem, ICapabilityP
 
         if (fluid == Fluids.WATER) {
             return PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER);
-        } else if (WorkshopItems.BOTTLES.get(fluid.getRegistryName()) != null) {
+        }
+        else if (fluid == WorkshopFluids.HONEY.getFluid()) {
+            return new ItemStack(Items.HONEY_BOTTLE);
+        }
+        else if (WorkshopItems.BOTTLES.get(fluid.getRegistryName()) != null) {
             return new ItemStack(WorkshopItems.BOTTLES.get(fluid.getRegistryName()).get());
         }
 

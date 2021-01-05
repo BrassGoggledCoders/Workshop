@@ -1,5 +1,6 @@
 package xyz.brassgoggledcoders.workshop.content;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtils;
@@ -18,6 +19,7 @@ import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.capabilities.*;
 
 @Mod.EventBusSubscriber(modid = Workshop.MOD_ID)
+@SuppressWarnings("unused")
 public class WorkshopCapabilities {
     @CapabilityInject(ICollectorTarget.class)
     public static Capability<ICollectorTarget> COLLECTOR_TARGET;
@@ -30,8 +32,9 @@ public class WorkshopCapabilities {
 
     @SubscribeEvent
     public static void attachItemCapabilities(AttachCapabilitiesEvent<ItemStack> event) {
-        if (event.getObject().getItem() == Items.GLASS_BOTTLE ||
-                (event.getObject().getItem() == Items.POTION && Potions.WATER.equals(PotionUtils.getPotionFromItem(event.getObject())))) {
+        Item item = event.getObject().getItem();
+        if (item == Items.GLASS_BOTTLE || item == Items.HONEY_BOTTLE ||
+                (item == Items.POTION && Potions.WATER.equals(PotionUtils.getPotionFromItem(event.getObject())))) {
             event.addCapability(new ResourceLocation(Workshop.MOD_ID, "fluid_handler_item"),
                     new BottleCapabilityProvider(event.getObject()));
         }

@@ -22,7 +22,7 @@ public class FluidRegistryObjectGroup<F extends FlowingFluid, FF extends Fluid> 
     private final String name;
     private final Supplier<F> fluidCreator;
     private final Supplier<FF> flowingFluidCreator;
-    private Supplier<FlowingFluidBlock> blockCreator;
+    private final Supplier<FlowingFluidBlock> blockCreator;
 
     private RegistryObject<F> fluid;
     private RegistryObject<FF> flowingFluid;
