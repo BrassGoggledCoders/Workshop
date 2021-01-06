@@ -1,0 +1,6 @@
+{
+  "fluidIn": "{FluidName:\"workshop:honey\",Amount:333}",
+  "fluidOut": "{FluidName:\"workshop:mead\",Amount:333}",
+  "seasoningTime": 3600,
+  "type": "workshop:seasoning_barrel"
+}

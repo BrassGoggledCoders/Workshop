@@ -71,6 +71,11 @@ public class SeasoningBarrelRecipeProvider extends TitaniumSerializableProvider 
                         .setItemOut(new ItemStack(pair.getSecond()))
                         .setTime(20 * 60 * 5)
                         .build()));
+        recipes.add(new Builder("mead")
+                .setFluidIn(new FluidStack(WorkshopFluids.HONEY.get(), WorkshopFluids.BOTTLE_VOLUME))
+                .setFluidOut(new FluidStack(WorkshopFluids.MEAD.get(), WorkshopFluids.BOTTLE_VOLUME))
+                .setTime(20 * 60 * 3)
+                .build());
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }
 
