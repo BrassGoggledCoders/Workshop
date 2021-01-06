@@ -9,18 +9,18 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
-import xyz.brassgoggledcoders.workshop.tileentity.CollectorTileEntity;
 
 import javax.annotation.Nonnull;
 
 public class CollectorRecipe extends WorkshopRecipe {
 
-    public TileEntityType<CollectorTileEntity> targetTileType;
+    //TODO
+    public TileEntityType targetTileType = TileEntityType.FURNACE;
     public Ingredient input;
     public ItemStack output;
     public int processingTime = 500;
 
-    public CollectorRecipe(ResourceLocation resourceLocation, TileEntityType<CollectorTileEntity> targetType, Ingredient input, ItemStack output, int processingTime) {
+    public CollectorRecipe(ResourceLocation resourceLocation, TileEntityType<?> targetType, Ingredient input, ItemStack output, int processingTime) {
         this(resourceLocation);
         this.targetTileType = targetType;
         this.input = input;

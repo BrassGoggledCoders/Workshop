@@ -17,6 +17,7 @@ import xyz.brassgoggledcoders.workshop.recipe.CollectorRecipe;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class CollectorRecipeProvider extends TitaniumSerializableProvider {
 
@@ -52,8 +53,8 @@ public class CollectorRecipeProvider extends TitaniumSerializableProvider {
             this.name = new ResourceLocation(Workshop.MOD_ID, name);
         }
 
-        public Builder setTarget(TileEntityType type) {
-            this.targetTileType = type;
+        public Builder setTarget(TileEntityType<?> type) {
+            this.targetTileType = Objects.requireNonNull(type);
             return this;
         }
 

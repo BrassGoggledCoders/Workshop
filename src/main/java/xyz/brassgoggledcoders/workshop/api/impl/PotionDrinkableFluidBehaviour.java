@@ -6,8 +6,6 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.workshop.api.IDrinkableFluidBehaviour;
 
-import java.util.Arrays;
-
 public class PotionDrinkableFluidBehaviour implements IDrinkableFluidBehaviour {
 
     protected final EffectInstance[] effectinstances;

@@ -20,10 +20,7 @@ import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
-import xyz.brassgoggledcoders.workshop.tileentity.BasicMachineTileEntity;
-import xyz.brassgoggledcoders.workshop.tileentity.DryingBasinTileEntity;
-import xyz.brassgoggledcoders.workshop.tileentity.MortarTileEntity;
-import xyz.brassgoggledcoders.workshop.tileentity.SeasoningBarrelTileEntity;
+import xyz.brassgoggledcoders.workshop.tileentity.*;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -38,12 +35,11 @@ public class WorkshopJEIPlugin implements IModPlugin {
     public void registerCategories(IRecipeCategoryRegistration registry) {
         final IGuiHelper guiHelper = registry.getJeiHelpers().getGuiHelper();
         registry.addRecipeCategories(
-                /*new AlembicRecipeCategory(guiHelper),
+                new AlembicRecipeCategory(guiHelper),
                 new SpinningWheelRecipeCategory(guiHelper),
                 new SinteringFurnaceRecipeCategory(guiHelper),
                 new PressRecipeCategory(guiHelper),
                 new MoltenChamberRecipeCategory(guiHelper),
-                 */
                 new SeasoningBarrelRecipeCategory(guiHelper),
                 new DryingBasinRecipeCategory(guiHelper),
                 new MortarRecipeCategory(guiHelper)
@@ -54,11 +50,11 @@ public class WorkshopJEIPlugin implements IModPlugin {
     public void registerRecipes(@Nonnull IRecipeRegistration registration) {
         if (Minecraft.getInstance().world != null) {
             final RecipeManager recipeManager = Minecraft.getInstance().world.getRecipeManager();
-            /*registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.PRESS_SERIALIZER.get().getRecipeType()).values(), PressRecipeCategory.ID);
-            registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.ALEMBIC_SERIALIZER.get().getRecipeType()).values(), AlembicRecipeCategory.ID);
-            registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.SPINNING_WHEEL_SERIALIZER.get().getRecipeType()).values(), SpinningWheelRecipeCategory.ID);
-            registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.MOLTEN_CHAMBER_SERIALIZER.get().getRecipeType()).values(), MoltenChamberRecipeCategory.ID);
-            registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.SINTERING_FURNACE_SERIALIZER.get().getRecipeType()).values(), SinteringFurnaceRecipeCategory.ID);*/
+            registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.PRESS_SERIALIZER.get().getRecipeType()).values(), PressTileEntity.ID);
+            registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.ALEMBIC_SERIALIZER.get().getRecipeType()).values(), AlembicTileEntity.ID);
+            registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.SPINNING_WHEEL_SERIALIZER.get().getRecipeType()).values(), SpinningWheelTileEntity.ID);
+            registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.MOLTEN_CHAMBER_SERIALIZER.get().getRecipeType()).values(), MoltenChamberTileEntity.ID);
+            registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.SINTERING_FURNACE_SERIALIZER.get().getRecipeType()).values(), SinteringFurnaceTileEntity.ID);
             registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.MORTAR_SERIALIZER.get().getRecipeType()).values(), MortarTileEntity.ID);
             registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.SEASONING_BARREL_SERIALIZER.get().getRecipeType()).values(), SeasoningBarrelTileEntity.ID);
             registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.DRYING_BASIN_SERIALIZER.get().getRecipeType()).values(), DryingBasinTileEntity.ID);

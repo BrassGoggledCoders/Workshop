@@ -18,7 +18,7 @@ public class AlembicRecipe extends WorkshopRecipe {
 
     public Ingredient[] input = new Ingredient[0];
     public FluidStack output = FluidStack.EMPTY;
-    public RangedItemStack[] residue;
+    public RangedItemStack[] residue = new RangedItemStack[0];
     public int processingTime = 0;
 
     public AlembicRecipe(ResourceLocation resourceLocation) {

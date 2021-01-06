@@ -137,10 +137,10 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .patternLine("AAA")
                 .key('A', Blocks.POLISHED_ANDESITE)
                 .build(consumer);
-        TitaniumShapelessRecipeBuilder.shapelessRecipe(WorkshopBlocks.SILO_BARREL.getBlock())
+        /*TitaniumShapelessRecipeBuilder.shapelessRecipe(WorkshopBlocks.SILO_BARREL.getBlock())
                 .addIngredient(Blocks.BARREL)
                 .addIngredient(WorkshopItemTags.IRON_FILM)
-                .build(consumer);
+                .build(consumer);*/
         //endsection
         //section Misc
         TitaniumShapedRecipeBuilder.shapedRecipe(Items.TORCH)
