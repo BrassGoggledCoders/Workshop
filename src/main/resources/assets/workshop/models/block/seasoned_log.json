@@ -1,7 +1,7 @@
 {
   "parent": "block/cube_column",
   "textures": {
-    "side": "workshop:blocks/seasoned_log",
-    "end": "workshop:blocks/seasoned_log_top"
+    "side": "workshop:block/seasoned_log",
+    "end": "workshop:block/seasoned_log_top"
   }
 }

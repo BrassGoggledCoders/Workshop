@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"2": "workshop:blocks/spinning_wheel",
-		"particle": "workshop:blocks/spinning_wheel"
+		"2": "workshop:block/spinning_wheel",
+		"particle": "workshop:block/spinning_wheel"
 	},
 	"elements": [
 		{

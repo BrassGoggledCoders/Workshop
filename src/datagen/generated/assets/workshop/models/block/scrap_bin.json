@@ -3,6 +3,6 @@
   "textures": {
     "side": "minecraft:block/hopper_outside",
     "front": "minecraft:block/hopper_outside",
-    "top": "workshop:blocks/scrap_bin_top"
+    "top": "workshop:block/scrap_bin_top"
   }
 }

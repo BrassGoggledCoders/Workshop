@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/honey",
-  "textures": {
-    "particle": "minecraft:block/water_still"
-  }
-}

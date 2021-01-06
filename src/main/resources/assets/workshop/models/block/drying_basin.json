@@ -1,9 +1,9 @@
 {
   "parent": "minecraft:block/cauldron",
   "textures": {
-    "side": "workshop:blocks/drying_basin_side",
-    "top": "workshop:blocks/drying_basin_top",
-    "bottom": "workshop:blocks/drying_basin_bottom",
+    "side": "workshop:block/drying_basin_side",
+    "top": "workshop:block/drying_basin_top",
+    "bottom": "workshop:block/drying_basin_bottom",
     "inside": "minecraft:block/polished_andesite"
   }
 }

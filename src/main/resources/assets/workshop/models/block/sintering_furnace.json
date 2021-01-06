@@ -1,8 +1,8 @@
 {
 	"textures": {
-		"0": "workshop:blocks/sintering_furnace",
+		"0": "workshop:block/sintering_furnace",
 		"1": "minecraft:block/iron_bars",
-		"particle": "workshop:blocks/sintering_furnace"
+		"particle": "workshop:block/sintering_furnace"
 	},
 	"elements": [
 		{

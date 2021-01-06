@@ -51,10 +51,10 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
         this.directionalBlock(WorkshopBlocks.COLLECTOR.getBlock(),
                 this.models().orientable("collector", mcLoc("block/furnace_top"), mcLoc("block/dropper_front_vertical"), mcLoc("block/furnace_top")));
         //this.horizontalBlock(WorkshopBlocks.BELLOWS.getBlock(),
-        //        this.models().orientable("bellows", mcLoc("block/barrel_bottom"), modLoc("blocks/bellows"), mcLoc("block/composter_side")));
+        //        this.models().orientable("bellows", mcLoc("block/barrel_bottom"), modLoc("block/bellows"), mcLoc("block/composter_side")));
         this.horizontalBlock(WorkshopBlocks.SCRAP_BIN.getBlock(),
-                this.models().orientable("scrap_bin", mcLoc("block/hopper_outside"), mcLoc("block/hopper_outside"), modLoc("blocks/scrap_bin_top")));
-        this.simpleBlock(WorkshopBlocks.MOLTEN_CHAMBER.getBlock(), this.models().cubeAll("molten_chamber", modLoc("blocks/molten_chamber")));
+                this.models().orientable("scrap_bin", mcLoc("block/hopper_outside"), mcLoc("block/hopper_outside"), modLoc("block/scrap_bin_top")));
+        this.simpleBlock(WorkshopBlocks.MOLTEN_CHAMBER.getBlock(), this.models().cubeAll("molten_chamber", modLoc("block/molten_chamber")));
         //this.simpleBlock(WorkshopBlocks.CHALK_WRITING.getBlock(), this.models().singleTexture("chalk", mcLoc(BLOCK_FOLDER + "/bedrock"), "particle", mcLoc(BLOCK_FOLDER + "/bedrock")));
         this.horizontalBlock(WorkshopBlocks.ALEMBIC.getBlock(), new ModelFile.ExistingModelFile(modLoc("block/alembic"), exFileHelper));
         //TODO De pluralise texture folders

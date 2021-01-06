@@ -1,5 +1,0 @@
-{
-  "parent": "workshop:item/bottle",
-  "loader": "forge:bucket",
-  "fluid": "workshop:glacial_water"
-}

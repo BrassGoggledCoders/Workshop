@@ -1,8 +1,8 @@
 {
     "parent": "block/cube_bottom_top",
     "textures": {
-        "top": "workshop:blocks/sealed_barrel_top",
-        "side": "workshop:blocks/sealed_barrel_side",
-        "bottom": "workshop:blocks/sealed_barrel_bottom"
+        "top": "workshop:block/sealed_barrel_top",
+        "side": "workshop:block/sealed_barrel_side",
+        "bottom": "workshop:block/sealed_barrel_bottom"
     }
 }

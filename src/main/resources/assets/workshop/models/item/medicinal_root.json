@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "workshop:items/medicinal_root"
+    "layer0": "workshop:item/medicinal_root"
   }
 }

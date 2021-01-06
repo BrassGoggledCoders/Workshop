@@ -1,6 +1,6 @@
 {
   "parent": "block/crop",
   "textures": {
-    "crop": "workshop:blocks/tea_plant_0"
+    "crop": "workshop:block/tea_plant_0"
   }
 }

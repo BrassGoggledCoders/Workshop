@@ -1,6 +1,6 @@
 {
   "parent":"item/generated",
   "textures": {
-    "layer0": "workshop:items/guide"
+    "layer0": "workshop:item/guide"
   }
 }

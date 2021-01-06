@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "workshop:items/scrap_bag"
+    "layer0": "workshop:item/scrap_bag"
   }
 }

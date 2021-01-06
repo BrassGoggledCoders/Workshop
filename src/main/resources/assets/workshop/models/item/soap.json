@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "workshop:items/soap"
+    "layer0": "workshop:item/soap"
   }
 }

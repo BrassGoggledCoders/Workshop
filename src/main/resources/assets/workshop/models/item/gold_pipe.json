@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "texture": "workshop:items/resource/pipe"
+    "texture": "workshop:item/resource/pipe"
   }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "workshop:items/leather_cordage"
+    "layer0": "workshop:item/leather_cordage"
   }
 }
