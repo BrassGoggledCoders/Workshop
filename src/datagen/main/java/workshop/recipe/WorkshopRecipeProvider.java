@@ -2,17 +2,19 @@ package workshop.recipe;
 
 import com.hrznstudio.titanium.recipe.generator.TitaniumRecipeProvider;
 import com.hrznstudio.titanium.recipe.generator.TitaniumShapedRecipeBuilder;
-import com.hrznstudio.titanium.recipe.generator.TitaniumShapelessRecipeBuilder;
 import net.minecraft.block.Blocks;
+import net.minecraft.data.CookingRecipeBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.WorkshopItemTags;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
+import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 
 import java.util.function.Consumer;
 
@@ -149,6 +151,8 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('T', WorkshopItemTags.TALLOW)
                 .key('S', Tags.Items.RODS_WOODEN)
                 .build(consumer);
+        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(ItemTags.SAPLINGS), WorkshopItems.ASH.get(), 0.05F, 20);
+        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(ItemTags.LEAVES), WorkshopItems.ASH.get(), 0.05F, 20);
         //endsection
         //TODO the builder doesn't support ItemStack outputs, only Items...
         //CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(WorkshopBlocks.BROKEN_ANVIL.getItem()), new ItemStack(Blocks.IRON_BLOCK, 3), 0.1F, 300);

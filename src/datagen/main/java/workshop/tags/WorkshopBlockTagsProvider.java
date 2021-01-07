@@ -4,6 +4,8 @@ import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import xyz.brassgoggledcoders.workshop.Workshop;
+import xyz.brassgoggledcoders.workshop.WorkshopBlockTags;
+import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 
 import javax.annotation.Nonnull;
 
@@ -14,7 +16,7 @@ public class WorkshopBlockTagsProvider extends BlockTagsProvider {
 
     @Override
     public void registerTags() {
-        //NO-OP
+        WorkshopBlocks.CONCRETES.forEach(c -> this.getOrCreateBuilder(WorkshopBlockTags.REBARRED_CONCRETE).add(c.getBlock()));
     }
 
     @Override

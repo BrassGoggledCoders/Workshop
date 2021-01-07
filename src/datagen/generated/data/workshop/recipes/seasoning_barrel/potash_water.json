@@ -1,0 +1,9 @@
+{
+  "itemIn": {
+    "item": "workshop:ash"
+  },
+  "fluidIn": "{FluidName:\"minecraft:water\",Amount:250}",
+  "fluidOut": "{FluidName:\"workshop:potash_water\",Amount:250}",
+  "seasoningTime": 1000,
+  "type": "workshop:seasoning_barrel"
+}

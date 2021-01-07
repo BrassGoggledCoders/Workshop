@@ -51,6 +51,10 @@ public class DryingBasinRecipeProvider extends TitaniumSerializableProvider {
                 .setItemOut(new ItemStack(Blocks.HONEY_BLOCK))
                 .setTime(1500)
                 .build());
+        recipes.add(new Builder("lye")
+                .setFluidIn(new FluidStack(WorkshopFluids.POTASH_WATER.get(), FluidAttributes.BUCKET_VOLUME / 4))
+                .setItemOut(new ItemStack(WorkshopItems.LYE.get()))
+                .build());
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }
 

@@ -11,6 +11,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fluids.FluidStack;
 import xyz.brassgoggledcoders.workshop.Workshop;
+import xyz.brassgoggledcoders.workshop.WorkshopBlockTags;
 import xyz.brassgoggledcoders.workshop.WorkshopItemTags;
 import xyz.brassgoggledcoders.workshop.capabilities.BottleCapabilityProvider;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
@@ -33,7 +34,7 @@ public class WorkshopItemTagsProvider extends ItemTagsProvider {
         this.getOrCreateBuilder(WorkshopItemTags.TEA_SEEDS).add(WorkshopBlocks.TEA_PLANT.getItem());
         this.getOrCreateBuilder(Tags.Items.SEEDS).add(WorkshopBlocks.TEA_PLANT.getItem());
         this.getOrCreateBuilder(WorkshopItemTags.COLD).add(Items.SNOW, Items.SNOW_BLOCK, Items.SNOWBALL, Items.ICE, Items.BLUE_ICE, Items.PACKED_ICE);
-        WorkshopBlocks.CONCRETES.forEach(c -> this.getOrCreateBuilder(WorkshopItemTags.REBARRED_CONCRETE).add(c.getItem()));
+        this.copy(WorkshopBlockTags.REBARRED_CONCRETE, WorkshopItemTags.REBARRED_CONCRETE);
         this.getOrCreateBuilder(WorkshopItemTags.TALLOW).add(WorkshopItems.TALLOW.get());
         this.getOrCreateBuilder(WorkshopItemTags.ROOTS).add(Items.POISONOUS_POTATO).addOptional(new ResourceLocation("quark", "root_item"));
         this.getOrCreateBuilder(WorkshopItemTags.SALT).add(WorkshopItems.SALT.get());

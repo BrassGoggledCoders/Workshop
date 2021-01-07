@@ -2,7 +2,6 @@ package workshop.models;
 
 import com.hrznstudio.titanium.Titanium;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 

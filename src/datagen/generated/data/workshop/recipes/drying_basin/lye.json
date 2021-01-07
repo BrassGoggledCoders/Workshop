@@ -1,0 +1,9 @@
+{
+  "fluidIn": "{FluidName:\"workshop:potash_water\",Amount:250}",
+  "itemOut": {
+    "item": "workshop:lye",
+    "count": 1
+  },
+  "dryingTime": 1000,
+  "type": "workshop:drying_basin"
+}

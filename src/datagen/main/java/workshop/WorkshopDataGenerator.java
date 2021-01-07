@@ -13,7 +13,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-import xyz.brassgoggledcoders.workshop.Workshop;
 import workshop.language.WorkshopGBLanguageProvider;
 import workshop.language.WorkshopUSLanguageProvider;
 import workshop.loot.WorkshopLootTableProvider;
@@ -25,6 +24,7 @@ import workshop.recipe.*;
 import workshop.tags.WorkshopBlockTagsProvider;
 import workshop.tags.WorkshopFluidTagsProvider;
 import workshop.tags.WorkshopItemTagsProvider;
+import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
 
 import java.util.Collections;

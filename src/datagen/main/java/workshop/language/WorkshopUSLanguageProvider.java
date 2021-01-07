@@ -76,6 +76,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addFluid(WorkshopFluids.TEA, "Tea");
         this.addFluid(WorkshopFluids.HONEY, "Honey");
         this.addFluid(WorkshopFluids.MEAD, "Mead");
+        this.addFluid(WorkshopFluids.POTASH_WATER, "Potash Water");
         //endregion
 
         //region Guide
