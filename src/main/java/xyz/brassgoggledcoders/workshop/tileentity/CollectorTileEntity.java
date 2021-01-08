@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.block.CollectorBlock;
-import xyz.brassgoggledcoders.workshop.capabilities.ICollectorTarget;
+import xyz.brassgoggledcoders.workshop.api.capabilities.ICollectorTarget;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopCapabilities;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;

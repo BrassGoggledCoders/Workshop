@@ -30,7 +30,6 @@ public class SinteringTileEntityRenderer extends TileEntityRenderer<SinteringFur
         ItemStack input = furnace.getInputInventory().getStackInSlot(0);
         ItemStack output = furnace.getOutputInventory().getStackInSlot(0);
         ItemStack powder1 = furnace.getPowderInventory().getStackInSlot(0);
-        ItemStack powder2 = furnace.getPowderInventory().getStackInSlot(1);
         Direction direction = furnace.getMachineComponent().getFacingDirection();
         float f = direction.getHorizontalAngle();
         //if (furnace.isInactive()) {
@@ -65,15 +64,7 @@ public class SinteringTileEntityRenderer extends TileEntityRenderer<SinteringFur
                 GlStateManager.scalef(0.3f, 0.3f, 0.3f);
                 //itemRenderer.renderItem(powder1, ItemCameraTransforms.TransformType.FIXED);
                 GlStateManager.popMatrix();
-            } else if (!powder2.isEmpty()) {
-                GlStateManager.pushMatrix();
-                //GlStateManager.translated(x + 0.5, y + 1.1, z + 0.5);
-                GlStateManager.rotatef(f, 0, 1, 0.0F);
-                GlStateManager.scalef(0.3f, 0.3f, 0.3f);
-                //itemRenderer.renderItem(powder2, ItemCameraTransforms.TransformType.FIXED);
-                GlStateManager.popMatrix();
             }
-
             // }
 
         //}

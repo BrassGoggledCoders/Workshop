@@ -18,7 +18,7 @@ public class ClientSetupEventHandler {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
         ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.PRESS.getTileEntityType(), PressTileEntityRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.SINTERING_FURNACE.getTileEntityType(), SinteringTileEntityRenderer::new);
+        //ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.SINTERING_FURNACE.getTileEntityType(), SinteringTileEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.DRYING_BASIN.getTileEntityType(), DryingBasinTileEntityRenderer::new);
         //ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.MORTAR.getTileEntityType(), MortarTileEntityRenderer::new);
 

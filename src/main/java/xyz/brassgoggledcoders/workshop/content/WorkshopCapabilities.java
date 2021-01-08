@@ -16,7 +16,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import xyz.brassgoggledcoders.workshop.Workshop;
-import xyz.brassgoggledcoders.workshop.capabilities.*;
+import xyz.brassgoggledcoders.workshop.api.capabilities.*;
 
 @Mod.EventBusSubscriber(modid = Workshop.MOD_ID)
 @SuppressWarnings("unused")

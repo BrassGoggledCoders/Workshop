@@ -13,7 +13,7 @@ import net.minecraftforge.fluids.FluidStack;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.WorkshopBlockTags;
 import xyz.brassgoggledcoders.workshop.WorkshopItemTags;
-import xyz.brassgoggledcoders.workshop.capabilities.BottleCapabilityProvider;
+import xyz.brassgoggledcoders.workshop.api.capabilities.BottleCapabilityProvider;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;

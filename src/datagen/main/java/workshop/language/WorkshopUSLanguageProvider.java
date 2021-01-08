@@ -7,7 +7,7 @@ import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.fluids.FluidStack;
 import org.codehaus.plexus.util.StringUtils;
 import xyz.brassgoggledcoders.workshop.Workshop;
-import xyz.brassgoggledcoders.workshop.capabilities.BottleCapabilityProvider;
+import xyz.brassgoggledcoders.workshop.api.capabilities.BottleCapabilityProvider;
 import xyz.brassgoggledcoders.workshop.content.*;
 import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
@@ -30,7 +30,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addBlock(WorkshopBlocks.SPINNING_WHEEL, "Spinning Wheel");
         int i = 0;
         for (BlockRegistryObjectGroup<?, ?, ?> concrete : WorkshopBlocks.CONCRETES) {
-            this.addBlock(concrete, String.format("%s Rebarred Concrete", StringUtils.capitaliseAllWords(DyeColor.values()[i++].name().replace("_", " "))));
+            this.addBlock(concrete, String.format("%s Rebarred Concrete", StringUtils.capitaliseAllWords(DyeColor.values()[i++].name().toLowerCase().replace("_", " "))));
         }
         this.addBlock(WorkshopBlocks.TEA_PLANT, "Tea");
         this.addBlock(WorkshopBlocks.SEALED_BARREL, "Sealed Barrel");

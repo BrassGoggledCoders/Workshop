@@ -3,14 +3,18 @@ package xyz.brassgoggledcoders.workshop.tileentity;
 
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.ItemHandlerHelper;
+import xyz.brassgoggledcoders.workshop.WorkshopBlockTags;
+import xyz.brassgoggledcoders.workshop.block.SinteringFurnaceBlock;
 import xyz.brassgoggledcoders.workshop.component.machine.BurnTimerComponent;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
@@ -25,8 +29,6 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
     private final SidedInventoryComponent<SinteringFurnaceTileEntity> powderInventory;
     private final SidedInventoryComponent<SinteringFurnaceTileEntity> inputInventory;
     private final SidedInventoryComponent<SinteringFurnaceTileEntity> outputInventory;
-    private final SidedInventoryComponent<SinteringFurnaceTileEntity> fuelInventory;
-    private final BurnTimerComponent<SinteringFurnaceTileEntity> burnTimer;
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public SinteringFurnaceTileEntity() {
@@ -34,11 +36,8 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
                 new ProgressBarComponent<SinteringFurnaceTileEntity>(76, 42, 100)
                         .setBarDirection(ProgressBarComponent.BarDirection.ARROW_RIGHT));
         int pos = 0;
-        this.getMachineComponent().addInventory(this.fuelInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("fuelInventory", 78, 70, 1, pos++)
-                .setColor(DyeColor.BLACK)
-                .setInputFilter((stack, slot) -> ForgeHooks.getBurnTime(stack) > 0));
         //TODO Prevent insertion by hand
-        this.getMachineComponent().addInventory(this.powderInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("powderInventory", 70, 19, 2, pos++)
+        this.getMachineComponent().addInventory(this.powderInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("powderInventory", 70, 19, 1, pos++)
                 .setColor(DyeColor.ORANGE)
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
         this.getMachineComponent().addInventory(this.inputInventory = (SidedInventoryComponent) new SidedInventoryComponent<>(InventoryUtil.ITEM_INPUT, 34, 42, 1, pos++)
@@ -46,12 +45,19 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
         this.getMachineComponent().addInventory(this.outputInventory = (SidedInventoryComponent) new SidedInventoryComponent<>(InventoryUtil.ITEM_OUTPUT, 120, 42, 1, pos++)
                 .setColor(InventoryUtil.ITEM_OUTPUT_COLOR));
-        this.getMachineComponent().addProgressBar(this.burnTimer = new BurnTimerComponent<>(60, 60, 0));
-        this.getMachineComponent().getPrimaryBar().setCanIncrease(this::canIncrease);
-        //Invert the bar - makes progress decrease from max to zero
-        this.burnTimer.setIncreaseType(false);
-        this.burnTimer.setCanReset(this::handleBurnTime);
+        this.getMachineComponent().getPrimaryBar().setCanIncrease((tile) -> hasHeat() && tile.hasInputs() && tile.getMachineComponent().getCurrentRecipe() != null);
         this.powderInventory.disableFacingAddon();
+    }
+
+    //FIXME Efficiency. Cache state checks
+    @Override
+    public void tick() {
+        if(this.getBlockState().get(SinteringFurnaceBlock.LIT) != this.hasHeat()) {
+            this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(SinteringFurnaceBlock.LIT, hasHeat()), 3);
+            this.markDirty();
+            this.markComponentDirty();
+        }
+        super.tick();
     }
 
     @Override
@@ -59,8 +65,6 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
         powderInventory.deserializeNBT(compound.getCompound("powderInventory"));
         inputInventory.deserializeNBT(compound.getCompound("targetInputInventory"));
         outputInventory.deserializeNBT(compound.getCompound("outputInventory"));
-        fuelInventory.deserializeNBT(compound.getCompound("fuelInventory"));
-        burnTimer.deserializeNBT(compound.getCompound("burnTimer"));
         super.read(state, compound);
     }
 
@@ -70,8 +74,6 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
         compound.put("powderInventory", powderInventory.serializeNBT());
         compound.put("targetInputInventory", inputInventory.serializeNBT());
         compound.put("outputInventory", outputInventory.serializeNBT());
-        compound.put("fuelInventory", fuelInventory.serializeNBT());
-        compound.put("burnTimer", burnTimer.serializeNBT());
         return super.write(compound);
     }
 
@@ -83,19 +85,6 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
     @Override
     public SinteringFurnaceTileEntity getSelf() {
         return this;
-    }
-
-    public boolean handleBurnTime(SinteringFurnaceTileEntity tile) {
-        ItemStack stack = tile.fuelInventory.getStackInSlot(0).copy();
-        int time = ForgeHooks.getBurnTime(stack);
-        //Only burn if there's work to do, like the vanilla furnace
-        if (!stack.isEmpty() && tile.hasInputs()) {
-            tile.burnTimer.setMaxProgress(time);
-            tile.fuelInventory.getStackInSlot(0).shrink(1);
-        } else {
-            tile.burnTimer.setMaxProgress(0);
-        }
-        return time > 0;
     }
 
     public SidedInventoryComponent<SinteringFurnaceTileEntity> getOutputInventory() {
@@ -110,13 +99,9 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
         return inputInventory;
     }
 
-    public SidedInventoryComponent<SinteringFurnaceTileEntity> getFuelInventory() {
-        return fuelInventory;
-    }
-
     @Override
     public boolean hasInputs() {
-        return !this.getInputInventory().getStackInSlot(0).isEmpty() && (!this.getPowderInventory().getStackInSlot(0).isEmpty() || !this.getPowderInventory().getStackInSlot(1).isEmpty());
+        return !this.getInputInventory().getStackInSlot(0).isEmpty() && !this.getPowderInventory().getStackInSlot(0).isEmpty();
     }
 
     @Override
@@ -141,16 +126,14 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
 
     @Override
     public void handleComplete(SinteringFurnaceRecipe currentRecipe) {
-        for (int i = 0; i < powderInventory.getSlots(); i++) {
-            powderInventory.getStackInSlot(i).shrink(1);
-        }
+        powderInventory.getStackInSlot(0).shrink(1);
         inputInventory.getStackInSlot(0).shrink(1);
         if (currentRecipe.itemOut != null && !currentRecipe.itemOut.isEmpty()) {
             ItemHandlerHelper.insertItem(outputInventory, currentRecipe.itemOut.copy(), false);
         }
     }
 
-    private boolean canIncrease(SinteringFurnaceTileEntity tile) {
-        return tile.burnTimer.getProgress() > 0 && this.hasInputs() && this.getMachineComponent().getCurrentRecipe() != null;
+    private boolean hasHeat() {
+        return this.getWorld().getBlockState(this.getPos().down()).getBlock().isIn(WorkshopBlockTags.HOT) || this.getWorld().getBlockState(this.getPos().down(2)).getBlock().isIn(WorkshopBlockTags.HOT) ;
     }
 }

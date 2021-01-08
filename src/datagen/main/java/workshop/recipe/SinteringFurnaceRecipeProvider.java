@@ -3,16 +3,24 @@ package workshop.recipe;
 import com.hrznstudio.titanium.recipe.generator.IJSONGenerator;
 import com.hrznstudio.titanium.recipe.generator.IJsonFile;
 import com.hrznstudio.titanium.recipe.generator.TitaniumSerializableProvider;
+import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.Workshop;
+import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
+import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 import xyz.brassgoggledcoders.workshop.recipe.SinteringFurnaceRecipe;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class SinteringFurnaceRecipeProvider extends TitaniumSerializableProvider {
 
@@ -24,7 +32,7 @@ public class SinteringFurnaceRecipeProvider extends TitaniumSerializableProvider
 
     @Override
     public void add(Map<IJsonFile, IJSONGenerator> serializables) {
-        /*for (BlockRegistryObjectGroup<?, ?, ?> concrete : WorkshopBlocks.CONCRETES) {
+        for (BlockRegistryObjectGroup<?, ?, ?> concrete : WorkshopBlocks.CONCRETES) {
             ResourceLocation location = new ResourceLocation("minecraft", concrete.getName().replace("_rebarred_", "_") + "_powder");
             recipes.add(new Builder(concrete.getName())
                     .setInput(Ingredient.fromItems(Blocks.IRON_BARS))
@@ -45,7 +53,7 @@ public class SinteringFurnaceRecipeProvider extends TitaniumSerializableProvider
                 .setOutput(new ItemStack(WorkshopBlocks.OBSIDIAN_PLATE.getBlock()))
                 .setTime(60 * 20)
                 .build());
-        for (ResourceMaterial material : ResourceRegistry.getMaterials()) {
+        /*for (ResourceMaterial material : ResourceRegistry.getMaterials()) {
             Map<String, ForgeRegistryEntry> generated = material.getGenerated();
             if (generated.containsKey("dust")) {
                 if (generated.containsKey("film")) {
@@ -74,19 +82,19 @@ public class SinteringFurnaceRecipeProvider extends TitaniumSerializableProvider
                 .setOutput(new ItemStack(WorkshopResourcePlugin.GLASS_PIPE.getItem()))
                 .setTime(20)
                 .build());
+                recipes.add(new Builder("golden_apple")
+                .setInput(Ingredient.fromItems(WorkshopItems.CARAMEL_APPLE.get()))
+                .setPowder(Ingredient.fromTag(Objects.requireNonNull(ItemTags.getCollection().get(new ResourceLocation("forge", "dusts/gold")))))
+                .setOutput(new ItemStack(Items.GOLDEN_APPLE))
+                .setTime(120)
+                .build());*/
         recipes.add(new Builder("sealed_barrel")
                 .setInput(Ingredient.fromItems(Blocks.BARREL))
                 .setPowder(Ingredient.fromItems(WorkshopItems.ROSIN.get()))
                 .setOutput(new ItemStack(WorkshopBlocks.SEALED_BARREL.getItem()))
                 .setTime(60)
                 .build());
-        recipes.add(new Builder("golden_apple")
-                .setInput(Ingredient.fromItems(WorkshopItems.CARAMEL_APPLE.get()))
-                .setPowder(Ingredient.fromTag(ItemTags.getCollection().get(new ResourceLocation("forge", "dusts/gold"))))
-                .setOutput(new ItemStack(Items.GOLDEN_APPLE))
-                .setTime(120)
-                .build());
-        recipes.forEach(recipe -> serializables.put(recipe, recipe));*/
+        recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }
 
     protected static class Builder {

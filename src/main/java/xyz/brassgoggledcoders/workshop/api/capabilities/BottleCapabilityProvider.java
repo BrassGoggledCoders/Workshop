@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.capabilities;
+package xyz.brassgoggledcoders.workshop.api.capabilities;
 
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;

@@ -14,7 +14,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.workshop.api.WorkshopAPI;
-import xyz.brassgoggledcoders.workshop.capabilities.BottleCapabilityProvider;
+import xyz.brassgoggledcoders.workshop.api.capabilities.BottleCapabilityProvider;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;

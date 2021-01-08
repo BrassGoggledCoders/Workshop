@@ -57,16 +57,16 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('S', ItemTags.WOODEN_SLABS)
                 .key('W', ItemTags.PLANKS)
                 .key('I', Tags.Items.INGOTS_IRON)
-                .build(consumer);
+                .build(consumer);*/
         TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SINTERING_FURNACE.getBlock())
                 .patternLine("BDB")
                 .patternLine("G G")
                 .patternLine("BFB")
                 .key('B', Items.BRICKS)
                 .key('G', Tags.Items.GLASS)
-                .key('D', Blocks.DROPPER)
-                .key('F', Blocks.FURNACE)
-                .build(consumer);*/
+                .key('D', Blocks.IRON_BARS)
+                .key('F', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE)
+                .build(consumer);
         TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.BELLOWS.getBlock())
                 .patternLine("PPP")
                 .patternLine("WWW")

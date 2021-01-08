@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.Iterator;
 
 @Mod.EventBusSubscriber(modid = Workshop.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@SuppressWarnings("unused")
 public class WorkshopDataGenerator {
     static {
         JSONSerializableDataHandler.map(TileEntityType.class, (type) -> new JsonPrimitive(type.getRegistryName().toString()),
