@@ -1,14 +1,19 @@
 package xyz.brassgoggledcoders.workshop.block;
 
+import com.hrznstudio.titanium.component.sideness.IFacingComponent;
+import com.hrznstudio.titanium.util.FacingUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -16,6 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.tileentity.SinteringFurnaceTileEntity;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -33,7 +39,7 @@ public class SinteringFurnaceBlock extends GUITileBlock<SinteringFurnaceTileEnti
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
+        return super.getStateForPlacement(context).with(FACING, context.getPlacementHorizontalFacing().getOpposite());
     }
 
     @Override
@@ -61,6 +67,34 @@ public class SinteringFurnaceBlock extends GUITileBlock<SinteringFurnaceTileEnti
             double d6 = rand.nextDouble() * 9.0D / 16.0D;
             double d7 = direction$axis == Direction.Axis.Z ? (double)direction.getZOffset() * 0.52D : d4;
             worldIn.addParticle(ParticleTypes.SMOKE, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
+        }
+    }
+
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+        super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+        TileEntity tileentity = worldIn.getTileEntity(pos);
+        if (tileentity instanceof SinteringFurnaceTileEntity) {
+            for(FacingUtil.Sideness side : FacingUtil.Sideness.values()) {
+                SinteringFurnaceTileEntity f = (SinteringFurnaceTileEntity) tileentity;
+                switch(side) {
+                    case TOP:
+                        f.getInputInventory().getFacingModes().put(side, IFacingComponent.FaceMode.NONE);
+                        f.getPowderInventory().getFacingModes().put(side, IFacingComponent.FaceMode.ENABLED);
+                        f.getOutputInventory().getFacingModes().put(side, IFacingComponent.FaceMode.NONE);
+                    case BOTTOM:
+                        f.getInputInventory().getFacingModes().put(side, IFacingComponent.FaceMode.NONE);
+                        f.getPowderInventory().getFacingModes().put(side, IFacingComponent.FaceMode.NONE);
+                        f.getOutputInventory().getFacingModes().put(side, IFacingComponent.FaceMode.ENABLED);
+                    case BACK:
+                        f.getFuelInventory().getFacingModes().put(side, IFacingComponent.FaceMode.ENABLED);
+                        f.getInputInventory().getFacingModes().put(side, IFacingComponent.FaceMode.NONE);
+                        f.getOutputInventory().getFacingModes().put(side, IFacingComponent.FaceMode.NONE);
+                    default:
+                        f.getInputInventory().getFacingModes().put(side, IFacingComponent.FaceMode.ENABLED);
+                        f.getOutputInventory().getFacingModes().put(side, IFacingComponent.FaceMode.ENABLED);
+                }
+            }
         }
     }
 }

@@ -38,14 +38,20 @@ import java.util.Objects;
 public abstract class BasicInventoryTileEntity<T extends BasicInventoryTileEntity<T>>
         extends TileEntity implements IMachineHarness<T>, INamedContainerProvider, IButtonHandler,
         IFacingComponentHarness, GUITile, INameable, ITickableTileEntity {
-    private final MachineComponent<T> machineComponent;
+    private MachineComponent<T> machineComponent;
     private ITextComponent customName;
 
     public BasicInventoryTileEntity(TileEntityType<T> tileEntityType) {
         super(tileEntityType);
-        this.machineComponent = new MachineComponent<>(this.getSelf(), this::getPos);
+        this.createMachineComponent(new MachineComponent<>(this.getSelf(), this::getPos));
     }
 
+    @Override
+    public final void createMachineComponent(MachineComponent<T> machineComponent) {
+        this.machineComponent = machineComponent;
+    }
+
+    @Override
     public MachineComponent<T> getMachineComponent() {
         return this.machineComponent;
     }

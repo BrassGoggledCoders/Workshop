@@ -32,7 +32,6 @@ public class ScrapBinBlock extends GUITileBlock<ScrapBinTileEntity> {
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
         TileEntity tileentity = worldIn.getTileEntity(pos);
         if (tileentity instanceof ScrapBinTileEntity) {
-
             for(FacingUtil.Sideness side : FacingUtil.Sideness.values()) {
                 if(FacingUtil.Sideness.BOTTOM.equals(side)) {
                     ((ScrapBinTileEntity) tileentity).inventoryComponent.getFacingModes().put(FacingUtil.Sideness.BOTTOM, IFacingComponent.FaceMode.NONE);

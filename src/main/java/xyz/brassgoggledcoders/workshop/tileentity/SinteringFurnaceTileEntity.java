@@ -37,6 +37,7 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
         this.getMachineComponent().addInventory(this.fuelInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("fuelInventory", 78, 70, 1, pos++)
                 .setColor(DyeColor.BLACK)
                 .setInputFilter((stack, slot) -> ForgeHooks.getBurnTime(stack) > 0));
+        //TODO Prevent insertion by hand
         this.getMachineComponent().addInventory(this.powderInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("powderInventory", 70, 19, 2, pos++)
                 .setColor(DyeColor.ORANGE)
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
@@ -50,6 +51,7 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
         //Invert the bar - makes progress decrease from max to zero
         this.burnTimer.setIncreaseType(false);
         this.burnTimer.setCanReset(this::handleBurnTime);
+        this.powderInventory.disableFacingAddon();
     }
 
     @Override
@@ -106,6 +108,10 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
 
     public SidedInventoryComponent<SinteringFurnaceTileEntity> getInputInventory() {
         return inputInventory;
+    }
+
+    public SidedInventoryComponent<SinteringFurnaceTileEntity> getFuelInventory() {
+        return fuelInventory;
     }
 
     @Override
