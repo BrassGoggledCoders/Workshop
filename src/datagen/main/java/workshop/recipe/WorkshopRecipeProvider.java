@@ -79,6 +79,12 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .patternLine(" G ")
                 .key('G', Blocks.GRANITE)
                 .build(consumer);
+        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.ITEMDUCT.getBlock(), 4)
+                .patternLine("WW ")
+                .patternLine("  W")
+                .patternLine("WW ")
+                .key('W', WorkshopBlocks.SEASONED_LOG.getItem())
+                .build(consumer);
         /*TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.PRESS.getBlock())
                 .patternLine("WPW")
                 .patternLine("WGW")

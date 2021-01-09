@@ -82,13 +82,16 @@ public class SinteringFurnaceBlock extends GUITileBlock<SinteringFurnaceTileEnti
                         f.getInputInventory().getFacingModes().put(side, IFacingComponent.FaceMode.NONE);
                         f.getPowderInventory().getFacingModes().put(side, IFacingComponent.FaceMode.ENABLED);
                         f.getOutputInventory().getFacingModes().put(side, IFacingComponent.FaceMode.NONE);
+                        break;
                     case BOTTOM:
                         f.getInputInventory().getFacingModes().put(side, IFacingComponent.FaceMode.NONE);
                         f.getPowderInventory().getFacingModes().put(side, IFacingComponent.FaceMode.NONE);
                         f.getOutputInventory().getFacingModes().put(side, IFacingComponent.FaceMode.ENABLED);
+                        break;
                     default:
                         f.getInputInventory().getFacingModes().put(side, IFacingComponent.FaceMode.ENABLED);
                         f.getOutputInventory().getFacingModes().put(side, IFacingComponent.FaceMode.ENABLED);
+                        break;
                 }
             }
         }

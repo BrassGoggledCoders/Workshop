@@ -3,16 +3,17 @@ package workshop.models;
 import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.block.SixWayBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fml.RegistryObject;
 import xyz.brassgoggledcoders.workshop.Workshop;
+import xyz.brassgoggledcoders.workshop.block.ItemductBlock;
 import xyz.brassgoggledcoders.workshop.block.ObsidianPlateBlock;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
@@ -70,5 +71,35 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
                 .texture("top", modLoc(BLOCK_FOLDER + "s/fluid_funnel_top")));*/
         this.simpleBlock(WorkshopBlocks.SILO_BARREL.get(), this.models().cubeBottomTop(WorkshopBlocks.SILO_BARREL.getName(), mcLoc(BLOCK_FOLDER + "/barrel_side"),
                 mcLoc(BLOCK_FOLDER + "/hopper_inside"), mcLoc(BLOCK_FOLDER + "/barrel_top")));
+        //section Itemduct
+        MultiPartBlockStateBuilder builder = this.getMultipartBuilder(WorkshopBlocks.ITEMDUCT.get())
+                .part().modelFile(models()
+                .withExistingParent("itemduct_center", modLoc("template_duct_center"))
+                .texture("main", modLoc("block/seasoned_log")
+                ).texture("particle", modLoc("block/seasoned_log"))).addModel()
+                .end();
+        BlockModelBuilder side = models().withExistingParent("itemduct_side", modLoc("template_duct_side")).texture("main", modLoc("block/seasoned_log")
+        ).texture("particle", modLoc("block/seasoned_log"));
+        BlockModelBuilder oside = models().withExistingParent("itemduct_side_output", modLoc("template_duct_side")).texture("main", mcLoc("block/hopper_inside")
+        ).texture("particle", modLoc("block/hopper_inside"));
+        SixWayBlock.FACING_TO_PROPERTY_MAP.forEach((dir, value) -> {
+            switch (dir) {
+                case UP:
+                    builder.part().modelFile(side).rotationX(-90).uvLock(true).addModel().condition(value, true);
+                    builder.part().modelFile(oside).rotationX(-90).uvLock(true).addModel().condition(ItemductBlock.FACING, dir);
+                    break;
+                case DOWN:
+                    builder.part().modelFile(side).rotationX(90).uvLock(true).addModel().condition(value, true);
+                    builder.part().modelFile(oside).rotationX(90).uvLock(true).addModel().condition(ItemductBlock.FACING, dir);
+                    break;
+                default:
+                    builder.part().modelFile(side).rotationY((((int) dir.getHorizontalAngle()) + 180) % 360).uvLock(true).addModel()
+                            .condition(value, true);
+                    builder.part().modelFile(oside).rotationY((((int) dir.getHorizontalAngle()) + 180) % 360).uvLock(true).addModel()
+                            .condition(ItemductBlock.FACING, dir);
+                    break;
+            }
+        });
+        //endsection
     }
 }

@@ -123,6 +123,9 @@ public class WorkshopBlocks {
             new BlockRegistryObjectGroup<>("seasoned_log", () -> createLogBlock(MaterialColor.ADOBE, MaterialColor.CLAY), blockItemCreator())
             .register(BLOCKS, ITEMS);
 
+    public static final BlockRegistryObjectGroup<ItemductBlock, BlockItem, ItemductTileEntity> ITEMDUCT = new BlockRegistryObjectGroup<>("itemduct", ItemductBlock::new, blockItemCreator(), ItemductTileEntity::new)
+            .register(BLOCKS, ITEMS, TILE_ENTITIES);
+
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);
         TILE_ENTITIES.register(bus);
