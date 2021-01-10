@@ -1,8 +1,6 @@
 package xyz.brassgoggledcoders.workshop;
 
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 

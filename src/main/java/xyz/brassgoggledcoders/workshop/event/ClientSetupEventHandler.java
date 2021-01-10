@@ -11,7 +11,6 @@ import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.renderer.DryingBasinTileEntityRenderer;
 import xyz.brassgoggledcoders.workshop.renderer.PressTileEntityRenderer;
-import xyz.brassgoggledcoders.workshop.renderer.SinteringTileEntityRenderer;
 
 @Mod.EventBusSubscriber(modid = Workshop.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientSetupEventHandler {

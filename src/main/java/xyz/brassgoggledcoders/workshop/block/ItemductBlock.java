@@ -4,21 +4,22 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SixWayBlock;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
+import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.tileentity.ItemductTileEntity;
-import xyz.brassgoggledcoders.workshop.tileentity.SiloBarrelTileEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -44,7 +45,13 @@ public class ItemductBlock extends GUITileBlock<ItemductTileEntity> {
                 .with(SOUTH, false)
                 .with(UP, false)
                 .with(WEST, false)
-                .with(UP, false));
+                .with(UP, false)
+                .with(DOWN, false));
+    }
+
+    @Override
+    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+        handleTileEntity(worldIn, pos, (tile) -> ((ItemductTileEntity)tile).invalidateCache());
     }
 
     @Override
@@ -59,11 +66,10 @@ public class ItemductBlock extends GUITileBlock<ItemductTileEntity> {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        if(shouldConnect(worldIn, facingPos, facing)) {
-            return stateIn.with(SixWayBlock.FACING_TO_PROPERTY_MAP.get(facing), true);
-        }
-        return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+        return super.updatePostPlacement(stateIn.with(SixWayBlock.FACING_TO_PROPERTY_MAP.get(facing), shouldConnect(worldIn, facingPos, facing)),
+                facing, facingState, worldIn, currentPos, facingPos);
     }
 
     public BlockState makeConnections(IBlockReader blockReader, BlockPos pos) {
@@ -77,6 +83,10 @@ public class ItemductBlock extends GUITileBlock<ItemductTileEntity> {
     }
 
     private boolean shouldConnect(IBlockReader blockReader, BlockPos to, @Nullable Direction facing) {
-        return blockReader.getTileEntity(to) != null && blockReader.getTileEntity(to).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing).isPresent();
+        if(blockReader.getTileEntity(to) != null) {
+            TileEntityType<?> type = blockReader.getTileEntity(to).getType();
+            return TileEntityType.HOPPER.equals(type) || WorkshopBlocks.ITEMDUCT.getTileEntityType().equals(type);
+        }
+        return false;
     }
 }

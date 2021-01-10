@@ -8,7 +8,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.component.machine.IRecipeMachineHarness;
-import xyz.brassgoggledcoders.workshop.component.machine.MachineComponent;
 import xyz.brassgoggledcoders.workshop.component.machine.RecipeMachineComponent;
 import xyz.brassgoggledcoders.workshop.recipe.IMachineRecipe;
 

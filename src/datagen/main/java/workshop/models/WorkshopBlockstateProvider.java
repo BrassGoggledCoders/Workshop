@@ -76,11 +76,11 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
         MultiPartBlockStateBuilder builder = this.getMultipartBuilder(WorkshopBlocks.ITEMDUCT.get())
                 .part().modelFile(models()
                 .withExistingParent("itemduct_center", modLoc("template_duct_center"))
-                .texture("main", modLoc("block/seasoned_log")
-                ).texture("particle", modLoc("block/seasoned_log"))).addModel()
+                .texture("main", modLoc("block/stripped_seasoned_log")
+                ).texture("particle", modLoc("block/stripped_seasoned_log"))).addModel()
                 .end();
-        BlockModelBuilder side = models().withExistingParent("itemduct_side", modLoc("template_duct_side")).texture("main", modLoc("block/seasoned_log")
-        ).texture("particle", modLoc("block/seasoned_log"));
+        BlockModelBuilder side = models().withExistingParent("itemduct_side", modLoc("template_duct_side")).texture("main", modLoc("block/stripped_seasoned_log")
+        ).texture("particle", modLoc("block/stripped_seasoned_log"));
         BlockModelBuilder oside = models().withExistingParent("itemduct_side_output", modLoc("template_duct_side")).texture("main", mcLoc("block/hopper_inside")
         ).texture("particle", modLoc("block/hopper_inside"));
         SixWayBlock.FACING_TO_PROPERTY_MAP.forEach((dir, value) -> {
