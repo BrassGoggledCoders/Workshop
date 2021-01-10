@@ -37,6 +37,7 @@ public class WorkshopBlockLootTables extends BlockLootTables {
         this.registerDropSelfLootTable(WorkshopBlocks.OBSIDIAN_PLATE.getBlock());
         this.registerDropSelfLootTable(WorkshopBlocks.BELLOWS.getBlock());
         this.registerDropSelfLootTable(WorkshopBlocks.SEASONED_LOG.getBlock());
+        this.registerDropSelfLootTable(WorkshopBlocks.STRIPPED_SEASONED_LOG.getBlock());
         this.registerDropSelfLootTable(WorkshopBlocks.ITEMDUCT.getBlock());
 
         this.registerLootTable(WorkshopBlocks.TEA_PLANT.getBlock(), droppingAndBonusWhen(WorkshopBlocks.TEA_PLANT.getBlock(), WorkshopItems.TEA_LEAVES.get(), WorkshopBlocks.TEA_PLANT.getItem(),

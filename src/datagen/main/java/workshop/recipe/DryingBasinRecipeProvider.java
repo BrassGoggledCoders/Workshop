@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import xyz.brassgoggledcoders.workshop.Workshop;
+import xyz.brassgoggledcoders.workshop.WorkshopItemTags;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
@@ -36,6 +37,10 @@ public class DryingBasinRecipeProvider extends TitaniumSerializableProvider {
         recipes.add(new Builder("log_drying")
                 .setItemIn(Ingredient.fromTag(ItemTags.LOGS))
                 .setItemOut(new ItemStack(WorkshopBlocks.SEASONED_LOG.get()))
+                .build());
+        recipes.add(new Builder("stripped_log_drying")
+                .setItemIn(Ingredient.fromTag(WorkshopItemTags.STRIPPED_LOGS))
+                .setItemOut(new ItemStack(WorkshopBlocks.STRIPPED_SEASONED_LOG.get()))
                 .build());
         recipes.add(new Builder("salt")
                 .setFluidIn(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME / 4))

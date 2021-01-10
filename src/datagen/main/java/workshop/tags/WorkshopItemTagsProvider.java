@@ -35,6 +35,7 @@ public class WorkshopItemTagsProvider extends ItemTagsProvider {
         this.getOrCreateBuilder(Tags.Items.SEEDS).add(WorkshopBlocks.TEA_PLANT.getItem());
         this.getOrCreateBuilder(WorkshopItemTags.COLD).add(Items.SNOW, Items.SNOW_BLOCK, Items.SNOWBALL, Items.ICE, Items.BLUE_ICE, Items.PACKED_ICE);
         this.copy(WorkshopBlockTags.REBARRED_CONCRETE, WorkshopItemTags.REBARRED_CONCRETE);
+        this.copy(WorkshopBlockTags.STRIPPED_LOGS, WorkshopItemTags.STRIPPED_LOGS);
         this.getOrCreateBuilder(WorkshopItemTags.TALLOW).add(WorkshopItems.TALLOW.get());
         this.getOrCreateBuilder(WorkshopItemTags.ROOTS).add(Items.POISONOUS_POTATO).addOptional(new ResourceLocation("quark", "root_item"));
         this.getOrCreateBuilder(WorkshopItemTags.SALT).add(WorkshopItems.SALT.get());

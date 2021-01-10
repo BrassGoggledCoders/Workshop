@@ -1,6 +1,8 @@
 package xyz.brassgoggledcoders.workshop;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 
@@ -14,4 +16,5 @@ public class WorkshopItemTags {
     public static final ITag.INamedTag<Item> SALT = ItemTags.makeWrapperTag("forge:dusts/salt");
     //Filled automatically by Titanium
     public static final ITag.INamedTag<Item> IRON_FILM = ItemTags.makeWrapperTag("forge:films/iron");
+    public static final ITag.INamedTag<Item> STRIPPED_LOGS = ItemTags.makeWrapperTag("forge:stripped_logs");
 }

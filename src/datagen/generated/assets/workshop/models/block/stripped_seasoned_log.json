@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "workshop:block/stripped_seasoned_log",
+    "end": "workshop:block/stripped_seasoned_log_top"
+  }
+}

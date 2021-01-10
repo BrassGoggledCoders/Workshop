@@ -38,6 +38,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addBlock(WorkshopBlocks.COLLECTOR, "Byproduct Collector");
         this.addBlock(WorkshopBlocks.SCRAP_BIN, "Scrap Bin");
         this.addBlock(WorkshopBlocks.MORTAR, "Mortar and Pestle");
+        this.addBlock(WorkshopBlocks.STRIPPED_SEASONED_LOG, "Stripped Seasoned Log");
         this.addBlock(WorkshopBlocks.SEASONED_LOG, "Seasoned Log");
         this.addBlock(WorkshopBlocks.DRYING_BASIN, "Drying Basin");
         this.addBlock(WorkshopBlocks.FLUID_FUNNEL, "Fluid Funnel");

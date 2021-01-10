@@ -1,18 +1,16 @@
 package xyz.brassgoggledcoders.workshop.content;
 
 import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.RotatedPillarBlock;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.BlockNamedItem;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.Item;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.*;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -21,6 +19,7 @@ import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.block.*;
 import xyz.brassgoggledcoders.workshop.tileentity.*;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
@@ -119,9 +118,13 @@ public class WorkshopBlocks {
     public static final BlockRegistryObjectGroup<SiloBarrelBlock, BlockItem, SiloBarrelTileEntity> SILO_BARREL = new BlockRegistryObjectGroup<>("silo_barrel", SiloBarrelBlock::new, blockItemCreator(), SiloBarrelTileEntity::new)
             .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
+    public static final BlockRegistryObjectGroup<RotatedPillarBlock, BlockItem, ?> STRIPPED_SEASONED_LOG =
+            new BlockRegistryObjectGroup<>("stripped_seasoned_log", () -> createLogBlock(MaterialColor.ADOBE, MaterialColor.CLAY, null), blockItemCreator())
+                    .register(BLOCKS, ITEMS);
+
     public static final BlockRegistryObjectGroup<RotatedPillarBlock, BlockItem, ?> SEASONED_LOG =
-            new BlockRegistryObjectGroup<>("seasoned_log", () -> createLogBlock(MaterialColor.ADOBE, MaterialColor.CLAY), blockItemCreator())
-            .register(BLOCKS, ITEMS);
+            new BlockRegistryObjectGroup<>("seasoned_log", () -> createLogBlock(MaterialColor.ADOBE, MaterialColor.CLAY, STRIPPED_SEASONED_LOG.get()), blockItemCreator())
+                    .register(BLOCKS, ITEMS);
 
     public static final BlockRegistryObjectGroup<ItemductBlock, BlockItem, ItemductTileEntity> ITEMDUCT = new BlockRegistryObjectGroup<>("itemduct", ItemductBlock::new, blockItemCreator(), ItemductTileEntity::new)
             .register(BLOCKS, ITEMS, TILE_ENTITIES);
@@ -145,7 +148,16 @@ public class WorkshopBlocks {
     }
 
     //Copied and pasted from vanilla
-    private static RotatedPillarBlock createLogBlock(MaterialColor topColor, MaterialColor barkColor) {
-        return new RotatedPillarBlock(AbstractBlock.Properties.create(Material.WOOD, (p_lambda$createLogBlock$36_2_) -> p_lambda$createLogBlock$36_2_.get(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? topColor : barkColor).hardnessAndResistance(2.0F).sound(SoundType.WOOD));
+    private static RotatedPillarBlock createLogBlock(MaterialColor topColor, MaterialColor barkColor, @Nullable Block strippingResult) {
+        return new RotatedPillarBlock(AbstractBlock.Properties.create(Material.WOOD, (p_lambda$createLogBlock$36_2_) -> p_lambda$createLogBlock$36_2_.get(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? topColor : barkColor).hardnessAndResistance(2.0F).sound(SoundType.WOOD)) {
+            @Override
+            public BlockState getToolModifiedState(BlockState state, World world, BlockPos pos, PlayerEntity player, ItemStack stack, ToolType toolType)
+            {
+                if (strippingResult != null && toolType == ToolType.AXE) {
+                    return strippingResult.getDefaultState().with(RotatedPillarBlock.AXIS, state.get(RotatedPillarBlock.AXIS));
+                }
+                return super.getToolModifiedState(state, world, pos, player, stack, toolType);
+            }
+        };
     }
 }

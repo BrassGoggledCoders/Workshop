@@ -21,6 +21,8 @@ public class WorkshopBlockTagsProvider extends BlockTagsProvider {
         WorkshopBlocks.CONCRETES.forEach(c -> this.getOrCreateBuilder(WorkshopBlockTags.REBARRED_CONCRETE).add(c.getBlock()));
         this.getOrCreateBuilder(WorkshopBlockTags.VERY_HOT).add(Blocks.LAVA, Blocks.MAGMA_BLOCK);
         this.getOrCreateBuilder(WorkshopBlockTags.HOT).addTag(WorkshopBlockTags.VERY_HOT).add(Blocks.FIRE, Blocks.SOUL_FIRE, Blocks.CAMPFIRE, Blocks.SOUL_CAMPFIRE);
+        this.getOrCreateBuilder(WorkshopBlockTags.STRIPPED_LOGS).add(Blocks.STRIPPED_ACACIA_LOG, Blocks.STRIPPED_BIRCH_LOG, Blocks.STRIPPED_DARK_OAK_LOG,
+                Blocks.STRIPPED_JUNGLE_LOG, Blocks.STRIPPED_OAK_LOG, Blocks.STRIPPED_SPRUCE_LOG);
     }
 
     @Override
