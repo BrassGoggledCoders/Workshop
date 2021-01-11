@@ -24,6 +24,8 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
     private final SidedInventoryComponent<SinteringFurnaceTileEntity> powderInventory;
     private final SidedInventoryComponent<SinteringFurnaceTileEntity> inputInventory;
     private final SidedInventoryComponent<SinteringFurnaceTileEntity> outputInventory;
+    protected int timer = 0;
+    protected int interval = 20;
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public SinteringFurnaceTileEntity() {
@@ -47,10 +49,16 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
     //FIXME Efficiency. Cache state checks
     @Override
     public void tick() {
-        if(this.getBlockState().get(SinteringFurnaceBlock.LIT) != this.hasHeat()) {
-            this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(SinteringFurnaceBlock.LIT, hasHeat()), 3);
-            this.markDirty();
-            this.markComponentDirty();
+        if(this.getWorld() != null && !this.getWorld().isRemote) {
+            timer++;
+            if(timer > interval) {
+                timer = 0;
+                if (this.getBlockState().get(SinteringFurnaceBlock.LIT) != this.hasHeat()) {
+                    this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(SinteringFurnaceBlock.LIT, hasHeat()), 3);
+                    this.markDirty();
+                    this.markComponentDirty();
+                }
+            }
         }
         super.tick();
     }

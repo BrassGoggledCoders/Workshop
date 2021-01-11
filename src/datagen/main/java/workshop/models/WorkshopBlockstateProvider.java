@@ -82,7 +82,7 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
         BlockModelBuilder side = models().withExistingParent("itemduct_side", modLoc("template_duct_side")).texture("main", modLoc("block/stripped_seasoned_log")
         ).texture("particle", modLoc("block/stripped_seasoned_log"));
         BlockModelBuilder oside = models().withExistingParent("itemduct_side_output", modLoc("template_duct_side")).texture("main", mcLoc("block/hopper_inside")
-        ).texture("particle", modLoc("block/hopper_inside"));
+        ).texture("particle", mcLoc("block/hopper_inside"));
         SixWayBlock.FACING_TO_PROPERTY_MAP.forEach((dir, value) -> {
             switch (dir) {
                 case UP:

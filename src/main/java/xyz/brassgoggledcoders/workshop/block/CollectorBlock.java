@@ -29,7 +29,7 @@ public class CollectorBlock extends GUITileBlock<CollectorTileEntity> {
     @Override
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         if(worldIn.getTileEntity(pos) instanceof CollectorTileEntity) {
-            this.handleTileEntity(worldIn, pos, tile -> ((CollectorTileEntity) tile).getMachineComponent().forceRecipeRecheck());
+            this.handleTileEntity(worldIn, pos, tile -> tile.getMachineComponent().forceRecipeRecheck());
         }
     }
 }

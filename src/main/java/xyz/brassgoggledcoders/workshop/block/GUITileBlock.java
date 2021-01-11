@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import xyz.brassgoggledcoders.workshop.tileentity.GUITile;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
@@ -31,10 +32,11 @@ public class GUITileBlock<T extends TileEntity & GUITile> extends TileBlock<T> {
         return result.get();
     }
 
-    protected void handleTileEntity(IWorld world, BlockPos pos, Consumer<? super GUITile> tileEntityConsumer) {
+    protected void handleTileEntity(IWorld world, BlockPos pos, Consumer<T> tileEntityConsumer) {
         Optional.ofNullable(world.getTileEntity(pos))
-                .filter(tileEntity -> tileEntity instanceof GUITile)
-                .map(GUITile.class::cast)
+                //Is there a cleaner way to do this?
+                .filter(tileEntity -> tileEntity.getType().equals(this.tileSupplier.get().getType()))
+                .map(tileEntity -> (T) tileEntity)
                 .ifPresent(tileEntityConsumer);
     }
 }

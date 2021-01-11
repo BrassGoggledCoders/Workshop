@@ -36,10 +36,6 @@ public class SpinningWheelBlock extends GUITileBlock<SpinningWheelTileEntity> {
     @Override
     @SuppressWarnings("deprecation")
     public void onBlockClicked(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
-        handleTileEntity(worldIn, pos, tile -> {
-            if (tile instanceof SpinningWheelTileEntity) {
-                ((SpinningWheelTileEntity) tile).setTimes(2 * 20, 2 * 20);
-            }
-        });
+        handleTileEntity(worldIn, pos, tile -> tile.setTimes(2 * 20, 2 * 20));
     }
 }

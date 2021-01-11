@@ -5,7 +5,9 @@ import com.hrznstudio.titanium.util.FacingUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
@@ -18,22 +20,36 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.items.ItemStackHandler;
 import xyz.brassgoggledcoders.workshop.tileentity.SinteringFurnaceTileEntity;
 
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
+@ParametersAreNonnullByDefault
 public class SinteringFurnaceBlock extends GUITileBlock<SinteringFurnaceTileEntity> {
 
+    protected static final VoxelShape AABB = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 15.0D, 16.0D);
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
     public SinteringFurnaceBlock() {
         super(Properties.create(Material.GLASS).hardnessAndResistance(3.5F).setLightLevel((state) -> state.get(LIT) ? 13 : 0).notSolid(), SinteringFurnaceTileEntity::new);
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH).with(LIT, false));
+    }
+
+    @Override
+    @Nonnull
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return AABB;
     }
 
     @Override
@@ -93,6 +109,15 @@ public class SinteringFurnaceBlock extends GUITileBlock<SinteringFurnaceTileEnti
                         break;
                 }
             }
+        }
+    }
+
+    @Override
+    public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
+        if(entityIn instanceof ItemEntity) {
+            ItemEntity itemEntity = (ItemEntity) entityIn;
+            ItemStack stack = itemEntity.getItem();
+            this.handleTileEntity(worldIn, pos, (tile) -> itemEntity.setItem(ItemHandlerHelper.insertItemStacked(tile.getPowderInventory(), stack, false)));
         }
     }
 }

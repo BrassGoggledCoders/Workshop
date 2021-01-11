@@ -2,6 +2,6 @@
   "parent": "workshop:block/template_duct_side",
   "textures": {
     "main": "minecraft:block/hopper_inside",
-    "particle": "workshop:block/hopper_inside"
+    "particle": "minecraft:block/hopper_inside"
   }
 }
