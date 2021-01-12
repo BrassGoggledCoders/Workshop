@@ -49,9 +49,9 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
     //FIXME Efficiency. Cache state checks
     @Override
     public void tick() {
-        if(this.getWorld() != null && !this.getWorld().isRemote) {
+        if (this.getWorld() != null && !this.getWorld().isRemote) {
             timer++;
-            if(timer > interval) {
+            if (timer > interval) {
                 timer = 0;
                 if (this.getBlockState().get(SinteringFurnaceBlock.LIT) != this.hasHeat()) {
                     this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(SinteringFurnaceBlock.LIT, hasHeat()), 3);
@@ -137,6 +137,6 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
     }
 
     private boolean hasHeat() {
-        return this.getWorld().getBlockState(this.getPos().down()).getBlock().isIn(WorkshopBlockTags.HOT) || this.getWorld().getBlockState(this.getPos().down(2)).getBlock().isIn(WorkshopBlockTags.HOT) ;
+        return this.getWorld().getBlockState(this.getPos().down()).getBlock().isIn(WorkshopBlockTags.HOT) || this.getWorld().getBlockState(this.getPos().down(2)).getBlock().isIn(WorkshopBlockTags.HOT);
     }
 }

@@ -27,7 +27,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
 import xyz.brassgoggledcoders.workshop.tileentity.SinteringFurnaceTileEntity;
 
 import javax.annotation.Nonnull;
@@ -69,18 +68,18 @@ public class SinteringFurnaceBlock extends GUITileBlock<SinteringFurnaceTileEnti
     @ParametersAreNonnullByDefault
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
         if (stateIn.get(LIT)) {
-            double d0 = (double)pos.getX() + 0.5D;
+            double d0 = (double) pos.getX() + 0.5D;
             double d1 = pos.getY();
-            double d2 = (double)pos.getZ() + 0.5D;
+            double d2 = (double) pos.getZ() + 0.5D;
             if (rand.nextDouble() < 0.1D) {
                 worldIn.playSound(d0, d1, d2, SoundEvents.BLOCK_BLASTFURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
             }
             Direction direction = stateIn.get(FACING);
             Direction.Axis direction$axis = direction.getAxis();
             double d4 = rand.nextDouble() * 0.6D - 0.3D;
-            double d5 = direction$axis == Direction.Axis.X ? (double)direction.getXOffset() * 0.52D : d4;
+            double d5 = direction$axis == Direction.Axis.X ? (double) direction.getXOffset() * 0.52D : d4;
             double d6 = rand.nextDouble() * 9.0D / 16.0D;
-            double d7 = direction$axis == Direction.Axis.Z ? (double)direction.getZOffset() * 0.52D : d4;
+            double d7 = direction$axis == Direction.Axis.Z ? (double) direction.getZOffset() * 0.52D : d4;
             worldIn.addParticle(ParticleTypes.SMOKE, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
         }
     }
@@ -90,9 +89,9 @@ public class SinteringFurnaceBlock extends GUITileBlock<SinteringFurnaceTileEnti
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
         TileEntity tileentity = worldIn.getTileEntity(pos);
         if (tileentity instanceof SinteringFurnaceTileEntity) {
-            for(FacingUtil.Sideness side : FacingUtil.Sideness.values()) {
+            for (FacingUtil.Sideness side : FacingUtil.Sideness.values()) {
                 SinteringFurnaceTileEntity f = (SinteringFurnaceTileEntity) tileentity;
-                switch(side) {
+                switch (side) {
                     case TOP:
                         f.getInputInventory().getFacingModes().put(side, IFacingComponent.FaceMode.NONE);
                         f.getPowderInventory().getFacingModes().put(side, IFacingComponent.FaceMode.ENABLED);
@@ -114,7 +113,7 @@ public class SinteringFurnaceBlock extends GUITileBlock<SinteringFurnaceTileEnti
 
     @Override
     public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
-        if(entityIn instanceof ItemEntity) {
+        if (entityIn instanceof ItemEntity) {
             ItemEntity itemEntity = (ItemEntity) entityIn;
             ItemStack stack = itemEntity.getItem();
             this.handleTileEntity(worldIn, pos, (tile) -> itemEntity.setItem(ItemHandlerHelper.insertItemStacked(tile.getPowderInventory(), stack, false)));

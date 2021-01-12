@@ -58,12 +58,12 @@ public class SinteringFurnaceRecipeCategory implements IRecipeCategory<Sintering
     @Override
     public void draw(SinteringFurnaceRecipe recipe, MatrixStack stack, double mouseX, double mouseY) {
         //Input
-        slot.draw(stack,34, 22);
+        slot.draw(stack, 34, 22);
         //Powder
-        slot.draw(stack,70, 0);
-        slot.draw(stack,87, 0);
+        slot.draw(stack, 70, 0);
+        slot.draw(stack, 87, 0);
         //Output
-        slot.draw(stack,120, 22);
+        slot.draw(stack, 120, 22);
         //arrow.draw(24, 18);
     }
 
