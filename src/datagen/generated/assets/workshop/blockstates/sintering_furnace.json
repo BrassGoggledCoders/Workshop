@@ -16,18 +16,18 @@
       "y": 90
     },
     "facing=north,lit=true": {
-      "model": "workshop:block/sintering_furnace"
+      "model": "workshop:block/sintering_furnace_hot"
     },
     "facing=south,lit=true": {
-      "model": "workshop:block/sintering_furnace",
+      "model": "workshop:block/sintering_furnace_hot",
       "y": 180
     },
     "facing=west,lit=true": {
-      "model": "workshop:block/sintering_furnace",
+      "model": "workshop:block/sintering_furnace_hot",
       "y": 270
     },
     "facing=east,lit=true": {
-      "model": "workshop:block/sintering_furnace",
+      "model": "workshop:block/sintering_furnace_hot",
       "y": 90
     }
   }

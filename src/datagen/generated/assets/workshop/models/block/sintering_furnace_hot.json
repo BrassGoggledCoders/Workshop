@@ -1,0 +1,6 @@
+{
+  "parent": "workshop:block/sintering_furnace",
+  "textures": {
+    "0": "workshop:block/hot_iron_block"
+  }
+}

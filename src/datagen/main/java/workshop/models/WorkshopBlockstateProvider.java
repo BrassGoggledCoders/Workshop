@@ -4,9 +4,12 @@ import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.SixWayBlock;
+import net.minecraft.block.TrapDoorBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.state.properties.Half;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -14,6 +17,7 @@ import net.minecraftforge.fml.RegistryObject;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.block.ItemductBlock;
 import xyz.brassgoggledcoders.workshop.block.ObsidianPlateBlock;
+import xyz.brassgoggledcoders.workshop.block.SinteringFurnaceBlock;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 
@@ -101,6 +105,11 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
             }
         });
         //endsection
-        this.horizontalBlock(WorkshopBlocks.SINTERING_FURNACE.get(), new ModelFile.ExistingModelFile(modLoc("block/sintering_furnace"), exFileHelper));
+        ResourceLocation location = modLoc("block/sintering_furnace");
+        ModelFile sintering_furnace = new ModelFile.ExistingModelFile(location, exFileHelper);
+        ModelFile sintering_furnace_hot = models().withExistingParent("sintering_furnace_hot", location).texture("0", modLoc(BLOCK_FOLDER + "/hot_iron_block"));
+        this.getVariantBuilder(WorkshopBlocks.SINTERING_FURNACE.get()).forAllStates(state -> ConfiguredModel.builder().modelFile(state.get(SinteringFurnaceBlock.LIT) ? sintering_furnace_hot : sintering_furnace)
+                .rotationY(((int) state.get(BlockStateProperties.HORIZONTAL_FACING).getHorizontalAngle() + 180) % 360)
+                .build());
     }
 }
