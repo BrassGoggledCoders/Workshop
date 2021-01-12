@@ -31,4 +31,9 @@ public abstract class WorkshopRecipe extends SerializableRecipe implements IMach
     public ItemStack getRecipeOutput() {
         return ItemStack.EMPTY;
     }
+
+    @Override
+    public boolean isDynamic() {
+        return true;
+    }
 }
