@@ -50,12 +50,12 @@ public class WorkshopEffects {
 
         @Override
         public double getAttributeModifierAmount(int amplifier, @Nonnull AttributeModifier modifier) {
-            return 4 * (double)(amplifier + 1);
+            return 4 * (double) (amplifier + 1);
         }
 
         @Override
         public void affectEntity(@Nullable Entity source, @Nullable Entity indirectSource, @Nonnull LivingEntity entityLivingBaseIn, int amplifier, double health) {
-            if(entityLivingBaseIn.isSprinting()) {
+            if (entityLivingBaseIn.isSprinting()) {
                 entityLivingBaseIn.setMotionMultiplier(entityLivingBaseIn.getBlockState(), new Vector3d(amplifier + 1, 0, amplifier + 1));
             }
         }

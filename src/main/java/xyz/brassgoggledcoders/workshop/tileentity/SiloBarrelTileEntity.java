@@ -48,16 +48,16 @@ public class SiloBarrelTileEntity extends BasicInventoryTileEntity<SiloBarrelTil
     @Override
     public void tick() {
         super.tick();
-        if(this.getWorld() != null && !this.getWorld().isRemote) {
+        if (this.getWorld() != null && !this.getWorld().isRemote) {
             timer++;
-            if(timer > interval) {
+            if (timer > interval) {
                 timer = 0;
                 TileEntity tile = this.getWorld().getTileEntity(this.getPos().down());
-                if(tile != null) {
+                if (tile != null) {
                     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP).ifPresent(otherInventory -> {
-                        for(int i = 0; i < this.inventoryComponent.getSlots(); i++) {
+                        for (int i = 0; i < this.inventoryComponent.getSlots(); i++) {
                             ItemStack stackInSlot = this.inventoryComponent.getStackInSlot(i);
-                            if(!stackInSlot.isEmpty() && ItemHandlerHelper.insertItemStacked(otherInventory, stackInSlot.copy().split(1), true).isEmpty()) {
+                            if (!stackInSlot.isEmpty() && ItemHandlerHelper.insertItemStacked(otherInventory, stackInSlot.copy().split(1), true).isEmpty()) {
                                 ItemHandlerHelper.insertItemStacked(otherInventory, stackInSlot.split(1), false);
                                 break;
                             }

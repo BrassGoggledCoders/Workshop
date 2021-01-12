@@ -41,7 +41,7 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
 
     @Override
     public void tick() {
-        if(world != null) {
+        if (world != null) {
             if (world.getGameTime() % 5 == 0) {
                 updatePressProgress();
             }
@@ -51,27 +51,27 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
         super.tick();
     }
 
-    public void setHeightChange(){
+    public void setHeightChange() {
         int progress = getMachineComponent().getPrimaryBar().getProgress();
         double maxHeigh = 0.8;
-        if(progress == 0){
+        if (progress == 0) {
             height = maxHeigh;
-        } else{
+        } else {
             int max = getMachineComponent().getPrimaryBar().getMaxProgress();
-            int bottom = max/2;
+            int bottom = max / 2;
             double minHeigh = 0.3;
-            if(progress >= bottom){
+            if (progress >= bottom) {
                 height = minHeigh;
-                if(progress != bottom) {
+                if (progress != bottom) {
                     progress = progress - bottom;
-                    float sections = (float)((maxHeigh - minHeigh) /bottom);
-                    float offset = (float)progress*sections;
-                    height = Math.min(maxHeigh,height + offset);
+                    float sections = (float) ((maxHeigh - minHeigh) / bottom);
+                    float offset = (float) progress * sections;
+                    height = Math.min(maxHeigh, height + offset);
                 }
             } else {
                 height = maxHeigh;
-                float sections = (float)((maxHeigh - minHeigh) /bottom);
-                float offset = (float)progress*sections;
+                float sections = (float) ((maxHeigh - minHeigh) / bottom);
+                float offset = (float) progress * sections;
                 height = Math.max(height - offset, minHeigh);
             }
 

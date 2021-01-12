@@ -46,54 +46,54 @@ public class HUDRender {
 
         if (!(minecraft.currentScreen instanceof ChatScreen) && rayTraceResult.getType() == RayTraceResult.Type.BLOCK) {
 
-        BlockPos blockPos =  ((BlockRayTraceResult)rayTraceResult).getPos();
+            BlockPos blockPos = ((BlockRayTraceResult) rayTraceResult).getPos();
 
-        if (blockPos.getY() < 0 || blockPos.getY() >= 256) {
-            // Sanity check.
-            return;
-        }
-
-        if (minecraft.world.getTileEntity(blockPos) instanceof MortarTileEntity) {
-            MortarTileEntity tileEntity = (MortarTileEntity) minecraft.world.getTileEntity(blockPos);
-            if (tileEntity.hasWorld()) {
-                ItemStackHandler itemStackHandler = tileEntity.getInputInventory();
-
-                List<ItemStack> itemStackList = InventoryUtil.getItemStackStream(itemStackHandler).collect(Collectors.toList());
-
-                float angle = (float) (Math.PI * 2 / itemStackList.size());
-                double radius = 32;
-
-                //GlStateManager.enableBlend();
-                //GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                //GlStateManager.color(1, 1, 1, 1);
-                RenderHelper.enableStandardItemLighting();
-                int scaledWidth = minecraft.getMainWindow().getScaledWidth();
-                for (int ii = 0; ii < itemStackList.size(); ii++) {
-                    ItemStack itemStack = itemStackList.get(ii);
-                    int x = (int) (MathHelper.cos(angle * ii) * radius + scaledWidth / 2) - 8;
-                    int y = (int) (MathHelper.sin(angle * ii) * radius + minecraft.getMainWindow().getScaledHeight() / 2) - 8;
-                    minecraft.getItemRenderer().renderItemAndEffectIntoGUI(itemStack, x, y);
-                    minecraft.getItemRenderer().renderItemOverlays(minecraft.fontRenderer, itemStack, x, y);
-                }
-                //TODO add faded display of what the recipe *will* make
-                if (!tileEntity.getOutputInventory().getStackInSlot(0).isEmpty()) {
-                    ItemStack output = tileEntity.getOutputInventory().getStackInSlot(0);
-                    int x = (int) (radius + scaledWidth / 2) - 8 + 64;
-                    int y = minecraft.getMainWindow().getScaledHeight() / 2 - 8;
-                    minecraft.getItemRenderer().renderItemAndEffectIntoGUI(output, x, y);
-                    minecraft.getItemRenderer().renderItemOverlays(minecraft.fontRenderer, output, x, y);
-
-                    x = (int) (radius + minecraft.getMainWindow().getScaledWidth() / 2) - 8 + 30;
-                    y = minecraft.getMainWindow().getScaledHeight() / 2 - 4;
-
-                    //TODO render progress
-                    // Arrow
-                    //drawTexturedRect(minecraft, IAssetProvider.DEFAULT_LOCATION, x + 5, y, 12, 11, 100, 177, 61, 256, 256);
-                }
-                RenderHelper.disableStandardItemLighting();
-                //GlStateManager.disableLighting();
+            if (blockPos.getY() < 0 || blockPos.getY() >= 256) {
+                // Sanity check.
+                return;
             }
-        }
+
+            if (minecraft.world.getTileEntity(blockPos) instanceof MortarTileEntity) {
+                MortarTileEntity tileEntity = (MortarTileEntity) minecraft.world.getTileEntity(blockPos);
+                if (tileEntity.hasWorld()) {
+                    ItemStackHandler itemStackHandler = tileEntity.getInputInventory();
+
+                    List<ItemStack> itemStackList = InventoryUtil.getItemStackStream(itemStackHandler).collect(Collectors.toList());
+
+                    float angle = (float) (Math.PI * 2 / itemStackList.size());
+                    double radius = 32;
+
+                    //GlStateManager.enableBlend();
+                    //GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+                    //GlStateManager.color(1, 1, 1, 1);
+                    RenderHelper.enableStandardItemLighting();
+                    int scaledWidth = minecraft.getMainWindow().getScaledWidth();
+                    for (int ii = 0; ii < itemStackList.size(); ii++) {
+                        ItemStack itemStack = itemStackList.get(ii);
+                        int x = (int) (MathHelper.cos(angle * ii) * radius + scaledWidth / 2) - 8;
+                        int y = (int) (MathHelper.sin(angle * ii) * radius + minecraft.getMainWindow().getScaledHeight() / 2) - 8;
+                        minecraft.getItemRenderer().renderItemAndEffectIntoGUI(itemStack, x, y);
+                        minecraft.getItemRenderer().renderItemOverlays(minecraft.fontRenderer, itemStack, x, y);
+                    }
+                    //TODO add faded display of what the recipe *will* make
+                    if (!tileEntity.getOutputInventory().getStackInSlot(0).isEmpty()) {
+                        ItemStack output = tileEntity.getOutputInventory().getStackInSlot(0);
+                        int x = (int) (radius + scaledWidth / 2) - 8 + 64;
+                        int y = minecraft.getMainWindow().getScaledHeight() / 2 - 8;
+                        minecraft.getItemRenderer().renderItemAndEffectIntoGUI(output, x, y);
+                        minecraft.getItemRenderer().renderItemOverlays(minecraft.fontRenderer, output, x, y);
+
+                        x = (int) (radius + minecraft.getMainWindow().getScaledWidth() / 2) - 8 + 30;
+                        y = minecraft.getMainWindow().getScaledHeight() / 2 - 4;
+
+                        //TODO render progress
+                        // Arrow
+                        //drawTexturedRect(minecraft, IAssetProvider.DEFAULT_LOCATION, x + 5, y, 12, 11, 100, 177, 61, 256, 256);
+                    }
+                    RenderHelper.disableStandardItemLighting();
+                    //GlStateManager.disableLighting();
+                }
+            }
         }
     }
 

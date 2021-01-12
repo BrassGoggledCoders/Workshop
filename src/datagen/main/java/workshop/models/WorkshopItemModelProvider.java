@@ -1,5 +1,6 @@
 package workshop.models;
 
+import com.google.common.collect.Lists;
 import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
@@ -38,12 +39,14 @@ public class WorkshopItemModelProvider extends ModelProvider<PropertiedItemModel
         // this.singleTexture("lye", mcLoc("item/generated"), modLoc("items/lye"));
         //this.singleTexture("leather_cordage", mcLoc("item/generated"), modLoc("items/leather_cordage"));
 
-        this.withExistingParent(WorkshopBlocks.BELLOWS.getName(), modLoc(BLOCK_FOLDER + "/bellows"));
-        this.withExistingParent(WorkshopBlocks.ALEMBIC.getName(), modLoc(BLOCK_FOLDER + "/alembic"));
-        this.withExistingParent(WorkshopBlocks.SCRAP_BIN.getName(), modLoc(BLOCK_FOLDER + "/scrap_bin"));
-        this.withExistingParent(WorkshopBlocks.SEASONED_LOG.getName(), modLoc(BLOCK_FOLDER + "/seasoned_log"));
-        this.withExistingParent(WorkshopBlocks.SILO_BARREL.getName(), modLoc(BLOCK_FOLDER + "/silo_barrel"));
-        this.withExistingParent(WorkshopBlocks.STRIPPED_SEASONED_LOG.getName(), modLoc(BLOCK_FOLDER + "/stripped_seasoned_log"));
+        Lists.newArrayList(WorkshopBlocks.BELLOWS,
+                WorkshopBlocks.ALEMBIC,
+                WorkshopBlocks.SCRAP_BIN,
+                WorkshopBlocks.SEASONED_LOG,
+                WorkshopBlocks.SILO_BARREL,
+                WorkshopBlocks.STRIPPED_SEASONED_LOG,
+                WorkshopBlocks.SINTERING_FURNACE)
+                .forEach(blockGroup -> this.withExistingParent(blockGroup.getName(), modLoc(String.format("%s/%s", BLOCK_FOLDER, blockGroup.getName()))));
         this.withExistingParent(WorkshopBlocks.ITEMDUCT.getName(), modLoc(BLOCK_FOLDER + "/itemduct_center"));
         //TODO Item rotations
         //this.withExistingParent(WorkshopBlocks.DRYING_BASIN.getName(), modLoc(BLOCK_FOLDER + "/drying_basin"));

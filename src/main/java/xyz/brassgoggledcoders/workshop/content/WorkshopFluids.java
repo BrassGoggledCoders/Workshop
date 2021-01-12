@@ -48,9 +48,9 @@ public class WorkshopFluids {
     public static final ForgeFlowingFluid.Properties MEAD_PROPERTIES = properties(MEAD, "EBA937");
 
     private static final Supplier<ForgeFlowingFluid.Source> brine = () ->
-                new ForgeFlowingFluid.Source(WorkshopFluids.BRINE_PROPERTIES);
+            new ForgeFlowingFluid.Source(WorkshopFluids.BRINE_PROPERTIES);
     public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> BRINE = new FluidRegistryObjectGroup<>("brine", brine, () ->
-                    new ForgeFlowingFluid.Flowing(WorkshopFluids.BRINE_PROPERTIES), () -> new FlowingFluidBlock(brine, AbstractBlock.Properties.from(Blocks.WATER)) {
+            new ForgeFlowingFluid.Flowing(WorkshopFluids.BRINE_PROPERTIES), () -> new FlowingFluidBlock(brine, AbstractBlock.Properties.from(Blocks.WATER)) {
         @Override
         @SuppressWarnings("deprecated")
         public void onEntityCollision(@Nonnull BlockState state, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull Entity entityIn) {

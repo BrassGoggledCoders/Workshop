@@ -22,10 +22,8 @@ import javax.annotation.Nullable;
 import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 
 /**
- *
- *  @author TinkersConstruct
- *  All Credit for this Code is theirs.
- *
+ * @author TinkersConstruct
+ * All Credit for this Code is theirs.
  */
 
 @OnlyIn(value = Dist.CLIENT)
@@ -352,10 +350,11 @@ public class FluidRenderer {
 
     /**
      * Gets the model for the given item
-     * @param item   Item provider
-     * @param clazz  Class type to cast result into
-     * @param <T>    Class type
-     * @return  Item model, or null if its missing or the wrong class type
+     *
+     * @param item  Item provider
+     * @param clazz Class type to cast result into
+     * @param <T>   Class type
+     * @return Item model, or null if its missing or the wrong class type
      */
     @Nullable
     @SuppressWarnings("unchecked")
@@ -376,7 +375,7 @@ public class FluidRenderer {
                     .transparency(RenderType.TRANSLUCENT_TRANSPARENCY)
                     .build(false));
 
-    public static RenderType getBlockRenderType(){
+    public static RenderType getBlockRenderType() {
         return blockRenderType;
     }
 

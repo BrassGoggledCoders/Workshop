@@ -33,13 +33,12 @@ public class DryingBasinTileEntityRenderer extends TileEntityRenderer<DryingBasi
     @ParametersAreNonnullByDefault
     public void render(DryingBasinTileEntity tileEntityIn, float v, MatrixStack stack, IRenderTypeBuffer buf, int combinedLight, int combinedOverlay) {
         if (tileEntityIn.hasWorld()) {
-            if(!tileEntityIn.getOutputInventory().getStackInSlot(0).isEmpty()) {
-               renderItem(tileEntityIn, tileEntityIn.getOutputInventory().getStackInSlot(0), stack, buf, combinedLight, combinedOverlay);
-            }
-            else if(!tileEntityIn.getInputInventory().getStackInSlot(0).isEmpty()) {
+            if (!tileEntityIn.getOutputInventory().getStackInSlot(0).isEmpty()) {
+                renderItem(tileEntityIn, tileEntityIn.getOutputInventory().getStackInSlot(0), stack, buf, combinedLight, combinedOverlay);
+            } else if (!tileEntityIn.getInputInventory().getStackInSlot(0).isEmpty()) {
                 renderItem(tileEntityIn, tileEntityIn.getInputInventory().getStackInSlot(0), stack, buf, combinedLight, combinedOverlay);
             }
-            if(!tileEntityIn.getInputFluidTank().isEmpty()) {
+            if (!tileEntityIn.getInputFluidTank().isEmpty()) {
                 renderFluidBlock(tileEntityIn.getInputFluidTank(), stack, buf, combinedLight);
             }
         }
@@ -50,7 +49,7 @@ public class DryingBasinTileEntityRenderer extends TileEntityRenderer<DryingBasi
     private void renderItem(TileEntity tile, ItemStack item, MatrixStack stack, IRenderTypeBuffer buf, int combinedLight, int combinedOverlay) {
         stack.push();
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-        if(item.getItem() instanceof BlockItem) {
+        if (item.getItem() instanceof BlockItem) {
             stack.translate(0.14, 0.2, 0.14);
             stack.scale(0.73F, 0.8F, 0.73F);
             Minecraft.getInstance().getBlockRendererDispatcher().renderBlock(Block.getBlockFromItem(item.getItem()).getDefaultState(), stack, buf, combinedLight, combinedOverlay);
@@ -69,9 +68,9 @@ public class DryingBasinTileEntityRenderer extends TileEntityRenderer<DryingBasi
         IVertexBuilder builder = buf.getBuffer(FluidRenderer.getBlockRenderType());
         float minY = 3.1F;
         float maxY = 15F;
-        float sections = (maxY - minY)/tank.getCapacity();
-        float height = (float)tank.getFluidAmount()*sections;
-        FluidRenderer.renderScaledFluidCuboid(tank.getFluid(),stack,builder,combinedLight,2F,minY,2F,13.9F,minY + height,13.9F);
+        float sections = (maxY - minY) / tank.getCapacity();
+        float height = (float) tank.getFluidAmount() * sections;
+        FluidRenderer.renderScaledFluidCuboid(tank.getFluid(), stack, builder, combinedLight, 2F, minY, 2F, 13.9F, minY + height, 13.9F);
         stack.pop();
     }
 

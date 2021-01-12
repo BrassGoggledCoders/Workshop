@@ -24,9 +24,10 @@ public class ClientEventHandler {
             HUDRender.render();
         }
     }
+
     @SubscribeEvent
     public static void onInput(InputUpdateEvent event) {
-        if(event.getPlayer().isPotionActive(WorkshopEffects.DRUNK.get())) {
+        if (event.getPlayer().isPotionActive(WorkshopEffects.DRUNK.get())) {
             event.getMovementInput().moveForward = -event.getMovementInput().moveForward;
             event.getMovementInput().moveStrafe = -event.getMovementInput().moveStrafe;
         }
@@ -37,9 +38,9 @@ public class ClientEventHandler {
         PlayerEntity player = Minecraft.getInstance().player;
         float screenEffectScale = Minecraft.getInstance().gameSettings.screenEffectScale;
         //TODO More granular
-        if(screenEffectScale > 0 && player != null && player.isPotionActive(WorkshopEffects.WIRED.get())) {
+        if (screenEffectScale > 0 && player != null && player.isPotionActive(WorkshopEffects.WIRED.get())) {
             Random random = player.getEntityWorld().getRandom();
-            if(random.nextBoolean()) {
+            if (random.nextBoolean()) {
                 event.setPitch((event.getPitch() + random.nextFloat()));
             } else {
                 event.setPitch(event.getPitch() - random.nextFloat());

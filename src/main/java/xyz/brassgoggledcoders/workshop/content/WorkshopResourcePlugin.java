@@ -18,10 +18,10 @@ public class WorkshopResourcePlugin implements FeaturePluginInstance {
     @Override
     public void execute(PluginPhase phase) {
         if (phase == PluginPhase.CONSTRUCTION) {
-           // ResourceRegistry.getOrCreate("iron").addAll(ResourceType.DUST, WorkshopResourceType.FILM, WorkshopResourceType.PIPE);
+            // ResourceRegistry.getOrCreate("iron").addAll(ResourceType.DUST, WorkshopResourceType.FILM, WorkshopResourceType.PIPE);
             //ResourceRegistry.getOrCreate("gold").addAll(ResourceType.DUST, WorkshopResourceType.FILM, WorkshopResourceType.PIPE);
             //ResourceRegistry.getOrCreate("glass").setColor(WorkshopFluids.fromHex("80FFFFFF")).add(WorkshopResourceType.PIPE);
-           // ResourceRegistry.getOrCreate("copper").setColor(WorkshopFluids.fromHex("FFb87333")).addAll(ResourceType.NUGGET, ResourceType.METAL_BLOCK, ResourceType.INGOT);
+            // ResourceRegistry.getOrCreate("copper").setColor(WorkshopFluids.fromHex("FFb87333")).addAll(ResourceType.NUGGET, ResourceType.METAL_BLOCK, ResourceType.INGOT);
             //ResourceRegistry.getOrCreate("silver").setColor(WorkshopFluids.fromHex("FFc0c0c0")).addAll(ResourceType.NUGGET, ResourceType.METAL_BLOCK, ResourceType.INGOT);
         }
     }

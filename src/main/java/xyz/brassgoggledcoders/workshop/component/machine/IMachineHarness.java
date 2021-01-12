@@ -18,7 +18,7 @@ public interface IMachineHarness<T extends IMachineHarness<T>> extends IComponen
     LocatorInstance getLocatorInstance();
 
     void createMachineComponent(MachineComponent<T> machineComponent);
-    
+
     MachineComponent<T> getMachineComponent();
 
     boolean canInteractWith(PlayerEntity player);

@@ -12,7 +12,6 @@ import net.minecraft.world.World;
 import xyz.brassgoggledcoders.workshop.tileentity.GUITile;
 
 import javax.annotation.Nonnull;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
@@ -20,7 +19,7 @@ import java.util.function.Supplier;
 
 public class GUITileBlock<T extends TileEntity & GUITile> extends TileBlock<T> {
     public GUITileBlock(Properties properties, Supplier<T> tileSupplier) {
-        super(properties,tileSupplier);
+        super(properties, tileSupplier);
     }
 
     @Override

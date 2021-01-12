@@ -85,7 +85,7 @@ public class BellowsBlock extends Block {
     }
 
     private double randomise(World worldIn, double start) {
-        return start + 0.5D + ((double)worldIn.rand.nextFloat() - 0.5D) * 2.0D;
+        return start + 0.5D + ((double) worldIn.rand.nextFloat() - 0.5D) * 2.0D;
     }
 
     protected void updateState(World worldIn, BlockPos pos, BlockState state, boolean pressed) {
@@ -105,7 +105,7 @@ public class BellowsBlock extends Block {
     @Override
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
         if (stateIn.get(PRESSED)) {
-            for(int i = 0; i < 20 + worldIn.rand.nextInt(10); i++) {
+            for (int i = 0; i < 20 + worldIn.rand.nextInt(10); i++) {
                 worldIn.addParticle(ParticleTypes.SMOKE, randomise(worldIn, pos.getX()), randomise(worldIn, pos.getY()), randomise(worldIn, pos.getZ()),
                         randomise(worldIn, stateIn.get(FACING).getDirectionVec().getX()) * 0.01, worldIn.getRandom().nextDouble() * 0.01, randomise(worldIn, stateIn.get(FACING).getDirectionVec().getZ()) * 0.01);
             }

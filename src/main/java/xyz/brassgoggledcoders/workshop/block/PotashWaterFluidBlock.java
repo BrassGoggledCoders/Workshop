@@ -32,7 +32,7 @@ public class PotashWaterFluidBlock extends FlowingFluidBlock {
     }
 
     private boolean reactWithNeighbors(World worldIn, BlockPos pos) {
-        for(Direction direction : Direction.values()) {
+        for (Direction direction : Direction.values()) {
             if (direction != Direction.DOWN) {
                 BlockPos blockpos = pos.offset(direction);
                 if (worldIn.getFluidState(blockpos).isTagged(FluidTags.LAVA)) {

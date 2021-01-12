@@ -46,7 +46,7 @@ public class FluidFunnelBlock extends GUITileBlock<FluidFunnelTileEntity> {
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        switch(state.get(FACING)) {
+        switch (state.get(FACING)) {
             case DOWN:
                 return DOWN_SHAPE;
             case NORTH:
@@ -64,7 +64,7 @@ public class FluidFunnelBlock extends GUITileBlock<FluidFunnelTileEntity> {
 
     @Override
     public VoxelShape getRaytraceShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        switch(state.get(FACING)) {
+        switch (state.get(FACING)) {
             case DOWN:
                 return DOWN_RAYTRACE_SHAPE;
             case NORTH:
@@ -107,6 +107,6 @@ public class FluidFunnelBlock extends GUITileBlock<FluidFunnelTileEntity> {
 
     @Override
     protected void fillStateContainer(@Nonnull StateContainer.Builder<Block, BlockState> builder) {
-        super.fillStateContainer(builder.add(FACING,ENABLED));
+        super.fillStateContainer(builder.add(FACING, ENABLED));
     }
 }

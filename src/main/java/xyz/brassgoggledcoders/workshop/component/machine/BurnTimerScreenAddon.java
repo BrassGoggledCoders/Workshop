@@ -56,7 +56,7 @@ public class BurnTimerScreenAddon<T extends IComponentHarness> extends BasicScre
     @Override
     public List<ITextComponent> getTooltipLines() {
         List<ITextComponent> tooltip = new ArrayList<>();
-        tooltip.add( new StringTextComponent(TextFormatting.RED + "Ticks Remaining: " + TextFormatting.WHITE + new DecimalFormat().format(progressBar.getProgress()) + TextFormatting.GOLD + "/" + TextFormatting.WHITE + new DecimalFormat().format(progressBar.getMaxProgress())));
+        tooltip.add(new StringTextComponent(TextFormatting.RED + "Ticks Remaining: " + TextFormatting.WHITE + new DecimalFormat().format(progressBar.getProgress()) + TextFormatting.GOLD + "/" + TextFormatting.WHITE + new DecimalFormat().format(progressBar.getMaxProgress())));
         int progress = (progressBar.getMaxProgress() - progressBar.getProgress()) / progressBar.getProgressIncrease();
         if (!progressBar.getIncreaseType()) progress = progressBar.getMaxProgress() - progress;
         tooltip.add(new StringTextComponent(TextFormatting.RED + "ETA: " + TextFormatting.WHITE + new DecimalFormat().format(Math.ceil(progress * progressBar.getTickingTime() / 20D)) + TextFormatting.DARK_AQUA + "s"));

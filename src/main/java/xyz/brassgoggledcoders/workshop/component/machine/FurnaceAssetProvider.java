@@ -16,6 +16,7 @@ public class FurnaceAssetProvider implements IAssetProvider {
         public ResourceLocation getResourceLocation() {
             return LOCATION;
         }
+
         @Override
         public Rectangle getArea() {
             return new Rectangle(57, 37, 13, 13);
@@ -26,6 +27,7 @@ public class FurnaceAssetProvider implements IAssetProvider {
         public ResourceLocation getResourceLocation() {
             return LOCATION;
         }
+
         @Override
         public Rectangle getArea() {
             return new Rectangle(176, 0, 14, 14);
@@ -37,7 +39,7 @@ public class FurnaceAssetProvider implements IAssetProvider {
     public <T extends IAsset> T getAsset(IAssetType<T> assetType) {
         if (assetType == AssetTypes.FURNACE_FLAMES) {
             return assetType.castOrDefault(FURNACE_FLAMES);
-        } else if(assetType == AssetTypes.FURNACE_FLAMES_BACKGROUND) {
+        } else if (assetType == AssetTypes.FURNACE_FLAMES_BACKGROUND) {
             return assetType.castOrDefault(FURNACE_FLAMES_BACKGROUND);
         }
         return null;

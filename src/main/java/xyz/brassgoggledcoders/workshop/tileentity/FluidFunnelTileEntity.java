@@ -51,14 +51,14 @@ public class FluidFunnelTileEntity extends BasicInventoryTileEntity<FluidFunnelT
     @Override
     public void tick() {
         super.tick();
-        if(this.getWorld() != null && !this.getWorld().isRemote) {
+        if (this.getWorld() != null && !this.getWorld().isRemote) {
             timer++;
-            if(timer > interval) {
+            if (timer > interval) {
                 timer = 0;
-                if(!this.getWorld().isAirBlock(this.getPos().up())) {
+                if (!this.getWorld().isAirBlock(this.getPos().up())) {
                     FluidUtil.getFluidHandler(this.getWorld(), this.getPos().up(), Direction.DOWN).ifPresent(fluidHandler -> FluidUtil.tryFluidTransfer(tank, fluidHandler, fluidMovedPer, true));
                 }
-                if(!this.getWorld().isAirBlock(this.getPos().down())) {
+                if (!this.getWorld().isAirBlock(this.getPos().down())) {
                     FluidUtil.getFluidHandler(this.getWorld(), this.getPos().down(), Direction.UP).ifPresent(fluidHandler -> FluidUtil.tryFluidTransfer(fluidHandler, tank, fluidMovedPer, true));
                 }
             }

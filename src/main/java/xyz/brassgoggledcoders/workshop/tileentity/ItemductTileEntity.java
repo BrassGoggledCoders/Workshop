@@ -2,7 +2,6 @@ package xyz.brassgoggledcoders.workshop.tileentity;
 
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.CarvedPumpkinBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -50,15 +49,15 @@ public class ItemductTileEntity extends BasicInventoryTileEntity<ItemductTileEnt
     @Override
     public void tick() {
         super.tick();
-        if(this.getWorld() != null && !this.getWorld().isRemote) {
+        if (this.getWorld() != null && !this.getWorld().isRemote) {
             timer++;
-            if(timer > interval) {
+            if (timer > interval) {
                 timer = 0;
-                if(capability == null) {
+                if (capability == null) {
                     Direction facing = this.getBlockState().get(ItemductBlock.FACING);
                     BlockPos target = this.getPos().offset(facing);
                     TileEntity tile = this.getWorld().getTileEntity(target);
-                    if(tile != null) {
+                    if (tile != null) {
                         capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite());
                     } else {
                         capability = null;

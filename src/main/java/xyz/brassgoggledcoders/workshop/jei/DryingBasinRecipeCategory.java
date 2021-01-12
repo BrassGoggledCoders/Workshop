@@ -71,7 +71,7 @@ public class DryingBasinRecipeCategory implements IRecipeCategory<DryingBasinRec
     @Override
     public void setIngredients(DryingBasinRecipe recipe, IIngredients iIngredients) {
         iIngredients.setInputIngredients(Lists.newArrayList(recipe.itemIn));
-        if(!recipe.fluidIn.isEmpty()) {
+        if (!recipe.fluidIn.isEmpty()) {
             iIngredients.setInput(VanillaTypes.FLUID, recipe.fluidIn);
         }
         iIngredients.setOutput(VanillaTypes.ITEM, recipe.itemOut);

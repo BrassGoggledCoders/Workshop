@@ -105,7 +105,7 @@ public class DryingBasinTileEntity extends BasicMachineTileEntity<DryingBasinTil
         for (int i = 0; i < inputInventory.getSlots(); i++) {
             inputInventory.getStackInSlot(i).shrink(1);
         }
-        if(!currentRecipe.itemOut.isEmpty()) {
+        if (!currentRecipe.itemOut.isEmpty()) {
             ItemHandlerHelper.insertItem(outputInventory, currentRecipe.itemOut.copy(), false);
         }
     }

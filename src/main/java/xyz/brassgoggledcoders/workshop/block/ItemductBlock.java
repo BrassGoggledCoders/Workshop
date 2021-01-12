@@ -12,12 +12,9 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.items.CapabilityItemHandler;
-import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.tileentity.ItemductTileEntity;
 
@@ -74,8 +71,8 @@ public class ItemductBlock extends GUITileBlock<ItemductTileEntity> {
 
     public BlockState makeConnections(IBlockReader blockReader, BlockPos pos) {
         BlockState state = this.getDefaultState();
-        for(Direction direction : Direction.values()) {
-            if(shouldConnect(blockReader, pos.offset(direction), direction.getOpposite())) {
+        for (Direction direction : Direction.values()) {
+            if (shouldConnect(blockReader, pos.offset(direction), direction.getOpposite())) {
                 state.with(SixWayBlock.FACING_TO_PROPERTY_MAP.get(direction), true);
             }
         }
@@ -83,7 +80,7 @@ public class ItemductBlock extends GUITileBlock<ItemductTileEntity> {
     }
 
     private boolean shouldConnect(IBlockReader blockReader, BlockPos to, @Nullable Direction facing) {
-        if(blockReader.getTileEntity(to) != null) {
+        if (blockReader.getTileEntity(to) != null) {
             TileEntityType<?> type = blockReader.getTileEntity(to).getType();
             return TileEntityType.HOPPER.equals(type) || WorkshopBlocks.ITEMDUCT.getTileEntityType().equals(type);
         }

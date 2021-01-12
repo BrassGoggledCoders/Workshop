@@ -1,20 +1,48 @@
 {
-	"parent": "workshop:block/press",
-	"display": {
-		"thirdperson_righthand": {
-			"scale": [0.55, 0.55, 0.55]
-		},
-		"firstperson_righthand": {
-			"translation": [6, 0, 0],
-			"scale": [0.42, 0.42, 0.42]
-		},
-		"ground": {
-			"scale": [0.5, 0.5, 0.5]
-		},
-		"gui": {
-			"rotation": [19, 143, 0],
-			"translation": [0, -2.5, 0],
-			"scale": [0.39, 0.39, 0.39]
-		}
-	}
+  "parent": "workshop:block/press",
+  "display": {
+    "thirdperson_righthand": {
+      "scale": [
+        0.55,
+        0.55,
+        0.55
+      ]
+    },
+    "firstperson_righthand": {
+      "translation": [
+        6,
+        0,
+        0
+      ],
+      "scale": [
+        0.42,
+        0.42,
+        0.42
+      ]
+    },
+    "ground": {
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "gui": {
+      "rotation": [
+        19,
+        143,
+        0
+      ],
+      "translation": [
+        0,
+        -2.5,
+        0
+      ],
+      "scale": [
+        0.39,
+        0.39,
+        0.39
+      ]
+    }
+  }
 }

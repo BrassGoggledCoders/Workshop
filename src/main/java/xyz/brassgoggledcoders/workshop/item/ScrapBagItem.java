@@ -46,13 +46,13 @@ public class ScrapBagItem extends Item {
     }
 
     public static List<ItemStack> getLoot(ServerWorld worldIn, @Nullable PlayerEntity playerIn, @Nullable BlockPos position) {
-        if(position == null && playerIn != null) {
+        if (position == null && playerIn != null) {
             position = playerIn.getPosition();
         }
-        if(position != null) {
+        if (position != null) {
             return worldIn.getServer()
                     .getLootTableManager()
-                    .getLootTableFromLocation( new ResourceLocation(Workshop.MOD_ID, "gameplay/scrap_bag"))
+                    .getLootTableFromLocation(new ResourceLocation(Workshop.MOD_ID, "gameplay/scrap_bag"))
                     .generate(new LootContext.Builder(worldIn)
                             .withParameter(LootParameters.field_237457_g_, new Vector3d(position.getX(), position.getY(), position.getZ()))
                             .withNullableParameter(LootParameters.THIS_ENTITY, playerIn)

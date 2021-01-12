@@ -48,7 +48,7 @@ public class TileBlock<T extends TileEntity> extends Block {
         if (stack.hasDisplayName()) {
             TileEntity tileentity = worldIn.getTileEntity(pos);
             if (tileentity instanceof BasicMachineTileEntity) {
-                ((BasicMachineTileEntity<?, ?>)tileentity).setCustomName(stack.getDisplayName());
+                ((BasicMachineTileEntity<?, ?>) tileentity).setCustomName(stack.getDisplayName());
             }
         }
     }

@@ -55,9 +55,9 @@ public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity>
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
         ItemStack item = press.getInputInventory().getStackInSlot(0);
         World world = press.getWorld();
-        if(world != null) {
+        if (world != null) {
             float f = world.getBlockState(press.getPos()).get(FACING).getHorizontalAngle();
-            if (!item.isEmpty() && press.getHeightChange() - 0.2 > 0.3 && press.getMachineComponent().getPrimaryBar().getProgress() < press.getMachineComponent().getPrimaryBar().getMaxProgress()/2) {
+            if (!item.isEmpty() && press.getHeightChange() - 0.2 > 0.3 && press.getMachineComponent().getPrimaryBar().getProgress() < press.getMachineComponent().getPrimaryBar().getMaxProgress() / 2) {
                 stack.push();
                 stack.translate(0.5, press.getHeightChange() - 0.2, 0.5);
                 if (press.getMachineComponent().getPrimaryBar().getCanIncrease().test(press)) {
@@ -90,10 +90,10 @@ public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity>
         IVertexBuilder builder = buf.getBuffer(FluidRenderer.getBlockRenderType());
         float minY = 1.1F;
         float maxY = 15F;
-        if(!liquid.isEmpty()){
-            float sections = (maxY - minY)/tile.getOutputFluid().getCapacity();
-            float height = (float)liquid.getAmount()*sections;
-            FluidRenderer.renderScaledFluidCuboid(liquid,stack,builder,combinedLight,2.2F,minY,2.1F,13.9F,minY + height,13.9F);
+        if (!liquid.isEmpty()) {
+            float sections = (maxY - minY) / tile.getOutputFluid().getCapacity();
+            float height = (float) liquid.getAmount() * sections;
+            FluidRenderer.renderScaledFluidCuboid(liquid, stack, builder, combinedLight, 2.2F, minY, 2.1F, 13.9F, minY + height, 13.9F);
         }
 
 

@@ -43,7 +43,7 @@ public class WorkshopJEIPlugin implements IModPlugin {
                 new SeasoningBarrelRecipeCategory(guiHelper),
                 new DryingBasinRecipeCategory(guiHelper),
                 new MortarRecipeCategory(guiHelper)
-                );
+        );
     }
 
     @Override
@@ -69,7 +69,7 @@ public class WorkshopJEIPlugin implements IModPlugin {
             @Nonnull
             public Collection<IGuiClickableArea> getGuiClickableAreas(@Nonnull BasicAddonScreen containerScreen, double mouseX, double mouseY) {
                 Collection<IGuiClickableArea> areas = new ArrayList<>();
-                if(containerScreen.getContainer().getProvider() instanceof BasicMachineTileEntity) {
+                if (containerScreen.getContainer().getProvider() instanceof BasicMachineTileEntity) {
                     containerScreen.getAddons().stream()
                             .filter(addon -> addon instanceof ProgressBarScreenAddon)
                             .map(addon -> (ProgressBarScreenAddon<?>) addon)

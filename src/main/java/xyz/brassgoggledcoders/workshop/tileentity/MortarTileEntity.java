@@ -113,7 +113,7 @@ public class MortarTileEntity extends BasicMachineTileEntity<MortarTileEntity, M
         for (int i = 0; i < input.getSlots(); i++) {
             input.getStackInSlot(i).shrink(1);
         }
-        if(!currentRecipe.output.isEmpty()) {
+        if (!currentRecipe.output.isEmpty()) {
             ItemHandlerHelper.insertItem(output, currentRecipe.output.copy(), false);
         }
     }

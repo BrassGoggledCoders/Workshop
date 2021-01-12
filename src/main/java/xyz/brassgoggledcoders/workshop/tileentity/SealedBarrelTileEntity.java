@@ -65,7 +65,7 @@ public class SealedBarrelTileEntity extends BasicInventoryTileEntity<SealedBarre
     //Can't do it onSlotChanged like I wanted because I can't then set the stack without an infinite loop
     @Override
     public void tick() {
-        if(this.getWorld() != null && !this.getWorld().isRemote) {
+        if (this.getWorld() != null && !this.getWorld().isRemote) {
             ItemStack drainingInventoryStackInSlot = this.drainingInventory.getStackInSlot(0);
             if (!drainingInventoryStackInSlot.isEmpty()) {
                 if (FluidUtil.tryEmptyContainer(drainingInventoryStackInSlot, this.tank, tankCapacity, null, false).isSuccess()) {

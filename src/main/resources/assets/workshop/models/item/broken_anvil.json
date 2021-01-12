@@ -1,5 +1,5 @@
 {
-  "parent":"workshop:block/broken_anvil",
+  "parent": "workshop:block/broken_anvil",
   "textures": {
     "body": "minecraft:block/anvil",
     "top": "minecraft:block/damaged_anvil_top"

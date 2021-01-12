@@ -39,7 +39,7 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
                 .setResidue(new RangedItemStack(Items.BUCKET, 1, 1),
                         new RangedItemStack(WorkshopItems.SALT.get(), 1, 2),
                         new RangedItemStack(WorkshopItems.SILT.get(), 0, 1))
-                        //new RangedItemStack(WorkshopBlocks.CHALK_WRITING.getItem(), 0, 1))
+                //new RangedItemStack(WorkshopBlocks.CHALK_WRITING.getItem(), 0, 1))
                 .setTime(500)
                 .build());
         recipes.add(new Builder("adhesive_oil")

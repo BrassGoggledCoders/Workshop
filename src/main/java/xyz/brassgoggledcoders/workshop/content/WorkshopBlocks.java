@@ -59,7 +59,7 @@ public class WorkshopBlocks {
     //TODO Neither of these need items, and the arm is purely a dummy block for rendering, which is dumb...
 
     public static final BlockRegistryObjectGroup<Block, BlockItem, ?> PRESS_ARM =
-            new BlockRegistryObjectGroup<>("press_arm",() -> new Block(Block.Properties.create(Material.BAMBOO)), blockItemCreatorNoGroup()).register(BLOCKS, ITEMS);
+            new BlockRegistryObjectGroup<>("press_arm", () -> new Block(Block.Properties.create(Material.BAMBOO)), blockItemCreatorNoGroup()).register(BLOCKS, ITEMS);
 
     public static final BlockRegistryObjectGroup<PressTopBlock, BlockItem, ?> PRESS_TOP =
             new BlockRegistryObjectGroup<>("press_top", PressTopBlock::new, blockItemCreatorNoGroup()).register(BLOCKS, ITEMS);
@@ -151,8 +151,7 @@ public class WorkshopBlocks {
     private static RotatedPillarBlock createLogBlock(MaterialColor topColor, MaterialColor barkColor, @Nullable Block strippingResult) {
         return new RotatedPillarBlock(AbstractBlock.Properties.create(Material.WOOD, (p_lambda$createLogBlock$36_2_) -> p_lambda$createLogBlock$36_2_.get(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? topColor : barkColor).hardnessAndResistance(2.0F).sound(SoundType.WOOD)) {
             @Override
-            public BlockState getToolModifiedState(BlockState state, World world, BlockPos pos, PlayerEntity player, ItemStack stack, ToolType toolType)
-            {
+            public BlockState getToolModifiedState(BlockState state, World world, BlockPos pos, PlayerEntity player, ItemStack stack, ToolType toolType) {
                 if (strippingResult != null && toolType == ToolType.AXE) {
                     return strippingResult.getDefaultState().with(RotatedPillarBlock.AXIS, state.get(RotatedPillarBlock.AXIS));
                 }

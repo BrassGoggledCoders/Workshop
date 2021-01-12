@@ -1,6 +1,5 @@
 package workshop.tags;
 
-
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.ItemTagsProvider;
@@ -22,8 +21,7 @@ import javax.annotation.Nonnull;
 
 public class WorkshopItemTagsProvider extends ItemTagsProvider {
 
-    public WorkshopItemTagsProvider(DataGenerator gen, BlockTagsProvider blockTagProvider, ExistingFileHelper existingFileHelper)
-    {
+    public WorkshopItemTagsProvider(DataGenerator gen, BlockTagsProvider blockTagProvider, ExistingFileHelper existingFileHelper) {
         super(gen, blockTagProvider, Workshop.MOD_ID, existingFileHelper);
     }
 

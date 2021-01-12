@@ -7,7 +7,6 @@ import net.minecraft.block.SixWayBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
-import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -75,9 +74,9 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
         //section Itemduct
         MultiPartBlockStateBuilder builder = this.getMultipartBuilder(WorkshopBlocks.ITEMDUCT.get())
                 .part().modelFile(models()
-                .withExistingParent("itemduct_center", modLoc("template_duct_center"))
-                .texture("main", modLoc("block/stripped_seasoned_log")
-                ).texture("particle", modLoc("block/stripped_seasoned_log"))).addModel()
+                        .withExistingParent("itemduct_center", modLoc("template_duct_center"))
+                        .texture("main", modLoc("block/stripped_seasoned_log")
+                        ).texture("particle", modLoc("block/stripped_seasoned_log"))).addModel()
                 .end();
         BlockModelBuilder side = models().withExistingParent("itemduct_side", modLoc("template_duct_side")).texture("main", modLoc("block/stripped_seasoned_log")
         ).texture("particle", modLoc("block/stripped_seasoned_log"));
@@ -102,5 +101,6 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
             }
         });
         //endsection
+        this.horizontalBlock(WorkshopBlocks.SINTERING_FURNACE.get(), new ModelFile.ExistingModelFile(modLoc("block/sintering_furnace"), exFileHelper));
     }
 }

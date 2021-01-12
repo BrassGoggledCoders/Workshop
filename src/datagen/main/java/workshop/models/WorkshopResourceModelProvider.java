@@ -11,14 +11,15 @@ public class WorkshopResourceModelProvider extends ModelProvider<PropertiedItemM
     public WorkshopResourceModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
         super(generator, Titanium.MODID, ITEM_FOLDER, PropertiedItemModelBuilder::new, existingFileHelper);
     }
+
     @Override
     protected void registerModels() {
         this.singleTexture("iron_dust", mcLoc("item/generated"), "layer0", new ResourceLocation(Titanium.MODID, "items/resource/dust"));
         this.singleTexture("gold_dust", mcLoc("item/generated"), "layer0", new ResourceLocation(Titanium.MODID, "items/resource/dust"));
         this.singleTexture("iron_pipe", mcLoc("item/generated"), "layer0", new ResourceLocation(Workshop.MOD_ID, "items/resource/pipe"));
-        this.singleTexture("gold_pipe", mcLoc("item/generated"), "layer0", new ResourceLocation(Workshop.MOD_ID,"items/resource/pipe"));
-        this.singleTexture("iron_film", mcLoc("item/generated"), "layer0", new ResourceLocation(Workshop.MOD_ID,"items/resource/film"));
-        this.singleTexture("gold_film", mcLoc("item/generated"), "layer0", new ResourceLocation(Workshop.MOD_ID,"items/resource/film"));
+        this.singleTexture("gold_pipe", mcLoc("item/generated"), "layer0", new ResourceLocation(Workshop.MOD_ID, "items/resource/pipe"));
+        this.singleTexture("iron_film", mcLoc("item/generated"), "layer0", new ResourceLocation(Workshop.MOD_ID, "items/resource/film"));
+        this.singleTexture("gold_film", mcLoc("item/generated"), "layer0", new ResourceLocation(Workshop.MOD_ID, "items/resource/film"));
         this.singleTexture("copper_nugget", mcLoc("item/generated"), "layer0", new ResourceLocation(Titanium.MODID, "items/resource/nugget"));
         this.singleTexture("silver_nugget", mcLoc("item/generated"), "layer0", new ResourceLocation(Titanium.MODID, "items/resource/nugget"));
         this.singleTexture("copper_ingot", mcLoc("item/generated"), "layer0", new ResourceLocation(Titanium.MODID, "items/resource/ingot"));

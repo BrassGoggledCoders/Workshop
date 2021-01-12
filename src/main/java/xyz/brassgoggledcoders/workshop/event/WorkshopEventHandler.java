@@ -43,20 +43,19 @@ public class WorkshopEventHandler {
 
     @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent event) {
-        if(RayTraceResult.Type.ENTITY.equals(event.getRayTraceResult().getType())) {
-            Entity hit = ((EntityRayTraceResult)event.getRayTraceResult()).getEntity();
-            if(hit instanceof LivingEntity && ((LivingEntity) hit).isPotionActive(WorkshopEffects.WIRED.get())) {
+        if (RayTraceResult.Type.ENTITY.equals(event.getRayTraceResult().getType())) {
+            Entity hit = ((EntityRayTraceResult) event.getRayTraceResult()).getEntity();
+            if (hit instanceof LivingEntity && ((LivingEntity) hit).isPotionActive(WorkshopEffects.WIRED.get())) {
                 event.setCanceled(true);
-                Random random = ((LivingEntity)hit).getRNG();
-                if(random.nextBoolean()) {
+                Random random = ((LivingEntity) hit).getRNG();
+                if (random.nextBoolean()) {
                     ((LivingEntity) hit).attemptTeleport(hit.getPosX() + random.nextDouble(), hit.getPosY(), hit.getPosZ() + random.nextDouble(), false);
-                }
-                else {
+                } else {
                     ((LivingEntity) hit).attemptTeleport(hit.getPosX() - random.nextDouble(), hit.getPosY(), hit.getPosZ() - random.nextDouble(), false);
                 }
                 //Did you just catch a projectile out of the air? Yes. You're that wired.
-                if(hit instanceof PlayerEntity && event.getEntity() instanceof ArrowEntity && random.nextInt(1000) == 0) {
-                    ((PlayerEntity) hit).inventory.addItemStackToInventory(((ArrowEntity)event.getEntity()).getArrowStack());
+                if (hit instanceof PlayerEntity && event.getEntity() instanceof ArrowEntity && random.nextInt(1000) == 0) {
+                    ((PlayerEntity) hit).inventory.addItemStackToInventory(((ArrowEntity) event.getEntity()).getArrowStack());
                     event.getEntity().remove();
                 }
             }
@@ -65,9 +64,9 @@ public class WorkshopEventHandler {
 
     @SubscribeEvent
     public static void onTakeDamage(LivingHurtEvent event) {
-        if(event.getEntityLiving().isPotionActive(WorkshopEffects.MELLOW.get())) {
-            if(event.getSource().getImmediateSource() instanceof LivingEntity) {
-                if(CreatureAttribute.ARTHROPOD.equals(((LivingEntity) event.getSource().getImmediateSource()).getCreatureAttribute())) {
+        if (event.getEntityLiving().isPotionActive(WorkshopEffects.MELLOW.get())) {
+            if (event.getSource().getImmediateSource() instanceof LivingEntity) {
+                if (CreatureAttribute.ARTHROPOD.equals(((LivingEntity) event.getSource().getImmediateSource()).getCreatureAttribute())) {
                     event.setAmount(event.getAmount() * 0.5F);
                 }
             }
@@ -77,16 +76,16 @@ public class WorkshopEventHandler {
     @SubscribeEvent
     public static void onUseFinish(LivingEntityUseItemEvent.Finish event) {
         //FIXME Hook into food change event if/when this becomes possible
-        if(event.getEntityLiving() instanceof PlayerEntity && event.getItem().isFood() && event.getEntityLiving().isPotionActive(WorkshopEffects.INEBRIATED.get())) {
+        if (event.getEntityLiving() instanceof PlayerEntity && event.getItem().isFood() && event.getEntityLiving().isPotionActive(WorkshopEffects.INEBRIATED.get())) {
             //Add saturation from food again, effectively doubling it
             FoodStats foodStats = ((PlayerEntity) event.getEntityLiving()).getFoodStats();
-            foodStats.addStats(0,event.getItem().getItem().getFood().getSaturation());
+            foodStats.addStats(0, event.getItem().getItem().getFood().getSaturation());
         }
     }
 
     @SubscribeEvent
     public static void xpEvent(PlayerXpEvent.XpChange event) {
-        if(event.getPlayer().isPotionActive(WorkshopEffects.INEBRIATED.get())) {
+        if (event.getPlayer().isPotionActive(WorkshopEffects.INEBRIATED.get())) {
             event.setAmount((int) Math.floor(event.getAmount() * 0.7));
         }
     }
@@ -98,7 +97,7 @@ public class WorkshopEventHandler {
 
     @SubscribeEvent
     public static void trySleep(PlayerSleepInBedEvent event) {
-        if(event.getPlayer().isPotionActive(WorkshopEffects.WIRED.get())) {
+        if (event.getPlayer().isPotionActive(WorkshopEffects.WIRED.get())) {
             event.setResult(PlayerEntity.SleepResult.NOT_POSSIBLE_NOW);
         }
     }
@@ -106,7 +105,7 @@ public class WorkshopEventHandler {
     @SubscribeEvent
     public static void potionCheck(PotionEvent.PotionAddedEvent event) {
         EffectInstance potionEffect = event.getOldPotionEffect();
-        if(potionEffect != null) {
+        if (potionEffect != null) {
             Effect potion = potionEffect.getPotion();
             if (potion instanceof IStackingEffect && event.getEntityLiving().isPotionActive(potion)) {
                 if (potionEffect.getAmplifier() < (((IStackingEffect) potion).getMaxLevel() - 1)) {
