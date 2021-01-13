@@ -41,6 +41,10 @@ public class CollectorRecipe extends WorkshopRecipe {
         return Arrays.asList(outputs);
     }
 
+    public List<TileEntityType<?>> getTileEntityTypes() {
+        return Arrays.asList(targetTileTypes);
+    }
+
     @Override
     public ItemStack getCraftingResult(IInventory inv) {
         return null;

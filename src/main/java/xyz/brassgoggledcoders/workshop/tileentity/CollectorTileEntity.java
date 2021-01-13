@@ -3,17 +3,17 @@ package xyz.brassgoggledcoders.workshop.tileentity;
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import net.minecraft.block.BlockState;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemHandlerHelper;
-<<<<<<< HEAD
 import xyz.brassgoggledcoders.workshop.api.capabilities.ICollectorTarget;
-=======
 import org.apache.commons.lang3.tuple.Pair;
->>>>>>> feature/collector_weighted_output
 import xyz.brassgoggledcoders.workshop.block.CollectorBlock;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopCapabilities;
@@ -68,13 +68,17 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
     }
 
     @Override
+    //FIXME Efficiency
     public boolean matchesInputs(CollectorRecipe currentRecipe) {
         TileEntity tile = this.getWorld().getTileEntity(this.getPos().offset(this.getBlockState().get(CollectorBlock.FACING)));
-        if (currentRecipe.targetTileTypes.getTileEntityTypes().stream().anyMatch(type -> tile.getType().equals(type))) {
+        // Check tile entity exists and is of correct type
+        if (tile != null && currentRecipe.getTileEntityTypes().contains(tile.getType())) {
             LazyOptional<ICollectorTarget> cap = tile.getCapability(WorkshopCapabilities.COLLECTOR_TARGET);
             return cap.map(target -> {
                 // Recipe is only valid if machine can accept all possible outputs from recipe
-                if (target.isActive() && currentRecipe.getOutputs().stream().map(Pair::getLeft).allMatch(itemStack -> ItemHandlerHelper.insertItemStacked(this.output, itemStack, true).isEmpty())) {
+                //Method creates a dummmy stack of maximum possible size for each output. TODO - revisit this
+                if (target.isActive() && currentRecipe.getOutputs().stream().map(rangedStack -> new ItemStack(rangedStack.stack.getItem(), rangedStack.max))
+                        .allMatch(itemStack -> ItemHandlerHelper.insertItemStacked(this.output, itemStack, true).isEmpty())) {
                     return Stream.of(target.getCollectables()).anyMatch(stack -> currentRecipe.input.test(stack));
                 }
                 return false;
@@ -85,14 +89,14 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
 
     @Override
     public void handleComplete(CollectorRecipe currentRecipe) {
-        ItemHandlerHelper.insertItemStacked(this.output, currentRecipe.getRecipeOutput(world.getRandom()), false);
+        ItemHandlerHelper.insertItemStacked(this.output, currentRecipe.getRecipeOutput(this.getWorld().getRandom()), false);
         this.getMachineComponent().forceRecipeRecheck();
     }
 
     @Override
-    public void read(CompoundNBT compound) {
+    public void read(@Nonnull BlockState state, CompoundNBT compound) {
         output.deserializeNBT(compound.getCompound("output"));
-        super.read(compound);
+        super.read(state, compound);
     }
 
     @Nonnull

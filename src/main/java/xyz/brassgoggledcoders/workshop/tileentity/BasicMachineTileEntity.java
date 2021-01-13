@@ -34,24 +34,5 @@ public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T,
         return currentRecipe.getProcessingTime();
     }
 
-    @Override
-<<<<<<< HEAD
-    public void read(BlockState state, CompoundNBT compound) {
-        this.getMachineComponent().getPrimaryBar().deserializeNBT(compound.getCompound("progress"));
-        super.read(state, compound);
-=======
-    public void read(CompoundNBT compound) {
-        machineComponent.deserializeNBT(compound.getCompound("machineComponent"));
-        super.read(compound);
->>>>>>> feature/collector_weighted_output
-    }
-
-    @Override
-    @Nonnull
-    public CompoundNBT write(@Nonnull CompoundNBT compound) {
-        compound.put("machineComponent", machineComponent.serializeNBT());
-        return super.write(compound);
-    }
-
     public abstract ResourceLocation getRecipeCategoryUID();
 }

@@ -1,13 +1,4 @@
 {
-  "weightedOutputList": [
-    {
-      "weight": 1,
-      "stack": {
-        "item": "workshop:tallow",
-        "count": 1
-      }
-    }
-  ],
   "targetTileTypes": [
     "minecraft:furnace",
     "minecraft:smoker"
@@ -15,6 +6,16 @@
   "input": {
     "tag": "forge:raw_meats"
   },
+  "outputs": [
+    {
+      "min": 1,
+      "max": 1,
+      "stack": {
+        "item": "workshop:tallow",
+        "count": 1
+      }
+    }
+  ],
   "processingTime": 200,
   "type": "workshop:collector"
 }

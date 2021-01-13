@@ -88,6 +88,13 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .patternLine("WW ")
                 .key('W', WorkshopBlocks.SEASONED_LOG.getItem())
                 .build(consumer);
+        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.COLLECTOR.getBlock())
+                .patternLine("SS ")
+                .patternLine(" CS")
+                .patternLine("SS ")
+                .key('S', Tags.Items.STONE)
+                .key('C', Tags.Items.CHESTS)
+                .build(consumer);
         /*TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.PRESS.getBlock())
                 .patternLine("WPW")
                 .patternLine("WGW")
@@ -107,13 +114,7 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('C', Items.CAULDRON)
                 .key('B', Items.GLASS_BOTTLE)
                 .build(consumer);
-        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.COLLECTOR.getBlock())
-                .patternLine("SS ")
-                .patternLine(" CS")
-                .patternLine("SS ")
-                .key('S', Tags.Items.STONE)
-                .key('C', Tags.Items.CHESTS)
-                .build(consumer);
+
         TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.MOLTEN_CHAMBER.getBlock())
                 .patternLine("COC")
                 .patternLine("C C")

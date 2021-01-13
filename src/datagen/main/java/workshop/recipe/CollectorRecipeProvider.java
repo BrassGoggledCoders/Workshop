@@ -17,7 +17,9 @@ import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 import xyz.brassgoggledcoders.workshop.recipe.CollectorRecipe;
 import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -32,32 +34,25 @@ public class CollectorRecipeProvider extends TitaniumSerializableProvider {
     @Override
     public void add(Map<IJsonFile, IJSONGenerator> serializables) {
         recipes.add(new Builder("meat_to_tallow")
-                .addTarget(TileEntityType.FURNACE)
-                .addTarget(TileEntityType.SMOKER)
+                .addTarget(TileEntityType.FURNACE, TileEntityType.SMOKER)
                 .setInput(Ingredient.fromTag(WorkshopItemTags.RAW_MEAT))
                 .addOutput(new ItemStack(WorkshopItems.TALLOW.get()))
                 .setTime(200)
                 .build());
         recipes.add(new Builder("saplings_to_ash")
-                .addTarget(TileEntityType.FURNACE)
-                .addTarget(TileEntityType.BLAST_FURNACE)
-                .addTarget(TileEntityType.SMOKER)
+                .addTarget(TileEntityType.FURNACE, TileEntityType.BLAST_FURNACE, TileEntityType.SMOKER)
                 .setInput(Ingredient.fromTag(ItemTags.SAPLINGS))
                 .setTime(100)
                 .addOutput(new RangedItemStack(WorkshopItems.ASH.get(), 0, 3))
                 .build());
         recipes.add(new Builder("logs_to_ash")
-                .addTarget(TileEntityType.FURNACE)
-                .addTarget(TileEntityType.BLAST_FURNACE)
-                .addTarget(TileEntityType.SMOKER)
+                .addTarget(TileEntityType.FURNACE, TileEntityType.BLAST_FURNACE, TileEntityType.SMOKER)
                 .setInput(Ingredient.fromTag(ItemTags.LOGS))
                 .addOutput(new RangedItemStack(WorkshopItems.ASH.get(), 1, 4))
                 .setTime(600)
                 .build());
         recipes.add(new Builder("planks_to_ash")
-                .addTarget(TileEntityType.FURNACE)
-                .addTarget(TileEntityType.BLAST_FURNACE)
-                .addTarget(TileEntityType.SMOKER)
+                .addTarget(TileEntityType.FURNACE, TileEntityType.BLAST_FURNACE, TileEntityType.SMOKER)
                 .setInput(Ingredient.fromTag(ItemTags.LOGS))
                 .setTime(300)
                 .addOutput(new RangedItemStack(WorkshopItems.ASH.get(), 0, 1))
@@ -81,17 +76,17 @@ public class CollectorRecipeProvider extends TitaniumSerializableProvider {
 
     protected static class Builder {
         private final ResourceLocation name;
-        private ArrayList<TileEntityType<?>> targetTileTypes;
+        private final ArrayList<TileEntityType<?>> targetTileTypes = new ArrayList<>();
         private Ingredient input;
-        private ArrayList<RangedItemStack> outputs;
+        private final ArrayList<RangedItemStack> outputs = new ArrayList<>();
         private int processingTime = 10;
 
         public Builder(String name) {
             this.name = new ResourceLocation(Workshop.MOD_ID, name);
         }
 
-        public Builder addTarget(TileEntityType<?> type) {
-            this.targetTileTypes.add(type);
+        public Builder addTarget(TileEntityType<?>... type) {
+            targetTileTypes.addAll(Arrays.asList(type));
             return this;
         }
 

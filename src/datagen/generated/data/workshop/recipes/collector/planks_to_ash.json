@@ -5,18 +5,18 @@
     "minecraft:smoker"
   ],
   "input": {
-    "tag": "minecraft:saplings"
+    "tag": "minecraft:logs"
   },
   "outputs": [
     {
       "min": 0,
-      "max": 3,
+      "max": 1,
       "stack": {
         "item": "workshop:ash",
         "count": 1
       }
     }
   ],
-  "processingTime": 100,
+  "processingTime": 300,
   "type": "workshop:collector"
 }

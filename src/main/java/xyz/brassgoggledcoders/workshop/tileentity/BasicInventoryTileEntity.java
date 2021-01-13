@@ -126,10 +126,11 @@ public abstract class BasicInventoryTileEntity<T extends BasicInventoryTileEntit
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
+    public void read(@Nonnull BlockState state, CompoundNBT compound) {
         if (compound.contains("CustomName", 8)) {
             this.customName = ITextComponent.Serializer.getComponentFromJson(compound.getString("CustomName"));
         }
+        this.getMachineComponent().deserializeNBT(compound.getCompound("machineComponent"));
         super.read(state, compound);
     }
 
@@ -139,6 +140,7 @@ public abstract class BasicInventoryTileEntity<T extends BasicInventoryTileEntit
         if (this.customName != null) {
             compound.putString("CustomName", ITextComponent.Serializer.toJson(this.customName));
         }
+        compound.put("machineComponent", this.getMachineComponent().serializeNBT());
         return super.write(compound);
     }
 
