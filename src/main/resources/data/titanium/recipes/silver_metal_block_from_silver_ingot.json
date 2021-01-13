@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "III",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "titanium:silver_ingot"
+    }
+  },
+  "result": {
+    "item": "titanium:silver_metal_block"
+  }
+}

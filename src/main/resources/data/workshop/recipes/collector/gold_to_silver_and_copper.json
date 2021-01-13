@@ -3,17 +3,24 @@
     {
       "weight": 1,
       "stack": {
-        "item": "workshop:tallow",
+        "item": "titanium:copper_nugget",
+        "count": 1
+      }
+    },
+    {
+      "weight": 1,
+      "stack": {
+        "item": "titanium:silver_nugget",
         "count": 1
       }
     }
   ],
   "targetTileTypes": [
     "minecraft:furnace",
-    "minecraft:smoker"
+    "minecraft:blast_furnace"
   ],
   "input": {
-    "tag": "forge:raw_meats"
+    "tag": "forge:ores/gold"
   },
   "processingTime": 200,
   "type": "workshop:collector"

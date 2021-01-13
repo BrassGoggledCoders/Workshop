@@ -6,9 +6,12 @@ import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import com.hrznstudio.titanium.component.sideness.IFacingComponent;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public class RecipeMachineComponent<T extends IRecipeMachineHarness<T, U>, U extends IRecipe<IInventory>> extends MachineComponent<T> {
@@ -17,12 +20,13 @@ public class RecipeMachineComponent<T extends IRecipeMachineHarness<T, U>, U ext
     private int timeSinceLastRecipeCheck = 50;
     private boolean recheck = false;
     private U currentRecipe;
+    private ResourceLocation recipeResourceLocation;
 
     public RecipeMachineComponent(T componentHarness, Supplier<BlockPos> posSupplier, ProgressBarComponent<T> primaryBar) {
         super(componentHarness, posSupplier);
         this.primaryBar = primaryBar;
         if (primaryBar != null) {
-            this.primaryBar.setCanIncrease(value -> currentRecipe != null);
+            this.primaryBar.setCanIncrease(value -> getCurrentRecipe() != null);
             this.addProgressBar(primaryBar);
         }
     }
@@ -62,9 +66,10 @@ public class RecipeMachineComponent<T extends IRecipeMachineHarness<T, U>, U ext
                 }
             }
 
-            if (currentRecipe == null) {
+            if (currentRecipe == null || recheck) {
                 handleNoRecipe(recheck);
-            } else {
+            }
+            else {
                 handleRecipe();
             }
             recheck = false;
@@ -76,23 +81,44 @@ public class RecipeMachineComponent<T extends IRecipeMachineHarness<T, U>, U ext
     }
 
     protected void handleNoRecipe(boolean didWork) {
-        if (timeSinceLastRecipeCheck-- <= 0 || didWork) {
+        if (recipeResourceLocation != null){
+            currentRecipe = getRecipeFromNBT();
+            if (currentRecipe != null) {
+                primaryBar.setMaxProgress(componentHarness.getProcessingTime(currentRecipe));
+            }
+
+        }
+        else if (timeSinceLastRecipeCheck-- <= 0 || didWork) {
             timeSinceLastRecipeCheck = 50;
             if (componentHarness.hasInputs()) {
-                currentRecipe = componentHarness.getComponentWorld().getRecipeManager()
-                        .getRecipes()
-                        .stream()
-                        .filter(componentHarness::checkRecipe)
-                        .map(componentHarness::castRecipe)
-                        .filter(componentHarness::matchesInputs)
-                        .findFirst()
-                        .orElse(null);
+                currentRecipe = findRecipe();
                 primaryBar.setProgress(0);
                 if (currentRecipe != null) {
                     primaryBar.setMaxProgress(componentHarness.getProcessingTime(currentRecipe));
                 }
             }
         }
+    }
+
+    @Override
+    public CompoundNBT serializeNBT() {
+        final CompoundNBT compoundNBT = super.serializeNBT();
+        if (currentRecipe != null){
+            compoundNBT.putString("recipe", getCurrentRecipe().getId().toString());
+        }
+        compoundNBT.put("progressBar", primaryBar.serializeNBT());
+        return compoundNBT;
+    }
+
+    @Override
+    public void deserializeNBT(CompoundNBT nbt) {
+        if (nbt.contains("recipe")){
+            recipeResourceLocation = new ResourceLocation(nbt.getString("recipe"));
+        }
+        if (nbt.contains("progressBar")){
+            primaryBar.deserializeNBT(nbt.getCompound("progressBar"));
+        }
+        super.deserializeNBT(nbt);
     }
 
     protected void handleRecipe() {
@@ -108,7 +134,6 @@ public class RecipeMachineComponent<T extends IRecipeMachineHarness<T, U>, U ext
         componentHarness.markComponentDirty();
     }
 
-
     public int getFacingHandlerWorkTime() {
         return 10;
     }
@@ -117,7 +142,41 @@ public class RecipeMachineComponent<T extends IRecipeMachineHarness<T, U>, U ext
         return 4;
     }
 
+    @Nullable
     public U getCurrentRecipe() {
-        return currentRecipe;
+        if (currentRecipe != null){
+            return currentRecipe;
+        }
+        else if (recipeResourceLocation != null){
+            return getRecipeFromNBT();
+        }
+        else {
+            return findRecipe();
+        }
+    }
+
+    @Nullable
+    private U findRecipe() {
+        return componentHarness.getComponentWorld().getRecipeManager()
+                .getRecipes()
+                .stream()
+                .filter(componentHarness::checkRecipe)
+                .map(componentHarness::castRecipe)
+                .filter(componentHarness::matchesInputs)
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Nullable
+    private U getRecipeFromNBT() {
+        final U recipe = componentHarness.getComponentWorld().getRecipeManager()
+                .getRecipes()
+                .stream()
+                .filter(iRecipe -> iRecipe.getId().equals(recipeResourceLocation))
+                .map(componentHarness::castRecipe)
+                .findFirst()
+                .orElse(null);
+        recipeResourceLocation = null;
+        return recipe;
     }
 }

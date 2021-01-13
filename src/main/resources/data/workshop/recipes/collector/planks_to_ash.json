@@ -6,20 +6,6 @@
         "item": "workshop:ash",
         "count": 1
       }
-    },
-    {
-      "weight": 1,
-      "stack": {
-        "item": "workshop:ash",
-        "count": 2
-      }
-    },
-    {
-      "weight": 1,
-      "stack": {
-        "item": "workshop:ash",
-        "count": 3
-      }
     }
   ],
   "targetTileTypes": [
@@ -28,8 +14,8 @@
     "minecraft:smoker"
   ],
   "input": {
-    "tag": "minecraft:saplings"
+    "tag": "minecraft:logs"
   },
-  "processingTime": 100,
+  "processingTime": 300,
   "type": "workshop:collector"
 }

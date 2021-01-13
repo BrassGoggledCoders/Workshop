@@ -18,8 +18,6 @@ import workshop.language.WorkshopUSLanguageProvider;
 import workshop.loot.WorkshopLootTableProvider;
 import workshop.models.WorkshopBlockstateProvider;
 import workshop.models.WorkshopItemModelProvider;
-import workshop.models.WorkshopResourceBlockstateProvider;
-import workshop.models.WorkshopResourceModelProvider;
 import workshop.recipe.*;
 import workshop.tags.WorkshopBlockTagsProvider;
 import workshop.tags.WorkshopFluidTagsProvider;
@@ -27,6 +25,7 @@ import workshop.tags.WorkshopItemTagsProvider;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 
@@ -62,6 +61,20 @@ public class WorkshopDataGenerator {
             }
             return stacks;
         });
+        JSONSerializableDataHandler.map(TileEntityType[].class, list -> {
+            JsonArray array = new JsonArray();
+            Arrays.asList(list).forEach(t -> array.add(JSONSerializableDataHandler.write(TileEntityType.class, t)));
+            return array;
+        }, element -> {
+            TileEntityType<?>[] types = new TileEntityType[element.getAsJsonArray().size()];
+            int i = 0;
+            Iterator<JsonElement> iterator;
+            for (iterator = element.getAsJsonArray().iterator(); iterator.hasNext(); i++) {
+                JsonElement jsonElement = iterator.next();
+                types[i] = JSONSerializableDataHandler.read(TileEntityType.class, jsonElement);
+            }
+            return types;
+        });
     }
 
     @SubscribeEvent
@@ -74,8 +87,8 @@ public class WorkshopDataGenerator {
             dataGenerator.addProvider(new WorkshopGBLanguageProvider(dataGenerator));
             dataGenerator.addProvider(new WorkshopBlockstateProvider(dataGenerator, existingFileHelper));
             dataGenerator.addProvider(new WorkshopItemModelProvider(dataGenerator, existingFileHelper));
-            dataGenerator.addProvider(new WorkshopResourceModelProvider(dataGenerator, existingFileHelper));
-            dataGenerator.addProvider(new WorkshopResourceBlockstateProvider(dataGenerator, existingFileHelper));
+            //dataGenerator.addProvider(new WorkshopResourceModelProvider(dataGenerator, existingFileHelper));
+            //dataGenerator.addProvider(new WorkshopResourceBlockstateProvider(dataGenerator, existingFileHelper));
         }
 
         if (event.includeServer()) {

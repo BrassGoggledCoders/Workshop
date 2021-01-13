@@ -4,7 +4,9 @@ import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.block.BlockState;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.component.machine.IRecipeMachineHarness;
@@ -33,15 +35,21 @@ public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T,
     }
 
     @Override
+<<<<<<< HEAD
     public void read(BlockState state, CompoundNBT compound) {
         this.getMachineComponent().getPrimaryBar().deserializeNBT(compound.getCompound("progress"));
         super.read(state, compound);
+=======
+    public void read(CompoundNBT compound) {
+        machineComponent.deserializeNBT(compound.getCompound("machineComponent"));
+        super.read(compound);
+>>>>>>> feature/collector_weighted_output
     }
 
     @Override
     @Nonnull
     public CompoundNBT write(@Nonnull CompoundNBT compound) {
-        compound.put("progress", this.getMachineComponent().getPrimaryBar().serializeNBT());
+        compound.put("machineComponent", machineComponent.serializeNBT());
         return super.write(compound);
     }
 

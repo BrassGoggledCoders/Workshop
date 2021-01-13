@@ -1,14 +1,17 @@
 package workshop.recipe;
 
+import com.hrznstudio.titanium.Titanium;
 import com.hrznstudio.titanium.recipe.generator.TitaniumRecipeProvider;
 import com.hrznstudio.titanium.recipe.generator.TitaniumShapedRecipeBuilder;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.CookingRecipeBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
+import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import xyz.brassgoggledcoders.workshop.Workshop;
@@ -105,9 +108,11 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('B', Items.GLASS_BOTTLE)
                 .build(consumer);
         TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.COLLECTOR.getBlock())
-                .patternLine("C C")
-                .patternLine("CCC")
-                .key('C', Tags.Items.COBBLESTONE)
+                .patternLine("SS ")
+                .patternLine(" CS")
+                .patternLine("SS ")
+                .key('S', Tags.Items.STONE)
+                .key('C', Tags.Items.CHESTS)
                 .build(consumer);
         TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.MOLTEN_CHAMBER.getBlock())
                 .patternLine("COC")
@@ -149,7 +154,7 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .addIngredient(Blocks.BARREL)
                 .addIngredient(WorkshopItemTags.IRON_FILM)
                 .build(consumer);*/
-        //endsection
+        //endsection        CookingRecipeBuilder.
         //section Misc
         TitaniumShapedRecipeBuilder.shapedRecipe(Items.TORCH)
                 .patternLine("T")
@@ -159,8 +164,40 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .build(consumer);
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(ItemTags.SAPLINGS), WorkshopItems.ASH.get(), 0.05F, 20);
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(ItemTags.LEAVES), WorkshopItems.ASH.get(), 0.05F, 20);
+
+        /*createThreeByThree(WorkshopResourcePlugin.COPPER_BLOCK, WorkshopResourcePlugin.COPPER_INGOT, consumer);
+        createThreeByThree(WorkshopResourcePlugin.SILVER_BLOCK, WorkshopResourcePlugin.SILVER_INGOT, consumer);
+        createThreeByThree(WorkshopResourcePlugin.COPPER_INGOT, WorkshopResourcePlugin.COPPER_NUGGET, consumer);
+        createThreeByThree(WorkshopResourcePlugin.SILVER_INGOT, WorkshopResourcePlugin.SILVER_NUGGET, consumer);
+        TitaniumShapelessRecipeBuilder.shapelessRecipe(WorkshopResourcePlugin.COPPER_INGOT, 9)
+                .addIngredient(Ingredient.fromTag(new ItemTags.Wrapper(new ResourceLocation("forge", "storage_blocks/copper"))))
+                .build(consumer);
+        TitaniumShapelessRecipeBuilder.shapelessRecipe(WorkshopResourcePlugin.SILVER_INGOT, 9)
+                .addIngredient(Ingredient.fromTag(new ItemTags.Wrapper(new ResourceLocation("forge", "storage_blocks/silver"))))
+                .build(consumer);
+        TitaniumShapelessRecipeBuilder.shapelessRecipe(WorkshopResourcePlugin.COPPER_NUGGET, 9)
+                .addIngredient(Ingredient.fromTag(new ItemTags.Wrapper(new ResourceLocation("forge", "nuggets/copper"))))
+                .build(consumer);
+        TitaniumShapelessRecipeBuilder.shapelessRecipe(WorkshopResourcePlugin.SILVER_NUGGET, 9)
+                .addIngredient(Ingredient.fromTag(new ItemTags.Wrapper(new ResourceLocation("forge", "nuggets/silver"))))
+                .build(consumer);*/
         //endsection
         //TODO the builder doesn't support ItemStack outputs, only Items...
         //CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(WorkshopBlocks.BROKEN_ANVIL.getItem()), new ItemStack(Blocks.IRON_BLOCK, 3), 0.1F, 300);
+    }
+
+    /**
+     * Creates a shaped recipe that converts a 3x3 grid of items into one item (usually used for ingots to blocks and nuggets to ingots)
+     * @param output The item to output
+     * @param input The input item, of which 9 will be required to craft the output
+     * @param consumer The consumer to build the recipe with
+     */
+    private void createThreeByThree(IItemProvider output, Item input, Consumer<IFinishedRecipe> consumer) {
+        TitaniumShapedRecipeBuilder.shapedRecipe(output)
+                .patternLine("III")
+                .patternLine("III")
+                .patternLine("III")
+                .key('I', input)
+                .build(consumer, new ResourceLocation(Titanium.MODID, output.asItem().getRegistryName().getPath()) + "_from_" + input.getRegistryName().getPath());
     }
 }
