@@ -42,7 +42,8 @@ public class WorkshopJEIPlugin implements IModPlugin {
                 new MoltenChamberRecipeCategory(guiHelper),
                 new SeasoningBarrelRecipeCategory(guiHelper),
                 new DryingBasinRecipeCategory(guiHelper),
-                new MortarRecipeCategory(guiHelper)
+                new MortarRecipeCategory(guiHelper),
+                new CollectorRecipeCategory(guiHelper)
         );
     }
 
@@ -58,6 +59,7 @@ public class WorkshopJEIPlugin implements IModPlugin {
             registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.MORTAR_SERIALIZER.get().getRecipeType()).values(), MortarTileEntity.ID);
             registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.SEASONING_BARREL_SERIALIZER.get().getRecipeType()).values(), SeasoningBarrelTileEntity.ID);
             registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.DRYING_BASIN_SERIALIZER.get().getRecipeType()).values(), DryingBasinTileEntity.ID);
+            registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.COLLECTOR_SERIALIZER.get().getRecipeType()).values(), CollectorTileEntity.ID);
         }
         registration.addIngredientInfo(new ItemStack(WorkshopItems.SCRAP_BAG.get()), VanillaTypes.ITEM, Workshop.SCRAP_BAG_DESC);
     }

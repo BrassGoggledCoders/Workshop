@@ -47,6 +47,11 @@ public class ItemductTileEntity extends BasicInventoryTileEntity<ItemductTileEnt
     }
 
     @Override
+    public void remove() {
+        super.remove();
+    }
+
+    @Override
     public void tick() {
         super.tick();
         if (this.getWorld() != null && !this.getWorld().isRemote) {
@@ -59,6 +64,7 @@ public class ItemductTileEntity extends BasicInventoryTileEntity<ItemductTileEnt
                     TileEntity tile = this.getWorld().getTileEntity(target);
                     if (tile != null) {
                         capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite());
+                        capability.addListener((t) -> this.invalidateCache());
                     } else {
                         capability = null;
                     }

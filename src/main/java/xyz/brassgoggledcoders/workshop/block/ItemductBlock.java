@@ -48,7 +48,7 @@ public class ItemductBlock extends GUITileBlock<ItemductTileEntity> {
 
     @Override
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-        handleTileEntity(worldIn, pos, (tile) -> tile.invalidateCache());
+        handleTileEntity(worldIn, pos, ItemductTileEntity::invalidateCache);
     }
 
     @Override

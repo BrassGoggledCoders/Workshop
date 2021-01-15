@@ -5,7 +5,7 @@ import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import xyz.brassgoggledcoders.workshop.Workshop;
-import xyz.brassgoggledcoders.workshop.WorkshopBlockTags;
+import xyz.brassgoggledcoders.workshop.tag.WorkshopBlockTags;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 
 import javax.annotation.Nonnull;

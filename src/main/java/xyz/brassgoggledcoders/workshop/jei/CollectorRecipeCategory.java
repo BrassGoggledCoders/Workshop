@@ -15,42 +15,40 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
-import xyz.brassgoggledcoders.workshop.recipe.AlembicRecipe;
-import xyz.brassgoggledcoders.workshop.tileentity.AlembicTileEntity;
+import xyz.brassgoggledcoders.workshop.recipe.CollectorRecipe;
+import xyz.brassgoggledcoders.workshop.tileentity.CollectorTileEntity;
 import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AlembicRecipeCategory implements IRecipeCategory<AlembicRecipe> {
+public class CollectorRecipeCategory implements IRecipeCategory<CollectorRecipe> {
 
     private final IGuiHelper guiHelper;
     private final IDrawable slot;
     private final IDrawableAnimated arrow;
-    private final IDrawable tank;
 
-    public AlembicRecipeCategory(IGuiHelper guiHelper) {
+    public CollectorRecipeCategory(IGuiHelper guiHelper) {
         this.guiHelper = guiHelper;
         this.slot = guiHelper.getSlotDrawable();
         this.arrow = guiHelper.drawableBuilder(new ResourceLocation(Titanium.MODID, "textures/gui/background.png"), 176, 60, 24, 17)
                 .buildAnimated(500, IDrawableAnimated.StartDirection.LEFT, false);
-        this.tank = guiHelper.drawableBuilder(new ResourceLocation(Titanium.MODID, "textures/gui/background.png"), 176, 0, 20, 58).build();
     }
 
     @Override
     public ResourceLocation getUid() {
-        return AlembicTileEntity.ID;
+        return CollectorTileEntity.ID;
     }
 
     @Override
-    public Class<? extends AlembicRecipe> getRecipeClass() {
-        return AlembicRecipe.class;
+    public Class<CollectorRecipe> getRecipeClass() {
+        return CollectorRecipe.class;
     }
 
     @Override
     public String getTitle() {
-        return "Alembic";
+        return "Collector";
     }
 
     @Override
@@ -60,47 +58,42 @@ public class AlembicRecipeCategory implements IRecipeCategory<AlembicRecipe> {
 
     @Override
     public IDrawable getIcon() {
-        return this.guiHelper.createDrawableIngredient(new ItemStack(WorkshopBlocks.ALEMBIC.getBlock()));
+        return this.guiHelper.createDrawableIngredient(new ItemStack(WorkshopBlocks.COLLECTOR.getBlock()));
     }
 
     @Override
-    public void draw(AlembicRecipe recipe, MatrixStack stack, double mouseX, double mouseY) {
+    public void draw(CollectorRecipe recipe, MatrixStack stack, double mouseX, double mouseY) {
         //Inputs
         for (int i = 0; i < 3; i++) {
             slot.draw(stack, 5, 5 + (i * 18));
         }
         //Outputs
-        this.tank.draw(stack, 50, 0);
-        for (int i = 0; i < AlembicTileEntity.residueSize; i++) {
+        for (int i = 0; i < CollectorTileEntity.outputSize; i++) {
             slot.draw(stack, 75, 5 + (i * 18));
         }
         arrow.draw(stack, 24, 24);
     }
 
     @Override
-    public void setIngredients(AlembicRecipe recipe, IIngredients ingredients) {
+    public void setIngredients(CollectorRecipe recipe, IIngredients ingredients) {
         ingredients.setInputIngredients(Arrays.asList(recipe.input));
-        if (!recipe.output.isEmpty()) {
-            ingredients.setOutput(VanillaTypes.FLUID, recipe.output);
-        }
         List<ItemStack> stacks = new ArrayList<>();
-        for (int i = 0; i < recipe.residue.length; i++) {
-            stacks.add(recipe.residue[i].stack);
+        for (int i = 0; i < recipe.outputs.length; i++) {
+            stacks.add(recipe.outputs[i].stack);
         }
         ingredients.setOutputs(VanillaTypes.ITEM, stacks);
     }
 
+    //TODO Display of what tile entity types are required
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, AlembicRecipe recipe, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayout recipeLayout, CollectorRecipe recipe, IIngredients ingredients) {
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
         IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
         int index = 0;
-        for (int i = 0; i < recipe.input.length; i++) {
-            guiItemStacks.init(index++, true, 5, 5 + (i * 18));
-        }
+        guiItemStacks.init(index++, true, 5, 18);
         guiFluidStacks.init(0, false, 54, 38, 12, 16, 100, false, null);
-        for (int i = 0; i < recipe.residue.length; i++) {
+        for (int i = 0; i < recipe.outputs.length; i++) {
             guiItemStacks.init(index + i, false, 75, 5 + (i * 18));
         }
 
@@ -110,8 +103,8 @@ public class AlembicRecipeCategory implements IRecipeCategory<AlembicRecipe> {
         int finalInputIndex = index;
         recipeLayout.getItemStacks().addTooltipCallback((slotIndex, input, ingredient, tooltip) -> {
             int residueIndex = (slotIndex - finalInputIndex);
-            if (slotIndex >= finalInputIndex && recipe.residue.length >= residueIndex) {
-                RangedItemStack rangedItemStack = recipe.residue[residueIndex];
+            if (slotIndex >= finalInputIndex && recipe.outputs.length >= residueIndex) {
+                RangedItemStack rangedItemStack = recipe.outputs[residueIndex];
                 if (rangedItemStack != null) {
                     if (rangedItemStack.min == rangedItemStack.max) {
                         tooltip.add(new StringTextComponent(String.format("Count: %s", rangedItemStack.min)));

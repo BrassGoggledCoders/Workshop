@@ -1,8 +1,9 @@
-package xyz.brassgoggledcoders.workshop;
+package xyz.brassgoggledcoders.workshop.tag;
 
 import net.minecraft.item.Item;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
+import xyz.brassgoggledcoders.workshop.Workshop;
 
 public class WorkshopItemTags {
     public static final ITag.INamedTag<Item> TEA_SEEDS = ItemTags.makeWrapperTag("forge:seeds/tea");

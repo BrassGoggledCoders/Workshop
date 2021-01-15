@@ -1,8 +1,9 @@
-package xyz.brassgoggledcoders.workshop;
+package xyz.brassgoggledcoders.workshop.tag;
 
 import net.minecraft.block.Block;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
+import xyz.brassgoggledcoders.workshop.Workshop;
 
 public class WorkshopBlockTags {
     public static final ITag.INamedTag<Block> REBARRED_CONCRETE = BlockTags.makeWrapperTag(Workshop.MOD_ID + ":rebarred_concrete");

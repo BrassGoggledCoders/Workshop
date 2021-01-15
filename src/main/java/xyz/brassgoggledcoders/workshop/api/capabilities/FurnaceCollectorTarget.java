@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.FurnaceTileEntity;
 import org.apache.commons.lang3.ArrayUtils;
 
-public class FurnaceCollectorTarget implements ICollectorTarget {
+public class FurnaceCollectorTarget implements CollectorTarget {
 
     final FurnaceTileEntity tile;
 

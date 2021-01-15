@@ -37,7 +37,7 @@ public class SpinningWheelRecipeCategory implements IRecipeCategory<SpinningWhee
     }
 
     @Override
-    public Class<? extends SpinningWheelRecipe> getRecipeClass() {
+    public Class<SpinningWheelRecipe> getRecipeClass() {
         return SpinningWheelRecipe.class;
     }
 

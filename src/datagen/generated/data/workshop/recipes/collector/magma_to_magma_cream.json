@@ -9,6 +9,7 @@
     {
       "min": 0,
       "max": 3,
+      "weight": 1,
       "stack": {
         "item": "minecraft:magma_cream",
         "count": 1

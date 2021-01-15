@@ -33,54 +33,13 @@ import java.util.Iterator;
 @SuppressWarnings("unused")
 public class WorkshopDataGenerator {
     static {
-        JSONSerializableDataHandler.map(TileEntityType.class, (type) -> new JsonPrimitive(type.getRegistryName().toString()),
-                (element) -> ForgeRegistries.TILE_ENTITIES.getValue(new ResourceLocation(element.getAsString())));
-        JSONSerializableDataHandler.map(RangedItemStack.class, (object) -> {
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("min", object.min);
-            jsonObject.addProperty("max", object.max);
-            jsonObject.addProperty("weight", object.weight);
-            jsonObject.add("stack", JSONSerializableDataHandler.writeItemStack(object.stack));
-            return jsonObject;
-        }, (json) -> {
-            JsonObject jsonObject = json.getAsJsonObject();
-            return new RangedItemStack(JSONSerializableDataHandler.readItemStack(jsonObject.get("stack").getAsJsonObject()), jsonObject.get("min").getAsInt(), jsonObject.get("max").getAsInt(), jsonObject.get("weight").getAsInt());
-        });
-        JSONSerializableDataHandler.map(RangedItemStack[].class, (type) -> {
-            JsonArray array = new JsonArray();
-            for (RangedItemStack rStack : type) {
-                array.add(JSONSerializableDataHandler.write(RangedItemStack.class, rStack));
-            }
-            return array;
-        }, (element) -> {
-            RangedItemStack[] stacks = new RangedItemStack[element.getAsJsonArray().size()];
-            int i = 0;
-            Iterator<JsonElement> iterator;
-            for (iterator = element.getAsJsonArray().iterator(); iterator.hasNext(); i++) {
-                JsonElement jsonElement = iterator.next();
-                stacks[i] = JSONSerializableDataHandler.read(RangedItemStack.class, jsonElement);
-            }
-            return stacks;
-        });
-        JSONSerializableDataHandler.map(TileEntityType[].class, list -> {
-            JsonArray array = new JsonArray();
-            Arrays.asList(list).forEach(t -> array.add(JSONSerializableDataHandler.write(TileEntityType.class, t)));
-            return array;
-        }, element -> {
-            TileEntityType<?>[] types = new TileEntityType[element.getAsJsonArray().size()];
-            int i = 0;
-            Iterator<JsonElement> iterator;
-            for (iterator = element.getAsJsonArray().iterator(); iterator.hasNext(); i++) {
-                JsonElement jsonElement = iterator.next();
-                types[i] = JSONSerializableDataHandler.read(TileEntityType.class, jsonElement);
-            }
-            return types;
-        });
+
     }
 
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
         final DataGenerator dataGenerator = event.getGenerator();
+        //FIXME
         final ExistingFileHelper existingFileHelper = new ExistingFileHelper(Collections.emptyList(), false);
 
         if (event.includeClient()) {
@@ -88,8 +47,6 @@ public class WorkshopDataGenerator {
             dataGenerator.addProvider(new WorkshopGBLanguageProvider(dataGenerator));
             dataGenerator.addProvider(new WorkshopBlockstateProvider(dataGenerator, existingFileHelper));
             dataGenerator.addProvider(new WorkshopItemModelProvider(dataGenerator, existingFileHelper));
-            //dataGenerator.addProvider(new WorkshopResourceModelProvider(dataGenerator, existingFileHelper));
-            //dataGenerator.addProvider(new WorkshopResourceBlockstateProvider(dataGenerator, existingFileHelper));
         }
 
         if (event.includeServer()) {

@@ -2,6 +2,7 @@ package xyz.brassgoggledcoders.workshop.util;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.RandomValueRange;
 
 import java.util.Random;
 
@@ -32,7 +33,7 @@ public class RangedItemStack {
 
     public static ItemStack getOutput(Random random, RangedItemStack stackOutput) {
         ItemStack stack = stackOutput.stack;
-        stack.setCount(Math.max(stackOutput.min, random.nextInt(stackOutput.max)));
+        stack.setCount(RandomValueRange.of(stackOutput.min, stackOutput.max).generateInt(random));
         return stack;
     }
 }

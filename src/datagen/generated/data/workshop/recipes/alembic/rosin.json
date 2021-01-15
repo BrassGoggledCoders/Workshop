@@ -12,6 +12,7 @@
     {
       "min": 4,
       "max": 4,
+      "weight": 1,
       "stack": {
         "item": "workshop:rosin",
         "count": 1
@@ -20,6 +21,7 @@
     {
       "min": 0,
       "max": 2,
+      "weight": 1,
       "stack": {
         "item": "minecraft:slime_ball",
         "count": 1

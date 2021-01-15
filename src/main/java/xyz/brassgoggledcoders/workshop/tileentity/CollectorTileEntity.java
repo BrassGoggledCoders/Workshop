@@ -9,12 +9,16 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
-import xyz.brassgoggledcoders.workshop.api.capabilities.ICollectorTarget;
-import org.apache.commons.lang3.tuple.Pair;
+import xyz.brassgoggledcoders.workshop.Workshop;
+import xyz.brassgoggledcoders.workshop.api.capabilities.CollectorTarget;
 import xyz.brassgoggledcoders.workshop.block.CollectorBlock;
+import xyz.brassgoggledcoders.workshop.block.ItemductBlock;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopCapabilities;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
@@ -26,13 +30,18 @@ import java.util.stream.Stream;
 
 public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEntity, CollectorRecipe> {
 
+    public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.COLLECTOR_SERIALIZER.get().getRecipeType().toString());
     private final InventoryComponent<CollectorTileEntity> output;
+    public static final int outputSize = 5;
+
+    public TileEntityType<?> type;
+    public LazyOptional<CollectorTarget> capability;
 
     public CollectorTileEntity() {
         super(WorkshopBlocks.COLLECTOR.getTileEntityType(),
                 new ProgressBarComponent<CollectorTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.VERTICAL_UP));
         int pos = 0;
-        this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<CollectorTileEntity>(InventoryUtil.ITEM_OUTPUT, 102, 44, 5, pos + 1)
+        this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<CollectorTileEntity>(InventoryUtil.ITEM_OUTPUT, 102, 44, outputSize, pos++)
                 .setColor(InventoryUtil.ITEM_OUTPUT_COLOR)
                 .setInputFilter((stack, integer) -> false));
     }
@@ -44,7 +53,7 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
 
     @Override
     public boolean hasInputs() {
-        return this.getWorld().getTileEntity(this.getPos().offset(this.getBlockState().get(CollectorBlock.FACING))) != null;
+        return type != null;
     }
 
     @Override
@@ -68,21 +77,19 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
     }
 
     @Override
-    //FIXME Efficiency
     public boolean matchesInputs(CollectorRecipe currentRecipe) {
-        TileEntity tile = this.getWorld().getTileEntity(this.getPos().offset(this.getBlockState().get(CollectorBlock.FACING)));
-        // Check tile entity exists and is of correct type
-        if (tile != null && currentRecipe.getTileEntityTypes().contains(tile.getType())) {
-            LazyOptional<ICollectorTarget> cap = tile.getCapability(WorkshopCapabilities.COLLECTOR_TARGET);
-            return cap.map(target -> {
-                // Recipe is only valid if machine can accept all possible outputs from recipe
-                //Method creates a dummmy stack of maximum possible size for each output. TODO - revisit this
-                if (target.isActive() && currentRecipe.getOutputs().stream().map(rangedStack -> new ItemStack(rangedStack.stack.getItem(), rangedStack.max))
-                        .allMatch(itemStack -> ItemHandlerHelper.insertItemStacked(this.output, itemStack, true).isEmpty())) {
-                    return Stream.of(target.getCollectables()).anyMatch(stack -> currentRecipe.input.test(stack));
-                }
-                return false;
-            }).orElse(false);
+        if (this.getWorld() != null && !this.getWorld().isRemote) {
+            if(this.capability != null && currentRecipe.getTileEntityTypes().contains(type)) {
+                return capability.map(target -> {
+                    // Recipe is only valid if machine can accept all possible outputs from recipe
+                    //&& currentRecipe.getOutputs().stream().map(rangedStack -> new ItemStack(rangedStack.stack.getItem(), rangedStack.max))
+                    //                            .allMatch(itemStack -> ItemHandlerHelper.insertItemStacked(this.output, itemStack, true).isEmpty())
+                    if (target.isActive()) {
+                        return Stream.of(target.getCollectables()).anyMatch(stack -> currentRecipe.input.test(stack));
+                    }
+                    return false;
+                }).orElse(false);
+            }
         }
         return false;
     }
@@ -104,5 +111,9 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
     public CompoundNBT write(@Nonnull CompoundNBT compound) {
         compound.put("output", output.serializeNBT());
         return super.write(compound);
+    }
+
+    public void invalidateCache() {
+        this.capability = null;
     }
 }

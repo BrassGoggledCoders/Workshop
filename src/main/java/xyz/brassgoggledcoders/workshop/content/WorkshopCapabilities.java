@@ -21,12 +21,12 @@ import xyz.brassgoggledcoders.workshop.api.capabilities.*;
 @Mod.EventBusSubscriber(modid = Workshop.MOD_ID)
 @SuppressWarnings("unused")
 public class WorkshopCapabilities {
-    @CapabilityInject(ICollectorTarget.class)
-    public static Capability<ICollectorTarget> COLLECTOR_TARGET;
+    @CapabilityInject(CollectorTarget.class)
+    public static Capability<CollectorTarget> COLLECTOR_TARGET;
 
     @SubscribeEvent
     public void preInit(FMLCommonSetupEvent evt) {
-        CapabilityManager.INSTANCE.register(ICollectorTarget.class, new NOPStorage<>(),
+        CapabilityManager.INSTANCE.register(CollectorTarget.class, new NOPStorage<>(),
                 DefaultCollectorTarget::new);
     }
 

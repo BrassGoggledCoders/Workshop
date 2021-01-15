@@ -2,7 +2,7 @@ package xyz.brassgoggledcoders.workshop.api.capabilities;
 
 import net.minecraft.item.ItemStack;
 
-public class DefaultCollectorTarget implements ICollectorTarget {
+public class DefaultCollectorTarget implements CollectorTarget {
     @Override
     public ItemStack[] getCollectables() {
         return new ItemStack[0];
