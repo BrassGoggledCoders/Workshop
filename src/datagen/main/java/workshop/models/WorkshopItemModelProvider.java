@@ -7,8 +7,8 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.client.model.generators.ModelProvider;
+import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.client.model.generators.loaders.DynamicBucketModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fml.RegistryObject;
 import xyz.brassgoggledcoders.workshop.Workshop;
@@ -17,18 +17,18 @@ import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 
 import javax.annotation.Nonnull;
 
-public class WorkshopItemModelProvider extends ModelProvider<PropertiedItemModelBuilder> {
+public class WorkshopItemModelProvider extends ItemModelProvider {
 
     public WorkshopItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, Workshop.MOD_ID, ITEM_FOLDER, PropertiedItemModelBuilder::new, existingFileHelper);
+        super(generator, Workshop.MOD_ID, existingFileHelper);
     }
 
     @Override
     protected void registerModels() {
         for (RegistryObject<Fluid> fluid : WorkshopFluids.getAllFluids()) {
             if (fluid.get().isSource(fluid.get().getDefaultState())) {
-                bucket(fluid.getId());
-                bottle(fluid.getId());
+                bucket(fluid);
+                bottle(fluid);
             }
         }
         for (BlockRegistryObjectGroup<Block, BlockItem, ?> concrete : WorkshopBlocks.CONCRETES) {
@@ -45,26 +45,23 @@ public class WorkshopItemModelProvider extends ModelProvider<PropertiedItemModel
                 WorkshopBlocks.SEASONED_LOG,
                 WorkshopBlocks.SILO_BARREL,
                 WorkshopBlocks.STRIPPED_SEASONED_LOG,
-                WorkshopBlocks.SINTERING_FURNACE)
+                WorkshopBlocks.SINTERING_FURNACE,
+                WorkshopBlocks.DRYING_BASIN,
+                WorkshopBlocks.FLUID_FUNNEL)
                 .forEach(blockGroup -> this.withExistingParent(blockGroup.getName(), modLoc(String.format("%s/%s", BLOCK_FOLDER, blockGroup.getName()))));
         this.withExistingParent(WorkshopBlocks.ITEMDUCT.getName(), modLoc(BLOCK_FOLDER + "/itemduct_center"));
-        //TODO Item rotations
-        //this.withExistingParent(WorkshopBlocks.DRYING_BASIN.getName(), modLoc(BLOCK_FOLDER + "/drying_basin"));
-        //this.withExistingParent(WorkshopBlocks.FLUID_FUNNEL.getName(), modLoc(BLOCK_FOLDER + "/fluid_funnel"));
     }
 
-    private void bucket(ResourceLocation fluidName) {
-        getBuilder(fluidName.toString() + "_bucket")
-                .parent(new ModelFile.UncheckedModelFile("forge:" + ITEM_FOLDER + "/bucket_drip"))
-                .property("loader", "forge:bucket")
-                .property("fluid", fluidName.toString());
+    private void bucket(RegistryObject<Fluid> fluid) {
+        this.withExistingParent(fluid.getId().toString() + "_bucket", new ResourceLocation("forge", ITEM_FOLDER + "/bucket_drip"))
+        .customLoader(DynamicBucketModelBuilder::begin)
+        .fluid(fluid.get());
     }
 
-    private void bottle(ResourceLocation fluidName) {
-        getBuilder(fluidName.toString() + "_bottle")
-                .parent(new ModelFile.UncheckedModelFile(modLoc(ITEM_FOLDER + "/bottle")))
-                .property("loader", "forge:bucket")
-                .property("fluid", fluidName.toString());
+    private void bottle(RegistryObject<Fluid> fluid) {
+        this.withExistingParent(fluid.getId().toString() + "_bottle", modLoc(ITEM_FOLDER + "/bottle"))
+                .customLoader(DynamicBucketModelBuilder::begin)
+                .fluid(fluid.get());
     }
 
     @Override

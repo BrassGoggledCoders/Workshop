@@ -39,11 +39,12 @@ public class WorkshopDataGenerator {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("min", object.min);
             jsonObject.addProperty("max", object.max);
+            jsonObject.addProperty("weight", object.weight);
             jsonObject.add("stack", JSONSerializableDataHandler.writeItemStack(object.stack));
             return jsonObject;
         }, (json) -> {
             JsonObject jsonObject = json.getAsJsonObject();
-            return new RangedItemStack(JSONSerializableDataHandler.readItemStack(jsonObject.get("stack").getAsJsonObject()), jsonObject.get("min").getAsInt(), jsonObject.get("max").getAsInt());
+            return new RangedItemStack(JSONSerializableDataHandler.readItemStack(jsonObject.get("stack").getAsJsonObject()), jsonObject.get("min").getAsInt(), jsonObject.get("max").getAsInt(), jsonObject.get("weight").getAsInt());
         });
         JSONSerializableDataHandler.map(RangedItemStack[].class, (type) -> {
             JsonArray array = new JsonArray();
