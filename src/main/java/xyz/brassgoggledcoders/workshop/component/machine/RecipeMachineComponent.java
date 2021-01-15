@@ -86,7 +86,6 @@ public class RecipeMachineComponent<T extends IRecipeMachineHarness<T, U>, U ext
             if (currentRecipe != null) {
                 primaryBar.setMaxProgress(componentHarness.getProcessingTime(currentRecipe));
             }
-
         }
         else if (timeSinceLastRecipeCheck-- <= 0 || didWork) {
             timeSinceLastRecipeCheck = 50;

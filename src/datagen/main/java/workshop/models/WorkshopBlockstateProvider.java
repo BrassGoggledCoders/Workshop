@@ -50,7 +50,7 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
                 .partialState().with(ObsidianPlateBlock.POWERED, false).addModels(
                 new ConfiguredModel(models().withExistingParent("obsidian_plate_up", mcLoc("block/pressure_plate_up")).texture("texture", mcLoc("block/obsidian"))));
         this.directionalBlock(WorkshopBlocks.COLLECTOR.getBlock(),
-                this.models().orientable("collector", mcLoc("block/furnace_top"), mcLoc("block/dropper_front_vertical"), mcLoc("block/furnace_top")));
+                this.models().orientableVertical("collector", mcLoc("block/furnace_top"), mcLoc("block/dropper_front_vertical")));
         //this.horizontalBlock(WorkshopBlocks.BELLOWS.getBlock(),
         //        this.models().orientable("bellows", mcLoc("block/barrel_bottom"), modLoc("block/bellows"), mcLoc("block/composter_side")));
         this.horizontalBlock(WorkshopBlocks.SCRAP_BIN.getBlock(),
