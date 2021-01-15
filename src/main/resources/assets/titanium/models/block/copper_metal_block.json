@@ -1,6 +1,0 @@
-{
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "titanium:block/copper_metal_block"
-  }
-}

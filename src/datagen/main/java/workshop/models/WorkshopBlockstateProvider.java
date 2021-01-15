@@ -50,27 +50,17 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
                 .partialState().with(ObsidianPlateBlock.POWERED, false).addModels(
                 new ConfiguredModel(models().withExistingParent("obsidian_plate_up", mcLoc("block/pressure_plate_up")).texture("texture", mcLoc("block/obsidian"))));
         this.directionalBlock(WorkshopBlocks.COLLECTOR.getBlock(),
-                this.models().orientableVertical("collector", mcLoc("block/furnace_top"), mcLoc("block/dropper_front_vertical")));
-        //this.horizontalBlock(WorkshopBlocks.BELLOWS.getBlock(),
-        //        this.models().orientable("bellows", mcLoc("block/barrel_bottom"), modLoc("block/bellows"), mcLoc("block/composter_side")));
+                this.models().withExistingParent("collector", mcLoc("block/hopper"))
+                        .texture("side", mcLoc("block/stone"))
+                        .texture("inside", mcLoc("block/stone"))
+                        .texture("top", modLoc("block/drying_basin_top")));
         this.horizontalBlock(WorkshopBlocks.SCRAP_BIN.getBlock(),
                 this.models().orientable("scrap_bin", mcLoc("block/hopper_outside"), mcLoc("block/hopper_outside"), modLoc("block/scrap_bin_top")));
         this.simpleBlock(WorkshopBlocks.MOLTEN_CHAMBER.getBlock(), this.models().cubeAll("molten_chamber", modLoc("block/molten_chamber")));
-        //this.simpleBlock(WorkshopBlocks.CHALK_WRITING.getBlock(), this.models().singleTexture("chalk", mcLoc(BLOCK_FOLDER + "/bedrock"), "particle", mcLoc(BLOCK_FOLDER + "/bedrock")));
         this.horizontalBlock(WorkshopBlocks.ALEMBIC.getBlock(), new ModelFile.ExistingModelFile(modLoc("block/alembic"), exFileHelper));
         //TODO De pluralise texture folders
         this.logBlock(WorkshopBlocks.SEASONED_LOG.get());
         this.logBlock(WorkshopBlocks.STRIPPED_SEASONED_LOG.getBlock());
-        //TODO Inventory rotations
-        /*this.simpleBlock(WorkshopBlocks.DRYING_BASIN.getBlock(), this.models().withExistingParent(WorkshopBlocks.DRYING_BASIN.getName(), mcLoc(BLOCK_FOLDER + "/cauldron"))
-                .texture("side", modLoc(BLOCK_FOLDER + "s/drying_basin_side"))
-                .texture("top", modLoc(BLOCK_FOLDER + "s/drying_basin_top"))
-                .texture("bottom", modLoc(BLOCK_FOLDER + "s/drying_basin_bottom"))
-                .texture("inside", mcLoc(BLOCK_FOLDER + "/polished_andesite")));
-        this.simpleBlock(WorkshopBlocks.FLUID_FUNNEL.get(), this.models().withExistingParent(WorkshopBlocks.FLUID_FUNNEL.getName(), mcLoc(BLOCK_FOLDER + "/hopper"))
-                .texture("side", modLoc(BLOCK_FOLDER + "s/seasoned_log"))
-                .texture("inside", modLoc(BLOCK_FOLDER + "s/seasoned_log"))
-                .texture("top", modLoc(BLOCK_FOLDER + "s/fluid_funnel_top")));*/
         this.simpleBlock(WorkshopBlocks.SILO_BARREL.get(), this.models().cubeBottomTop(WorkshopBlocks.SILO_BARREL.getName(), mcLoc(BLOCK_FOLDER + "/barrel_side"),
                 mcLoc(BLOCK_FOLDER + "/hopper_inside"), mcLoc(BLOCK_FOLDER + "/barrel_top")));
         //section Itemduct
