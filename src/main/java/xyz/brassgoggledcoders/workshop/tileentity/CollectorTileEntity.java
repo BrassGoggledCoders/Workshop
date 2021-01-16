@@ -37,9 +37,9 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
 
     public CollectorTileEntity() {
         super(WorkshopBlocks.COLLECTOR.getTileEntityType(),
-                new ProgressBarComponent<CollectorTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.VERTICAL_UP));
+                new ProgressBarComponent<CollectorTileEntity>(82, 15, 100).setBarDirection(ProgressBarComponent.BarDirection.VERTICAL_UP));
         int pos = 0;
-        this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<CollectorTileEntity>(InventoryUtil.ITEM_OUTPUT, 102, 44, outputSize, pos++)
+        this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<CollectorTileEntity>(InventoryUtil.ITEM_OUTPUT, 45, 79, outputSize, pos++)
                 .setColor(InventoryUtil.ITEM_OUTPUT_COLOR)
                 .setInputFilter((stack, integer) -> false));
     }
@@ -52,7 +52,6 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
             if (timer > interval) {
                 timer = 0;
                 this.rebuildCache();
-                //Workshop.LOGGER.warn("c" + capability + "type" + type);
             }
         }
     }

@@ -47,8 +47,7 @@ public class BellowsBlock extends Block {
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         super.fillStateContainer(builder);
-        builder.add(FACING);
-        builder.add(PRESSED);
+        builder.add(FACING, PRESSED);
     }
 
     @Override

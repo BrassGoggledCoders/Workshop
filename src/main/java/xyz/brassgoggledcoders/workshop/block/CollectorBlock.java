@@ -4,24 +4,41 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.IHopper;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.workshop.tileentity.CollectorTileEntity;
+import xyz.brassgoggledcoders.workshop.util.ShapeUtil;
 
 public class CollectorBlock extends GUITileBlock<CollectorTileEntity> {
 
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     public CollectorBlock() {
-        super(Properties.from(Blocks.STONE), CollectorTileEntity::new);
+        super(Properties.from(Blocks.STONE).notSolid(), CollectorTileEntity::new);
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.DOWN));
     }
+
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return ShapeUtil.Hopper.getShapeFromFacing(state.get(FACING));
+    }
+
+    @Override
+    public VoxelShape getRaytraceShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
+        return ShapeUtil.Hopper.getRaytraceShapeFromFacing(state.get(FACING));
+    }
+
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
