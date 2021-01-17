@@ -2,42 +2,52 @@ package workshop.recipe;
 
 import com.hrznstudio.titanium.Titanium;
 import com.hrznstudio.titanium.recipe.generator.TitaniumRecipeProvider;
-import com.hrznstudio.titanium.recipe.generator.TitaniumShapedRecipeBuilder;
+import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.CookingRecipeBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
+import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.crafting.ConditionalRecipe;
+import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import workshop.WorkshopDataGenerator;
 import xyz.brassgoggledcoders.workshop.Workshop;
-import xyz.brassgoggledcoders.workshop.tag.WorkshopItemTags;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
+import xyz.brassgoggledcoders.workshop.tag.WorkshopItemTags;
 
 import java.util.function.Consumer;
 
 public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
 
-    public WorkshopRecipeProvider(DataGenerator generatorIn) {
+    private final ExistingFileHelper helper;
+    
+    public WorkshopRecipeProvider(DataGenerator generatorIn, ExistingFileHelper helper) {
         super(generatorIn);
+        this.helper = helper;
     }
 
     @Override
     public void register(Consumer<IFinishedRecipe> consumer) {
         //section Machine Self Recipes
-        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SEASONING_BARREL.getBlock())
+        WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SEASONING_BARREL.getBlock(), helper)
                 .patternLine("LSL")
                 .patternLine("L L")
                 .patternLine("LSL")
                 .key('L', Blocks.STRIPPED_OAK_LOG)
                 .key('S', Blocks.OAK_SLAB)
                 .build(consumer);
-        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SEASONING_BARREL.getBlock())
+        WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SEASONING_BARREL.getBlock(), helper)
                 .setName(new ResourceLocation(Workshop.MOD_ID, "seasoning_barrel_alt"))
                 .patternLine("LSL")
                 .patternLine("L L")
@@ -45,7 +55,7 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('L', Blocks.STRIPPED_DARK_OAK_LOG)
                 .key('S', Blocks.DARK_OAK_SLAB)
                 .build(consumer);
-        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SEASONING_BARREL.getBlock())
+        WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SEASONING_BARREL.getBlock(), helper)
                 .setName(new ResourceLocation(Workshop.MOD_ID, "seasoning_barrel_seasoned"))
                 .patternLine("LSL")
                 .patternLine("L L")
@@ -53,7 +63,7 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('L', WorkshopBlocks.SEASONED_LOG.get())
                 .key('S', Blocks.OAK_SLAB)
                 .build(consumer);
-        /*TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SPINNING_WHEEL.getBlock())
+        /*WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SPINNING_WHEEL.getBlock())
                 .patternLine("W I")
                 .patternLine("WWW")
                 .patternLine("SSS")
@@ -61,7 +71,7 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('W', ItemTags.PLANKS)
                 .key('I', Tags.Items.INGOTS_IRON)
                 .build(consumer);*/
-        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SINTERING_FURNACE.getBlock())
+        WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SINTERING_FURNACE.getBlock(), helper)
                 .patternLine("BDB")
                 .patternLine("G G")
                 .patternLine("BFB")
@@ -70,32 +80,32 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('D', Blocks.IRON_BARS)
                 .key('F', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE)
                 .build(consumer);
-        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.BELLOWS.getBlock())
+        WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.BELLOWS.getBlock(), helper)
                 .patternLine("PPP")
                 .patternLine("WWW")
                 .patternLine("PPP")
                 .key('P', ItemTags.PLANKS)
                 .key('W', ItemTags.WOOL)
                 .build(consumer);
-        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.MORTAR.getBlock())
+        WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.MORTAR.getBlock(), helper)
                 .patternLine("G G")
                 .patternLine(" G ")
                 .key('G', Blocks.GRANITE)
                 .build(consumer);
-        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.ITEMDUCT.getBlock(), 4)
+        WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.ITEMDUCT.getBlock(), 4, helper)
                 .patternLine("WW ")
                 .patternLine("  W")
                 .patternLine("WW ")
                 .key('W', WorkshopBlocks.SEASONED_LOG.getItem())
                 .build(consumer);
-        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.COLLECTOR.getBlock())
+        WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.COLLECTOR.getBlock(), helper)
                 .patternLine("SS ")
                 .patternLine(" CS")
                 .patternLine("SS ")
                 .key('S', Tags.Items.STONE)
                 .key('C', Tags.Items.CHESTS)
                 .build(consumer);
-        /*TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.PRESS.getBlock())
+        /*WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.PRESS.getBlock())
                 .patternLine("WPW")
                 .patternLine("WGW")
                 .patternLine("WCW")
@@ -104,7 +114,7 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('G', Tags.Items.GLASS_PANES)
                 .key('C', Items.COBBLESTONE)
                 .build(consumer);
-        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.ALEMBIC.getBlock())
+        WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.ALEMBIC.getBlock())
                 .patternLine("PPP")
                 .patternLine("PPB")
                 .patternLine("FSC")
@@ -115,29 +125,29 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('B', Items.GLASS_BOTTLE)
                 .build(consumer);
 
-        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.MOLTEN_CHAMBER.getBlock())
+        WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.MOLTEN_CHAMBER.getBlock())
                 .patternLine("COC")
                 .patternLine("C C")
                 .patternLine("COC")
                 .key('C', WorkshopItemTagsProvider.REBARRED_CONCRETE)
                 .key('O', WorkshopBlocks.OBSIDIAN_PLATE.getItem())
                 .build(consumer);
-        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.FLUID_FUNNEL.getBlock())
+        WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.FLUID_FUNNEL.getBlock())
                 .patternLine("L L")
                 .patternLine("LCL")
-                .patternLine(" L ")
+                .patternLine(" L "), helper
                 .key('L', WorkshopBlocks.SEASONED_LOG.getItem())
                 .key('C', Tags.Items.CHESTS_WOODEN)
                 .build(consumer);
                 */
-        /*TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SCRAP_BIN.getBlock())
+        /*WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SCRAP_BIN.getBlock())
                 .patternLine("III")
                 .patternLine("ICI")
                 .patternLine("III")
                 .key('I', ItemTags.getCollection().get(new ResourceLocation("forge", "films/iron")))
                 .key('C', Items.COMPOSTER)
                 .build(consumer);*/
-        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SCRAP_BIN.getBlock())
+        WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SCRAP_BIN.getBlock(), helper)
                 .setName(new ResourceLocation(Workshop.MOD_ID, "scrap_bin_alt"))
                 .patternLine("III")
                 .patternLine("ICI")
@@ -145,7 +155,7 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('I', Items.HEAVY_WEIGHTED_PRESSURE_PLATE)
                 .key('C', Items.COMPOSTER)
                 .build(consumer);
-        TitaniumShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.DRYING_BASIN.getBlock())
+        WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.DRYING_BASIN.getBlock(), helper)
                 .patternLine("A A")
                 .patternLine("A A")
                 .patternLine("AAA")
@@ -157,7 +167,7 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .build(consumer);*/
         //endsection        CookingRecipeBuilder.
         //section Misc
-        TitaniumShapedRecipeBuilder.shapedRecipe(Items.TORCH)
+        WorkshopShapedRecipeBuilder.shapedRecipe(Items.TORCH, helper)
                 .patternLine("T")
                 .patternLine("S")
                 .key('T', WorkshopItemTags.TALLOW)
@@ -194,11 +204,77 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
      * @param consumer The consumer to build the recipe with
      */
     private void createThreeByThree(IItemProvider output, Item input, Consumer<IFinishedRecipe> consumer) {
-        TitaniumShapedRecipeBuilder.shapedRecipe(output)
+        WorkshopShapedRecipeBuilder.shapedRecipe(output)
                 .patternLine("III")
                 .patternLine("III")
                 .patternLine("III")
                 .key('I', input)
                 .build(consumer, new ResourceLocation(Titanium.MODID, output.asItem().getRegistryName().getPath()) + "_from_" + input.getRegistryName().getPath());
+    }
+
+    public static class WorkshopShapedRecipeBuilder extends ShapedRecipeBuilder implements IConditionBuilder {
+        private ResourceLocation resourceLocation;
+        private ConditionalRecipe.Builder conditional;
+        private boolean build;
+        private boolean criterion;
+        private final ExistingFileHelper helper;
+
+        public WorkshopShapedRecipeBuilder(IItemProvider resultIn, int countIn, ExistingFileHelper helper) {
+            super(resultIn, countIn);
+            this.resourceLocation = resultIn.asItem().getRegistryName();
+            this.build = false;
+            this.conditional = ConditionalRecipe.builder().addCondition(this.and(this.itemExists(this.resourceLocation.getNamespace(), this.resourceLocation.getPath())));
+            this.helper = helper;
+        }
+
+        public static WorkshopShapedRecipeBuilder shapedRecipe(IItemProvider resultIn, ExistingFileHelper helper) {
+            return shapedRecipe(resultIn, 1, helper);
+        }
+
+        public static WorkshopShapedRecipeBuilder shapedRecipe(IItemProvider resultIn, int countIn, ExistingFileHelper helper) {
+            return new WorkshopShapedRecipeBuilder(resultIn, countIn, helper);
+        }
+
+        public void build(Consumer<IFinishedRecipe> consumerIn) {
+            if (!this.build) {
+                this.build = true;
+                this.conditional.addRecipe(this::build).build(consumerIn, this.resourceLocation);
+            } else {
+                this.build(consumerIn, this.resourceLocation);
+            }
+            helper.trackGenerated(this.resourceLocation, WorkshopDataGenerator.RECIPE);
+        }
+
+        public ShapedRecipeBuilder key(Character symbol, ITag<Item> tagIn) {
+            if (!this.criterion) {
+                this.criterion = true;
+                this.addCriterion("has_item", InventoryChangeTrigger.Instance.forItems(ItemPredicate.Builder.create().tag(tagIn).build()));
+            }
+
+            return super.key(symbol, tagIn);
+        }
+
+        public ShapedRecipeBuilder key(Character symbol, Ingredient ingredientIn) {
+            if (!this.criterion) {
+                this.criterion = true;
+                this.addCriterion("has_item", InventoryChangeTrigger.Instance.forItems(ItemPredicate.Builder.create().item(ingredientIn.getMatchingStacks()[0].getItem()).build()));
+            }
+
+            return super.key(symbol, ingredientIn);
+        }
+
+        public WorkshopShapedRecipeBuilder setName(ResourceLocation resourceLocation) {
+            this.resourceLocation = resourceLocation;
+            return this;
+        }
+
+        public ConditionalRecipe.Builder getConditional() {
+            return this.conditional;
+        }
+
+        public WorkshopShapedRecipeBuilder setConditional(ConditionalRecipe.Builder conditional) {
+            this.conditional = conditional;
+            return this;
+        }
     }
 }

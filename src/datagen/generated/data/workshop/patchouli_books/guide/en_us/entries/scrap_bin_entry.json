@@ -9,7 +9,7 @@
     },
     {
       "type": "crafting",
-      "recipe": "workshop:scrap_bin"
+      "recipe": "workshop:scrap_bin_alt"
     },
     {
       "type": "spotlight",

@@ -6,10 +6,6 @@
     {
       "type": "text",
       "text": "The $(item)Obsidian Plate$() acts like a $(item)Pressure Plate$() except it will only react to players. It may be right-clicked with a name tag to blacklist that player from triggering the pressure plate. This does not consume the name tag."
-    },
-    {
-      "type": "crafting",
-      "recipe": "workshop:obsidian_plate"
     }
   ]
 }

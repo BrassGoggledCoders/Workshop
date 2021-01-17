@@ -1,11 +1,11 @@
 package workshop;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IDataProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import org.codehaus.plexus.util.StringUtils;
 import workshop.language.WorkshopUSLanguageProvider;
 import xyz.brassgoggledcoders.patchouliprovider.BookBuilder;
@@ -20,8 +20,11 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 public class WorkshopBookProvider extends PatchouliBookProvider implements IDataProvider {
-    public WorkshopBookProvider(DataGenerator gen) {
+    final ExistingFileHelper helper;
+
+    public WorkshopBookProvider(DataGenerator gen, ExistingFileHelper helper) {
         super(gen, Workshop.MOD_ID, "en_us");
+        this.helper = helper;
     }
     @Override
     protected void addBooks(Consumer<BookBuilder> consumer) {
@@ -33,12 +36,12 @@ public class WorkshopBookProvider extends PatchouliBookProvider implements IData
         final CategoryBuilder machineCategory =
                 builder.addCategory("crafting_machine_category", "Crafting Machines", "Machines are the heart of any workshop, and these allow you to produce resources, and other machines.", new ItemStack(WorkshopBlocks.SEASONING_BARREL.getItem()));
         //addStandardEntry(machineCategory, "evaporates and then re-condenses the fumes from a mixture of things into bottles or other fluid containers. Cold items can be added to the alembic's condenser to speed it up.", WorkshopBlocks.ALEMBIC.getItem());
-        addStandardEntry(machineCategory, "is used to transform solids into liquids, often with a solid by-product. It can, for example, juice apples and squeeze oil from seeds", WorkshopBlocks.PRESS.getItem());
+        //addStandardEntry(machineCategory, "is used to transform solids into liquids, often with a solid by-product. It can, for example, juice apples and squeeze oil from seeds", WorkshopBlocks.PRESS.getItem());
         addStandardEntry(machineCategory, "transforms fluids by interaction with catalyst items over an extended period of time. It cannot hold liquids hotter than lava, for that you need the $(item)Molten Reaction Chamber$()", WorkshopBlocks.SEASONING_BARREL.getItem());
         addStandardEntry(machineCategory, "allows you to heat and apply powders to other items, this can be used to coat materials. To power it, place a hot block (lava, magma block etc) one or two blocks beneath.", WorkshopBlocks.SINTERING_FURNACE.getItem());
         //addStandardEntry(machineCategory, "takes fibers and often something else and transforms it into threads, cords, or ropes.", WorkshopBlocks.SPINNING_WHEEL.getItem());
         addStandardEntry(machineCategory, "can be used for grinding things, such as metal into powder and gravel into sand", WorkshopBlocks.MORTAR.getItem());
-        addStandardEntry(machineCategory, "is similar to the $(item)Seasoning Barrel except with the ability to hold and process hot liquids.", WorkshopBlocks.MOLTEN_CHAMBER.getItem());
+        //addStandardEntry(machineCategory, "is similar to the $(item)Seasoning Barrel except with the ability to hold and process hot liquids.", WorkshopBlocks.MOLTEN_CHAMBER.getItem());
         addStandardEntry(machineCategory, "is for...well...drying things. It can dry items into drier versions of themselves, or evaporate off fluid to get the residue. It's pretty slow.", WorkshopBlocks.DRYING_BASIN.getItem());
         final CategoryBuilder otherMachineCategory =
                 builder.addCategory("other_machine_category", "Other Machines", "More useful machines", new ItemStack(WorkshopBlocks.SCRAP_BIN.getItem()));
@@ -60,7 +63,13 @@ public class WorkshopBookProvider extends PatchouliBookProvider implements IData
         String name = WorkshopUSLanguageProvider.strings.getOrDefault(item.getTranslationKey(), StringUtils.capitaliseAllWords(path.replace('_', ' ')));
         final EntryBuilder entryBuilder = category.addEntry(path + "_entry", name, new ItemStack(item));
         entryBuilder.addSimpleTextPage(String.format("The $(item)%s$() ", name) + text);
-        entryBuilder.addCraftingPage(new ResourceLocation(Workshop.MOD_ID, path));
+        if(this.helper.exists(item.getRegistryName(), WorkshopDataGenerator.RECIPE)) {
+            entryBuilder.addCraftingPage(new ResourceLocation(Workshop.MOD_ID, path));
+        }
+        String alt = path + "_alt";
+        if(this.helper.exists(new ResourceLocation(Workshop.MOD_ID, alt), WorkshopDataGenerator.RECIPE)) {
+            entryBuilder.addCraftingPage(new ResourceLocation(Workshop.MOD_ID, alt));
+        }
         return entryBuilder;
     }
 }

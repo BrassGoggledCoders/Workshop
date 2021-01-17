@@ -1,18 +1,11 @@
 package workshop;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import com.hrznstudio.titanium.recipe.serializer.JSONSerializableDataHandler;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourcePackType;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 import workshop.language.WorkshopGBLanguageProvider;
 import workshop.language.WorkshopUSLanguageProvider;
 import workshop.loot.WorkshopLootTableProvider;
@@ -23,24 +16,16 @@ import workshop.tags.WorkshopBlockTagsProvider;
 import workshop.tags.WorkshopFluidTagsProvider;
 import workshop.tags.WorkshopItemTagsProvider;
 import xyz.brassgoggledcoders.workshop.Workshop;
-import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
 
 @Mod.EventBusSubscriber(modid = Workshop.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @SuppressWarnings("unused")
 public class WorkshopDataGenerator {
-    static {
-
-    }
+    public static final ExistingFileHelper.ResourceType RECIPE = new ExistingFileHelper.ResourceType(ResourcePackType.SERVER_DATA, ".json", "recipes");
 
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
         final DataGenerator dataGenerator = event.getGenerator();
-        //FIXME
-        final ExistingFileHelper existingFileHelper = new ExistingFileHelper(Collections.emptyList(), false);
+        final ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
         if (event.includeClient()) {
             dataGenerator.addProvider(new WorkshopUSLanguageProvider(dataGenerator));
@@ -52,7 +37,7 @@ public class WorkshopDataGenerator {
         if (event.includeServer()) {
             dataGenerator.addProvider(new WorkshopLootTableProvider(dataGenerator));
 
-            dataGenerator.addProvider(new WorkshopRecipeProvider(dataGenerator));
+            dataGenerator.addProvider(new WorkshopRecipeProvider(dataGenerator, existingFileHelper));
             dataGenerator.addProvider(new SeasoningBarrelRecipeProvider(dataGenerator));
             dataGenerator.addProvider(new AlembicRecipeProvider(dataGenerator));
             dataGenerator.addProvider(new PressRecipeProvider(dataGenerator));
@@ -68,7 +53,7 @@ public class WorkshopDataGenerator {
             dataGenerator.addProvider(new WorkshopItemTagsProvider(dataGenerator, blockTagsProvider, existingFileHelper));
             dataGenerator.addProvider(new WorkshopFluidTagsProvider(dataGenerator, existingFileHelper));
 
-            dataGenerator.addProvider(new WorkshopBookProvider(dataGenerator));
+            dataGenerator.addProvider(new WorkshopBookProvider(dataGenerator, existingFileHelper));
         }
     }
 }

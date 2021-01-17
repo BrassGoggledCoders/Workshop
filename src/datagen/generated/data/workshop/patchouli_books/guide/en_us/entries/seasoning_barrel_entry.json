@@ -10,6 +10,10 @@
     {
       "type": "crafting",
       "recipe": "workshop:seasoning_barrel"
+    },
+    {
+      "type": "crafting",
+      "recipe": "workshop:seasoning_barrel_alt"
     }
   ]
 }
