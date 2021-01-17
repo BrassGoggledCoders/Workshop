@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.jei;
+package xyz.brassgoggledcoders.workshop.compat.jei;
 
 import com.hrznstudio.titanium.Titanium;
 import com.mojang.blaze3d.matrix.MatrixStack;

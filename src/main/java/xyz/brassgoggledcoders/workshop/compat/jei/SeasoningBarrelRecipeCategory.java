@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.jei;
+package xyz.brassgoggledcoders.workshop.compat.jei;
 
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;

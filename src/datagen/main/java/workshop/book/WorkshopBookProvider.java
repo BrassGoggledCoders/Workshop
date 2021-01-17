@@ -1,4 +1,4 @@
-package workshop;
+package workshop.book;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IDataProvider;
@@ -7,14 +7,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.codehaus.plexus.util.StringUtils;
+import workshop.WorkshopDataGenerator;
 import workshop.language.WorkshopUSLanguageProvider;
 import xyz.brassgoggledcoders.patchouliprovider.BookBuilder;
 import xyz.brassgoggledcoders.patchouliprovider.CategoryBuilder;
 import xyz.brassgoggledcoders.patchouliprovider.EntryBuilder;
 import xyz.brassgoggledcoders.patchouliprovider.PatchouliBookProvider;
+import xyz.brassgoggledcoders.patchouliprovider.page.CraftingPageBuilder;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
+import xyz.brassgoggledcoders.workshop.tag.WorkshopBlockTags;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -38,7 +41,8 @@ public class WorkshopBookProvider extends PatchouliBookProvider implements IData
         //addStandardEntry(machineCategory, "evaporates and then re-condenses the fumes from a mixture of things into bottles or other fluid containers. Cold items can be added to the alembic's condenser to speed it up.", WorkshopBlocks.ALEMBIC.getItem());
         //addStandardEntry(machineCategory, "is used to transform solids into liquids, often with a solid by-product. It can, for example, juice apples and squeeze oil from seeds", WorkshopBlocks.PRESS.getItem());
         addStandardEntry(machineCategory, "transforms fluids by interaction with catalyst items over an extended period of time. It cannot hold liquids hotter than lava, for that you need the $(item)Molten Reaction Chamber$()", WorkshopBlocks.SEASONING_BARREL.getItem());
-        addStandardEntry(machineCategory, "allows you to heat and apply powders to other items, this can be used to coat materials. To power it, place a hot block (lava, magma block etc) one or two blocks beneath.", WorkshopBlocks.SINTERING_FURNACE.getItem());
+        EntryBuilder eSintering = addStandardEntry(machineCategory, "allows you to heat and apply powders to other items, this can be used to coat materials. To power it, place a hot block (lava, magma block etc) one or two blocks beneath.", WorkshopBlocks.SINTERING_FURNACE.getItem());
+        eSintering.addPage(new TagPageBuilder(eSintering, WorkshopBlockTags.HOT.getName()).setTitle("Heat Source Blocks:"));
         //addStandardEntry(machineCategory, "takes fibers and often something else and transforms it into threads, cords, or ropes.", WorkshopBlocks.SPINNING_WHEEL.getItem());
         addStandardEntry(machineCategory, "can be used for grinding things, such as metal into powder and gravel into sand", WorkshopBlocks.MORTAR.getItem());
         //addStandardEntry(machineCategory, "is similar to the $(item)Seasoning Barrel except with the ability to hold and process hot liquids.", WorkshopBlocks.MOLTEN_CHAMBER.getItem());
@@ -63,12 +67,19 @@ public class WorkshopBookProvider extends PatchouliBookProvider implements IData
         String name = WorkshopUSLanguageProvider.strings.getOrDefault(item.getTranslationKey(), StringUtils.capitaliseAllWords(path.replace('_', ' ')));
         final EntryBuilder entryBuilder = category.addEntry(path + "_entry", name, new ItemStack(item));
         entryBuilder.addSimpleTextPage(String.format("The $(item)%s$() ", name) + text);
+        //TODO Refactor
+        CraftingPageBuilder builder = null;
         if(this.helper.exists(item.getRegistryName(), WorkshopDataGenerator.RECIPE)) {
-            entryBuilder.addCraftingPage(new ResourceLocation(Workshop.MOD_ID, path));
+            builder = entryBuilder.addCraftingPage(new ResourceLocation(Workshop.MOD_ID, path));
         }
         String alt = path + "_alt";
-        if(this.helper.exists(new ResourceLocation(Workshop.MOD_ID, alt), WorkshopDataGenerator.RECIPE)) {
-            entryBuilder.addCraftingPage(new ResourceLocation(Workshop.MOD_ID, alt));
+        ResourceLocation recipe = new ResourceLocation(Workshop.MOD_ID, alt);
+        if(this.helper.exists(recipe, WorkshopDataGenerator.RECIPE)) {
+            if(builder != null) {
+                builder.setRecipe2(recipe);
+            } else {
+                entryBuilder.addCraftingPage(recipe);
+            }
         }
         return entryBuilder;
     }

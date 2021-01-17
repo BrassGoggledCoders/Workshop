@@ -9,11 +9,8 @@
     },
     {
       "type": "crafting",
-      "recipe": "workshop:seasoning_barrel"
-    },
-    {
-      "type": "crafting",
-      "recipe": "workshop:seasoning_barrel_alt"
+      "recipe": "workshop:seasoning_barrel",
+      "recipe2": "workshop:seasoning_barrel_alt"
     }
   ]
 }

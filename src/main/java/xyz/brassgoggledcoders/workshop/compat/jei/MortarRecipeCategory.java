@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.jei;
+package xyz.brassgoggledcoders.workshop.compat.jei;
 
 import com.google.common.collect.Lists;
 import com.hrznstudio.titanium.Titanium;

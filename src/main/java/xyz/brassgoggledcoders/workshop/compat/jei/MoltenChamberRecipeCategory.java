@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.workshop.jei;
+package xyz.brassgoggledcoders.workshop.compat.jei;
 
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -8,7 +8,7 @@ import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.recipe.MoltenChamberRecipe;
 import xyz.brassgoggledcoders.workshop.tileentity.MoltenChamberTileEntity;
 
-public class MoltenChamberRecipeCategory extends AbstractBarrelRecipeCategory {
+public class MoltenChamberRecipeCategory extends AbstractBarrelRecipeCategory<MoltenChamberRecipe> {
 
     public MoltenChamberRecipeCategory(IGuiHelper guiHelper) {
         super(guiHelper);

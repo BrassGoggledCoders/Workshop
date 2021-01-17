@@ -6,6 +6,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
+import workshop.book.WorkshopBookProvider;
 import workshop.language.WorkshopGBLanguageProvider;
 import workshop.language.WorkshopUSLanguageProvider;
 import workshop.loot.WorkshopLootTableProvider;
