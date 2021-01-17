@@ -1,0 +1,15 @@
+{
+  "name": "Itemduct",
+  "category": "misc_category",
+  "icon": "workshop:itemduct",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The $(item)Itemduct$() can be oriented in any direction, has one slot and attempts to output in that direction. It is like a hopper, without the pull capability."
+    },
+    {
+      "type": "crafting",
+      "recipe": "workshop:itemduct"
+    }
+  ]
+}

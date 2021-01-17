@@ -1,0 +1,15 @@
+{
+  "name": "Seasoning Barrel",
+  "category": "crafting_machine_category",
+  "icon": "workshop:seasoning_barrel",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The $(item)Seasoning Barrel$() transforms fluids by interaction with catalyst items over an extended period of time. It cannot hold liquids hotter than lava, for that you need the $(item)Molten Reaction Chamber$()"
+    },
+    {
+      "type": "crafting",
+      "recipe": "workshop:seasoning_barrel"
+    }
+  ]
+}

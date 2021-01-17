@@ -1,0 +1,15 @@
+{
+  "name": "Byproduct Collector",
+  "category": "other_machine_category",
+  "icon": "workshop:collector",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The $(item)Byproduct Collector$() allows obtaining by-products from other machines that would be otherwise lost. For example, meat cooked in a furnace results in $(item)Tallow$() collected in the Collector."
+    },
+    {
+      "type": "crafting",
+      "recipe": "workshop:collector"
+    }
+  ]
+}

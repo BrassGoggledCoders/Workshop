@@ -39,7 +39,7 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
         super(WorkshopBlocks.COLLECTOR.getTileEntityType(),
                 new ProgressBarComponent<CollectorTileEntity>(82, 15, 100).setBarDirection(ProgressBarComponent.BarDirection.VERTICAL_UP));
         int pos = 0;
-        this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<CollectorTileEntity>(InventoryUtil.ITEM_OUTPUT, 45, 79, outputSize, pos++)
+        this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<CollectorTileEntity>(InventoryUtil.ITEM_OUTPUT, 44, 79, outputSize, pos++)
                 .setColor(InventoryUtil.ITEM_OUTPUT_COLOR)
                 .setInputFilter((stack, integer) -> false));
     }

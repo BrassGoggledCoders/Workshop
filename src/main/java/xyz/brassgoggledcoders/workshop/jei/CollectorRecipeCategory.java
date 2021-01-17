@@ -71,7 +71,7 @@ public class CollectorRecipeCategory implements IRecipeCategory<CollectorRecipe>
     @Override
     public void draw(CollectorRecipe recipe, MatrixStack stack, double mouseX, double mouseY) {
         //Inputs
-        slot.draw(stack, 5, 36);
+        slot.draw(stack, 5, 42);
         //Outputs
         for (int i = 0; i < CollectorTileEntity.outputSize; i++) {
             slot.draw(stack, 50, 5 + (i * 18));
@@ -102,7 +102,7 @@ public class CollectorRecipeCategory implements IRecipeCategory<CollectorRecipe>
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
         int index = 0;
-        guiItemStacks.init(index++, true, 5, 36);
+        guiItemStacks.init(index++, true, 5, 50);
         for (int i = 0; i < recipe.outputs.length; i++) {
             guiItemStacks.init(index + i, false, 50, 5 + (i * 18));
         }

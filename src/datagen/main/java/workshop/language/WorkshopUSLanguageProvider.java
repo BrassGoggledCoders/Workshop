@@ -11,7 +11,13 @@ import xyz.brassgoggledcoders.workshop.api.capabilities.BottleCapabilityProvider
 import xyz.brassgoggledcoders.workshop.content.*;
 import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 public class WorkshopUSLanguageProvider extends LanguageProvider {
+
+    //Publicised for use in BookProvider
+    public static final Map<String, String> strings = new TreeMap<>();
 
     public WorkshopUSLanguageProvider(DataGenerator gen) {
         super(gen, Workshop.MOD_ID, "en_us");
@@ -143,5 +149,11 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
     public void addResource(String key, String name) {
         String prefix = "resource.titanium.type.";
         this.add(prefix + key, name);
+    }
+
+    @Override
+    public void add(String key, String value) {
+        strings.put(key, value);
+        super.add(key, value);
     }
 }
