@@ -56,8 +56,8 @@ configurations {
 }
 
 def version_properties = [
-        "mod_version"       : mod_version,
-        "titanium_version"    : titanium_version,
+        "mod_version": mod_version,
+        "titanium_version": titanium_version,
         "forge_version" : forge_version,
         "loader_version": loader_version
 ]
