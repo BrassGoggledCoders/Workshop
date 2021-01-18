@@ -2,23 +2,41 @@ package xyz.brassgoggledcoders.workshop.compat.patchouli;
 
 import com.google.gson.annotations.SerializedName;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.inventory.container.PlayerContainer;
+import net.minecraft.client.renderer.BlockRendererDispatcher;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.TagRegistryManager;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Quaternion;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
+import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import vazkii.patchouli.client.RenderHelper;
 import vazkii.patchouli.client.book.BookEntry;
 import vazkii.patchouli.client.book.BookPage;
+import xyz.brassgoggledcoders.workshop.util.FluidRenderer;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class TagPage extends BookPage {
@@ -46,33 +64,38 @@ public class TagPage extends BookPage {
         super.build(entry, pageNum);
     }
 
-    //TODO Tooltips
     @Override
     public void render(MatrixStack ms, int mouseX, int mouseY, float pticks) {
         this.parent.drawCenteredStringNoShadow(ms, title, 58, 0, this.book.headerColor);
         for(int i = 0; i < hotBlocks.size(); i++) {
             IItemProvider provider = hotBlocks.get(i);
-            int xPosition = i * 18;
-            int yPosition = 10;
+            int x = i * 18;
+            int y = 10;
             if(provider instanceof Block && Items.AIR.equals(provider.asItem())) {
-                BlockState bs = ((Block) provider).getDefaultState();
-                MiscRenderer r = new MiscRenderer();
+                Block block = (Block) provider;
+                BlockState bs = block.getDefaultState();
+                //TODO Render fluids in the same manner as JEI instead
                 if(!bs.getFluidState().isEmpty()) {
-                    r.render(ms, xPosition, yPosition, new FluidStack(bs.getFluidState().getFluid(), FluidAttributes.BUCKET_VOLUME));
+                    ItemStack stack = new ItemStack(bs.getFluidState().getFluid().getFilledBucket());
+                    if (!stack.isEmpty()) {
+                        this.parent.renderItemStack(ms, x, y, mouseX, mouseY, stack);
+                    }
                 }
                 else {
-                    //TODO don't render texture directly, ew
-                    //IRenderTypeBuffer.Impl bf = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
-                    //Minecraft.getInstance().getBlockRendererDispatcher().renderBlock(bs, ms, bf, 15728880, OverlayTexture.NO_OVERLAY);
-                    Minecraft.getInstance().getTextureManager().bindTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
-                    Matrix4f matrix = ms.getLast().getMatrix();
-                    MiscRenderer.drawTextureWithMasking(matrix, xPosition, yPosition, Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelShapes().getTexture(bs),0, 0, 100);
+                    RenderHelper.transferMsToGl(ms, () -> {
+                        Minecraft.getInstance().getItemRenderer().zLevel += 50f;
+                        Minecraft.getInstance().getItemRenderer().renderItemModelIntoGUI(new ItemStack(Items.BEDROCK), x, y, Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelShapes().getModel(bs));
+                        Minecraft.getInstance().getItemRenderer().zLevel -= 50f;
+                    });
+                }
+                if (this.parent.isMouseInRelativeRange(mouseX, mouseY, x, y, 16, 16)) {
+                    super.parent.setTooltip(new TranslationTextComponent(block.getTranslationKey()));
                 }
             }
             else {
                 ItemStack stack = new ItemStack(provider);
                 if (!stack.isEmpty()) {
-                    this.parent.renderItemStack(ms, xPosition, yPosition, mouseX, mouseY, stack);
+                    this.parent.renderItemStack(ms, x, y, mouseX, mouseY, stack);
                 }
             }
         }
