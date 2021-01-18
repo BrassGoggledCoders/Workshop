@@ -44,9 +44,8 @@ public class Workshop {
 
     public static final String SCRAP_BAG_DESC = "description.jei.scrap_bag";
 
-    //READ then WRITE
     static {
-        //section packets
+        //Titanium maps this in JSON but not for packets
         CompoundSerializableDataHandler.map(ItemStack[].class, (buf) -> {
             ItemStack[] stacks = new ItemStack[buf.readInt()];
             for (int i = 0; i < stacks.length; i++) {
@@ -59,73 +58,95 @@ public class Workshop {
                 buf.writeItemStack(stack);
             }
         });
-        CompoundSerializableDataHandler.map(TileEntityType.class, (buf) -> ForgeRegistries.TILE_ENTITIES.getValue(buf.readResourceLocation()),
-                (buf, tileEntityType) -> buf.writeResourceLocation(tileEntityType.getRegistryName()));
-        CompoundSerializableDataHandler.map(RangedItemStack.class, (buf) -> new RangedItemStack(buf.readItemStack(), buf.readInt(), buf.readInt()), ((buf, rangedItemStack) -> {
-            buf.writeItemStack(rangedItemStack.stack);
-            buf.writeInt(rangedItemStack.min);
-            buf.writeInt(rangedItemStack.max);
-        }));
-        CompoundSerializableDataHandler.map(RangedItemStack[].class, (buf) -> {
-            RangedItemStack[] stacks = new RangedItemStack[buf.readInt()];
-            for (int i = 0; i < stacks.length; i++) {
-                stacks[i] = new RangedItemStack(buf.readItemStack(), buf.readInt(), buf.readInt());
-            }
-            return stacks;
-        }, ((buf, rangedItemStacks) -> {
-            buf.writeInt(rangedItemStacks.length);
-            for (RangedItemStack rangedItemStack : rangedItemStacks) {
-                buf.writeItemStack(rangedItemStack.stack);
-                buf.writeInt(rangedItemStack.min);
-                buf.writeInt(rangedItemStack.max);
-            }
-        }));
-        //ednsection
-        //section JSON
-        JSONSerializableDataHandler.map(TileEntityType.class, (type) -> new JsonPrimitive(type.getRegistryName().toString()),
-                (element) -> ForgeRegistries.TILE_ENTITIES.getValue(new ResourceLocation(element.getAsString())));
-        JSONSerializableDataHandler.map(RangedItemStack.class, (object) -> {
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("min", object.min);
-            jsonObject.addProperty("max", object.max);
-            jsonObject.addProperty("weight", object.weight);
-            jsonObject.add("stack", JSONSerializableDataHandler.writeItemStack(object.stack));
-            return jsonObject;
-        }, (json) -> {
-            JsonObject jsonObject = json.getAsJsonObject();
-            return new RangedItemStack(JSONSerializableDataHandler.readItemStack(jsonObject.get("stack").getAsJsonObject()), jsonObject.get("min").getAsInt(), jsonObject.get("max").getAsInt(), jsonObject.get("weight").getAsInt());
-        });
-        JSONSerializableDataHandler.map(RangedItemStack[].class, (type) -> {
-            JsonArray array = new JsonArray();
-            for (RangedItemStack rStack : type) {
-                array.add(JSONSerializableDataHandler.write(RangedItemStack.class, rStack));
-            }
-            return array;
-        }, (element) -> {
-            RangedItemStack[] stacks = new RangedItemStack[element.getAsJsonArray().size()];
-            int i = 0;
-            Iterator<JsonElement> iterator;
-            for (iterator = element.getAsJsonArray().iterator(); iterator.hasNext(); i++) {
-                JsonElement jsonElement = iterator.next();
-                stacks[i] = JSONSerializableDataHandler.read(RangedItemStack.class, jsonElement);
-            }
-            return stacks;
-        });
-        JSONSerializableDataHandler.map(TileEntityType[].class, list -> {
-            JsonArray array = new JsonArray();
-            Arrays.asList(list).forEach(t -> array.add(JSONSerializableDataHandler.write(TileEntityType.class, t)));
-            return array;
-        }, element -> {
-            TileEntityType<?>[] types = new TileEntityType[element.getAsJsonArray().size()];
-            int i = 0;
-            Iterator<JsonElement> iterator;
-            for (iterator = element.getAsJsonArray().iterator(); iterator.hasNext(); i++) {
-                JsonElement jsonElement = iterator.next();
-                types[i] = JSONSerializableDataHandler.read(TileEntityType.class, jsonElement);
-            }
-            return types;
-        });
-        //endsection
+        /*
+        JSON Write
+        NBT Write
+        JSON Read
+        NBT Read
+         */
+        map(TileEntityType.class,
+                type -> new JsonPrimitive(type.getRegistryName().toString()),
+                (buf, tileEntityType) -> buf.writeResourceLocation(tileEntityType.getRegistryName()),
+                element -> ForgeRegistries.TILE_ENTITIES.getValue(new ResourceLocation(element.getAsString())),
+                buf -> ForgeRegistries.TILE_ENTITIES.getValue(buf.readResourceLocation()));
+        map(TileEntityType[].class,
+                list -> {
+                    JsonArray array = new JsonArray();
+                    Arrays.asList(list).forEach(t -> array.add(JSONSerializableDataHandler.write(TileEntityType.class, t)));
+                    return array;
+                },
+                (buf, list) -> {
+                    buf.writeInt(list.length);
+                    Arrays.asList(list).forEach(tileEntityType -> buf.writeResourceLocation(tileEntityType.getRegistryName()));
+                },
+                element -> {
+                    TileEntityType<?>[] types = new TileEntityType[element.getAsJsonArray().size()];
+                    int i = 0;
+                    Iterator<JsonElement> iterator;
+                    for (iterator = element.getAsJsonArray().iterator(); iterator.hasNext(); i++) {
+                        JsonElement jsonElement = iterator.next();
+                        types[i] = JSONSerializableDataHandler.read(TileEntityType.class, jsonElement);
+                    }
+                    return types;
+                },(buf) -> {
+                    TileEntityType[] types = new TileEntityType[buf.readInt()];
+                    for(int i = 0; i < types.length; i++) {
+                        types[i] = ForgeRegistries.TILE_ENTITIES.getValue(buf.readResourceLocation());
+                    }
+                    return types;
+                });
+        map(RangedItemStack.class,
+                (object) -> {
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("min", object.min);
+                    jsonObject.addProperty("max", object.max);
+                    jsonObject.addProperty("weight", object.weight);
+                    jsonObject.add("stack", JSONSerializableDataHandler.writeItemStack(object.stack));
+                    return jsonObject;
+                }, (buf, rangedItemStack) -> {
+                    buf.writeItemStack(rangedItemStack.stack);
+                    buf.writeInt(rangedItemStack.min);
+                    buf.writeInt(rangedItemStack.max);
+                },
+                (json) -> {
+                    JsonObject jsonObject = json.getAsJsonObject();
+                    return new RangedItemStack(JSONSerializableDataHandler.readItemStack(jsonObject.get("stack").getAsJsonObject()), jsonObject.get("min").getAsInt(), jsonObject.get("max").getAsInt(), jsonObject.get("weight").getAsInt());
+                },
+                (buf) -> new RangedItemStack(buf.readItemStack(), buf.readInt(), buf.readInt()));
+        map(RangedItemStack[].class,
+                (type) -> {
+                    JsonArray array = new JsonArray();
+                    for (RangedItemStack rStack : type) {
+                        array.add(JSONSerializableDataHandler.write(RangedItemStack.class, rStack));
+                    }
+                    return array;
+                },
+                (buf, rangedItemStacks) -> {
+                    buf.writeInt(rangedItemStacks.length);
+                    for (RangedItemStack rangedItemStack : rangedItemStacks) {
+                        buf.writeItemStack(rangedItemStack.stack);
+                        buf.writeInt(rangedItemStack.min);
+                        buf.writeInt(rangedItemStack.max);
+                    }
+                },
+                (element) -> {
+                    RangedItemStack[] stacks = new RangedItemStack[element.getAsJsonArray().size()];
+                    int i = 0;
+                    Iterator<JsonElement> iterator;
+                    for (iterator = element.getAsJsonArray().iterator(); iterator.hasNext(); i++) {
+                        JsonElement jsonElement = iterator.next();
+                        stacks[i] = JSONSerializableDataHandler.read(RangedItemStack.class, jsonElement);
+                    }
+                    return stacks;
+                },
+                (buf) -> {
+                    RangedItemStack[] stacks = new RangedItemStack[buf.readInt()];
+                    for (int i = 0; i < stacks.length; i++) {
+                        stacks[i] = new RangedItemStack(buf.readItemStack(), buf.readInt(), buf.readInt());
+                    }
+                    return stacks;
+                }
+        );
     }
 
     public Workshop() {
@@ -156,5 +177,10 @@ public class Workshop {
             ComposterBlock.registerCompostable(0.05F, WorkshopBlocks.TEA_PLANT.getItem());
             ComposterBlock.registerCompostable(0.1F, WorkshopItems.TEA_LEAVES.get());
         });
+    }
+
+    private static <T> void map(Class<T> clazz, JSONSerializableDataHandler.Writer<T> writer, CompoundSerializableDataHandler.Writer<T> writerNBT, JSONSerializableDataHandler.Reader<T> reader, CompoundSerializableDataHandler.Reader<T> readerNBT) {
+        JSONSerializableDataHandler.map(clazz, writer, reader);
+        CompoundSerializableDataHandler.map(clazz, readerNBT, writerNBT);
     }
 }
