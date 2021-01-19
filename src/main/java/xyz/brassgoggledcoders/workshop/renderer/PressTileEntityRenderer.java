@@ -3,7 +3,6 @@ package xyz.brassgoggledcoders.workshop.renderer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
@@ -15,13 +14,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
+import xyz.brassgoggledcoders.workshop.block.PressBlock;
 import xyz.brassgoggledcoders.workshop.tileentity.PressTileEntity;
 import xyz.brassgoggledcoders.workshop.util.FluidRenderer;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-
-import static xyz.brassgoggledcoders.workshop.block.PressBlock.FACING;
-import static xyz.brassgoggledcoders.workshop.content.WorkshopBlocks.PRESS_ARM;
 
 @OnlyIn(value = Dist.CLIENT)
 public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity> {
@@ -30,25 +27,16 @@ public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity>
         super(dispatcher);
     }
 
-    @Deprecated
     @Override
     @ParametersAreNonnullByDefault
     public void render(PressTileEntity press, float v, MatrixStack stack, IRenderTypeBuffer buf, int combinedLight, int combinedOverlay) {
-        if (!press.hasWorld()) {
-            return;
+        if (press.hasWorld()) {
+            //Fluid Visuals
+            renderFluidBlock(press, stack, buf, combinedLight);
+            //Render Item
+            renderInventory(press, stack, buf, combinedLight, combinedOverlay);
         }
-
-        //Fluid Visuals
-        renderFluidBlock(press, stack, buf, combinedLight);
-
-        //ArmRender
-        renderArm(press, stack, buf, combinedLight, combinedOverlay);
-
-        //Render Item
-        renderInventory(press, stack, buf, combinedLight, combinedOverlay);
-
     }
-
 
     //Inventory Item Renderer
     private void renderInventory(PressTileEntity press, MatrixStack stack, IRenderTypeBuffer buf, int combinedLight, int combinedOverlay) {
@@ -56,7 +44,7 @@ public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity>
         ItemStack item = press.getInputInventory().getStackInSlot(0);
         World world = press.getWorld();
         if (world != null) {
-            float f = world.getBlockState(press.getPos()).get(FACING).getHorizontalAngle();
+            float f = world.getBlockState(press.getPos()).get(PressBlock.FACING).getHorizontalAngle();
             if (!item.isEmpty() && press.getHeightChange() - 0.2 > 0.3 && press.getMachineComponent().getPrimaryBar().getProgress() < press.getMachineComponent().getPrimaryBar().getMaxProgress() / 2) {
                 stack.push();
                 stack.translate(0.5, press.getHeightChange() - 0.2, 0.5);
@@ -73,18 +61,6 @@ public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity>
         }
     }
 
-
-    //Arm Stuff
-    @Deprecated
-    private void renderArm(PressTileEntity press, MatrixStack stack, IRenderTypeBuffer buf, int combinedLight, int combinedOverlay) {
-        BlockRendererDispatcher blockRender = Minecraft.getInstance().getBlockRendererDispatcher();
-        stack.push();
-        stack.translate(0, press.getHeightChange(), 0);
-        stack.scale(1, 1, 1);
-        blockRender.renderBlock(PRESS_ARM.getBlock().getDefaultState(), stack, buf, combinedLight, combinedOverlay);
-        stack.pop();
-    }
-
     public void renderFluidBlock(PressTileEntity tile, MatrixStack stack, IRenderTypeBuffer buf, int combinedLight) {
         FluidStack liquid = tile.getOutputFluid().getFluid();
         IVertexBuilder builder = buf.getBuffer(FluidRenderer.getBlockRenderType());
@@ -95,8 +71,6 @@ public class PressTileEntityRenderer extends TileEntityRenderer<PressTileEntity>
             float height = (float) liquid.getAmount() * sections;
             FluidRenderer.renderScaledFluidCuboid(liquid, stack, builder, combinedLight, 2.2F, minY, 2.1F, 13.9F, minY + height, 13.9F);
         }
-
-
     }
 
 }

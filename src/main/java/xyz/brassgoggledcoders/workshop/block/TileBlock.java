@@ -3,6 +3,7 @@ package xyz.brassgoggledcoders.workshop.block;
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
@@ -67,5 +68,10 @@ public class TileBlock<T extends TileEntity> extends Block {
             }
             super.onReplaced(state, worldIn, pos, newState, isMoving);
         }
+    }
+
+    @Override
+    public PushReaction getPushReaction(BlockState state) {
+        return PushReaction.BLOCK;
     }
 }

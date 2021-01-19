@@ -1,8 +1,10 @@
 package xyz.brassgoggledcoders.workshop.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -34,32 +36,23 @@ public class PressBlock extends GUITileBlock<PressTileEntity> {
 
     @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
-        BlockPos blockpos = pos.up();
-        BlockState blockstate = worldIn.getBlockState(blockpos);
-        if (blockstate.getBlock() == WorkshopBlocks.PRESS_TOP.getBlock()) {
-            worldIn.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 3);
+        if(!worldIn.isRemote) {
+            BlockPos blockpos = pos.up();
+            BlockState blockstate = worldIn.getBlockState(blockpos);
+            if (blockstate.getBlock() == WorkshopBlocks.PRESS_TOP.getBlock()) {
+                worldIn.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 3);
+                worldIn.playEvent(player, 2001, blockpos, Block.getStateId(blockstate));
+            }
         }
         super.onBlockHarvested(worldIn, pos, state, player);
-    }
-
-    @Override
-    public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor) {
-        BlockPos blockpos = pos.up();
-        BlockState blockstate = world.getBlockState(blockpos);
-        if (blockstate.getBlock() != WorkshopBlocks.PRESS_TOP.getBlock()) {
-            //World newWorld = Objects.requireNonNull(world.getChunk(pos).getWorldForge()).getWorld();
-            //newWorld.setBlockState(pos, Blocks.AIR.getDefaultState());
-        }
     }
 
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
         if (!worldIn.isRemote) {
-            BlockPos blockpos = pos.offset(Direction.UP);
+            BlockPos blockpos = pos.up();
             worldIn.setBlockState(blockpos, WorkshopBlocks.PRESS_TOP.getBlock().getDefaultState(), 3);
-            //worldIn.notifyNeighbors(pos, Blocks.AIR);
-            //state.updateNeighbors(worldIn, pos, 3);
         }
     }
 
@@ -81,4 +74,10 @@ public class PressBlock extends GUITileBlock<PressTileEntity> {
         super.fillStateContainer(builder);
         builder.add(FACING);
     }
+
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
+    }
+
 }

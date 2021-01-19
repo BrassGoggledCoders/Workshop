@@ -39,7 +39,7 @@ public class WorkshopBookProvider extends PatchouliBookProvider implements IData
         final CategoryBuilder machineCategory =
                 builder.addCategory("crafting_machine_category", "Crafting Machines", "Machines are the heart of any workshop, and these allow you to produce resources, and other machines.", new ItemStack(WorkshopBlocks.SEASONING_BARREL.getItem()));
         //addStandardEntry(machineCategory, "evaporates and then re-condenses the fumes from a mixture of things into bottles or other fluid containers. Cold items can be added to the alembic's condenser to speed it up.", WorkshopBlocks.ALEMBIC.getItem());
-        //addStandardEntry(machineCategory, "is used to transform solids into liquids, often with a solid by-product. It can, for example, juice apples and squeeze oil from seeds", WorkshopBlocks.PRESS.getItem());
+        addStandardEntry(machineCategory, "is used to transform solids into liquids, often with a solid by-product. It can, for example, juice apples and squeeze oil from seeds", WorkshopBlocks.PRESS.getItem());
         addStandardEntry(machineCategory, "transforms fluids by interaction with catalyst items over an extended period of time. It cannot hold liquids hotter than lava, for that you need the $(item)Molten Reaction Chamber$()", WorkshopBlocks.SEASONING_BARREL.getItem());
         EntryBuilder eSintering = addStandardEntry(machineCategory, "allows you to heat and apply powders to other items, this can be used to coat materials. To power it, place a hot block (lava, magma block etc) one or two blocks beneath.", WorkshopBlocks.SINTERING_FURNACE.getItem());
         eSintering.addPage(new TagPageBuilder(eSintering, WorkshopBlockTags.HOT.getName()).setTitle("Heat Source Blocks:"));

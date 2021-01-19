@@ -3,6 +3,7 @@ package xyz.brassgoggledcoders.workshop.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -28,23 +29,26 @@ public class PressTopBlock extends Block {
     }
 
     @Override
+    public PushReaction getPushReaction(BlockState state) {
+        return PushReaction.BLOCK;
+    }
+
+    @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
         BlockPos blockpos = pos.down();
         BlockState blockstate = worldIn.getBlockState(blockpos);
         if (blockstate.getBlock() == WorkshopBlocks.PRESS.getBlock()) {
             worldIn.destroyBlock(blockpos, true);
-            //worldIn.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 3);
+            worldIn.playEvent(player, 2001, blockpos, Block.getStateId(blockstate));
         }
         super.onBlockHarvested(worldIn, pos, state, player);
     }
 
     @Override
-    public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor) {
-        BlockPos blockpos = pos.down();
-        BlockState blockstate = world.getBlockState(blockpos);
-        if (blockstate.getBlock() != WorkshopBlocks.PRESS.getBlock()) {
-            //World newWorld = Objects.requireNonNull(world.getChunk(pos).getWorldForge()).getWorld();
-            //newWorld.setBlockState(pos, Blocks.AIR.getDefaultState());
+    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+        super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
+        if(worldIn.getBlockState(pos.down()).getBlock() != WorkshopBlocks.PRESS.getBlock()) {
+            worldIn.removeBlock(pos, false);
         }
     }
 

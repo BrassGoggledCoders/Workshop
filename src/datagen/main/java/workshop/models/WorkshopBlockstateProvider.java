@@ -8,6 +8,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -93,11 +94,14 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
             }
         });
         //endsection
+        //section Sintering
         ResourceLocation location = modLoc("block/sintering_furnace");
         ModelFile sintering_furnace = new ModelFile.ExistingModelFile(location, exFileHelper);
         ModelFile sintering_furnace_hot = models().withExistingParent("sintering_furnace_hot", location).texture("0", modLoc(BLOCK_FOLDER + "/hot_iron_block"));
         this.getVariantBuilder(WorkshopBlocks.SINTERING_FURNACE.get()).forAllStates(state -> ConfiguredModel.builder().modelFile(state.get(SinteringFurnaceBlock.LIT) ? sintering_furnace_hot : sintering_furnace)
                 .rotationY(((int) state.get(BlockStateProperties.HORIZONTAL_FACING).getHorizontalAngle() + 180) % 360)
                 .build());
+        //endsection
+        this.horizontalBlock(WorkshopBlocks.PRESS.getBlock(), new ModelFile.ExistingModelFile(modLoc("block/press"), exFileHelper));
     }
 }

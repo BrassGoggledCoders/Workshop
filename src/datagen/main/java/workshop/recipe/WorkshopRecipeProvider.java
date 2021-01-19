@@ -2,6 +2,7 @@ package workshop.recipe;
 
 import com.hrznstudio.titanium.Titanium;
 import com.hrznstudio.titanium.recipe.generator.TitaniumRecipeProvider;
+import com.hrznstudio.titanium.recipe.generator.TitaniumShapelessRecipeBuilder;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.block.Blocks;
@@ -105,15 +106,15 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('S', Tags.Items.STONE)
                 .key('C', Tags.Items.CHESTS)
                 .build(consumer);
-        /*WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.PRESS.getBlock())
+        WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.PRESS.getBlock(), helper)
                 .patternLine("WPW")
-                .patternLine("WGW")
+                .patternLine("W W")
                 .patternLine("WCW")
                 .key('W', ItemTags.PLANKS)
                 .key('P', Items.PISTON)
-                .key('G', Tags.Items.GLASS_PANES)
-                .key('C', Items.COBBLESTONE)
+                .key('C', Items.CAULDRON)
                 .build(consumer);
+        /*
         WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.ALEMBIC.getBlock())
                 .patternLine("PPP")
                 .patternLine("PPB")
@@ -132,13 +133,6 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('C', WorkshopItemTagsProvider.REBARRED_CONCRETE)
                 .key('O', WorkshopBlocks.OBSIDIAN_PLATE.getItem())
                 .build(consumer);
-        WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.FLUID_FUNNEL.getBlock())
-                .patternLine("L L")
-                .patternLine("LCL")
-                .patternLine(" L "), helper
-                .key('L', WorkshopBlocks.SEASONED_LOG.getItem())
-                .key('C', Tags.Items.CHESTS_WOODEN)
-                .build(consumer);
                 */
         /*WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SCRAP_BIN.getBlock())
                 .patternLine("III")
@@ -147,6 +141,13 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('I', ItemTags.getCollection().get(new ResourceLocation("forge", "films/iron")))
                 .key('C', Items.COMPOSTER)
                 .build(consumer);*/
+        WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.FLUID_FUNNEL.getBlock(), helper)
+                .patternLine("L L")
+                .patternLine("LCL")
+                .patternLine(" L ")
+                .key('L', WorkshopBlocks.SEASONED_LOG.getItem())
+                .key('C', Tags.Items.CHESTS_WOODEN)
+                .build(consumer);
         WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SCRAP_BIN.getBlock(), helper)
                 .setName(new ResourceLocation(Workshop.MOD_ID, "scrap_bin_alt"))
                 .patternLine("III")
@@ -161,11 +162,11 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .patternLine("AAA")
                 .key('A', Blocks.POLISHED_ANDESITE)
                 .build(consumer);
-        /*TitaniumShapelessRecipeBuilder.shapelessRecipe(WorkshopBlocks.SILO_BARREL.getBlock())
+        TitaniumShapelessRecipeBuilder.shapelessRecipe(WorkshopBlocks.SILO_BARREL.getBlock())
                 .addIngredient(Blocks.BARREL)
-                .addIngredient(WorkshopItemTags.IRON_FILM)
-                .build(consumer);*/
-        //endsection        CookingRecipeBuilder.
+                .addIngredient(Items.HEAVY_WEIGHTED_PRESSURE_PLATE)
+                .build(consumer);
+        //endsection
         //section Misc
         WorkshopShapedRecipeBuilder.shapedRecipe(Items.TORCH, helper)
                 .patternLine("T")

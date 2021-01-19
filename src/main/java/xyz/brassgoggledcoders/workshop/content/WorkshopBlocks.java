@@ -56,11 +56,7 @@ public class WorkshopBlocks {
             new BlockRegistryObjectGroup<>("press", PressBlock::new, blockItemCreator(), PressTileEntity::new)
                     .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
-    //TODO Neither of these need items, and the arm is purely a dummy block for rendering, which is dumb...
-
-    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> PRESS_ARM =
-            new BlockRegistryObjectGroup<>("press_arm", () -> new Block(Block.Properties.create(Material.BAMBOO)), blockItemCreatorNoGroup()).register(BLOCKS, ITEMS);
-
+    //TODO Change BlockRegistryObjectGroup to allow no item
     public static final BlockRegistryObjectGroup<PressTopBlock, BlockItem, ?> PRESS_TOP =
             new BlockRegistryObjectGroup<>("press_top", PressTopBlock::new, blockItemCreatorNoGroup()).register(BLOCKS, ITEMS);
 

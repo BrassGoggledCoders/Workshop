@@ -64,6 +64,4 @@ public class CollectorBlock extends GUITileBlock<CollectorTileEntity> {
             this.handleTileEntity(worldIn, pos, CollectorTileEntity::rebuildCache);
         }
     }
-
-
 }

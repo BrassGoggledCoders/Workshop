@@ -42,6 +42,6 @@ public class PressRecipe extends WorkshopRecipe {
 
     @Override
     public int getProcessingTime() {
-        return 100;
+        return 20 * 6;
     }
 }

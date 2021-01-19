@@ -47,7 +47,8 @@ public class WorkshopItemModelProvider extends ItemModelProvider {
                 WorkshopBlocks.STRIPPED_SEASONED_LOG,
                 WorkshopBlocks.SINTERING_FURNACE,
                 WorkshopBlocks.DRYING_BASIN,
-                WorkshopBlocks.FLUID_FUNNEL)
+                WorkshopBlocks.FLUID_FUNNEL,
+                WorkshopBlocks.PRESS)
                 .forEach(blockGroup -> this.withExistingParent(blockGroup.getName(), modLoc(String.format("%s/%s", BLOCK_FOLDER, blockGroup.getName()))));
         this.withExistingParent(WorkshopBlocks.ITEMDUCT.getName(), modLoc(BLOCK_FOLDER + "/itemduct_center"));
     }
