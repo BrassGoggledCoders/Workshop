@@ -35,6 +35,26 @@ public class PressBlock extends GUITileBlock<PressTileEntity> {
     }
 
     @Override
+    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+        if (!worldIn.isRemote && !fromPos.equals(pos.up())) {
+            if(worldIn.isBlockPowered(pos)) {
+                this.handleTileEntity(worldIn, pos, PressTileEntity::trigger);
+            }
+        }
+    }
+
+    @Override
+    public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+        if (!oldState.isIn(state.getBlock())) {
+            if (!worldIn.isRemote && worldIn.getTileEntity(pos) == null) {
+                if(worldIn.isBlockPowered(pos) || worldIn.isBlockPowered(pos.up())) {
+                    this.handleTileEntity(worldIn, pos, PressTileEntity::trigger);
+                }
+            }
+        }
+    }
+
+    @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
         if(!worldIn.isRemote) {
             BlockPos blockpos = pos.up();
@@ -53,6 +73,9 @@ public class PressBlock extends GUITileBlock<PressTileEntity> {
         if (!worldIn.isRemote) {
             BlockPos blockpos = pos.up();
             worldIn.setBlockState(blockpos, WorkshopBlocks.PRESS_TOP.getBlock().getDefaultState(), 3);
+            if(worldIn.isBlockPowered(pos) || worldIn.isBlockPowered(pos.up())) {
+                this.handleTileEntity(worldIn, pos, PressTileEntity::trigger);
+            }
         }
     }
 

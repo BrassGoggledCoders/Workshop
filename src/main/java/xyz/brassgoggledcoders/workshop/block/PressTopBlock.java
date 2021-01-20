@@ -17,12 +17,14 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.tileentity.GUITile;
+import xyz.brassgoggledcoders.workshop.tileentity.PressTileEntity;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
+@SuppressWarnings("deprecation")
 public class PressTopBlock extends Block {
     public PressTopBlock() {
         super(Block.Properties.from(WorkshopBlocks.PRESS.getBlock()));
@@ -45,10 +47,26 @@ public class PressTopBlock extends Block {
     }
 
     @Override
+    public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+        if (!oldState.isIn(state.getBlock())) {
+            if (!worldIn.isRemote && worldIn.getTileEntity(pos) == null) {
+                if(worldIn.isBlockPowered(pos) || worldIn.isBlockPowered(pos.up())) {
+                    this.handleTileEntity(worldIn, pos, PressTileEntity::trigger);
+                }
+            }
+        }
+    }
+
+    @Override
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
-        if(worldIn.getBlockState(pos.down()).getBlock() != WorkshopBlocks.PRESS.getBlock()) {
-            worldIn.removeBlock(pos, false);
+        if (!worldIn.isRemote) {
+            if (worldIn.getBlockState(pos.down()).getBlock() != WorkshopBlocks.PRESS.getBlock()) {
+                worldIn.removeBlock(pos, false);
+            }
+            if(!fromPos.equals(pos.down()) && worldIn.isBlockPowered(pos)) {
+                this.handleTileEntity(worldIn, pos, PressTileEntity::trigger);
+            }
         }
     }
 
@@ -73,10 +91,10 @@ public class PressTopBlock extends Block {
         return result.get();
     }
 
-    protected void handleTileEntity(IWorld world, BlockPos pos, Consumer<? super GUITile> tileEntityConsumer) {
+    protected void handleTileEntity(IWorld world, BlockPos pos, Consumer<PressTileEntity> tileEntityConsumer) {
         Optional.ofNullable(world.getTileEntity(pos.down()))
-                .filter(tileEntity -> tileEntity instanceof GUITile)
-                .map(GUITile.class::cast)
+                .filter(tileEntity -> tileEntity instanceof PressTileEntity)
+                .map(PressTileEntity.class::cast)
                 .ifPresent(tileEntityConsumer);
     }
 }
