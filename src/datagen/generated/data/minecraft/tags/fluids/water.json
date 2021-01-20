@@ -3,6 +3,7 @@
   "values": [
     "workshop:distilled_water",
     "workshop:brine",
-    "workshop:potash_water"
+    "workshop:potash_water",
+    "workshop:glacial_water"
   ]
 }

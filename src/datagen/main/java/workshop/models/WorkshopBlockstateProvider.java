@@ -103,5 +103,7 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
                 .build());
         //endsection
         this.horizontalBlock(WorkshopBlocks.PRESS.getBlock(), new ModelFile.ExistingModelFile(modLoc("block/press"), exFileHelper));
+        this.simpleBlock(WorkshopBlocks.SILT.getBlock());
+        this.simpleBlock(WorkshopBlocks.SILTSTONE.getBlock(), this.models().cubeBottomTop("siltstone", modLoc("block/siltstone"), modLoc("block/siltstone_bottom"), modLoc("block/siltstone_top")));
     }
 }

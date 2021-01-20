@@ -4,6 +4,7 @@ import com.hrznstudio.titanium.recipe.generator.IJSONGenerator;
 import com.hrznstudio.titanium.recipe.generator.IJsonFile;
 import com.hrznstudio.titanium.recipe.generator.TitaniumSerializableProvider;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
@@ -12,6 +13,7 @@ import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import xyz.brassgoggledcoders.workshop.Workshop;
+import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.tag.WorkshopItemTags;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
@@ -38,7 +40,7 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
                 .setOutput(new FluidStack(WorkshopFluids.DISTILLED_WATER.getFluid(), FluidAttributes.BUCKET_VOLUME))
                 .setResidue(new RangedItemStack(Items.BUCKET, 1, 1),
                         new RangedItemStack(WorkshopItems.SALT.get(), 1, 2),
-                        new RangedItemStack(WorkshopItems.SILT.get(), 0, 1))
+                        new RangedItemStack(new ItemStack(WorkshopBlocks.SILT.get()), 0, 1))
                 //new RangedItemStack(WorkshopBlocks.CHALK_WRITING.getItem(), 0, 1))
                 .setTime(500)
                 .build());
@@ -63,14 +65,14 @@ public class AlembicRecipeProvider extends TitaniumSerializableProvider {
         recipes.add(new Builder("tannin_seeds")
                 .setInputs(Ingredient.fromTag(Tags.Items.SEEDS), Ingredient.fromItems(WorkshopItems.TEA_LEAVES.get()))
                 .setResidue(new RangedItemStack(WorkshopItems.ASH.get(), 0, 2),
-                        new RangedItemStack(WorkshopItems.SILT.get(), 0, 1),
+                        new RangedItemStack(new ItemStack(WorkshopBlocks.SILT.get()), 0, 1),
                         new RangedItemStack(WorkshopItems.TANNIN.get(), 6, 6))
                 .setTime(8 * 20)
                 .build());
         recipes.add(new Builder("tannin_roots")
                 .setInputs(Ingredient.fromTag(WorkshopItemTags.ROOTS), Ingredient.fromItems(WorkshopItems.TEA_LEAVES.get()))
                 .setResidue(new RangedItemStack(WorkshopItems.ASH.get(), 0, 2),
-                        new RangedItemStack(WorkshopItems.SILT.get(), 0, 1),
+                        new RangedItemStack(new ItemStack(WorkshopBlocks.SILT.get()), 0, 1),
                         new RangedItemStack(WorkshopItems.TANNIN.get(), 6, 6))
                 .setTime(8 * 20)
                 .build());

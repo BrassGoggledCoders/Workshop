@@ -8,6 +8,7 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -16,7 +17,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.workshop.Workshop;
-import xyz.brassgoggledcoders.workshop.block.PotashWaterFluidBlock;
+import xyz.brassgoggledcoders.workshop.block.LavaInteractableFluidBlock;
 import xyz.brassgoggledcoders.workshop.fluid.HoneyFluid;
 
 import javax.annotation.Nonnull;
@@ -67,8 +68,20 @@ public class WorkshopFluids {
 
     public static final Supplier<ForgeFlowingFluid.Source> potash = () -> new ForgeFlowingFluid.Source(WorkshopFluids.POTASH_WATER_PROPERTIES);
     public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> POTASH_WATER = new FluidRegistryObjectGroup<>("potash_water",
-            potash, () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.POTASH_WATER_PROPERTIES), PotashWaterFluidBlock::new).register(FLUIDS, BLOCKS, ITEMS);
+            potash, () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.POTASH_WATER_PROPERTIES),
+            () -> new LavaInteractableFluidBlock(potash, AbstractBlock.Properties.from(Blocks.WATER), Blocks.ANDESITE::getDefaultState)).register(FLUIDS, BLOCKS, ITEMS);
     public static final ForgeFlowingFluid.Properties POTASH_WATER_PROPERTIES = properties(POTASH_WATER, "7DF9FF");
+
+    public static final Supplier<ForgeFlowingFluid.Source> glacial = () -> new ForgeFlowingFluid.Source(WorkshopFluids.GLACIAL_WATER_PROPERTIES);
+    public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> GLACIAL_WATER = new FluidRegistryObjectGroup<>("glacial_water",
+            glacial, () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.GLACIAL_WATER_PROPERTIES),
+            () -> new LavaInteractableFluidBlock(glacial, AbstractBlock.Properties.from(Blocks.WATER), () -> WorkshopBlocks.SILT.getBlock().getDefaultState()) {
+                @Override
+                public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+                    entityIn.setMotionMultiplier(state, new Vector3d(0.25D, (double)0.05F, 0.25D));
+                }
+            }).register(FLUIDS, BLOCKS, ITEMS);
+    public static final ForgeFlowingFluid.Properties GLACIAL_WATER_PROPERTIES = properties(GLACIAL_WATER, "3a5358");
 
     public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> DISTILLED_WATER = new FluidRegistryObjectGroup<>("distilled_water",
             () -> new ForgeFlowingFluid.Source(WorkshopFluids.DISTILLED_WATER_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.DISTILLED_WATER_PROPERTIES))
@@ -99,8 +112,9 @@ public class WorkshopFluids {
             () -> new ForgeFlowingFluid.Source(WorkshopFluids.TEA_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.TEA_PROPERTIES)).register(FLUIDS, BLOCKS, ITEMS);
     public static final ForgeFlowingFluid.Properties TEA_PROPERTIES = properties(TEA, "8B512F");
 
+    private static final Supplier<ForgeFlowingFluid.Source> hellblood = () -> new ForgeFlowingFluid.Source(WorkshopFluids.HELLBLOOD_PROPERTIES);
     public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> HELLBLOOD = new FluidRegistryObjectGroup<>("hellblood",
-            () -> new ForgeFlowingFluid.Source(WorkshopFluids.HELLBLOOD_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.HELLBLOOD_PROPERTIES)).register(FLUIDS, BLOCKS, ITEMS);
+            hellblood, () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.HELLBLOOD_PROPERTIES), () -> new LavaInteractableFluidBlock(hellblood, AbstractBlock.Properties.from(Blocks.LAVA), Blocks.BASALT::getDefaultState)).register(FLUIDS, BLOCKS, ITEMS);
     public static final ForgeFlowingFluid.Properties HELLBLOOD_PROPERTIES = properties(HELLBLOOD, "8c2727", "lava");
 
     public static void register(IEventBus modBus) {

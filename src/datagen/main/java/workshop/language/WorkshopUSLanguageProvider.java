@@ -50,6 +50,8 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addBlock(WorkshopBlocks.FLUID_FUNNEL, "Fluid Funnel");
         this.addBlock(WorkshopBlocks.SILO_BARREL, "Silo Barrel");
         this.addBlock(WorkshopBlocks.ITEMDUCT, "Itemduct");
+        this.addBlock(WorkshopBlocks.SILT, "Silt");
+        this.addBlock(WorkshopBlocks.SILTSTONE, "Siltstone");
         //endregion
 
         //region Items
@@ -65,7 +67,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addItem(WorkshopItems.TALLOW, "Tallow");
         this.addItem(WorkshopItems.SOAP, "Soap");
         this.addItem(WorkshopItems.SCRAP_BAG, "Scrap Bag");
-        this.addItem(WorkshopItems.SILT, "Silt");
+        //this.addItem(WorkshopItems.SILT, "Silt");
         this.addItem(WorkshopItems.LEATHER_CORDAGE, "Leather Cordage");
         this.addItem(WorkshopItems.LYE, "Lye");
         //endregion
@@ -80,7 +82,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addFluid(WorkshopFluids.RESIN, "Resin");
         this.addFluid(WorkshopFluids.ADHESIVE_OILS, "Adhesive Oils");
         //this.addFluid(WorkshopFluids.CHERRY_JUICE, "Cherry Juice");
-        //this.addFluid(WorkshopFluids.GLACIAL_WATER, "Glacial Water");
+        this.addFluid(WorkshopFluids.GLACIAL_WATER, "Glacial Water");
         this.addFluid(WorkshopFluids.TEA, "Tea");
         this.addFluid(WorkshopFluids.HONEY, "Honey");
         this.addFluid(WorkshopFluids.MEAD, "Mead");

@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
+import net.minecraft.tileentity.BeehiveTileEntity;
 import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -42,9 +43,13 @@ public class WorkshopCapabilities {
 
     @SubscribeEvent
     public static void attachTileCapabilities(AttachCapabilitiesEvent<TileEntity> event) {
+        ResourceLocation collector_target = new ResourceLocation(Workshop.MOD_ID, "collector_target");
         if (event.getObject() instanceof FurnaceTileEntity) {
-            event.addCapability(new ResourceLocation(Workshop.MOD_ID, "collector_target"),
+            event.addCapability(collector_target,
                     new FurnaceCapabilityProvider((FurnaceTileEntity) event.getObject()));
+        }
+        else if(event.getObject() instanceof BeehiveTileEntity) {
+            event.addCapability(collector_target, new BeehiveCapabilityProvider((BeehiveTileEntity) event.getObject()));
         }
     }
 }

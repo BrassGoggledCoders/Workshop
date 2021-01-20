@@ -1,0 +1,34 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "values": [
+            {
+              "item": "workshop:siltstone",
+              "type": "forge:item_exists"
+            }
+          ],
+          "type": "forge:and"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "SS",
+          "SS"
+        ],
+        "key": {
+          "S": {
+            "item": "workshop:silt"
+          }
+        },
+        "result": {
+          "item": "workshop:siltstone",
+          "count": 4
+        }
+      }
+    }
+  ]
+}

@@ -30,7 +30,7 @@ public class PressRecipeProvider extends TitaniumSerializableProvider {
     public void add(Map<IJsonFile, IJSONGenerator> serializables) {
         recipes.add(new Builder("seeds_to_seed_oil")
                 .setInput(Ingredient.fromTag(Tags.Items.SEEDS))
-                .setOutput(new FluidStack(WorkshopFluids.SEED_OIL.getFluid(), FluidAttributes.BUCKET_VOLUME))
+                .setOutput(new FluidStack(WorkshopFluids.SEED_OIL.getFluid(), FluidAttributes.BUCKET_VOLUME / 10))
                 .build());
         recipes.add(new Builder("apple_juicing")
                 .setInput(Ingredient.fromItems(Items.APPLE))
@@ -39,6 +39,14 @@ public class PressRecipeProvider extends TitaniumSerializableProvider {
         recipes.add(new Builder("magma_to_hellblood")
                 .setInput(Ingredient.fromItems(Items.MAGMA_BLOCK))
                 .setOutput(new FluidStack(WorkshopFluids.HELLBLOOD.getFluid(), FluidAttributes.BUCKET_VOLUME / 4))
+                .build());
+        recipes.add(new Builder("glacial_water")
+                .setInput(Ingredient.fromItems(Items.BLUE_ICE, Items.PACKED_ICE))
+                .setOutput(new FluidStack(WorkshopFluids.GLACIAL_WATER.getFluid(), FluidAttributes.BUCKET_VOLUME))
+                .build());
+        recipes.add(new Builder("honeycomb")
+                .setInput(Ingredient.fromItems(Items.HONEYCOMB))
+                .setOutput(new FluidStack(WorkshopFluids.HONEY.getFluid(), FluidAttributes.BUCKET_VOLUME / 10))
                 .build());
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }

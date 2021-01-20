@@ -70,6 +70,12 @@ public class CollectorRecipeProvider extends TitaniumSerializableProvider {
                 .setTime(200)
                 .addOutput(new RangedItemStack(Items.MAGMA_CREAM, 0, 3))
                 .build());
+        recipes.add(new Builder("honeycomb")
+                .addTarget(TileEntityType.BEEHIVE)
+                .setInput(Ingredient.fromItems(Items.BEDROCK))
+                .setTime(6000)
+                .addOutput(new RangedItemStack(Items.HONEYCOMB, 1, 2))
+            .build());
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }
 

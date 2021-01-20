@@ -39,6 +39,8 @@ public class WorkshopBlockLootTables extends BlockLootTables {
         this.registerDropSelfLootTable(WorkshopBlocks.SEASONED_LOG.getBlock());
         this.registerDropSelfLootTable(WorkshopBlocks.STRIPPED_SEASONED_LOG.getBlock());
         this.registerDropSelfLootTable(WorkshopBlocks.ITEMDUCT.getBlock());
+        this.registerDropSelfLootTable(WorkshopBlocks.SILT.getBlock());
+        this.registerDropSelfLootTable(WorkshopBlocks.SILTSTONE.getBlock());
 
         this.registerLootTable(WorkshopBlocks.TEA_PLANT.getBlock(), droppingAndBonusWhen(WorkshopBlocks.TEA_PLANT.getBlock(), WorkshopItems.TEA_LEAVES.get(), WorkshopBlocks.TEA_PLANT.getItem(),
                 BlockStateProperty.builder(WorkshopBlocks.TEA_PLANT.getBlock()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(CropsBlock.AGE, 1))));

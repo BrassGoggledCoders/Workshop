@@ -174,6 +174,11 @@ public class WorkshopRecipeProvider extends TitaniumRecipeProvider {
                 .key('T', WorkshopItemTags.TALLOW)
                 .key('S', Tags.Items.RODS_WOODEN)
                 .build(consumer);
+        WorkshopShapedRecipeBuilder.shapedRecipe(WorkshopBlocks.SILTSTONE.getBlock(), 4, helper)
+                .patternLine("SS")
+                .patternLine("SS")
+                .key('S', WorkshopBlocks.SILT.getItem())
+                .build(consumer);
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(ItemTags.SAPLINGS), WorkshopItems.ASH.get(), 0.05F, 20);
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(ItemTags.LEAVES), WorkshopItems.ASH.get(), 0.05F, 20);
 

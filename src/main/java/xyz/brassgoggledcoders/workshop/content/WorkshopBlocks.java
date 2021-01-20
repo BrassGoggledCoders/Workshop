@@ -4,6 +4,7 @@ import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.tileentity.TileEntityType;
@@ -124,6 +125,12 @@ public class WorkshopBlocks {
 
     public static final BlockRegistryObjectGroup<ItemductBlock, BlockItem, ItemductTileEntity> ITEMDUCT = new BlockRegistryObjectGroup<>("itemduct", ItemductBlock::new, blockItemCreator(), ItemductTileEntity::new)
             .register(BLOCKS, ITEMS, TILE_ENTITIES);
+
+    public static final BlockRegistryObjectGroup<SandBlock, BlockItem, ?> SILT = new BlockRegistryObjectGroup<>("silt", () -> new SandBlock(WorkshopFluids.fromHex("2c2c2c"), AbstractBlock.Properties.from(Blocks.SAND)), blockItemCreator())
+            .register(BLOCKS, ITEMS);
+
+    public static final BlockRegistryObjectGroup<Block, BlockItem, ?> SILTSTONE = new BlockRegistryObjectGroup<>("siltstone", () -> new Block(AbstractBlock.Properties.from(Blocks.SANDSTONE)), blockItemCreator())
+            .register(BLOCKS, ITEMS);
 
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);

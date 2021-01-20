@@ -1,18 +1,22 @@
 package xyz.brassgoggledcoders.workshop.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.block.*;
+import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 
-public class PotashWaterFluidBlock extends FlowingFluidBlock {
-    public PotashWaterFluidBlock() {
-        super(WorkshopFluids.potash, Properties.from(Blocks.WATER));
+import java.util.function.Supplier;
+
+public class LavaInteractableFluidBlock extends FlowingFluidBlock {
+
+    private final Supplier<BlockState> created;
+
+    public LavaInteractableFluidBlock(Supplier<? extends FlowingFluid> supplier, AbstractBlock.Properties properties, Supplier<BlockState> created) {
+        super(supplier, properties);
+        this.created = created;
     }
 
     @Override
@@ -36,7 +40,7 @@ public class PotashWaterFluidBlock extends FlowingFluidBlock {
             if (direction != Direction.DOWN) {
                 BlockPos blockpos = pos.offset(direction);
                 if (worldIn.getFluidState(blockpos).isTagged(FluidTags.LAVA)) {
-                    worldIn.setBlockState(pos, net.minecraftforge.event.ForgeEventFactory.fireFluidPlaceBlockEvent(worldIn, pos, pos, Blocks.ANDESITE.getDefaultState()));
+                    worldIn.setBlockState(pos, net.minecraftforge.event.ForgeEventFactory.fireFluidPlaceBlockEvent(worldIn, pos, pos, created.get()));
                     return false;
                 }
             }

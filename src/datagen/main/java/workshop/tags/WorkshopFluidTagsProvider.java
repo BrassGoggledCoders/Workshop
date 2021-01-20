@@ -26,7 +26,7 @@ public class WorkshopFluidTagsProvider extends FluidTagsProvider {
         this.getOrCreateBuilder(BRINE).add(WorkshopFluids.BRINE.getFluid());
         this.getOrCreateBuilder(HONEY).add(WorkshopFluids.HONEY.getFluid());
         this.getOrCreateBuilder(FluidTags.WATER).add(WorkshopFluids.DISTILLED_WATER.getFluid(),
-                WorkshopFluids.BRINE.getFluid(), WorkshopFluids.POTASH_WATER.getFluid());
+                WorkshopFluids.BRINE.getFluid(), WorkshopFluids.POTASH_WATER.getFluid(), WorkshopFluids.GLACIAL_WATER.getFluid());
     }
 
     @Override
