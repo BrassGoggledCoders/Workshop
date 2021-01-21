@@ -7,7 +7,7 @@ pipeline {
             steps {
                 echo 'Cleaning Project'
                 sh 'chmod +x gradlew'
-                sh './gradlew clean cleanBuildCache'
+                sh './gradlew clean'
             }
         }
         stage('Build and Deploy') {
@@ -15,7 +15,7 @@ pipeline {
                 echo 'Building and Deploying to Maven'
                 script {
                     if (env.BRANCH_NAME.contains("develop")) {
-                        sh './gradlew build -Pbranch=Snapshot uploadArchives'
+                        sh './gradlew build -Pbranch=Snapshot uploadArchives --debug'
                     } else if (env.BRANCH_NAME.contains("release")) {
                         sh './gradlew build uploadArchives'
                     } else {
