@@ -8,6 +8,7 @@ pipeline {
                 echo 'Cleaning Project'
                 sh 'chmod +x gradlew'
                 sh './gradlew clean'
+                sh 'git clean -xdf'
             }
         }
         stage('Build and Deploy') {
