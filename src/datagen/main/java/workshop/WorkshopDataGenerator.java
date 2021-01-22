@@ -55,6 +55,8 @@ public class WorkshopDataGenerator {
             dataGenerator.addProvider(new WorkshopFluidTagsProvider(dataGenerator, existingFileHelper));
 
             dataGenerator.addProvider(new WorkshopBookProvider(dataGenerator, existingFileHelper));
+
+            dataGenerator.addProvider(new WorkshopAdvancementProvider(dataGenerator));
         }
     }
 }

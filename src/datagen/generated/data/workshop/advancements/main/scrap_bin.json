@@ -1,0 +1,35 @@
+{
+  "parent": "workshop:main/root",
+  "display": {
+    "icon": {
+      "item": "workshop:scrap_bin"
+    },
+    "title": {
+      "translate": "advancement.workshop.scrap_bin"
+    },
+    "description": {
+      "translate": "advancement.workshop.scrap_bin.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "scrap_bin": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "workshop:scrap_bin"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "scrap_bin"
+    ]
+  ]
+}

@@ -16,7 +16,7 @@ pipeline {
                 echo 'Building and Deploying to Maven'
                 script {
                     if (env.BRANCH_NAME.contains("develop")) {
-                        sh './gradlew build -Pbranch=Snapshot uploadArchives --debug'
+                        sh './gradlew build -Pbranch=Snapshot uploadArchives'
                     } else if (env.BRANCH_NAME.contains("release")) {
                         sh './gradlew build uploadArchives'
                     } else {

@@ -1,0 +1,35 @@
+{
+  "parent": "workshop:main/root",
+  "display": {
+    "icon": {
+      "item": "workshop:seasoning_barrel"
+    },
+    "title": {
+      "translate": "advancement.workshop.seasoning_barrel"
+    },
+    "description": {
+      "translate": "advancement.workshop.seasoning_barrel.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "seasoning_barrel": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "workshop:seasoning_barrel"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "seasoning_barrel"
+    ]
+  ]
+}

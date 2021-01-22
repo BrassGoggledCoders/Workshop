@@ -1,4 +1,6 @@
 {
+  "advancement.workshop.drunk": "Get Hammered",
+  "advancement.workshop.drunk.desc": "*hic*",
   "block.workshop.gray_rebarred_concrete": "Grey Rebarred Concrete",
   "block.workshop.light_gray_rebarred_concrete": "Light Grey Rebarred Concrete",
   "item.workshop.caramel_apple": "Toffee Apple"

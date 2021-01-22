@@ -1,0 +1,35 @@
+{
+  "parent": "workshop:main/root",
+  "display": {
+    "icon": {
+      "item": "workshop:drying_basin"
+    },
+    "title": {
+      "translate": "advancement.workshop.drying_basin"
+    },
+    "description": {
+      "translate": "advancement.workshop.drying_basin.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "drying_basin": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "workshop:drying_basin"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "drying_basin"
+    ]
+  ]
+}

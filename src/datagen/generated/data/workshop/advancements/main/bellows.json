@@ -1,0 +1,35 @@
+{
+  "parent": "workshop:main/root",
+  "display": {
+    "icon": {
+      "item": "workshop:bellows"
+    },
+    "title": {
+      "translate": "advancement.workshop.bellows"
+    },
+    "description": {
+      "translate": "advancement.workshop.bellows.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "bellows": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "workshop:bellows"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "bellows"
+    ]
+  ]
+}

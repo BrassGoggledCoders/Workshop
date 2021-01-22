@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "item": "workshop:broken_anvil"
+    },
+    "title": {
+      "translate": "advancement.workshop.root"
+    },
+    "description": {
+      "translate": "advancement.workshop.root.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:"
+  },
+  "criteria": {
+    "anvil": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:anvil"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "anvil"
+    ]
+  ]
+}

@@ -23,6 +23,10 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         super(gen, Workshop.MOD_ID, "en_us");
     }
 
+    protected WorkshopUSLanguageProvider(DataGenerator gen, String modid, String locale) {
+        super(gen, modid, locale);
+    }
+
     @Override
     protected void addTranslations() {
         //region Blocks
@@ -134,6 +138,14 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         //region JEI
         this.add(Workshop.SCRAP_BAG_DESC, "Scrap bags are generated when a Scrap Bin destroys enough excess items (more than a stack of any one item). They can be opened by hand or in a dispenser for some items.");
         //endregion
+
+        this.addAdvancement("root", "A wright's beginning...", "Measure twice. Cut once.");
+        this.addAdvancement("bellows", "Embers' friend", "Craft Bellows");
+        this.addAdvancement("drying_basin", "Hurry up and wait", "Craft the Drying Basin");
+        this.addAdvancement("scrap_bin", "Recycling!", "Craft the Scrap Bin");
+        this.addAdvancement("mortar", "crushcrushcrush", "Craft the Mortal & Pestle");
+        this.addAdvancement("seasoning_barrel", "Aquatic Chemistry M*gic", "Craft the Seasoning Barrel");
+        this.addAdvancement("drunk", "Get Drunk", "*hick*");
     }
 
     public void addFluid(FluidRegistryObjectGroup<?, ?> fluid, String name) {
@@ -151,6 +163,11 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
     public void addResource(String key, String name) {
         String prefix = "resource.titanium.type.";
         this.add(prefix + key, name);
+    }
+
+    public void addAdvancement(String key, String name, String desc) {
+        this.add("advancement.workshop." + key, name);
+        this.add("advancement.workshop." + key + ".desc", desc);
     }
 
     @Override
