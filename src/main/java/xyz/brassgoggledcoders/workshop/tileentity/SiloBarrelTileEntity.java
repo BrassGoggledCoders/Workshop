@@ -1,5 +1,6 @@
 package xyz.brassgoggledcoders.workshop.tileentity;
 
+import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.DyeColor;
@@ -15,15 +16,13 @@ import javax.annotation.Nonnull;
 
 public class SiloBarrelTileEntity extends BasicInventoryTileEntity<SiloBarrelTileEntity> {
 
-    protected final SidedInventoryComponent<SiloBarrelTileEntity> inventoryComponent;
+    protected final InventoryComponent<SiloBarrelTileEntity> inventoryComponent;
     protected int timer = 0;
     protected int interval = 20;
 
     public SiloBarrelTileEntity() {
         super(WorkshopBlocks.SILO_BARREL.getTileEntityType());
-        int pos = 0;
-        this.getMachineComponent().addInventory(this.inventoryComponent = (SidedInventoryComponent<SiloBarrelTileEntity>) new SidedInventoryComponent<SiloBarrelTileEntity>("inventory", 5, 20, 27, pos++)
-                .setColor(DyeColor.ORANGE)
+        this.getMachineComponent().addInventory(this.inventoryComponent = new InventoryComponent<SiloBarrelTileEntity>("inventory", 5, 20, 27)
                 .setRange(9, 3));
     }
 

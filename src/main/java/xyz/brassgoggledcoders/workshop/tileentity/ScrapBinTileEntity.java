@@ -3,9 +3,12 @@ package xyz.brassgoggledcoders.workshop.tileentity;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ComposterBlock;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopConfig;
@@ -47,10 +50,14 @@ public class ScrapBinTileEntity extends BasicInventoryTileEntity<ScrapBinTileEnt
                     //Add that value to the scrap counter
                     this.scrapValue.setProgress(Math.min(this.scrapValue.getProgress() + diff, this.scrapValue.getMaxProgress()));
                     this.scrapValue.tickBar();
+                    ComposterBlock.playEvent(this.getWorld(), this.getPos(), false);
                 }
             }
         });
-        this.scrapValue.setOnFinishWork(() -> ItemHandlerHelper.insertItem(scrapOutput, new ItemStack(WorkshopItems.SCRAP_BAG.get()), false));
+        this.scrapValue.setOnFinishWork(() -> {
+            ComposterBlock.playEvent(this.getWorld(), this.getPos(), true);
+            ItemHandlerHelper.insertItem(scrapOutput, new ItemStack(WorkshopItems.SCRAP_BAG.get()), false);
+        });
     }
 
     @Override

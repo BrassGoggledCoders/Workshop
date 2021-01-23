@@ -92,7 +92,6 @@ public abstract class BasicInventoryTileEntity<T extends BasicInventoryTileEntit
     @Nonnull
     public ITextComponent getDisplayName() {
         return getCustomName() != null ? getCustomName() : new TranslationTextComponent(this.getBlockState().getBlock().getTranslationKey());
-        //.applyTextStyle(TextFormatting.BLACK);
     }
 
     @Nullable
