@@ -14,8 +14,10 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
@@ -24,14 +26,34 @@ import xyz.brassgoggledcoders.workshop.tileentity.PressTileEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.stream.Stream;
 
 public class PressBlock extends GUITileBlock<PressTileEntity> {
 
+    public static final VoxelShape SHAPE = Stream.of(
+            Block.makeCuboidShape(3, 3, 13, 13, 15, 14),
+            Block.makeCuboidShape(3, 3, 2, 13, 15, 3),
+            Block.makeCuboidShape(13, 3, 3, 14, 15, 13),
+            Block.makeCuboidShape(2, 3, 3, 3, 15, 13),
+            Block.makeCuboidShape(3, 19, 3, 13, 21, 13),
+            Block.makeCuboidShape(3, 21, 3, 13, 28, 13),
+            Block.makeCuboidShape(13, 4, 0, 16, 28, 3),
+            Block.makeCuboidShape(13, 4, 13, 16, 28, 16),
+            Block.makeCuboidShape(0, 4, 0, 3, 28, 3),
+            Block.makeCuboidShape(0, 4, 13, 3, 28, 16),
+            Block.makeCuboidShape(0, 28, 0, 16, 32, 16),
+            Block.makeCuboidShape(0, 0, 0, 16, 4, 16)
+    ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR)).get();
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public PressBlock() {
         super(Properties.from(Blocks.CHEST).notSolid(), PressTileEntity::new);
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH));
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return SHAPE;
     }
 
     @Override
@@ -77,13 +99,6 @@ public class PressBlock extends GUITileBlock<PressTileEntity> {
                 this.handleTileEntity(worldIn, pos, PressTileEntity::trigger);
             }
         }
-    }
-
-    @Override
-    @Nonnull
-    @SuppressWarnings("deprecation")
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 32.0D, 16.0D);
     }
 
     @Nullable

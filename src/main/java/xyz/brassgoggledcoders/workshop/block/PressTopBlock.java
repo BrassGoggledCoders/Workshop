@@ -71,10 +71,8 @@ public class PressTopBlock extends Block {
     }
 
     @Override
-    @Nonnull
-    @SuppressWarnings("deprecation")
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return Block.makeCuboidShape(0.0D, -16.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+        return PressBlock.SHAPE.withOffset(0, -1, 0);
     }
 
     @Override
