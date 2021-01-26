@@ -44,7 +44,7 @@ public class HUDRender {
         Minecraft minecraft = Minecraft.getInstance();
         RayTraceResult rayTraceResult = minecraft.objectMouseOver;
 
-        if (!(minecraft.currentScreen instanceof ChatScreen) && rayTraceResult.getType() == RayTraceResult.Type.BLOCK) {
+        if (rayTraceResult != null && !(minecraft.currentScreen instanceof ChatScreen) && rayTraceResult.getType() == RayTraceResult.Type.BLOCK) {
 
             BlockPos blockPos = ((BlockRayTraceResult) rayTraceResult).getPos();
 
@@ -53,9 +53,9 @@ public class HUDRender {
                 return;
             }
 
-            if (minecraft.world.getTileEntity(blockPos) instanceof MortarTileEntity) {
+            if (minecraft.world != null && minecraft.world.isBlockLoaded(blockPos) && minecraft.world.getTileEntity(blockPos) instanceof MortarTileEntity) {
                 MortarTileEntity tileEntity = (MortarTileEntity) minecraft.world.getTileEntity(blockPos);
-                if (tileEntity.hasWorld()) {
+                if (tileEntity != null && tileEntity.getWorld() != null) {
                     ItemStackHandler itemStackHandler = tileEntity.getInputInventory();
 
                     List<ItemStack> itemStackList = InventoryUtil.getItemStackStream(itemStackHandler).collect(Collectors.toList());
