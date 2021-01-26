@@ -1,6 +1,5 @@
 package workshop;
 
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -27,10 +26,10 @@ import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopEffects;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -44,7 +43,7 @@ public class WorkshopAdvancementProvider extends AdvancementProvider {
     }
 
     @Override
-    public void act(DirectoryCache cache) throws IOException {
+    public void act(@Nonnull DirectoryCache cache) {
         Set<ResourceLocation> set = Sets.newHashSet();
         Consumer<Advancement> consumer = (adv) -> {
             if (!set.add(adv.getId())) {

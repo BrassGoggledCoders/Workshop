@@ -6,7 +6,6 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 
 import java.util.function.Supplier;
 

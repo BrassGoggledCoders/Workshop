@@ -3,8 +3,6 @@ package xyz.brassgoggledcoders.workshop.api.capabilities;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tileentity.BeehiveTileEntity;
-import net.minecraft.tileentity.FurnaceTileEntity;
-import org.apache.commons.lang3.ArrayUtils;
 
 public class BeehiveCollectorTarget implements CollectorTarget {
 

@@ -77,7 +77,11 @@ public class Workshop {
                 },
                 (buf, list) -> {
                     buf.writeInt(list.length);
-                    Arrays.asList(list).forEach(tileEntityType -> buf.writeResourceLocation(tileEntityType.getRegistryName()));
+                    Arrays.asList(list).forEach(tileEntityType -> {
+                        if(tileEntityType.getRegistryName() != null) {
+                            buf.writeResourceLocation(tileEntityType.getRegistryName());
+                        }
+                    });
                 },
                 element -> {
                     TileEntityType<?>[] types = new TileEntityType[element.getAsJsonArray().size()];
@@ -89,7 +93,7 @@ public class Workshop {
                     }
                     return types;
                 },(buf) -> {
-                    TileEntityType[] types = new TileEntityType[buf.readInt()];
+                    TileEntityType<?>[] types = new TileEntityType[buf.readInt()];
                     for(int i = 0; i < types.length; i++) {
                         types[i] = ForgeRegistries.TILE_ENTITIES.getValue(buf.readResourceLocation());
                     }
@@ -169,9 +173,7 @@ public class Workshop {
         //Just because you *can* doesn't mean you should...
         WorkshopAPI.addDrinkableFluidBehaviour(WorkshopFluids.ADHESIVE_OILS.getFluid(), new PotionDrinkableFluidBehaviour(new EffectInstance(Effects.SLOWNESS, 300)));
         WorkshopAPI.addDrinkableFluidBehaviour(WorkshopFluids.BRINE.getFluid(), new PotionDrinkableFluidBehaviour(new EffectInstance(Effects.NAUSEA, 100)));
-        WorkshopAPI.addDrinkableFluidBehaviour(WorkshopFluids.HELLBLOOD.getFluid(), (stack, worldIn, entityLiving) -> {
-            entityLiving.setFire(10);
-        });
+        WorkshopAPI.addDrinkableFluidBehaviour(WorkshopFluids.HELLBLOOD.getFluid(), (stack, worldIn, entityLiving) -> entityLiving.setFire(10));
         event.enqueueWork(() -> {
             ComposterBlock.registerCompostable(0.2F, WorkshopItems.ASH.get());
             ComposterBlock.registerCompostable(0.05F, WorkshopBlocks.TEA_PLANT.getItem());

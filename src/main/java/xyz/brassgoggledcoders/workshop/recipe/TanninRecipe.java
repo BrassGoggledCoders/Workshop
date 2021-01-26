@@ -37,7 +37,6 @@ public class TanninRecipe extends SpecialRecipe {
 
     @Override
     public ItemStack getCraftingResult(CraftingInventory inv) {
-        int i = 0;
         ItemStack itemstack = ItemStack.EMPTY;
 
         for (int j = 0; j < inv.getSizeInventory(); ++j) {

@@ -39,6 +39,8 @@ public class BellowsBlock extends Block {
     public static final BooleanProperty PRESSED = BlockStateProperties.POWERED;
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
+    private static final int tickRate = 5; //Quarter of a second, should be quick enough to make it smooth when jumped on
+
     public BellowsBlock() {
         super(Properties.from(Blocks.BROWN_WOOL));
         this.setDefaultState((this.stateContainer.getBaseState().with(PRESSED, false).with(FACING, Direction.NORTH)));
@@ -92,7 +94,7 @@ public class BellowsBlock extends Block {
         worldIn.setBlockState(pos, blockstate, 2);
         worldIn.notifyNeighborsOfStateChange(pos, this);
         worldIn.markBlockRangeForRenderUpdate(pos, state, blockstate);
-        worldIn.getPendingBlockTicks().scheduleTick(new BlockPos(pos), this, this.tickRate());
+        worldIn.getPendingBlockTicks().scheduleTick(new BlockPos(pos), this, tickRate);
     }
 
     @Override
@@ -117,10 +119,5 @@ public class BellowsBlock extends Block {
         if (state.get(PRESSED)) {
             this.updateState(worldIn, pos, state, false);
         }
-    }
-
-    //@Override
-    public int tickRate() {
-        return 5; //Quarter of a second, should be quick enough to make it smooth when jumped on
     }
 }

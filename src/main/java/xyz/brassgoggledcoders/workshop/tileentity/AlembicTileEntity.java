@@ -49,7 +49,7 @@ public class AlembicTileEntity extends BasicMachineTileEntity<AlembicTileEntity,
                 .setColor(DyeColor.YELLOW)
                 .setRange(1, residueSize)
                 .setInputFilter((stack, integer) -> false));
-        this.getMachineComponent().addInventory(this.coldItem = new SidedInventoryComponent<AlembicTileEntity>("coldItem", 79, 20, 1, pos++)
+        this.getMachineComponent().addInventory(this.coldItem = new SidedInventoryComponent<AlembicTileEntity>("coldItem", 79, 20, 1, pos)
                 .setColor(DyeColor.LIGHT_BLUE)
                 .setInputFilter((stack, integer) -> stack.getItem().isIn(WorkshopItemTags.COLD))
                 .setOnSlotChanged((stack, slot) -> {

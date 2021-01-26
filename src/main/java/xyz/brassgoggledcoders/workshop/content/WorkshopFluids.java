@@ -78,7 +78,7 @@ public class WorkshopFluids {
             () -> new LavaInteractableFluidBlock(glacial, AbstractBlock.Properties.from(Blocks.WATER), () -> WorkshopBlocks.SILT.getBlock().getDefaultState()) {
                 @Override
                 public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-                    entityIn.setMotionMultiplier(state, new Vector3d(0.25D, (double)0.05F, 0.25D));
+                    entityIn.setMotionMultiplier(state, new Vector3d(0.25D, 0.05F, 0.25D));
                 }
             }).register(FLUIDS, BLOCKS, ITEMS);
     public static final ForgeFlowingFluid.Properties GLACIAL_WATER_PROPERTIES = properties(GLACIAL_WATER, "3a5358");

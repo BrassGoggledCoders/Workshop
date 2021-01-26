@@ -1,6 +1,5 @@
 package xyz.brassgoggledcoders.workshop.block;
 
-import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -17,7 +16,6 @@ import net.minecraft.world.World;
 import xyz.brassgoggledcoders.workshop.tileentity.SeasoningBarrelTileEntity;
 
 import javax.annotation.Nonnull;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class SeasoningBarrelBlock extends GUITileBlock<SeasoningBarrelTileEntity> {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;

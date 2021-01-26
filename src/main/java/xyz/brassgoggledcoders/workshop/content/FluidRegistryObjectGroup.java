@@ -40,6 +40,7 @@ public class FluidRegistryObjectGroup<F extends FlowingFluid, FF extends Fluid> 
         this.blockCreator = blockCreator; //TODO
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public FluidRegistryObjectGroup<F, FF> register(DeferredRegister<Fluid> fluidRegistry, DeferredRegister<Block> blockRegistry) {
         fluid = fluidRegistry.register(name, fluidCreator);
         flowingFluid = fluidRegistry.register(name + "_flowing", flowingFluidCreator);

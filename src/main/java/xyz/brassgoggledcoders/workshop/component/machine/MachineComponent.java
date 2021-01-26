@@ -16,7 +16,6 @@ import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import com.hrznstudio.titanium.component.sideness.IFacingComponent;
 import com.hrznstudio.titanium.container.addon.IContainerAddon;
 import com.hrznstudio.titanium.container.addon.IContainerAddonProvider;
-import com.hrznstudio.titanium.network.CompoundSerializableDataHandler;
 import com.hrznstudio.titanium.util.FacingUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -79,7 +78,7 @@ public class MachineComponent<T extends IMachineHarness<T>> implements IScreenAd
 
     public void addProgressBar(ProgressBarComponent<T> progressBarComponent) {
         if (this.multiProgressBarHandler == null) {
-            this.multiProgressBarHandler = new MultiProgressBarHandler<T>();
+            this.multiProgressBarHandler = new MultiProgressBarHandler<>();
         }
         this.multiProgressBarHandler.add(progressBarComponent.setComponentHarness(componentHarness));
     }

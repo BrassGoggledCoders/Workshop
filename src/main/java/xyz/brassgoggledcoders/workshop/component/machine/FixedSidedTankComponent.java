@@ -1,9 +1,7 @@
 package xyz.brassgoggledcoders.workshop.component.machine;
 
 import com.hrznstudio.titanium.component.IComponentHarness;
-import com.hrznstudio.titanium.component.fluid.FluidTankComponent;
 import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
-import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.util.FacingUtil;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.fluids.FluidStack;

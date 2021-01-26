@@ -8,7 +8,6 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import vazkii.patchouli.common.base.Patchouli;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.compat.patchouli.PageTypes;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;

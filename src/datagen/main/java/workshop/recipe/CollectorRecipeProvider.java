@@ -127,7 +127,7 @@ public class CollectorRecipeProvider extends TitaniumSerializableProvider {
         public CollectorRecipe build() {
             validate();
             return new CollectorRecipe(name, input, processingTime,
-                    outputs.toArray(new RangedItemStack[outputs.size()]), targetTileTypes.toArray(new TileEntityType[targetTileTypes.size()]));
+                    outputs.toArray(new RangedItemStack[0]), targetTileTypes.toArray(new TileEntityType[0]));
         }
     }
 

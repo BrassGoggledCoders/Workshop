@@ -4,7 +4,6 @@ import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.tileentity.TileEntityType;

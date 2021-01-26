@@ -3,7 +3,6 @@ package xyz.brassgoggledcoders.workshop.tileentity;
 import com.hrznstudio.titanium.component.fluid.FluidTankComponent;
 import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
-import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import com.hrznstudio.titanium.util.FacingUtil;
 import net.minecraft.block.BlockState;
@@ -29,7 +28,6 @@ public abstract class AbstractBarrelTileEntity<T extends BasicMachineTileEntity<
 
     public AbstractBarrelTileEntity(TileEntityType<T> tileEntityType, ProgressBarComponent<T> progressBar) {
         super(tileEntityType, progressBar);
-        int pos = 0;
         this.getMachineComponent().addInventory(this.inputInventory = new FixedSidedInventoryComponent<T>(
                 InventoryUtil.ITEM_INPUT, 29, 42, 1, FixedSidedInventoryComponent.NOT_BOTTOM)
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));

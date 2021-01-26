@@ -100,6 +100,9 @@ public class MortarRecipeProvider extends TitaniumSerializableProvider {
         }
 
         public void validate() {
+            if (this.time <= 0) {
+                throw new IllegalArgumentException("Processing time must be more than zero");
+            }
         }
 
         public MortarRecipe build() {

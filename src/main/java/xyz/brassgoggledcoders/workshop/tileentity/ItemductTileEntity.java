@@ -47,11 +47,6 @@ public class ItemductTileEntity extends BasicInventoryTileEntity<ItemductTileEnt
     }
 
     @Override
-    public void remove() {
-        super.remove();
-    }
-
-    @Override
     public void tick() {
         super.tick();
         if (this.getWorld() != null && !this.getWorld().isRemote) {

@@ -2,7 +2,6 @@ package xyz.brassgoggledcoders.workshop.api.capabilities;
 
 
 import net.minecraft.tileentity.BeehiveTileEntity;
-import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;

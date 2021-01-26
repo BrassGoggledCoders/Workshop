@@ -83,8 +83,8 @@ public class HUDRender {
                         minecraft.getItemRenderer().renderItemAndEffectIntoGUI(output, x, y);
                         minecraft.getItemRenderer().renderItemOverlays(minecraft.fontRenderer, output, x, y);
 
-                        x = (int) (radius + minecraft.getMainWindow().getScaledWidth() / 2) - 8 + 30;
-                        y = minecraft.getMainWindow().getScaledHeight() / 2 - 4;
+                        //x = (int) (radius + minecraft.getMainWindow().getScaledWidth() / 2) - 8 + 30;
+                        //y = minecraft.getMainWindow().getScaledHeight() / 2 - 4;
 
                         //TODO render progress
                         // Arrow
