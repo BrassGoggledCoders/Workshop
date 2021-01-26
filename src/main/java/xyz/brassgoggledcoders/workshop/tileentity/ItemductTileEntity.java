@@ -20,7 +20,7 @@ public class ItemductTileEntity extends BasicInventoryTileEntity<ItemductTileEnt
 
     protected final InventoryComponent<ItemductTileEntity> inv;
     protected int timer = 0;
-    protected int interval = 20;
+    protected final int interval = 20;
     private LazyOptional<IItemHandler> capability;
 
     public ItemductTileEntity() {
@@ -34,7 +34,7 @@ public class ItemductTileEntity extends BasicInventoryTileEntity<ItemductTileEnt
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
+    public void read(@Nonnull BlockState state, CompoundNBT compound) {
         inv.deserializeNBT(compound.getCompound("inv"));
         super.read(state, compound);
     }

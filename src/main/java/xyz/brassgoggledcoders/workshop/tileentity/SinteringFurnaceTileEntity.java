@@ -1,19 +1,21 @@
 package xyz.brassgoggledcoders.workshop.tileentity;
 
 
-import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
+import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import com.hrznstudio.titanium.util.FacingUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.ItemHandlerHelper;
-import xyz.brassgoggledcoders.workshop.tag.WorkshopBlockTags;
 import xyz.brassgoggledcoders.workshop.block.SinteringFurnaceBlock;
+import xyz.brassgoggledcoders.workshop.component.machine.FixedSidedInventoryComponent;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.SinteringFurnaceRecipe;
+import xyz.brassgoggledcoders.workshop.tag.WorkshopBlockTags;
 import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
 import javax.annotation.Nonnull;
@@ -21,29 +23,24 @@ import javax.annotation.Nonnull;
 public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<SinteringFurnaceTileEntity, SinteringFurnaceRecipe> {
 
     public static final ResourceLocation ID = new ResourceLocation(WorkshopRecipes.SINTERING_FURNACE_SERIALIZER.get().getRecipeType().toString());
-    private final SidedInventoryComponent<SinteringFurnaceTileEntity> powderInventory;
-    private final SidedInventoryComponent<SinteringFurnaceTileEntity> inputInventory;
-    private final SidedInventoryComponent<SinteringFurnaceTileEntity> outputInventory;
+    private final InventoryComponent<SinteringFurnaceTileEntity> powderInventory;
+    private final InventoryComponent<SinteringFurnaceTileEntity> inputInventory;
+    private final InventoryComponent<SinteringFurnaceTileEntity> outputInventory;
     protected int timer = 0;
-    protected int interval = 20;
+    protected final int interval = 20;
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
     public SinteringFurnaceTileEntity() {
         super(WorkshopBlocks.SINTERING_FURNACE.getTileEntityType(),
                 new ProgressBarComponent<SinteringFurnaceTileEntity>(76, 42, 100)
                         .setBarDirection(ProgressBarComponent.BarDirection.ARROW_RIGHT));
-        int pos = 0;
         //TODO Prevent insertion by hand
-        this.getMachineComponent().addInventory(this.powderInventory = (SidedInventoryComponent) new SidedInventoryComponent<>("powderInventory", 70, 19, 1, pos++)
-                .setColor(DyeColor.ORANGE)
+        this.getMachineComponent().addInventory(this.powderInventory = new FixedSidedInventoryComponent<SinteringFurnaceTileEntity>("powderInventory", 70, 19, 1, FacingUtil.Sideness.TOP)
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
-        this.getMachineComponent().addInventory(this.inputInventory = (SidedInventoryComponent) new SidedInventoryComponent<>(InventoryUtil.ITEM_INPUT, 34, 42, 1, pos++)
-                .setColor(InventoryUtil.ITEM_INPUT_COLOR)
+        this.getMachineComponent().addInventory(this.inputInventory = new FixedSidedInventoryComponent<SinteringFurnaceTileEntity>(InventoryUtil.ITEM_INPUT, 34, 42, 1,
+                FacingUtil.Sideness.BACK, FacingUtil.Sideness.FRONT, FacingUtil.Sideness.LEFT, FacingUtil.Sideness.RIGHT)
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
-        this.getMachineComponent().addInventory(this.outputInventory = (SidedInventoryComponent) new SidedInventoryComponent<>(InventoryUtil.ITEM_OUTPUT, 120, 42, 1, pos++)
-                .setColor(InventoryUtil.ITEM_OUTPUT_COLOR));
+        this.getMachineComponent().addInventory(this.outputInventory = new FixedSidedInventoryComponent<>(InventoryUtil.ITEM_OUTPUT, 120, 42, 1, FacingUtil.Sideness.BOTTOM));
         this.getMachineComponent().getPrimaryBar().setCanIncrease((tile) -> hasHeat() && tile.hasInputs() && tile.getMachineComponent().getCurrentRecipe() != null);
-        this.powderInventory.disableFacingAddon();
     }
 
     //FIXME Efficiency. Cache state checks
@@ -53,8 +50,8 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
             timer++;
             if (timer > interval) {
                 timer = 0;
-                if (this.getBlockState().get(SinteringFurnaceBlock.LIT) != this.hasHeat()) {
-                    this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(SinteringFurnaceBlock.LIT, hasHeat()), 3);
+                if (this.hasWorld() && this.getBlockState().get(SinteringFurnaceBlock.LIT) != this.hasHeat()) {
+                    this.getWorld().setBlockState(this.pos, this.getBlockState().with(SinteringFurnaceBlock.LIT, hasHeat()), 3);
                     this.markDirty();
                     this.markComponentDirty();
                 }
@@ -64,7 +61,7 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
+    public void read(@Nonnull BlockState state, CompoundNBT compound) {
         powderInventory.deserializeNBT(compound.getCompound("powderInventory"));
         inputInventory.deserializeNBT(compound.getCompound("targetInputInventory"));
         outputInventory.deserializeNBT(compound.getCompound("outputInventory"));
@@ -90,15 +87,15 @@ public class SinteringFurnaceTileEntity extends BasicMachineTileEntity<Sintering
         return this;
     }
 
-    public SidedInventoryComponent<SinteringFurnaceTileEntity> getOutputInventory() {
+    public InventoryComponent<SinteringFurnaceTileEntity> getOutputInventory() {
         return outputInventory;
     }
 
-    public SidedInventoryComponent<SinteringFurnaceTileEntity> getPowderInventory() {
+    public InventoryComponent<SinteringFurnaceTileEntity> getPowderInventory() {
         return powderInventory;
     }
 
-    public SidedInventoryComponent<SinteringFurnaceTileEntity> getInputInventory() {
+    public InventoryComponent<SinteringFurnaceTileEntity> getInputInventory() {
         return inputInventory;
     }
 

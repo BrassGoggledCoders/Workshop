@@ -1,7 +1,9 @@
 package xyz.brassgoggledcoders.workshop.tileentity;
 
+import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import com.hrznstudio.titanium.util.FacingUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.item.DyeColor;
@@ -10,28 +12,27 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraftforge.items.ItemHandlerHelper;
+import xyz.brassgoggledcoders.workshop.component.machine.FixedSidedInventoryComponent;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopConfig;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 
 public class ScrapBinTileEntity extends BasicInventoryTileEntity<ScrapBinTileEntity> {
-    public final SidedInventoryComponent<ScrapBinTileEntity> inventoryComponent;
-    public final SidedInventoryComponent<ScrapBinTileEntity> scrapOutput;
+    public final InventoryComponent<ScrapBinTileEntity> inventoryComponent;
+    public final InventoryComponent<ScrapBinTileEntity> scrapOutput;
     public final ProgressBarComponent<ScrapBinTileEntity> scrapValue;
 
     public ScrapBinTileEntity() {
         super(WorkshopBlocks.SCRAP_BIN.getTileEntityType());
-        int pos = 0;
-        this.getMachineComponent().addInventory(this.inventoryComponent = (SidedInventoryComponent<ScrapBinTileEntity>) new SidedInventoryComponent<ScrapBinTileEntity>("inventory", 8, 16, 24, pos++)
-                .setColor(DyeColor.WHITE)
+        this.getMachineComponent().addInventory(this.inventoryComponent = new FixedSidedInventoryComponent<ScrapBinTileEntity>("inventory", 8, 16, 24, FixedSidedInventoryComponent.NOT_BOTTOM)
                 .setRange(8, 3));
-        this.getMachineComponent().addInventory(this.scrapOutput = new SidedInventoryComponent<ScrapBinTileEntity>("output", 150, 75, 1, pos++).setColor(DyeColor.BLACK));
+        this.getMachineComponent().addInventory(this.scrapOutput = new FixedSidedInventoryComponent<>("output", 150, 75, 1, FacingUtil.Sideness.BOTTOM));
         this.getMachineComponent().addProgressBar(this.scrapValue = new ProgressBarComponent<>(155, 8, WorkshopConfig.COMMON.itemsRequiredPerScrapBag.get()));
-
         this.inventoryComponent.setOnSlotChanged((stack, slotNum) -> {
-            if (ItemHandlerHelper.insertItem(scrapOutput, new ItemStack(WorkshopItems.SCRAP_BAG.get()), true).isEmpty()) {
+            if (this.hasWorld() && ItemHandlerHelper.insertItem(scrapOutput, new ItemStack(WorkshopItems.SCRAP_BAG.get()), true).isEmpty()) {
                 //TODO Caching
                 int count = stack.getCount();
                 for (int i = 0; i < this.inventoryComponent.getSlots(); i++) {
@@ -50,13 +51,15 @@ public class ScrapBinTileEntity extends BasicInventoryTileEntity<ScrapBinTileEnt
                     //Add that value to the scrap counter
                     this.scrapValue.setProgress(Math.min(this.scrapValue.getProgress() + diff, this.scrapValue.getMaxProgress()));
                     this.scrapValue.tickBar();
-                    ComposterBlock.playEvent(this.getWorld(), this.getPos(), false);
+                    ComposterBlock.playEvent(Objects.requireNonNull(this.getWorld()), this.getPos(), false);
                 }
             }
         });
         this.scrapValue.setOnFinishWork(() -> {
-            ComposterBlock.playEvent(this.getWorld(), this.getPos(), true);
-            ItemHandlerHelper.insertItem(scrapOutput, new ItemStack(WorkshopItems.SCRAP_BAG.get()), false);
+            if(this.hasWorld()) {
+                ComposterBlock.playEvent(Objects.requireNonNull(this.getWorld()), this.getPos(), true);
+                ItemHandlerHelper.insertItem(scrapOutput, new ItemStack(WorkshopItems.SCRAP_BAG.get()), false);
+            }
         });
     }
 
@@ -66,7 +69,7 @@ public class ScrapBinTileEntity extends BasicInventoryTileEntity<ScrapBinTileEnt
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
+    public void read(@Nonnull BlockState state, CompoundNBT compound) {
         inventoryComponent.deserializeNBT(compound.getCompound("inventory"));
         scrapOutput.deserializeNBT(compound.getCompound("scrap"));
         scrapValue.deserializeNBT(compound.getCompound("scrapValue"));

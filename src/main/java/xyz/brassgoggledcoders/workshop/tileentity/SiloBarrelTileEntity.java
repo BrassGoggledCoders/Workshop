@@ -18,7 +18,7 @@ public class SiloBarrelTileEntity extends BasicInventoryTileEntity<SiloBarrelTil
 
     protected final InventoryComponent<SiloBarrelTileEntity> inventoryComponent;
     protected int timer = 0;
-    protected int interval = 20;
+    protected final int interval = 20;
 
     public SiloBarrelTileEntity() {
         super(WorkshopBlocks.SILO_BARREL.getTileEntityType());
@@ -32,7 +32,7 @@ public class SiloBarrelTileEntity extends BasicInventoryTileEntity<SiloBarrelTil
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
+    public void read(@Nonnull BlockState state, CompoundNBT compound) {
         inventoryComponent.deserializeNBT(compound.getCompound("capability"));
         super.read(state, compound);
     }

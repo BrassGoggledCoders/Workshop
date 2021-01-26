@@ -5,6 +5,7 @@ import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import com.hrznstudio.titanium.util.FacingUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.crafting.IRecipe;
@@ -17,6 +18,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import xyz.brassgoggledcoders.workshop.Workshop;
+import xyz.brassgoggledcoders.workshop.component.machine.FixedSidedInventoryComponent;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.PressRecipe;
@@ -37,13 +39,10 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
     public PressTileEntity() {
         super(WorkshopBlocks.PRESS.getTileEntityType(), new ProgressBarComponent<PressTileEntity>(70, 40, 120).
                 setBarDirection(ProgressBarComponent.BarDirection.ARROW_RIGHT));
-        int pos = 0;
-        this.getMachineComponent().addInventory(this.inputInventory = new SidedInventoryComponent<PressTileEntity>(InventoryUtil.ITEM_INPUT, 45, 50, 1, pos++)
-                .setColor(InventoryUtil.ITEM_INPUT_COLOR)
+        this.getMachineComponent().addInventory(this.inputInventory = new InventoryComponent<PressTileEntity>(InventoryUtil.ITEM_INPUT, 45, 50, 1)
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
-        this.getMachineComponent().addTank(this.outputFluid = new SidedFluidTankComponent<PressTileEntity>(InventoryUtil.FLUID_OUTPUT, 4000, 100, 20, pos++).
-                setColor(InventoryUtil.FLUID_OUTPUT_COLOR).
-                setTankAction(SidedFluidTankComponent.Action.DRAIN));
+        this.getMachineComponent().addTank(this.outputFluid = new FluidTankComponent<PressTileEntity>(InventoryUtil.FLUID_OUTPUT, 4000, 100, 20)
+                .setTankAction(SidedFluidTankComponent.Action.DRAIN));
         this.getMachineComponent().getPrimaryBar().setCanIncrease(this::canIncrease);
     }
 
@@ -52,7 +51,7 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
+    public void read(@Nonnull BlockState state, CompoundNBT compound) {
         inputInventory.deserializeNBT(compound.getCompound("input"));
         outputFluid.readFromNBT(compound.getCompound("output"));
         super.read(state, compound);
@@ -106,12 +105,14 @@ public class PressTileEntity extends BasicMachineTileEntity<PressTileEntity, Pre
 
     @Override
     public void handleComplete(PressRecipe currentRecipe) {
-        this.getWorld().playSound(null, this.getPos(), SoundEvents.BLOCK_PISTON_CONTRACT, SoundCategory.BLOCKS, 0.5F, this.getWorld().rand.nextFloat() * 0.1F + 0.9F);
-        inputInventory.getStackInSlot(0).shrink(1);
-        if (currentRecipe.fluidOut != null && !currentRecipe.fluidOut.isEmpty()) {
-            outputFluid.fillForced(currentRecipe.fluidOut.copy(), IFluidHandler.FluidAction.EXECUTE);
+        if(this.hasWorld()) {
+            this.getWorld().playSound(null, this.getPos(), SoundEvents.BLOCK_PISTON_CONTRACT, SoundCategory.BLOCKS, 0.5F, this.getWorld().rand.nextFloat() * 0.1F + 0.9F);
+            inputInventory.getStackInSlot(0).shrink(1);
+            if (currentRecipe.fluidOut != null && !currentRecipe.fluidOut.isEmpty()) {
+                outputFluid.fillForced(currentRecipe.fluidOut.copy(), IFluidHandler.FluidAction.EXECUTE);
+            }
+            this.triggered = false;
         }
-        this.triggered = false;
     }
 
     private boolean canIncrease(PressTileEntity tile) {

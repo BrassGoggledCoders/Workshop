@@ -5,6 +5,8 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -17,7 +19,8 @@ public class ObsidianPlateTileEntity extends TileEntity {
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    @Nonnull
+    public CompoundNBT write(@Nonnull CompoundNBT compound) {
         super.write(compound);
         int i = 0;
         playerNames.forEach(name -> compound.putUniqueId("name" + i, name));
@@ -26,6 +29,7 @@ public class ObsidianPlateTileEntity extends TileEntity {
     }
 
     @Override
+    @ParametersAreNonnullByDefault
     public void read(BlockState state, CompoundNBT compound) {
         super.read(state, compound);
         for (int i = 0; i < compound.getInt("size"); i++) {

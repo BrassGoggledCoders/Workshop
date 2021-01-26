@@ -1,8 +1,8 @@
 package xyz.brassgoggledcoders.workshop.tileentity;
 
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
-import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import com.hrznstudio.titanium.util.FacingUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -13,6 +13,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.items.ItemHandlerHelper;
+import xyz.brassgoggledcoders.workshop.component.machine.FixedSidedInventoryComponent;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.SpinningWheelRecipe;
@@ -32,14 +33,12 @@ public class SpinningWheelTileEntity extends BasicMachineTileEntity<SpinningWhee
 
     public SpinningWheelTileEntity() {
         super(WorkshopBlocks.SPINNING_WHEEL.getTileEntityType(), new ProgressBarComponent<>(75, 25, 100));
-        int pos = 0;
-        this.getMachineComponent().addInventory(this.input = new SidedInventoryComponent<SpinningWheelTileEntity>(
-                InventoryUtil.ITEM_INPUT, 34, 25, 3, pos++)
-                .setColor(InventoryUtil.ITEM_INPUT_COLOR)
+        this.getMachineComponent().addInventory(this.input = new FixedSidedInventoryComponent<SpinningWheelTileEntity>(
+                InventoryUtil.ITEM_INPUT, 34, 25, 3, FixedSidedInventoryComponent.NOT_BOTTOM)
                 .setRange(1, 3)
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
-        this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<SpinningWheelTileEntity>(
-                InventoryUtil.ITEM_OUTPUT, 102, 44, 1, pos++)
+        this.getMachineComponent().addInventory(this.output = new FixedSidedInventoryComponent<SpinningWheelTileEntity>(
+                InventoryUtil.ITEM_OUTPUT, 102, 44, 1, FacingUtil.Sideness.BOTTOM)
                 .setColor(InventoryUtil.ITEM_OUTPUT_COLOR)
                 .setInputFilter((stack, integer) -> false));
         this.getMachineComponent().getPrimaryBar().setOnTickWork(() -> {
@@ -68,7 +67,7 @@ public class SpinningWheelTileEntity extends BasicMachineTileEntity<SpinningWhee
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
+    public void read(@Nonnull BlockState state, CompoundNBT compound) {
         input.deserializeNBT(compound.getCompound("inputInventory"));
         output.deserializeNBT(compound.getCompound("outputInventory"));
         workingTime = compound.getInt("workingTime");

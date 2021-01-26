@@ -5,6 +5,7 @@ import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import com.hrznstudio.titanium.util.FacingUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.crafting.IRecipe;
@@ -14,6 +15,8 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
+import xyz.brassgoggledcoders.workshop.component.machine.FixedSidedInventoryComponent;
+import xyz.brassgoggledcoders.workshop.component.machine.FixedSidedTankComponent;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.recipe.MortarRecipe;
@@ -33,25 +36,21 @@ public class MortarTileEntity extends BasicMachineTileEntity<MortarTileEntity, M
 
     public MortarTileEntity() {
         super(WorkshopBlocks.MORTAR.getTileEntityType(), new ProgressBarComponent<MortarTileEntity>(76, 42, 100).setBarDirection(ProgressBarComponent.BarDirection.ARROW_RIGHT));
-        int pos = 0;
-        this.getMachineComponent().addInventory(this.input = new SidedInventoryComponent<MortarTileEntity>(InventoryUtil.ITEM_INPUT, 10, 25, inputSize, pos++)
-                .setColor(InventoryUtil.ITEM_INPUT_COLOR)
+        this.getMachineComponent().addInventory(this.input = new FixedSidedInventoryComponent<MortarTileEntity>(InventoryUtil.ITEM_INPUT, 10, 25, inputSize, FixedSidedInventoryComponent.NOT_BOTTOM)
                 .setRange(2, 3)
                 .setOnSlotChanged((stack, integer) -> this.getMachineComponent().forceRecipeRecheck()));
-        this.getMachineComponent().addTank(this.fluidInput = new SidedFluidTankComponent<MortarTileEntity>(
-                InventoryUtil.FLUID_INPUT, tankSize, 50, 20, pos++)
-                .setColor(InventoryUtil.FLUID_INPUT_COLOR)
+        this.getMachineComponent().addTank(this.fluidInput = new FixedSidedTankComponent<MortarTileEntity>(
+                InventoryUtil.FLUID_INPUT, tankSize, 50, 20, FixedSidedInventoryComponent.NOT_BOTTOM)
                 .setTankAction(SidedFluidTankComponent.Action.FILL)
                 .setOnContentChange(this.getMachineComponent()::forceRecipeRecheck));
-        this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<MortarTileEntity>(InventoryUtil.ITEM_OUTPUT, 102, 44, 1, pos++)
-                .setColor(InventoryUtil.ITEM_OUTPUT_COLOR)
+        this.getMachineComponent().addInventory(this.output = new FixedSidedInventoryComponent<MortarTileEntity>(InventoryUtil.ITEM_OUTPUT, 102, 44, 1, FacingUtil.Sideness.BOTTOM)
                 .setInputFilter((stack, integer) -> false));
         this.getMachineComponent().getPrimaryBar().setCanIncrease(tileEntity -> false);
         this.getMachineComponent().getPrimaryBar().setCanReset(tileEntity -> false);
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
+    public void read(@Nonnull BlockState state, CompoundNBT compound) {
         input.deserializeNBT(compound.getCompound("input"));
         fluidInput.readFromNBT(compound.getCompound("inputFluidTank"));
         output.deserializeNBT(compound.getCompound("output"));

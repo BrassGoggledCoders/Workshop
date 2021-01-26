@@ -2,14 +2,12 @@ package workshop.language;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.DyeColor;
-import net.minecraftforge.common.data.LanguageProvider;
-import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 
 public class WorkshopGBLanguageProvider extends WorkshopUSLanguageProvider {
     public WorkshopGBLanguageProvider(DataGenerator gen) {
-        super(gen, Workshop.MOD_ID, "en_gb");
+        super(gen, "en_gb");
     }
 
     @Override

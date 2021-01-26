@@ -4,11 +4,11 @@ import com.hrznstudio.titanium.component.fluid.FluidTankComponent;
 import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import net.minecraft.block.BlockState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.DyeColor;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidUtil;
+import xyz.brassgoggledcoders.workshop.component.machine.FixedSidedTankComponent;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 
 import javax.annotation.Nonnull;
@@ -18,16 +18,14 @@ public class FluidFunnelTileEntity extends BasicInventoryTileEntity<FluidFunnelT
     public static final int tankCapacity = 4000;//mB;
     protected final FluidTankComponent<FluidFunnelTileEntity> tank;
     protected int timer = 0;
-    protected int interval = 20;
+    protected final int interval = 20;
     private final int fluidMovedPer = FluidAttributes.BUCKET_VOLUME / 4;
 
     public FluidFunnelTileEntity() {
         super(WorkshopBlocks.FLUID_FUNNEL.getTileEntityType());
-        int pos = 0;
-        this.getMachineComponent().addTank(this.tank = (FluidTankComponent<FluidFunnelTileEntity>) new SidedFluidTankComponent<>("tank", tankCapacity, 80, 20, pos++)
-                .setColor(DyeColor.MAGENTA)
-                .setTankAction(SidedFluidTankComponent.Action.BOTH)
-                .setValidator(fluidStack -> fluidStack.getFluid().getFluid().getAttributes().getTemperature() < Fluids.LAVA.getAttributes().getTemperature()));
+        this.getMachineComponent().addTank(this.tank = new FixedSidedTankComponent<FluidFunnelTileEntity>("tank", tankCapacity, 80, 20)
+                .setValidator(fluidStack -> fluidStack.getFluid().getFluid().getAttributes().getTemperature() < Fluids.LAVA.getAttributes().getTemperature())
+                .setTankAction(SidedFluidTankComponent.Action.BOTH));
     }
 
     @Override
@@ -36,7 +34,7 @@ public class FluidFunnelTileEntity extends BasicInventoryTileEntity<FluidFunnelT
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
+    public void read(@Nonnull BlockState state, CompoundNBT compound) {
         tank.readFromNBT(compound.getCompound("capability"));
         super.read(state, compound);
     }

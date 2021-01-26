@@ -12,6 +12,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidUtil;
+import xyz.brassgoggledcoders.workshop.component.machine.FixedSidedInventoryComponent;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
@@ -27,21 +28,17 @@ public class SealedBarrelTileEntity extends BasicInventoryTileEntity<SealedBarre
     @SuppressWarnings("unchecked")
     public SealedBarrelTileEntity() {
         super(WorkshopBlocks.SEALED_BARREL.getTileEntityType());
-        int pos = 0;
-        this.getMachineComponent().addTank(this.tank = (FluidTankComponent<SealedBarrelTileEntity>) new SidedFluidTankComponent<>("tank", tankCapacity, 80, 20, pos++)
-                .setColor(DyeColor.MAGENTA)
+        this.getMachineComponent().addTank(this.tank = (FluidTankComponent<SealedBarrelTileEntity>) new FluidTankComponent<>("tank", tankCapacity, 80, 20)
                 .setTankAction(SidedFluidTankComponent.Action.BOTH)
                 .setValidator(fluidStack -> fluidStack.getFluid().getFluid().getAttributes().getTemperature() < Fluids.LAVA.getAttributes().getTemperature()));
-        this.getMachineComponent().addInventory(this.drainingInventory = new SidedInventoryComponent<SealedBarrelTileEntity>("draining", 50, 50, 1, pos++)
-                .setColor(InventoryUtil.FLUID_INPUT_COLOR)
+        this.getMachineComponent().addInventory(this.drainingInventory = new InventoryComponent<SealedBarrelTileEntity>("draining", 50, 50, 1)
                 .setInputFilter((stack, integer) -> FluidUtil.getFluidHandler(stack).isPresent()));
-        this.getMachineComponent().addInventory(this.fillingInventory = new SidedInventoryComponent<SealedBarrelTileEntity>("filling", 120, 50, 1, pos++)
-                .setColor(InventoryUtil.FLUID_OUTPUT_COLOR)
+        this.getMachineComponent().addInventory(this.fillingInventory = new InventoryComponent<SealedBarrelTileEntity>("filling", 120, 50, 1)
                 .setInputFilter((stack, slot) -> FluidUtil.getFluidHandler(stack).isPresent()));
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
+    public void read(@Nonnull BlockState state, CompoundNBT compound) {
         tank.readFromNBT(compound.getCompound("capability"));
         drainingInventory.deserializeNBT(compound.getCompound("draining"));
         fillingInventory.deserializeNBT(compound.getCompound("filling"));

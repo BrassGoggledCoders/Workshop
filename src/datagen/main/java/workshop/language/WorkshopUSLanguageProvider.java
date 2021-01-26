@@ -23,8 +23,8 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         super(gen, Workshop.MOD_ID, "en_us");
     }
 
-    protected WorkshopUSLanguageProvider(DataGenerator gen, String modid, String locale) {
-        super(gen, modid, locale);
+    protected WorkshopUSLanguageProvider(DataGenerator gen, String locale) {
+        super(gen, Workshop.MOD_ID, locale);
     }
 
     @Override

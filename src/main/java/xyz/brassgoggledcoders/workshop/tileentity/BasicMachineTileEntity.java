@@ -23,10 +23,9 @@ public abstract class BasicMachineTileEntity<T extends BasicMachineTileEntity<T,
         this.createMachineComponent(new RecipeMachineComponent<>(this.getSelf(), this::getPos, progressBar));
     }
 
-    //TODO
     @Override
     public RecipeMachineComponent<T, U> getMachineComponent() {
-        return (RecipeMachineComponent) super.getMachineComponent();
+        return (RecipeMachineComponent<T, U>) super.getMachineComponent();
     }
 
     @Override

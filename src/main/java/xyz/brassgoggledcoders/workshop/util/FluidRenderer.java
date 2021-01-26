@@ -29,7 +29,7 @@ import static xyz.brassgoggledcoders.workshop.Workshop.MOD_ID;
 @OnlyIn(value = Dist.CLIENT)
 public class FluidRenderer {
 
-    protected static Minecraft mc = Minecraft.getInstance();
+    protected static final Minecraft mc = Minecraft.getInstance();
 
     /**
      * Renders a fluid block with offset from the matrices with size w, h, d inside the block local coordinates, so from 0-1

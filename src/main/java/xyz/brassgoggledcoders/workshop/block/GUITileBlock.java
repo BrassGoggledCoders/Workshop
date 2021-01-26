@@ -31,9 +31,10 @@ public class GUITileBlock<T extends TileEntity & GUITile> extends TileBlock<T> {
         return result.get();
     }
 
+    @SuppressWarnings("unchecked")
     protected void handleTileEntity(IWorld world, BlockPos pos, Consumer<T> tileEntityConsumer) {
         Optional.ofNullable(world.getTileEntity(pos))
-                //Is there a cleaner way to do this?
+                //TODO Is there a cleaner way to do this?
                 .filter(tileEntity -> tileEntity.getType().equals(this.tileSupplier.get().getType()))
                 .map(tileEntity -> (T) tileEntity)
                 .ifPresent(tileEntityConsumer);

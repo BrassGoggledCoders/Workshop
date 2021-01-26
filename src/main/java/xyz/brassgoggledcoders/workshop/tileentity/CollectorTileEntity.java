@@ -3,6 +3,7 @@ package xyz.brassgoggledcoders.workshop.tileentity;
 import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
+import com.hrznstudio.titanium.util.FacingUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
@@ -15,6 +16,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.api.capabilities.CollectorTarget;
 import xyz.brassgoggledcoders.workshop.block.CollectorBlock;
+import xyz.brassgoggledcoders.workshop.component.machine.FixedSidedInventoryComponent;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopCapabilities;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
@@ -30,7 +32,7 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
     private final InventoryComponent<CollectorTileEntity> output;
     public static final int outputSize = 5;
     protected int timer = 0;
-    protected int interval = 20;
+    protected final int interval = 20;
 
     private TileEntityType<?> type;
     private LazyOptional<CollectorTarget> capability;
@@ -38,9 +40,7 @@ public class CollectorTileEntity extends BasicMachineTileEntity<CollectorTileEnt
     public CollectorTileEntity() {
         super(WorkshopBlocks.COLLECTOR.getTileEntityType(),
                 new ProgressBarComponent<CollectorTileEntity>(82, 15, 100).setBarDirection(ProgressBarComponent.BarDirection.VERTICAL_UP));
-        int pos = 0;
-        this.getMachineComponent().addInventory(this.output = new SidedInventoryComponent<CollectorTileEntity>(InventoryUtil.ITEM_OUTPUT, 44, 79, outputSize, pos++)
-                .setColor(InventoryUtil.ITEM_OUTPUT_COLOR)
+        this.getMachineComponent().addInventory(this.output = new InventoryComponent<CollectorTileEntity>(InventoryUtil.ITEM_OUTPUT, 44, 79, outputSize)
                 .setInputFilter((stack, integer) -> false));
     }
 
