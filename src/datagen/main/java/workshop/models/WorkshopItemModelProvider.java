@@ -26,10 +26,8 @@ public class WorkshopItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         for (RegistryObject<Fluid> fluid : WorkshopFluids.getAllFluids()) {
-            if (fluid.get().isSource(fluid.get().getDefaultState())) {
-                bucket(fluid);
-                bottle(fluid);
-            }
+            bucket(fluid);
+            bottle(fluid);
         }
         for (BlockRegistryObjectGroup<Block, BlockItem, ?> concrete : WorkshopBlocks.CONCRETES) {
             this.withExistingParent(concrete.getItem().getRegistryName().getPath(), modLoc(BLOCK_FOLDER + "/" + concrete.getName()));

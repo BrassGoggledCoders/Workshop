@@ -105,7 +105,7 @@ public class MortarTileEntity extends BasicMachineTileEntity<MortarTileEntity, M
 
     @Override
     public void handleComplete(MortarRecipe currentRecipe) {
-        fluidInput.drainForced(currentRecipe.fluidInput, IFluidHandler.FluidAction.EXECUTE);
+        fluidInput.drainForced(currentRecipe.fluidInput.getAmount(), IFluidHandler.FluidAction.EXECUTE);
         for (int i = 0; i < input.getSlots(); i++) {
             input.getStackInSlot(i).shrink(1);
         }

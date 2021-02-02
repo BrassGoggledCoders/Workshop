@@ -8,11 +8,14 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.recipe.MoltenChamberRecipe;
+import xyz.brassgoggledcoders.workshop.tag.WorkshopFluidTags;
+import xyz.brassgoggledcoders.workshop.util.FluidTagInput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +33,8 @@ public class MoltenChamberRecipeProvider extends TitaniumSerializableProvider {
     public void add(Map<IJsonFile, IJSONGenerator> serializables) {
         recipes.add(new Builder("hellblood_to_lava")
                 .setItemIn(Ingredient.fromItems(WorkshopBlocks.OBSIDIAN_PLATE.getItem()))
-                .setFluidIn(new FluidStack(WorkshopFluids.HELLBLOOD.getFluid(), 1000))
-                .setFluidOut(new FluidStack(Fluids.LAVA, 1000))
+                .setFluidIn(new FluidTagInput(WorkshopFluidTags.getFluidTag(WorkshopFluids.HELLBLOOD), FluidAttributes.BUCKET_VOLUME))
+                .setFluidOut(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME))
                 .build());
         recipes.forEach(recipe -> serializables.put(recipe, recipe));
     }
@@ -40,7 +43,7 @@ public class MoltenChamberRecipeProvider extends TitaniumSerializableProvider {
         private final ResourceLocation name;
         private Ingredient itemIn = Ingredient.EMPTY;
         private ItemStack itemOut = ItemStack.EMPTY;
-        private FluidStack fluidIn = FluidStack.EMPTY;
+        private FluidTagInput fluidIn;
         private FluidStack fluidOut = FluidStack.EMPTY;
         private int seasoningTime = 1000;
 
@@ -58,7 +61,7 @@ public class MoltenChamberRecipeProvider extends TitaniumSerializableProvider {
             return this;
         }
 
-        public Builder setFluidIn(FluidStack in) {
+        public Builder setFluidIn(FluidTagInput in) {
             this.fluidIn = in;
             return this;
         }
@@ -74,7 +77,7 @@ public class MoltenChamberRecipeProvider extends TitaniumSerializableProvider {
         }
 
         public void validate() {
-            if (Ingredient.EMPTY.equals(this.itemIn) && FluidStack.EMPTY.equals(this.fluidIn)) {
+            if (Ingredient.EMPTY.equals(this.itemIn) && this.fluidIn == null) {
                 throw new IllegalArgumentException("Recipe must have an input");
             }
         }

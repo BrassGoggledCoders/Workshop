@@ -2,7 +2,10 @@
   "itemIn": {
     "item": "workshop:obsidian_plate"
   },
-  "fluidIn": "{FluidName:\"workshop:hellblood\",Amount:1000}",
+  "fluidIn": {
+    "tag": "forge:hellblood",
+    "amount": 1000
+  },
   "fluidOut": "{FluidName:\"minecraft:lava\",Amount:1000}",
   "seasoningTime": 1000,
   "type": "workshop:molten_chamber"

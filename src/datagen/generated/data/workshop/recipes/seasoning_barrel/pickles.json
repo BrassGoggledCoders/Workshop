@@ -2,7 +2,10 @@
   "itemIn": {
     "item": "minecraft:sea_pickle"
   },
-  "fluidIn": "{FluidName:\"workshop:brine\",Amount:100}",
+  "fluidIn": {
+    "tag": "forge:brine",
+    "amount": 100
+  },
   "itemOut": {
     "item": "workshop:pickle",
     "count": 1

@@ -2,8 +2,11 @@
   "itemIn": {
     "item": "workshop:tea_leaves"
   },
-  "fluidIn": "{FluidName:\"minecraft:water\",Amount:333}",
-  "fluidOut": "{FluidName:\"workshop:tea_liquid\",Amount:333}",
+  "fluidIn": {
+    "tag": "forge:drinkable_water",
+    "amount": 333
+  },
+  "fluidOut": "{FluidName:\"workshop:tea\",Amount:333}",
   "seasoningTime": 1200,
   "type": "workshop:seasoning_barrel"
 }

@@ -9,11 +9,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.FluidStack;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 import xyz.brassgoggledcoders.workshop.recipe.MortarRecipe;
+import xyz.brassgoggledcoders.workshop.tag.WorkshopFluidTags;
+import xyz.brassgoggledcoders.workshop.util.FluidTagInput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,7 @@ public class MortarRecipeProvider extends TitaniumSerializableProvider {
                 .build());
         recipes.add(new Builder("lye")
                 .setItemsIn(Ingredient.fromItems(WorkshopItems.ASH.get()))
-                .setFluidIn(new FluidStack(WorkshopFluids.DISTILLED_WATER.getFluid(), WorkshopFluids.BOTTLE_VOLUME))
+                .setFluidIn(new FluidTagInput(WorkshopFluidTags.getFluidTag(WorkshopFluids.POTASH_WATER), WorkshopFluids.BOTTLE_VOLUME))
                 .setItemOut(new ItemStack(WorkshopItems.LYE.get()))
                 .build());
         recipes.add(new Builder("soap")
@@ -71,8 +72,8 @@ public class MortarRecipeProvider extends TitaniumSerializableProvider {
     protected static class Builder {
         private final ResourceLocation name;
         private Ingredient[] itemIn;
+        private FluidTagInput fluidIn;
         private ItemStack itemOut = ItemStack.EMPTY;
-        private FluidStack fluidIn = FluidStack.EMPTY;
         private int time = 10;
 
         public Builder(String name) {
@@ -89,7 +90,7 @@ public class MortarRecipeProvider extends TitaniumSerializableProvider {
             return this;
         }
 
-        public Builder setFluidIn(FluidStack in) {
+        public Builder setFluidIn(FluidTagInput in) {
             this.fluidIn = in;
             return this;
         }

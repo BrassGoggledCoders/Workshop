@@ -2,7 +2,10 @@
   "itemIn": {
     "tag": "forge:dusts/salt"
   },
-  "fluidIn": "{FluidName:\"minecraft:water\",Amount:100}",
+  "fluidIn": {
+    "tag": "minecraft:water",
+    "amount": 100
+  },
   "fluidOut": "{FluidName:\"workshop:brine\",Amount:100}",
   "seasoningTime": 1000,
   "type": "workshop:seasoning_barrel"

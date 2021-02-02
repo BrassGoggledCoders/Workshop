@@ -4,7 +4,10 @@
       "item": "workshop:ash"
     }
   ],
-  "fluidInput": "{FluidName:\"workshop:distilled_water\",Amount:333}",
+  "fluidInput": {
+    "tag": "forge:potash_water",
+    "amount": 333
+  },
   "output": {
     "item": "workshop:lye",
     "count": 1

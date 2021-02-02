@@ -8,6 +8,7 @@ import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.item.DyeableArmorItem;
+import net.minecraft.item.Food;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootEntry;
 import net.minecraft.loot.LootPool;
@@ -79,7 +80,10 @@ public class WorkshopEventHandler {
         if (event.getEntityLiving() instanceof PlayerEntity && event.getItem().isFood() && event.getEntityLiving().isPotionActive(WorkshopEffects.INEBRIATED.get())) {
             //Add saturation from food again, effectively doubling it
             FoodStats foodStats = ((PlayerEntity) event.getEntityLiving()).getFoodStats();
-            foodStats.addStats(0, event.getItem().getItem().getFood().getSaturation());
+            Food food = event.getItem().getItem().getFood();
+            if(food != null) {
+                foodStats.addStats(0, food.getSaturation());
+            }
         }
     }
 

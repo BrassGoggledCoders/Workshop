@@ -2,11 +2,11 @@ package xyz.brassgoggledcoders.workshop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.hrznstudio.titanium.network.CompoundSerializableDataHandler;
 import com.hrznstudio.titanium.recipe.serializer.JSONSerializableDataHandler;
 import com.hrznstudio.titanium.tab.TitaniumTab;
+import net.minecraft.block.Block;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.item.Foods;
 import net.minecraft.item.ItemGroup;
@@ -15,7 +15,9 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -28,6 +30,7 @@ import xyz.brassgoggledcoders.workshop.api.WorkshopAPI;
 import xyz.brassgoggledcoders.workshop.api.impl.FoodFluidBehaviour;
 import xyz.brassgoggledcoders.workshop.api.impl.PotionDrinkableFluidBehaviour;
 import xyz.brassgoggledcoders.workshop.content.*;
+import xyz.brassgoggledcoders.workshop.util.FluidTagInput;
 import xyz.brassgoggledcoders.workshop.util.RangedItemStack;
 
 import java.util.Arrays;
@@ -79,7 +82,7 @@ public class Workshop {
                 (buf, list) -> {
                     buf.writeInt(list.length);
                     Arrays.asList(list).forEach(tileEntityType -> {
-                        if(tileEntityType.getRegistryName() != null) {
+                        if (tileEntityType.getRegistryName() != null) {
                             buf.writeResourceLocation(tileEntityType.getRegistryName());
                         }
                     });
@@ -93,65 +96,16 @@ public class Workshop {
                         types[i] = JSONSerializableDataHandler.read(TileEntityType.class, jsonElement);
                     }
                     return types;
-                },(buf) -> {
+                }, (buf) -> {
                     TileEntityType<?>[] types = new TileEntityType[buf.readInt()];
-                    for(int i = 0; i < types.length; i++) {
+                    for (int i = 0; i < types.length; i++) {
                         types[i] = ForgeRegistries.TILE_ENTITIES.getValue(buf.readResourceLocation());
                     }
                     return types;
                 });
-        map(RangedItemStack.class,
-                (object) -> {
-                    JsonObject jsonObject = new JsonObject();
-                    jsonObject.addProperty("min", object.min);
-                    jsonObject.addProperty("max", object.max);
-                    jsonObject.addProperty("weight", object.weight);
-                    jsonObject.add("stack", JSONSerializableDataHandler.writeItemStack(object.stack));
-                    return jsonObject;
-                }, (buf, rangedItemStack) -> {
-                    buf.writeItemStack(rangedItemStack.stack);
-                    buf.writeInt(rangedItemStack.min);
-                    buf.writeInt(rangedItemStack.max);
-                },
-                (json) -> {
-                    JsonObject jsonObject = json.getAsJsonObject();
-                    return new RangedItemStack(JSONSerializableDataHandler.readItemStack(jsonObject.get("stack").getAsJsonObject()), jsonObject.get("min").getAsInt(), jsonObject.get("max").getAsInt(), jsonObject.get("weight").getAsInt());
-                },
-                (buf) -> new RangedItemStack(buf.readItemStack(), buf.readInt(), buf.readInt()));
-        map(RangedItemStack[].class,
-                (type) -> {
-                    JsonArray array = new JsonArray();
-                    for (RangedItemStack rStack : type) {
-                        array.add(JSONSerializableDataHandler.write(RangedItemStack.class, rStack));
-                    }
-                    return array;
-                },
-                (buf, rangedItemStacks) -> {
-                    buf.writeInt(rangedItemStacks.length);
-                    for (RangedItemStack rangedItemStack : rangedItemStacks) {
-                        buf.writeItemStack(rangedItemStack.stack);
-                        buf.writeInt(rangedItemStack.min);
-                        buf.writeInt(rangedItemStack.max);
-                    }
-                },
-                (element) -> {
-                    RangedItemStack[] stacks = new RangedItemStack[element.getAsJsonArray().size()];
-                    int i = 0;
-                    Iterator<JsonElement> iterator;
-                    for (iterator = element.getAsJsonArray().iterator(); iterator.hasNext(); i++) {
-                        JsonElement jsonElement = iterator.next();
-                        stacks[i] = JSONSerializableDataHandler.read(RangedItemStack.class, jsonElement);
-                    }
-                    return stacks;
-                },
-                (buf) -> {
-                    RangedItemStack[] stacks = new RangedItemStack[buf.readInt()];
-                    for (int i = 0; i < stacks.length; i++) {
-                        stacks[i] = new RangedItemStack(buf.readItemStack(), buf.readInt(), buf.readInt());
-                    }
-                    return stacks;
-                }
-        );
+        map(RangedItemStack.class, RangedItemStack::serialize, RangedItemStack::write, RangedItemStack::deserialize, RangedItemStack::read);
+        map(RangedItemStack[].class, RangedItemStack::serializeArr, RangedItemStack::writeArr, RangedItemStack::deserializeArr, RangedItemStack::readArr);
+        map(FluidTagInput.class, FluidTagInput::serialize, FluidTagInput::write, FluidTagInput::deserialize, FluidTagInput::read);
     }
 
     public Workshop() {
@@ -180,6 +134,15 @@ public class Workshop {
             ComposterBlock.registerCompostable(0.05F, WorkshopBlocks.TEA_PLANT.getItem());
             ComposterBlock.registerCompostable(0.1F, WorkshopItems.TEA_LEAVES.get());
         });
+    }
+
+    @SubscribeEvent
+    static void missingMappings(final RegistryEvent.MissingMappings<Block> event) {
+        for(RegistryEvent.MissingMappings.Mapping<Block> mapping : event.getMappings()) {
+            if ("tea_liquid".equals(mapping.key.getPath())) {
+                mapping.remap(WorkshopFluids.TEA.getBlock());
+            }
+        }
     }
 
     private static <T> void map(Class<T> clazz, JSONSerializableDataHandler.Writer<T> writer, CompoundSerializableDataHandler.Writer<T> writerNBT, JSONSerializableDataHandler.Reader<T> reader, CompoundSerializableDataHandler.Reader<T> readerNBT) {

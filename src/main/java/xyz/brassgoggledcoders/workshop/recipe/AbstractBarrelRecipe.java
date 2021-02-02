@@ -8,12 +8,13 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
+import xyz.brassgoggledcoders.workshop.util.FluidTagInput;
 
 import javax.annotation.Nonnull;
 
 public abstract class AbstractBarrelRecipe extends WorkshopRecipe {
     public Ingredient itemIn = Ingredient.EMPTY;
-    public FluidStack fluidIn = FluidStack.EMPTY;
+    public FluidTagInput fluidIn;
     public ItemStack itemOut = ItemStack.EMPTY;
     public FluidStack fluidOut = FluidStack.EMPTY;
     public int seasoningTime = 1000;
@@ -22,7 +23,7 @@ public abstract class AbstractBarrelRecipe extends WorkshopRecipe {
         super(resourceLocation);
     }
 
-    public AbstractBarrelRecipe(ResourceLocation resourceLocation, Ingredient itemIn, ItemStack itemOut, FluidStack fluidIn, FluidStack fluidOut, int seasoningTime) {
+    public AbstractBarrelRecipe(ResourceLocation resourceLocation, Ingredient itemIn, ItemStack itemOut, FluidTagInput fluidIn, FluidStack fluidOut, int seasoningTime) {
         this(resourceLocation);
         this.itemIn = itemIn;
         this.itemOut = itemOut;
@@ -32,8 +33,7 @@ public abstract class AbstractBarrelRecipe extends WorkshopRecipe {
     }
 
     public boolean matches(@Nonnull IItemHandler handler, @Nonnull FluidTankComponent<?> tank) {
-        return itemIn.test(handler.getStackInSlot(0)) &&
-                tank.drainForced(fluidIn, IFluidHandler.FluidAction.SIMULATE).getAmount() == fluidIn.getAmount();
+        return itemIn.test(handler.getStackInSlot(0)) && fluidIn.test(tank.getFluid());
     }
 
     @Override

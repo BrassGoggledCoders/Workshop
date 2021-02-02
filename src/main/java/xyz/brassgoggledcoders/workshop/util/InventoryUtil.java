@@ -1,8 +1,14 @@
 package xyz.brassgoggledcoders.workshop.util;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.JsonToNBT;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.Arrays;
@@ -10,6 +16,8 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class InventoryUtil {
+
+    private static Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 
     public static final String ITEM_INPUT = "item_input";
     public static final DyeColor ITEM_INPUT_COLOR = DyeColor.BLUE;
@@ -42,5 +50,13 @@ public class InventoryUtil {
                                 .filter(stack -> !stack.isEmpty())
                                 //Check if any of them match the Ingredient
                                 .anyMatch(ingredient));
+    }
+
+    public static CompoundNBT parseNbtFromJson(JsonElement jsonElement) throws CommandSyntaxException
+    {
+        if(jsonElement.isJsonObject())
+            return JsonToNBT.getTagFromJson(GSON.toJson(jsonElement));
+        else
+            return JsonToNBT.getTagFromJson(jsonElement.getAsString());
     }
 }

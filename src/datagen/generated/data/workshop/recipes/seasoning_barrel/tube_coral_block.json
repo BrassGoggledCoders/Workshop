@@ -2,7 +2,10 @@
   "itemIn": {
     "item": "minecraft:tube_coral_fan"
   },
-  "fluidIn": "{FluidName:\"workshop:brine\",Amount:333}",
+  "fluidIn": {
+    "tag": "minecraft:water",
+    "amount": 333
+  },
   "itemOut": {
     "item": "minecraft:tube_coral_block",
     "count": 1

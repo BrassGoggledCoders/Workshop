@@ -8,6 +8,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
+import xyz.brassgoggledcoders.workshop.util.FluidTagInput;
 
 import javax.annotation.Nonnull;
 
@@ -17,7 +18,7 @@ public class MoltenChamberRecipe extends AbstractBarrelRecipe {
         super(resourceLocation);
     }
 
-    public MoltenChamberRecipe(ResourceLocation resourceLocation, Ingredient itemIn, ItemStack itemOut, FluidStack fluidIn, FluidStack fluidOut, int seasoningTime) {
+    public MoltenChamberRecipe(ResourceLocation resourceLocation, Ingredient itemIn, ItemStack itemOut, FluidTagInput fluidIn, FluidStack fluidOut, int seasoningTime) {
         super(resourceLocation, itemIn, itemOut, fluidIn, fluidOut, seasoningTime);
     }
 

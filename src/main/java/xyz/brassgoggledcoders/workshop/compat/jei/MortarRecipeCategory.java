@@ -66,7 +66,7 @@ public class MortarRecipeCategory implements IRecipeCategory<MortarRecipe> {
             slot.draw(stack, 0, i * 18);
             slot.draw(stack, 18, i * 18);
         }
-        if (!recipe.fluidInput.isEmpty()) {
+        if (recipe.fluidInput != null) {
             this.tank.draw(stack, 40, 0);
         }
         //Output
@@ -77,7 +77,7 @@ public class MortarRecipeCategory implements IRecipeCategory<MortarRecipe> {
     @Override
     public void setIngredients(MortarRecipe recipe, IIngredients iIngredients) {
         iIngredients.setInputIngredients(Lists.newArrayList(recipe.input));
-        iIngredients.setInput(VanillaTypes.FLUID, recipe.fluidInput);
+        iIngredients.setInputs(VanillaTypes.FLUID, recipe.fluidInput.getMatchingFluidStacks());
         iIngredients.setOutput(VanillaTypes.ITEM, recipe.output);
     }
 
@@ -95,7 +95,7 @@ public class MortarRecipeCategory implements IRecipeCategory<MortarRecipe> {
                 guiItemStacks.init(i, true, xPos, i * 17);
             }
         }
-        if (!recipe.fluidInput.isEmpty()) {
+        if (recipe.fluidInput != null) {
             guiFluidStacks.init(0, true, 44, 38, 12, 16, 100, false, null);
         }
         guiItemStacks.init(7, false, 100, 20);

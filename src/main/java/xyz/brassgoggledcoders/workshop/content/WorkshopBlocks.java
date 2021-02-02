@@ -96,7 +96,7 @@ public class WorkshopBlocks {
                     .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
     public static final BlockRegistryObjectGroup<TeaPlantBlock, BlockNamedItem, ?> TEA_PLANT =
-            new BlockRegistryObjectGroup<>("tea", TeaPlantBlock::new, (block) ->
+            new BlockRegistryObjectGroup<>("tea_plant", TeaPlantBlock::new, (block) ->
                     new BlockNamedItem(WorkshopBlocks.TEA_PLANT.getBlock(), new Item.Properties().group(Workshop.ITEM_GROUP))).register(BLOCKS, ITEMS);
 
     public static final BlockRegistryObjectGroup<BellowsBlock, BlockItem, ?> BELLOWS = new BlockRegistryObjectGroup<>("bellows", BellowsBlock::new, blockItemCreator())

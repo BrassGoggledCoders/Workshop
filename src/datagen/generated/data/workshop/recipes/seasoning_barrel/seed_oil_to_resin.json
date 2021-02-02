@@ -1,5 +1,8 @@
 {
-  "fluidIn": "{FluidName:\"workshop:seed_oil\",Amount:1000}",
+  "fluidIn": {
+    "tag": "forge:seed_oil",
+    "amount": 1000
+  },
   "itemOut": {
     "item": "workshop:rosin",
     "count": 1

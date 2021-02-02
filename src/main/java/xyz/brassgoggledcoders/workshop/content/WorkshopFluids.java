@@ -23,6 +23,7 @@ import xyz.brassgoggledcoders.workshop.fluid.HoneyFluid;
 import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class WorkshopFluids {
     private static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, Workshop.MOD_ID);
@@ -108,7 +109,7 @@ public class WorkshopFluids {
             () -> new ForgeFlowingFluid.Source(WorkshopFluids.CIDER_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.CIDER_PROPERTIES)).register(FLUIDS, BLOCKS, ITEMS);
     public static final ForgeFlowingFluid.Properties CIDER_PROPERTIES = properties(CIDER, "ffc107");
 
-    public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> TEA = new FluidRegistryObjectGroup<>("tea_liquid",
+    public static final FluidRegistryObjectGroup<ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing> TEA = new FluidRegistryObjectGroup<>("tea",
             () -> new ForgeFlowingFluid.Source(WorkshopFluids.TEA_PROPERTIES), () -> new ForgeFlowingFluid.Flowing(WorkshopFluids.TEA_PROPERTIES)).register(FLUIDS, BLOCKS, ITEMS);
     public static final ForgeFlowingFluid.Properties TEA_PROPERTIES = properties(TEA, "8B512F");
 
@@ -124,7 +125,7 @@ public class WorkshopFluids {
     }
 
     public static Collection<RegistryObject<Fluid>> getAllFluids() {
-        return FLUIDS.getEntries();
+        return FLUIDS.getEntries().stream().filter(fluid -> !fluid.getId().getPath().contains("flowing")).collect(Collectors.toList());
     }
 
     public static Collection<RegistryObject<Block>> getAllBlocks() {

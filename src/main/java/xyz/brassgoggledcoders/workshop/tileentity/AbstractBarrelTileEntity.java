@@ -70,7 +70,7 @@ public abstract class AbstractBarrelTileEntity<T extends BasicMachineTileEntity<
 
     @Override
     public void handleComplete(R currentRecipe) {
-        inputFluidTank.drainForced(currentRecipe.fluidIn, IFluidHandler.FluidAction.EXECUTE);
+        inputFluidTank.drainForced(currentRecipe.fluidIn.getAmount(), IFluidHandler.FluidAction.EXECUTE);
         for (int i = 0; i < inputInventory.getSlots(); i++) {
             inputInventory.getStackInSlot(i).shrink(1);
         }

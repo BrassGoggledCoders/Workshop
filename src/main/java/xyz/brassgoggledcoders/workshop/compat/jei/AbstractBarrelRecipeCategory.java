@@ -47,8 +47,8 @@ public abstract class AbstractBarrelRecipeCategory<T extends AbstractBarrelRecip
         if (!Ingredient.EMPTY.equals(recipe.itemIn)) {
             ingredients.setInputIngredients(Collections.singletonList(recipe.itemIn));
         }
-        if (!recipe.fluidIn.isEmpty()) {
-            ingredients.setInput(VanillaTypes.FLUID, recipe.fluidIn);
+        if (recipe.fluidIn != null) {
+            ingredients.setInputs(VanillaTypes.FLUID, recipe.fluidIn.getMatchingFluidStacks());
         }
         if (!recipe.itemOut.isEmpty()) {
             ingredients.setOutput(VanillaTypes.ITEM, recipe.itemOut);
