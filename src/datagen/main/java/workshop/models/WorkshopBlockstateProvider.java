@@ -8,11 +8,13 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fml.RegistryObject;
 import xyz.brassgoggledcoders.workshop.Workshop;
+import xyz.brassgoggledcoders.workshop.block.FluidFunnelBlock;
 import xyz.brassgoggledcoders.workshop.block.ItemductBlock;
 import xyz.brassgoggledcoders.workshop.block.ObsidianPlateBlock;
 import xyz.brassgoggledcoders.workshop.block.SinteringFurnaceBlock;
@@ -35,7 +37,7 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
         for (RegistryObject<Block> block : WorkshopFluids.getAllBlocks()) {
             FlowingFluidBlock fluidBlock = (FlowingFluidBlock) block.get();
             Fluid fluid = fluidBlock.getFluid();
-            if (fluid.isSource(fluid.getDefaultState())) {
+            if (fluid.isSource(fluid.getDefaultState()) && fluidBlock.getRegistryName() != null) {
                 this.simpleBlock(block.get(), this.models()
                         .singleTexture(fluidBlock.getRegistryName().getPath(), mcLoc("water"), "particle", mcLoc("block/water_still")));
             }
@@ -58,7 +60,6 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
                 this.models().orientable("scrap_bin", mcLoc("block/hopper_outside"), mcLoc("block/hopper_outside"), modLoc("block/scrap_bin_top")));
         this.simpleBlock(WorkshopBlocks.MOLTEN_CHAMBER.getBlock(), this.models().cubeAll("molten_chamber", modLoc("block/molten_chamber")));
         this.horizontalBlock(WorkshopBlocks.ALEMBIC.getBlock(), new ModelFile.ExistingModelFile(modLoc("block/alembic"), exFileHelper));
-        //TODO De pluralise texture folders
         this.logBlock(WorkshopBlocks.SEASONED_LOG.get());
         this.logBlock(WorkshopBlocks.STRIPPED_SEASONED_LOG.getBlock());
         this.simpleBlock(WorkshopBlocks.SILO_BARREL.get(), this.models().cubeBottomTop(WorkshopBlocks.SILO_BARREL.getName(), mcLoc(BLOCK_FOLDER + "/barrel_side"),
@@ -104,5 +105,13 @@ public class WorkshopBlockstateProvider extends BlockStateProvider {
         this.horizontalBlock(WorkshopBlocks.PRESS.getBlock(), new ModelFile.ExistingModelFile(modLoc("block/press"), exFileHelper));
         this.simpleBlock(WorkshopBlocks.SILT.getBlock());
         this.simpleBlock(WorkshopBlocks.SILTSTONE.getBlock(), this.models().cubeBottomTop("siltstone", modLoc("block/siltstone"), modLoc("block/siltstone_bottom"), modLoc("block/siltstone_top")));
+        //section Fluid Funnel
+        this.getVariantBuilder(WorkshopBlocks.FLUID_FUNNEL.get()).forAllStatesExcept(state -> ConfiguredModel.builder().modelFile(models()
+                .withExistingParent("fluid_funnel" + (state.get(FluidFunnelBlock.FACING) == Direction.DOWN ? "" : "_side"), state.get(FluidFunnelBlock.FACING) == Direction.DOWN ? mcLoc("block/hopper") : mcLoc("block/hopper_side"))
+                    .texture("side", "workshop:block/seasoned_log")
+                    .texture("inside", "workshop:block/seasoned_log")
+                    .texture("top", "workshop:block/fluid_funnel_top"))
+                    .rotationY(((int) state.get(FluidFunnelBlock.FACING).getHorizontalAngle() + 180) % 360).build(), FluidFunnelBlock.ENABLED);
+        //endsection
     }
 }

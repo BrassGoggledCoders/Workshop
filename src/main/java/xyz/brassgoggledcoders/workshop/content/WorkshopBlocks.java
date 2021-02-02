@@ -130,6 +130,9 @@ public class WorkshopBlocks {
 
     public static final BlockRegistryObjectGroup<Block, BlockItem, ?> SILTSTONE = new BlockRegistryObjectGroup<>("siltstone", () -> new Block(AbstractBlock.Properties.from(Blocks.SANDSTONE)), blockItemCreator())
             .register(BLOCKS, ITEMS);
+    
+    public static final BlockRegistryObjectGroup<BottleRackBlock, BlockItem, BottleRackTileEntity> BOTTLE_RACK = new BlockRegistryObjectGroup<>("bottle_rack", BottleRackBlock::new, blockItemCreator(), BottleRackTileEntity::new)
+            .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);

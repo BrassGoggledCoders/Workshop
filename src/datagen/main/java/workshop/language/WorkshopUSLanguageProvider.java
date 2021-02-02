@@ -56,6 +56,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
         this.addBlock(WorkshopBlocks.ITEMDUCT, "Itemduct");
         this.addBlock(WorkshopBlocks.SILT, "Silt");
         this.addBlock(WorkshopBlocks.SILTSTONE, "Siltstone");
+        this.addBlock(WorkshopBlocks.BOTTLE_RACK, "Bottling Rack");
         //endregion
 
         //region Items
@@ -137,6 +138,7 @@ public class WorkshopUSLanguageProvider extends LanguageProvider {
 
         //region JEI
         this.add(Workshop.SCRAP_BAG_DESC, "Scrap bags are generated when a Scrap Bin destroys enough excess items (more than a stack of any one item). They can be opened by hand or in a dispenser for some items.");
+        this.add(Workshop.FLUID_FUNNEL_DESC, "Like a Hopper, but for Fluids");
         //endregion
 
         this.addAdvancement("root", "A wright's beginning...", "Measure twice. Cut once.");

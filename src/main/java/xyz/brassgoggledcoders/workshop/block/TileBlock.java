@@ -1,6 +1,5 @@
 package xyz.brassgoggledcoders.workshop.block;
 
-import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.PushReaction;
@@ -16,8 +15,11 @@ import xyz.brassgoggledcoders.workshop.tileentity.BasicMachineTileEntity;
 import xyz.brassgoggledcoders.workshop.util.InventoryUtil;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Optional;
 import java.util.function.Supplier;
 
+@ParametersAreNonnullByDefault
 public class TileBlock<T extends TileEntity> extends Block {
     protected final Supplier<T> tileSupplier;
 
@@ -61,13 +63,13 @@ public class TileBlock<T extends TileEntity> extends Block {
         if (state.getBlock() != newState.getBlock()) {
             TileEntity tileentity = worldIn.getTileEntity(pos);
             if (tileentity instanceof BasicInventoryTileEntity) {
-                for (InventoryComponent<?> inventoryComponent : ((BasicInventoryTileEntity<?>) tileentity).getMachineComponent().getMultiInventoryComponent().getInventoryHandlers()) {
-                    InventoryUtil.getItemStackStream(inventoryComponent).forEach(stack -> InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack));
-                }
+                Optional.ofNullable(((BasicInventoryTileEntity<?>) tileentity).getMachineComponent().getMultiInventoryComponent().getInventoryHandlers()).ifPresent(componentSet ->
+                    componentSet.forEach(inventoryComponent -> InventoryUtil.getItemStackStream(inventoryComponent).forEach(stack ->
+                            InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack))));
                 worldIn.updateComparatorOutputLevel(pos, this);
             }
-            super.onReplaced(state, worldIn, pos, newState, isMoving);
         }
+        super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
 
     @Override
