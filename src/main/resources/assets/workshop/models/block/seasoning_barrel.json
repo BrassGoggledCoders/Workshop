@@ -946,5 +946,48 @@
         12
       ]
     }
-  ]
+  ],
+  "display": {
+  "firstperson_righthand": {
+    "rotation": [
+      112.5,
+      0,
+      0
+    ],
+    "translation": [
+      -0.25,
+      0,
+      0
+    ],
+    "scale": [
+      0.67,
+      0.67,
+      0.67
+    ]
+  },
+  "ground": {
+    "scale": [
+      0.5,
+      0.5,
+      0.5
+    ]
+  },
+  "gui": {
+    "rotation": [
+      17,
+      150,
+      0
+    ],
+    "translation": [
+      0.5,
+      0,
+      0
+    ],
+    "scale": [
+      0.75,
+      0.75,
+      0.75
+    ]
+  }
+}
 }

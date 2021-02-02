@@ -77,7 +77,9 @@ public class MortarRecipeCategory implements IRecipeCategory<MortarRecipe> {
     @Override
     public void setIngredients(MortarRecipe recipe, IIngredients iIngredients) {
         iIngredients.setInputIngredients(Lists.newArrayList(recipe.input));
-        iIngredients.setInputs(VanillaTypes.FLUID, recipe.fluidInput.getMatchingFluidStacks());
+        if(recipe.fluidInput != null) {
+            iIngredients.setInputs(VanillaTypes.FLUID, recipe.fluidInput.getMatchingFluidStacks());
+        }
         iIngredients.setOutput(VanillaTypes.ITEM, recipe.output);
     }
 

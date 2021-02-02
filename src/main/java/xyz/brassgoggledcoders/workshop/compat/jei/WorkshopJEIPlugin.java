@@ -18,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.workshop.Workshop;
+import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 import xyz.brassgoggledcoders.workshop.tileentity.*;
@@ -62,6 +63,7 @@ public class WorkshopJEIPlugin implements IModPlugin {
             registration.addRecipes(recipeManager.getRecipes(WorkshopRecipes.COLLECTOR_SERIALIZER.get().getRecipeType()).values(), CollectorTileEntity.ID);
         }
         registration.addIngredientInfo(new ItemStack(WorkshopItems.SCRAP_BAG.get()), VanillaTypes.ITEM, Workshop.SCRAP_BAG_DESC);
+        registration.addIngredientInfo(new ItemStack(WorkshopBlocks.FLUID_FUNNEL.get()), VanillaTypes.ITEM, Workshop.FLUID_FUNNEL_DESC);
     }
 
     @Override

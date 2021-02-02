@@ -1,5 +1,6 @@
 package xyz.brassgoggledcoders.workshop.content;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.Foods;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -13,6 +14,7 @@ import xyz.brassgoggledcoders.workshop.item.BottleItem;
 import xyz.brassgoggledcoders.workshop.item.ScrapBagItem;
 import xyz.brassgoggledcoders.workshop.item.SoapItem;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -61,5 +63,9 @@ public class WorkshopItems {
 
     private static Item.Properties defaultProperties() {
         return new Item.Properties().group(Workshop.ITEM_GROUP);
+    }
+
+    public static Collection<RegistryObject<Item>> getAllItems() {
+        return ITEMS.getEntries();
     }
 }
