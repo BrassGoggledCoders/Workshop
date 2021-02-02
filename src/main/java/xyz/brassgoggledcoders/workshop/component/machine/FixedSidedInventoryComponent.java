@@ -20,7 +20,7 @@ public class FixedSidedInventoryComponent<H extends IComponentHarness> extends S
     }
 
     public static FacingUtil.Sideness[] except(FacingUtil.Sideness side) {
-        return (FacingUtil.Sideness[]) Arrays.stream(FacingUtil.Sideness.values()).filter(s -> s != side).toArray();
+        return Arrays.stream(FacingUtil.Sideness.values()).filter(s -> s != side).toArray(FacingUtil.Sideness[]::new);
     }
 
     @Override

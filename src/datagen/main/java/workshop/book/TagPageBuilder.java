@@ -9,7 +9,8 @@ import xyz.brassgoggledcoders.workshop.Workshop;
 public class TagPageBuilder extends AbstractPageBuilder<TagPageBuilder> {
 
     private final ResourceLocation tagID;
-    private String title;
+    private String title = "";
+    private String registry = "block";
 
     protected TagPageBuilder(EntryBuilder parent, ResourceLocation tagID) {
         super(Workshop.MOD_ID + ":tag", parent);
@@ -21,11 +22,15 @@ public class TagPageBuilder extends AbstractPageBuilder<TagPageBuilder> {
         return this;
     }
 
+    public TagPageBuilder setRegistry(String registry) {
+        this.registry = registry;
+        return this;
+    }
+
     @Override
     protected void serialize(JsonObject jsonObject) {
         jsonObject.addProperty("tag", tagID.toString());
-        //TODO
-        jsonObject.addProperty("registry", "block");
+        jsonObject.addProperty("registry", registry);
         jsonObject.addProperty("title", title);
     }
 }

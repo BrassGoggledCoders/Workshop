@@ -42,7 +42,8 @@ public class Workshop {
     public static final ItemGroup ITEM_GROUP = new TitaniumTab(MOD_ID,
             () -> new ItemStack(WorkshopBlocks.SEASONING_BARREL.getBlock()));
 
-    public static final String SCRAP_BAG_DESC = "description.jei.scrap_bag";
+    public static final String SCRAP_BAG_DESC = "description.jei.workshop.scrap_bag";
+    public static final String FLUID_FUNNEL_DESC = "description.jei.workshop.fluid_funnel";
 
     static {
         //Titanium maps this in JSON but not for packets

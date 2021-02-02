@@ -11,6 +11,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import xyz.brassgoggledcoders.workshop.Workshop;
 import xyz.brassgoggledcoders.workshop.compat.patchouli.PageTypes;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
+import xyz.brassgoggledcoders.workshop.renderer.BottleRackTileEntityRenderer;
 import xyz.brassgoggledcoders.workshop.renderer.DryingBasinTileEntityRenderer;
 import xyz.brassgoggledcoders.workshop.renderer.PressTileEntityRenderer;
 
@@ -22,6 +23,7 @@ public class ClientSetupEventHandler {
         //ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.SINTERING_FURNACE.getTileEntityType(), SinteringTileEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.DRYING_BASIN.getTileEntityType(), DryingBasinTileEntityRenderer::new);
         //ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.MORTAR.getTileEntityType(), MortarTileEntityRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(WorkshopBlocks.BOTTLE_RACK.getTileEntityType(), BottleRackTileEntityRenderer::new);
 
         RenderTypeLookup.setRenderLayer(WorkshopBlocks.SINTERING_FURNACE.getBlock(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(WorkshopBlocks.PRESS.getBlock(), RenderType.getCutout());

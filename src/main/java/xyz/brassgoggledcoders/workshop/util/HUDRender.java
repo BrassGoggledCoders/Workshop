@@ -15,6 +15,8 @@ limitations under the License.
  */
 package xyz.brassgoggledcoders.workshop.util;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -63,9 +65,6 @@ public class HUDRender {
                     float angle = (float) (Math.PI * 2 / itemStackList.size());
                     double radius = 32;
 
-                    //GlStateManager.enableBlend();
-                    //GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                    //GlStateManager.color(1, 1, 1, 1);
                     RenderHelper.enableStandardItemLighting();
                     int scaledWidth = minecraft.getMainWindow().getScaledWidth();
                     for (int ii = 0; ii < itemStackList.size(); ii++) {
@@ -75,7 +74,6 @@ public class HUDRender {
                         minecraft.getItemRenderer().renderItemAndEffectIntoGUI(itemStack, x, y);
                         minecraft.getItemRenderer().renderItemOverlays(minecraft.fontRenderer, itemStack, x, y);
                     }
-                    //TODO add faded display of what the recipe *will* make
                     if (!tileEntity.getOutputInventory().getStackInSlot(0).isEmpty()) {
                         ItemStack output = tileEntity.getOutputInventory().getStackInSlot(0);
                         int x = (int) (radius + scaledWidth / 2) - 8 + 64;
@@ -91,7 +89,6 @@ public class HUDRender {
                         //drawTexturedRect(minecraft, IAssetProvider.DEFAULT_LOCATION, x + 5, y, 12, 11, 100, 177, 61, 256, 256);
                     }
                     RenderHelper.disableStandardItemLighting();
-                    //GlStateManager.disableLighting();
                 }
             }
         }
