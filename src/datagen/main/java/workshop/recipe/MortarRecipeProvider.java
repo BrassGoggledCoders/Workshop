@@ -14,6 +14,7 @@ import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
 import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
 import xyz.brassgoggledcoders.workshop.recipe.MortarRecipe;
 import xyz.brassgoggledcoders.workshop.tag.WorkshopFluidTags;
+import xyz.brassgoggledcoders.workshop.tag.WorkshopItemTags;
 import xyz.brassgoggledcoders.workshop.util.FluidTagInput;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class MortarRecipeProvider extends TitaniumSerializableProvider {
                 .setItemOut(new ItemStack(WorkshopItems.LYE.get()))
                 .build());
         recipes.add(new Builder("soap")
-                .setItemsIn(Ingredient.fromItems(WorkshopItems.LYE.get()), Ingredient.fromItems(WorkshopItems.TALLOW.get()))
+                .setItemsIn(Ingredient.fromItems(WorkshopItems.LYE.get()), Ingredient.fromTag(WorkshopItemTags.TALLOW))
                 .setItemOut(new ItemStack(WorkshopItems.SOAP.get()))
                 .build());
         //TODO Doesn't work

@@ -4,7 +4,7 @@
       "item": "workshop:lye"
     },
     {
-      "item": "workshop:tallow"
+      "tag": "forge:tallow"
     }
   ],
   "output": {
