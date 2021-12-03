@@ -1,196 +1,104 @@
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
-
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        jcenter()
+        maven { url = 'https://maven.minecraftforge.net' }
         mavenCentral()
+        maven {
+            name = "Parchment"
+            url = 'https://maven.parchmentmc.org'
+        }
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath group: 'org.parchmentmc', name: 'librarian', version: '1.+'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'eclipse'
+apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'maven-publish'
-apply plugin: "maven"
-apply plugin: "java"
-apply plugin: "idea"
 
-version = "${minecraft_version}-" + getVersion()
-group = "${group}"
-archivesBaseName = "${mod_name}"
+version = '1.0'
+group = 'xyz.brassgoggledcoders.workshop' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'workshop'
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 8 to end users, so your mod should target Java 8.
 
-sourceSets {
-    main {
-        java {
-            srcDir 'src/main/java'
-        }
-        resources {
-            include '**/**'
-            //Add the generated main module resources
-            srcDirs += 'src/datagen/generated/'
-            //But exclude the cache of the generated data from what gets built
-            exclude '.cache'
-        }
-    }
-    //Data gen modules for the different modules
-    datagenmain { setupDataGenSourceSet(datagenmain, 'main') }
-}
-
-def setupDataGenSourceSet(SourceSet datagenSourceSet, String name) {
-    datagenSourceSet.java.srcDirs = ['src/datagen/' + name + '/java']
-    datagenSourceSet.resources.srcDirs = ['src/datagen/' + name + '/resources']
-    //datagenSourceSet.compileClasspath += project.sourceSets.api.output
-    datagenSourceSet.compileClasspath += project.sourceSets.main.output
-}
-
-configurations {
-    datagenmainCompile.extendsFrom(compile)
-    datagenmainImplementation.extendsFrom(implementation)
-    datagenmainCompileOnly.extendsFrom(compileOnly)
-    datagenmainRuntimeOnly.extendsFrom(runtimeOnly)
-}
-
-def version_properties = [
-        "mod_version": mod_version,
-        "titanium_version": titanium_version,
-        "forge_version" : forge_version,
-        "loader_version": loader_version
-]
-
-def jsonPatterns = ["**/*.json", "**/*.mcmeta"]
-
-processResources {
-    outputs.upToDateWhen { false }
-    from(sourceSets.main.resources) {
-        include "META-INF/mods.toml"
-        expand version_properties
-    }
-    into "$buildDir/resources/main/"
-    //Minify json resources
-    doLast {
-        fileTree(dir: getOutputs().getFiles().getAsPath(), includes: jsonPatterns).each {
-            File file -> file.setText(JsonOutput.toJson(new JsonSlurper().parse(file)))
-        }
-    }
-}
-
+println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-    mappings channel: "snapshot", version: "${mappings_version}"
+    mappings channel: 'parchment', version: '2021.08.29-1.16.5'
 
     runs {
         client {
-            workingDirectory project.file("run")
-            source sourceSets.main
-            properties 'mixin.env.disableRefMap': 'true'
+            workingDirectory project.file('run/client')
+
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                workshop {
+                    source sourceSets.main
+                }
+            }
         }
 
         server {
-            workingDirectory project.file("run")
-            source sourceSets.main
-            properties 'mixin.env.disableRefMap': 'true'
+            workingDirectory project.file('run/server')
+
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                workshop {
+                    source sourceSets.main
+                }
+            }
         }
 
         data {
-            workingDirectory project.file("run")
-            environment 'target', 'fmluserdevdata'
-            properties 'fml.earlyprogresswindow': 'false'
-            properties 'mixin.env.disableRefMap': 'true'
+            workingDirectory project.file('run/data')
 
-            args '--all', '--output', file('src/datagen/generated/'),
-                    '--mod', 'workshop', '--reports',
-                    '--existing', sourceSets.main.resources.srcDirs[0]
+            property 'forge.logging.console.level', 'debug'
 
-            //datagenSourceSet.compileClasspath += project.sourceSets.main.output
+            args '--mod', 'workshop', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+
             mods {
-                workshop.sources((SourceSet[]) [sourceSets.main, sourceSets.datagenmain])
+                workshop {
+                    source sourceSets.main
+                }
             }
         }
     }
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 }
 
-repositories {
-    mavenLocal()
-    maven {
-        url 'https://cdn.hrzn.studio/maven/'
-    }
-    maven {
-        url 'https://maven.blamejared.com'
-    }
-    maven {
-        // location of the maven that hosts JEI files
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
-    }
-    maven {
-        // location of a maven mirror for JEI files, as a fallback
-        name = "ModMaven"
-        url = "https://modmaven.k-4u.nl"
-    }
-}
+sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    if (findProject(':Titanium') != null) {
-        compile project(':Titanium')
-    } else {
-        compile fg.deobf (project.dependencies.create("com.hrznstudio:titanium:${minecraft_version}-${titanium_version}") {
-            transitive = false
-        })
-    }
-    compile fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
-    compile fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
-    compile fg.deobf("xyz.brassgoggledcoders:PatchouliProvider:1.16.4-1.0.2-Snapshot.3")
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.19'
 }
+
 
 jar {
     manifest {
         attributes([
-            "Specification-Title"     : "${title}",
-            "Specification-Vendor"    : "${team}",
-            "Specification-Version"   : "1",
-            "Implementation-Title"    : project.name,
-            "Implementation-Version"  : "${version}",
-            "Implementation-Vendor"   : "${team}",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-            "FMLAT": "accesstransformer.cfg"
+                "Specification-Title"     : "workshop",
+                "Specification-Vendor"    : "Brass Goggled Coders",
+                "Specification-Version"   : "1",
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : "${version}",
+                "Implementation-Vendor"   : "Brass Goggled Coders",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
 }
 
-uploadArchives {
+jar.finalizedBy('reobfJar')
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+        }
+    }
     repositories {
-        mavenDeployer {
-            repository(url: "file://" + (System.getenv("local_maven") != null ? System.getenv("local_maven") : System.getenv("bamboo_local_maven")))
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
         }
     }
-}
-
-String getVersion() {
-    String version = "${mod_version}"
-    String branch = project.hasProperty("branch") ? project.branch : ""
-
-    if (branch != "") {
-        version += "-" + branch
-
-        String buildNumber = getBuildNumber()
-        if (buildNumber != "") {
-            version += "." + buildNumber
-        }
-    }
-
-    return version
-}
-
-static String getBuildNumber() {
-    String buildNumber = System.getenv("BUILD_NUMBER") != null ? System.getenv("BUILD_NUMBER") : ""
-    if (buildNumber == "") {
-        buildNumber = System.getenv("bamboo_buildNumber") != null ? System.getenv("bamboo_buildNumber") : ""
-    }
-    return buildNumber
 }
