@@ -1,7 +1,0 @@
-{
-  "parent": "workshop:block/template_duct_side",
-  "textures": {
-    "main": "workshop:block/stripped_seasoned_log",
-    "particle": "workshop:block/stripped_seasoned_log"
-  }
-}

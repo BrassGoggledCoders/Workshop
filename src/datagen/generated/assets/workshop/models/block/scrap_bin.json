@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/orientable",
-  "textures": {
-    "side": "minecraft:block/hopper_outside",
-    "front": "minecraft:block/hopper_outside",
-    "top": "workshop:block/scrap_bin_top"
-  }
-}

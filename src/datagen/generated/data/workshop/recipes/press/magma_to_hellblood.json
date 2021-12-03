@@ -1,7 +1,0 @@
-{
-  "itemIn": {
-    "item": "minecraft:magma_block"
-  },
-  "fluidOut": "{FluidName:\"workshop:hellblood\",Amount:250}",
-  "type": "workshop:press"
-}

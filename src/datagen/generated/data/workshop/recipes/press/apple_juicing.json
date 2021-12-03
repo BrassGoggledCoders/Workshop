@@ -1,7 +1,0 @@
-{
-  "itemIn": {
-    "item": "minecraft:apple"
-  },
-  "fluidOut": "{FluidName:\"workshop:apple_juice\",Amount:333}",
-  "type": "workshop:press"
-}

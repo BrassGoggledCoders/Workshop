@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/hopper",
-  "textures": {
-    "side": "workshop:block/seasoned_log",
-    "inside": "workshop:block/seasoned_log",
-    "top": "workshop:block/fluid_funnel_top"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "fluidIn": {
-    "tag": "forge:honey",
-    "amount": 333
-  },
-  "fluidOut": "{FluidName:\"workshop:mead\",Amount:333}",
-  "seasoningTime": 3600,
-  "type": "workshop:seasoning_barrel"
-}

@@ -1,7 +1,0 @@
-{
-  "itemIn": {
-    "item": "minecraft:honeycomb"
-  },
-  "fluidOut": "{FluidName:\"workshop:honey\",Amount:100}",
-  "type": "workshop:press"
-}

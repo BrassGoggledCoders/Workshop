@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/hopper",
-  "textures": {
-    "side": "minecraft:block/stone",
-    "inside": "minecraft:block/stone",
-    "top": "workshop:block/drying_basin_top"
-  }
-}

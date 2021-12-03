@@ -1,9 +1,0 @@
-{
-  "fluidIn": "{FluidName:\"workshop:honey\",Amount:1000}",
-  "itemOut": {
-    "item": "minecraft:honey_block",
-    "count": 1
-  },
-  "dryingTime": 1500,
-  "type": "workshop:drying_basin"
-}
