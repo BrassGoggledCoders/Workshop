@@ -18,10 +18,3 @@ license="MIT"
     versionRange="[${forge_version},)"
     ordering="NONE"
     side="BOTH"
-
-[[dependencies.workshop]]
-    modId="titanium"
-    mandatory=true
-    versionRange="[${titanium_version},)"
-    ordering="NONE"
-    side="BOTH"
