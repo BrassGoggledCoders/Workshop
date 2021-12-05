@@ -22,6 +22,6 @@ public class SeasoningBarrelBlock extends Block {
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getClickedFace());
+        return this.defaultBlockState().setValue(FACING, context.getClickedFace().getOpposite());
     }
 }

@@ -20,6 +20,8 @@ public class WorkshopBlocks {
             ))
             .tileEntity(SeasoningBarrelBlockEntity::new)
             .build()
+            .item()
+            .build()
             .register();
 
     public static void setup() {
