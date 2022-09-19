@@ -25,11 +25,15 @@ version = '1.0.0'
 group = 'xyz.brassgoggledcoders.workshop' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'workshop'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 8 to end users, so your mod should target Java 8.
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+println(
+        'Java: ' + System.getProperty('java.version') + ' ' +
+        'JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') ' +
+        'Arch: ' + System.getProperty('os.arch')
+)
 minecraft {
-    mappings channel: 'parchment', version: '2021.08.29-1.16.5'
+    mappings channel: 'parchment', version: '2022.09.04-1.18.2'
 
     runs {
         client {
@@ -61,7 +65,8 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'workshop', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'workshop', '--all', '--output', file('src/generated/resources/'),
+                    '--existing', file('src/main/resources/')
 
             mods {
                 workshop {
@@ -85,9 +90,9 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.2.19'
+    minecraft 'net.minecraftforge:forge:1.18.2-40.1.80'
 
-    def registrate = "com.tterrag.registrate:Registrate:MC1.16.5-1.0.10"
+    def registrate = "com.tterrag.registrate:Registrate:MC1.18.2-1.1.1"
     implementation fg.deobf(registrate)
     shade registrate
 }

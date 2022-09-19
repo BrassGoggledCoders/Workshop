@@ -1,10 +1,12 @@
 package xyz.brassgoggledcoders.workshop.blockentity;
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class SeasoningBarrelBlockEntity extends TileEntity {
-    public SeasoningBarrelBlockEntity(TileEntityType<?> tileEntityType) {
-        super(tileEntityType);
+public class SeasoningBarrelBlockEntity extends BlockEntity {
+    public SeasoningBarrelBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
+        super(pType, pPos, pBlockState);
     }
 }

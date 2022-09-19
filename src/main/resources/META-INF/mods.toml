@@ -1,20 +1,21 @@
 modLoader="javafml"
-loaderVersion="[${loader_version},)"
+loaderVersion="[40,)"
 issueTrackerURL="https://github.com/BrassGoggledCoders/Workshop/issues"
 license="MIT"
 
 [[mods]]
     modId="workshop"
-    version="${mod_version}"
+    version="${file.jarVersion}"
     displayName="Workshop"
     credits="Divine for the design, Snurly and VeyezX for the art probably"
     authors="Brass Goggled Coders"
     description='''
         This mod adds various lower tier machines to work in tandem with our higher tier machines in other mods to give you a stepping stone type feel...
     '''
+
 [[dependencies.workshop]]
     modId="forge"
     mandatory=true
-    versionRange="[${forge_version},)"
+    versionRange="[40.1.0,)"
     ordering="NONE"
     side="BOTH"
