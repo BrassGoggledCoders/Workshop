@@ -22,14 +22,16 @@ public class SeasoningBarrelRecipe implements Recipe<FluidAndItemRecipeContainer
     private final FluidIngredient fluidInput;
     private final ItemStack itemOutput;
     private final FluidStack fluidOutput;
+    private final int time;
 
     public SeasoningBarrelRecipe(ResourceLocation id, Ingredient itemInput, FluidIngredient fluidInput,
-                                 ItemStack itemOutput, FluidStack fluidOutput) {
+                                 ItemStack itemOutput, FluidStack fluidOutput, int time) {
         this.id = id;
         this.itemInput = itemInput;
         this.fluidInput = fluidInput;
         this.itemOutput = itemOutput;
         this.fluidOutput = fluidOutput;
+        this.time = time;
     }
 
     @Override
@@ -83,5 +85,25 @@ public class SeasoningBarrelRecipe implements Recipe<FluidAndItemRecipeContainer
     @Nonnull
     public RecipeType<?> getType() {
         return WorkshopRecipes.SEASONING_BARREL_TYPE.get();
+    }
+
+    public Ingredient getItemInput() {
+        return itemInput;
+    }
+
+    public FluidIngredient getFluidInput() {
+        return fluidInput;
+    }
+
+    public ItemStack getItemOutput() {
+        return itemOutput;
+    }
+
+    public FluidStack getFluidOutput() {
+        return fluidOutput;
+    }
+
+    public int getTime() {
+        return time;
     }
 }

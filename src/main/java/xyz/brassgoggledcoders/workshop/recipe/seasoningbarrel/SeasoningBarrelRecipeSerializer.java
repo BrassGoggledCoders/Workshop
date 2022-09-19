@@ -55,12 +55,15 @@ public class SeasoningBarrelRecipeSerializer extends ForgeRegistryEntry<RecipeSe
             throw new JsonParseException("Must include least one of 'fluidOutput' or 'itemOutput'");
         }
 
+        int time = GsonHelper.getAsInt(pSerializedRecipe, "time", 20 * 30);
+
         return new SeasoningBarrelRecipe(
                 pRecipeId,
                 itemIngredient,
                 fluidIngredient,
                 itemStack,
-                fluidStack
+                fluidStack,
+                time
         );
     }
 
@@ -68,12 +71,23 @@ public class SeasoningBarrelRecipeSerializer extends ForgeRegistryEntry<RecipeSe
     @Override
     @ParametersAreNonnullByDefault
     public SeasoningBarrelRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
-        return null;
+        return new SeasoningBarrelRecipe(
+                pRecipeId,
+                Ingredient.fromNetwork(pBuffer),
+                FluidIngredient.fromNetwork(pBuffer),
+                pBuffer.readItem(),
+                pBuffer.readFluidStack(),
+                pBuffer.readInt()
+        );
     }
 
     @Override
     @ParametersAreNonnullByDefault
     public void toNetwork(FriendlyByteBuf pBuffer, SeasoningBarrelRecipe pRecipe) {
-
+        pRecipe.getItemInput().toNetwork(pBuffer);
+        pRecipe.getFluidInput().toNetwork(pBuffer);
+        pBuffer.writeItem(pRecipe.getItemOutput());
+        pBuffer.writeFluidStack(pRecipe.getFluidOutput());
+        pBuffer.writeInt(pRecipe.getTime());
     }
 }
