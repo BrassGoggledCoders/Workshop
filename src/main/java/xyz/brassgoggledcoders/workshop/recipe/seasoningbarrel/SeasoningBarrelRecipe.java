@@ -1,27 +1,30 @@
 package xyz.brassgoggledcoders.workshop.recipe.seasoningbarrel;
 
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
+import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
+import xyz.brassgoggledcoders.workshop.recipe.FluidAndItemRecipeContainer;
+import xyz.brassgoggledcoders.workshop.recipe.IFluidOutputRecipe;
+import xyz.brassgoggledcoders.workshop.recipe.ingredient.fluid.FluidIngredient;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public class SeasoningBarrelRecipe implements IRecipe<SeasoningBarrelRecipeInventory> {
+public class SeasoningBarrelRecipe implements Recipe<FluidAndItemRecipeContainer>, IFluidOutputRecipe<FluidAndItemRecipeContainer> {
     private final ResourceLocation id;
     private final Ingredient itemInput;
-    private final ITag<Fluid> fluidInput;
+    private final FluidIngredient fluidInput;
     private final ItemStack itemOutput;
     private final FluidStack fluidOutput;
 
-    public SeasoningBarrelRecipe(ResourceLocation id, Ingredient itemInput, ITag<Fluid> fluidInput, ItemStack itemOutput, FluidStack fluidOutput) {
+    public SeasoningBarrelRecipe(ResourceLocation id, Ingredient itemInput, FluidIngredient fluidInput,
+                                 ItemStack itemOutput, FluidStack fluidOutput) {
         this.id = id;
         this.itemInput = itemInput;
         this.fluidInput = fluidInput;
@@ -31,14 +34,20 @@ public class SeasoningBarrelRecipe implements IRecipe<SeasoningBarrelRecipeInven
 
     @Override
     @ParametersAreNonnullByDefault
-    public boolean matches(SeasoningBarrelRecipeInventory pInv, World pLevel) {
-        return false;
+    public boolean matches(FluidAndItemRecipeContainer container, Level pLevel) {
+        return itemInput.test(container.getItem(0)) && fluidInput.test(container.getFluidInTank(0));
     }
 
     @Override
     @Nonnull
-    public ItemStack assemble(@Nonnull SeasoningBarrelRecipeInventory pInv) {
-        return ItemStack.EMPTY;
+    public ItemStack assemble(@Nonnull FluidAndItemRecipeContainer pInv) {
+        return itemOutput.copy();
+    }
+
+    @Override
+    @Nonnull
+    public FluidStack assembleFluid(@Nonnull FluidAndItemRecipeContainer pInv) {
+        return fluidOutput.copy();
     }
 
     @Override
@@ -49,24 +58,30 @@ public class SeasoningBarrelRecipe implements IRecipe<SeasoningBarrelRecipeInven
     @Override
     @Nonnull
     public ItemStack getResultItem() {
-        return null;
+        return itemOutput;
+    }
+
+    @Override
+    @Nonnull
+    public FluidStack getResultFluid() {
+        return fluidOutput;
     }
 
     @Override
     @Nonnull
     public ResourceLocation getId() {
-        return null;
+        return id;
     }
 
     @Override
     @Nonnull
-    public IRecipeSerializer<?> getSerializer() {
-        return null;
+    public RecipeSerializer<?> getSerializer() {
+        return WorkshopRecipes.SEASONING_BARREL_SERIALIZER.get();
     }
 
     @Override
     @Nonnull
-    public IRecipeType<?> getType() {
-        return null;
+    public RecipeType<?> getType() {
+        return WorkshopRecipes.SEASONING_BARREL_TYPE.get();
     }
 }
