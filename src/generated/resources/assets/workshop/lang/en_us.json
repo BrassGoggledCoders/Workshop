@@ -1,3 +1,6 @@
 {
-  "block.workshop.seasoning_barrel": "Seasoning Barrel"
+  "block.workshop.brine": "Brine",
+  "block.workshop.seasoning_barrel": "Seasoning Barrel",
+  "item.workshop.brine_bucket": "Brine Bucket",
+  "item.workshop.pickle": "Pickle"
 }

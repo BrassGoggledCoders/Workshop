@@ -1,3 +1,6 @@
 {
-  "block.workshop.seasoning_barrel": "\u05DF\u01DD\u0279\u0279\u0250\u15FA bu\u0131uos\u0250\u01DDS"
+  "block.workshop.brine": "\u01DDu\u0131\u0279\u15FA",
+  "block.workshop.seasoning_barrel": "\u05DF\u01DD\u0279\u0279\u0250\u15FA bu\u0131uos\u0250\u01DDS",
+  "item.workshop.brine_bucket": "\u0287\u01DD\u029E\u0254n\u15FA \u01DDu\u0131\u0279\u15FA",
+  "item.workshop.pickle": "\u01DD\u05DF\u029E\u0254\u0131\u0500"
 }

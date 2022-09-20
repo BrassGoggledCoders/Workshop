@@ -7,6 +7,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.NonNullLazy;
 import net.minecraftforge.fml.common.Mod;
 import xyz.brassgoggledcoders.workshop.content.WorkshopBlocks;
+import xyz.brassgoggledcoders.workshop.content.WorkshopFluids;
+import xyz.brassgoggledcoders.workshop.content.WorkshopItems;
+import xyz.brassgoggledcoders.workshop.content.WorkshopRecipes;
 
 import javax.annotation.Nonnull;
 
@@ -26,6 +29,9 @@ public class Workshop {
 
     public Workshop() {
         WorkshopBlocks.setup();
+        WorkshopFluids.setup();
+        WorkshopItems.setup();
+        WorkshopRecipes.setup();
     }
 
     public static Registrate getRegistrate() {
